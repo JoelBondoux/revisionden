@@ -59,7 +59,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .pip-figure--rest .pip-figure__shoulders {
+  .pip-figure--alive.pip-figure--rest .pip-figure__shoulders {
     animation: pip-breathe calc(var(--motion-pulse) * 4) ease-in-out infinite;
   }
 

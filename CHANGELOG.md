@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: Pip now keeps completely still during lessons and tests, and settles down after a minute without a tap.
 - A new topic map: tap the big box at the top to change subject (Pip dresses for each one). Each unit is its own winding path you climb from the bottom to the unit challenge at the top, with "You are here" next to your topic. Swipe sideways (or use the arrows) for the next unit. Every unit has its own shape, the path gently breathes, and each style draws the topics its own way (plant pots in Garden Grow, pixel art in Pixel Arcade...).
 - Pip has a new look: a bigger head leaning out of his ring, and he now holds something for your subject so you can spot it at a glance (a calculator for Maths, a book for English Literature, a magnet for Physics...). For French, German and Spanish his circle has a soft wash of flag colours. He changes his look a little each day. Your own avatar now sits in its own ring on the Me button, with its head leaning out, just like Pip.
 - In the interactive factorising lesson, picking the wrong pair of numbers now shows the gaps or the spare strips, instead of drawing a different shape.
@@ -157,6 +158,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- J15b-3 (Codex review of train #335): Pip's shoulder breathing was keyed on the `rest` pose, so he breathed forever in lessons and after a minute idle. It now needs `PipFigure alive`, which `PipHomeButton` sets only while the idle loop runs.
 - W8c: the interactive area model fits one phone screen again now that Pip has his own row in lessons (no gap under the question, and the hint and pair question in the small text size), so the `area-model` e2e "Check fits without scrolling" passes on dev.
 - Docs: content plan tasks D7 ("either order" topic groups) and D8 (cross-subject "bridge" topics, discovered on the map) added to `docs/BACKLOG.md`, from the owner's map review.
 - F11b (Codex review on train #311): an all-decks flashcard session is complete when today's offered cards are done, the daily 20 plus any "10 more", not the whole backlog. `POST /flashcards/sessions` takes `extra`, stored in `flashcard_sessions.extra_cards` (migration 0032); finish compares with `todaysCards(…, extraCards)`. The web app sends the extra it asked for.

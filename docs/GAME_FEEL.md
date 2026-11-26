@@ -283,7 +283,9 @@ never transition. An ordinary link does not either.
 - **Idle loop** (`idle.ts`): one action about every 8 seconds (blink, a head tilt, an ear twitch,
   a look around; v3 has no arm), with slow shoulder breathing at rest, never the same twice running; naps outside 07:00 to 21:00; stops after a minute without
   a tap or key; still in lessons and tests. Moves ease in and out through in-between frames and
-  return to rest, so nothing snaps. Reduced motion: a still pose.
+  return to rest, so nothing snaps. Reduced motion: a still pose. Breathing runs only while the
+  idle loop is on (`PipFigure alive`, class `pip-figure--alive`), so being at rest never means
+  breathing in a lesson, after a minute or with reduced motion (J15b-3, Codex review of #335).
 - **Home** (`/home`, `features/home/`) is the first screen after signing in or unlocking and where
   Pip goes. One screen at 390 × 844, low on words: the level ring (count-up), streak, today's goal
   rings (XP, 5-a-day with Start or Continue, cards due), **one** big bobbing next-mission button
