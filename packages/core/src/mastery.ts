@@ -12,6 +12,8 @@ export interface MasteryAttempt {
   score: number;
   /** Milliseconds since the epoch. */
   at: number;
+  /** How much the attempt counts (1 by default; a retry in a lesson counts 0.5, RETRY_WEIGHT). */
+  weight?: number;
 }
 
 export const WEAK_SPOT_THRESHOLD = 60;
@@ -28,7 +30,7 @@ export function topicMastery(attempts: readonly MasteryAttempt[], now: number): 
   let totalWeight = PRIOR_WEIGHT;
   for (const attempt of recent) {
     const ageDays = Math.max(0, now - attempt.at) / DAY_MS;
-    const weight = 0.5 ** (ageDays / MASTERY_HALF_LIFE_DAYS);
+    const weight = (attempt.weight ?? 1) * 0.5 ** (ageDays / MASTERY_HALF_LIFE_DAYS);
     weighted += weight * clamp(attempt.score, 0, 1);
     totalWeight += weight;
   }
