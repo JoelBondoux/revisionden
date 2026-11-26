@@ -99,6 +99,16 @@ Tags: #product #rules #limits #defaults
   plays, all 7 19th-century novels and Animal Farm). Embedded third-party widgets (GeoGebra, Desmos,
   PhET) break the no-third-parties rule unless self-hosted and need commercial licences for a paid
   tier; Mathpix's terms are adults-only. Detail: `docs/research/specialist-tools-2026-11.md`.
+- Question generation rules (decision 0010, owner 2026-11-26): batches made only of items from
+  owner-approved templates (a `template-approval` check naming the template id and version) with
+  their cross-check passed are sampled at 3%, at least 10; every other batch 10%, at least 30
+  (`packages/core/src/review-sampling.ts`). Public-domain set texts count as official for
+  quotations only, from one fixed edition per text; items from individually approved fact-table
+  rows may be batch-sampled; board-neutral physics and chemistry calculations from DfE content
+  may be built now; awrt rounding is settled; spreadsheet citations use "sheet, row, cell";
+  readability (textstat) warns only, aiming at reading age 13 to 14 (GCSE), 15 to 16 (A-Level).
+  Pending: in-house notes review and Oak (until Oak's licence is read). In-copyright quotes: with
+  the owner's solicitor.
 - Onboarding takes Years 9 to 13 (9–11 GCSE, 12–13 A-Level). Exams are worked out from the year:
   Year 11 and 13 sit them next summer (2027 in school year 2026/27), Year 10 and 12 a year later,
   Year 9 two years later.

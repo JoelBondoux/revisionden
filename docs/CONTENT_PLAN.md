@@ -43,9 +43,13 @@ release. In short:
    source excerpts only. Every claim carries a citation (at least one official citation per item).
 3. **Verify.** Quote check against the source, blind answer by a different provider's model,
    adversarial review, exact checks (maths engine, units, equations), schema validation.
-4. **Approve.** Human approval for each item, or a 10% sample per batch with zero defects allowed;
-   items with no official source are always approved individually.
+4. **Approve.** Human approval for each item, or a 10% sample per batch (at least 30) with zero
+   defects allowed; 3% (at least 10) for batches made only of items from owner-approved templates
+   (decision 0010); items with no official source are always approved individually.
 5. **Release.** Content merges like code: pull request into `dev`.
+6. **Readability (decision 0010).** Notes and explanations are scored with `textstat` (subject
+   terms left out). It warns, never blocks: the aim is a reading age of 13 to 14 for GCSE and 15 to
+   16 for A-Level. Not built into the pipeline yet.
 
 ## Keeping it right
 
@@ -130,6 +134,8 @@ Shared definitions live in `content/schemas/common.schema.json`.
   fail, tool or model id, tool version, UTC time) and `reviewed_by` (a role, never a name).
 - Check names are the pipeline steps: `grounded-writing`, `quote-check`, `blind-answer`,
   `adversarial-review`, `maths-engine`, `schema`, then `human-approval` or `batch-sample`.
+  Template items add `template-approval` once the owner has approved their template's preview
+  (decision 0010).
   A `verified` item needs every step to pass (plus `maths-engine` for maths items), a quote in
   every citation, a reviewer role, and `human-approval` (not just `batch-sample`) when
   `needs_human_approval` is set. Topic trees, mark schemes and diagrams need `quote-check`,
