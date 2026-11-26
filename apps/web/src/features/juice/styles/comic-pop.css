@@ -17,9 +17,9 @@
   box-shadow: 3px 3px 0 var(--cp-ink);
 }
 
-:root[data-effect-style='comic-pop'] .map-summary,
-:root[data-effect-style='comic-pop'] .daily-card,
-:root[data-effect-style='comic-pop'] .mission {
+:root[data-effect-style='comic-pop'] .today-strip,
+:root[data-effect-style='comic-pop'] .today-strip__daily,
+:root[data-effect-style='comic-pop'] .today-strip__mission {
   border: 3px solid var(--cp-ink);
   border-radius: 6px;
   background: var(--cp-paper);
@@ -27,28 +27,28 @@
   box-shadow: 6px 6px 0 var(--cp-ink);
 }
 
-:root[data-effect-style='comic-pop'] .map-summary {
-  padding: var(--space-4);
+:root[data-effect-style='comic-pop'] .today-strip {
+  padding: var(--space-2) var(--space-3) var(--space-1);
 }
 
-:root[data-effect-style='comic-pop'] .map-summary__subject {
+:root[data-effect-style='comic-pop'] .today-strip__heading {
   color: var(--cp-blue);
 }
 
-:root[data-effect-style='comic-pop'] .map-summary .secondary-text,
-:root[data-effect-style='comic-pop'] .daily-card .secondary-text,
-:root[data-effect-style='comic-pop'] .daily-card__count,
-:root[data-effect-style='comic-pop'] .mission__time {
+:root[data-effect-style='comic-pop'] .today-strip__xp,
+:root[data-effect-style='comic-pop'] .today-strip__daily .today-strip__eyebrow,
+:root[data-effect-style='comic-pop'] .today-strip__daily .today-strip__title,
+:root[data-effect-style='comic-pop'] .today-strip__mission .today-strip__meta {
   color: var(--cp-ink);
 }
 
 /* Today's mission is a comic panel. */
-:root[data-effect-style='comic-pop'] .mission {
+:root[data-effect-style='comic-pop'] .today-strip__mission {
   background: var(--cp-yellow);
   rotate: -1deg;
 }
 
-:root[data-effect-style='comic-pop'] .mission__eyebrow {
+:root[data-effect-style='comic-pop'] .today-strip__mission .today-strip__eyebrow {
   color: #9b0f0f;
 }
 

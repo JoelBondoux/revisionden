@@ -16,6 +16,15 @@ const STUDENT = {
   yearGroup: 11,
 };
 
+/** A real browser with passkeys and a screen lock (E8 checks are tested in LinkPage.passkey). */
+const TEST_ENV = {
+  userAgent: 'Mozilla/5.0 (Linux; Android 15) Chrome/131.0 Mobile Safari/537.36',
+  hasWebAuthn: true,
+  screenLock: async () => true,
+  pageUrl: () => 'https://dev.revisionden.test/link',
+  now: () => 0,
+};
+
 function fakeApi(overrides: Partial<OnboardingApi> = {}): OnboardingApi {
   return fakeOnboardingApi({
     redeemLink: vi.fn(async () => ({
@@ -42,7 +51,10 @@ function renderLink(
   const storage = new Map<string, string>();
   const router = createMemoryRouter(
     [
-      { path: '/link', element: <LinkPage register={register} deviceType={() => 'phone'} /> },
+      {
+        path: '/link',
+        element: <LinkPage register={register} deviceType={() => 'phone'} env={TEST_ENV} />,
+      },
       { path: '/learn', element: <h1>Learn</h1> },
       // A newly linked device shows the young people's privacy notice first (workstream L).
       { path: '/welcome/privacy', element: <h1>Privacy notice for young people</h1> },
@@ -215,7 +227,7 @@ describe('LinkPage (student device)', () => {
     renderLink(fakeApi(), register);
     await user.click(await screen.findByRole('button', { name: 'Set up passkey' }));
     expect(await screen.findByRole('alert')).toHaveTextContent(
-      'The passkey was not set up. Try again.',
+      'Setting up the passkey was cancelled or took too long. Try again.',
     );
     await user.click(screen.getByRole('button', { name: 'Set up passkey' }));
     await user.click(await screen.findByRole('button', { name: 'Maybe later' }));

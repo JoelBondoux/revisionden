@@ -459,3 +459,9 @@ def test_standard_form_answers_and_steps_use_the_times_sign_like_the_question():
     assert item["steps"] == ["(9 × 10^9) × (7.8 × 10^6)", "(9 × 7.8) × 10^(9+6)", "70.2 × 10^15",
                              "7.02 × 10^16"]
     assert "*" not in item["verify"]["expression"]
+
+
+def test_the_brackets_question_points_to_the_power_key():
+    # F9 (#254) shows powers as superscripts with a "Power" key in answer boxes.
+    item = make_item(_template("double-brackets"), 1, NOW)
+    assert item["prompt"].endswith(". Use the Power key (^) for powers.")

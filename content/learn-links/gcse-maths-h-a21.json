@@ -1,0 +1,32 @@
+{
+  "topic": "gcse-maths-h-a21",
+  "links": [
+    {
+      "title": "Checking and securing understanding of forming linear equations",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/checking-and-securing-understanding-of-forming-linear-equations",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of forming linear equations GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can use a letter to represent a generalised number and form a linear equation from a context.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Forming simultaneous equations",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/simultaneous-equations-2-variables/lessons/forming-simultaneous-equations",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a21-lp-form-harder"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Forming simultaneous equations GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can derive two different simultaneous equations from a context.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

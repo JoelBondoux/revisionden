@@ -526,6 +526,10 @@ AQA subjects on hold until AQA answers).
 
 ## 9. Needs owner decision
 
+> Decided 2026-11-26: items 1 to 8 and 11 accepted, item 9 with the owner's solicitor, item 10
+> pending the owner's sign-off now that Oak's licence is confirmed
+> (`project_memory/decisions/0010-question-generation-rules.md`).
+
 None of these is changed by this document. Each would change or add to a rule.
 
 1. **Lower sample rate for computed items.** For example 3% (at least 10) instead of 10% (at least 30) for template items whose cross-check passed. Saves about two thirds of review on computed
