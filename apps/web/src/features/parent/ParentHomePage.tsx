@@ -26,6 +26,7 @@ import { LinkedDevicesCard } from '../onboarding/LinkedDevicesCard';
 import { ThingsToCheckCard } from '../onboarding/checksUi';
 import { BetaBadge } from '../programmes/BetaBadge';
 import { InstallCard } from '../../pwa/InstallCard';
+import { ParentFriendsTile } from '../league';
 import './parent.css';
 
 /**
@@ -111,11 +112,7 @@ function ChildCard({ choices }: { choices: Child[] }) {
           <ButtonTile to={`/family/${id}/rewards`} icon={<CrownIcon />} label="Rewards you set" />
           <ButtonTile to={`/parent/reminders/${id}`} icon={<BellIcon />} label="Reminder times" />
           <ButtonTile to={`/parent/subjects/${id}`} icon={<LearnIcon />} label="Subjects" />
-          <ButtonTile
-            to={`/parent/friends/${id}?name=${encodeURIComponent(child.nickname)}`}
-            icon={<UsersIcon />}
-            label="Friends"
-          />
+          <ParentFriendsTile studentId={child.id} nickname={child.nickname} />
         </ButtonTiles>
       </Card>
     </>

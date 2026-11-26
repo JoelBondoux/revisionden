@@ -21,6 +21,7 @@ import { SoundSettingsCard } from '../features/sound';
 import { ParentCanSee } from '../features/stats/ParentCanSee';
 import { MySubjectsCard } from '../features/onboarding/checksUi';
 import { InstallButton } from '../pwa/InstallCard';
+import { LeagueTile } from '../features/league';
 
 export function SettingsPage() {
   const bugButton = useBugButton();
@@ -73,14 +74,8 @@ export function SettingsPage() {
               description="Your level, chapter and collections"
             />
           </li>
-          <li>
-            <LinkTile
-              to="/league"
-              icon={<UsersIcon />}
-              title="Friends league"
-              description="This week's league with your friends"
-            />
-          </li>
+          {/* Only when this server has friends (dev only for now, FL). */}
+          <LeagueTile />
         </ul>
       </Card>
       <MySubjectsCard />

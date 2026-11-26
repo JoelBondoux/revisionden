@@ -123,3 +123,10 @@ describe('the league pages in the app', () => {
     expect(await screen.findByRole('heading', { name: 'Friends league' })).toBeInTheDocument();
   });
 });
+
+describe('when friends are not available yet', () => {
+  it('says so on the league page', async () => {
+    show(fakeLeagueApi({ getFriends: () => Promise.reject(new ApiError('http', 'x', 404)) }));
+    expect(await screen.findByText("Friends aren't available yet.")).toBeInTheDocument();
+  });
+});

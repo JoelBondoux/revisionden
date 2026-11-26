@@ -6,6 +6,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Avatar, Button, Card } from '../../components';
 import { createLeagueApi, type ParentLeagueApi } from './leagueApi';
+import { isNotAvailable } from './tiles';
 import './league.css';
 
 function LabelEditor({
@@ -66,6 +67,9 @@ export function ParentFriendsPanel({
     await action();
     setVersion((v) => v + 1);
   };
+  if (view.status === 'error' && isNotAvailable(view.error)) {
+    return <p className="secondary-text">Friends aren't available yet.</p>;
+  }
   if (view.status !== 'ready') return <LoadingOrError resource={view} />;
   const d = view.data;
   return (

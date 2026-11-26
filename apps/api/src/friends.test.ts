@@ -609,7 +609,6 @@ describe('the daily clean-up', () => {
   });
 });
 
-<<<<<<< HEAD
 describe('response shapes', () => {
   it('match the shared core schemas the web app reads', async () => {
     const a = await kid();
@@ -622,7 +621,9 @@ describe('response shapes', () => {
     expect(ParentFriendsResponseSchema.strict().safeParse(await parentView(a)).success).toBe(true);
     const league = await (await get('/v1/student/league', a.headers)).json();
     expect(LeagueResponseSchema.strict().safeParse(league).success).toBe(true);
-=======
+  });
+});
+
 describe('the friends flag (dev only until the notices are updated)', () => {
   it('refuses every friends and league route with "not available yet" when off', async () => {
     const off = await createTestContext();
@@ -657,6 +658,5 @@ describe('the friends flag (dev only until the notices are updated)', () => {
     } finally {
       await off.close();
     }
->>>>>>> feature/fl-friends-league-api
   });
 });

@@ -68,3 +68,19 @@ describe('the parent friends page', () => {
     ).toBeChecked();
   });
 });
+
+describe('the parent card when friends are not available yet', () => {
+  it('shows no switch, only a short note', async () => {
+    const { ApiError } = await import('../../api/client');
+    render(
+      <ParentFriendsPanel
+        api={fakeLeagueApi({
+          getChildFriends: () => Promise.reject(new ApiError('http', 'x', 404)),
+        })}
+        studentId="s1"
+      />,
+    );
+    expect(await screen.findByText("Friends aren't available yet.")).toBeInTheDocument();
+    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+  });
+});

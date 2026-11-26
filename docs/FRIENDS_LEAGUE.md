@@ -227,6 +227,8 @@ New tables (one new migration):
   (Settings), and the parent Friends page at `/parent/friends/:studentId` (from a "Friends" tile
   on the child's card in the parent home). Shared shapes: `packages/core/src/league-schemas.ts`.
   e2e: `e2e/tests/league.spec.ts`.
+  The Me tile, the parent tile and the chip appear only when the API has friends (`FRIENDS_ENABLED`,
+  dev only); otherwise the pages say "Friends aren't available yet."
 - **Still to come:** `league_weeks`, weekly wins into rewards and the
   title in the league (PR 3); the AppDeck report view, and closing a report (until then reports
   are kept until either child is deleted).

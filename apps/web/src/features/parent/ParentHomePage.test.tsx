@@ -58,7 +58,8 @@ describe('Parent home', () => {
       'href',
       '/parent/subjects/00000000-0000-4000-8000-0000000000a1',
     );
-    expect(within(child).getByRole('link', { name: /^Friends/ })).toHaveAttribute(
+    // Shown once the server confirms friends exist (dev-only flag, FL).
+    expect(await within(child).findByRole('link', { name: /^Friends/ })).toHaveAttribute(
       'href',
       '/parent/friends/00000000-0000-4000-8000-0000000000a1?name=demo_fox',
     );

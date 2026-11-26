@@ -16,6 +16,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Avatar, Button, Card, Sheet } from '../../components';
 import { createLeagueApi, type StudentLeagueApi } from './leagueApi';
+import { isNotAvailable } from './tiles';
 import './league.css';
 
 /** Nickname with the two-part title underneath (R8). */
@@ -320,7 +321,17 @@ export function LeagueScreen({ api }: { api: StudentLeagueApi }) {
   // Keep showing the last data while it refreshes, so an open sheet stays open.
   const last = useRef<{ friends: StudentFriendsResponse; league: LeagueResponse } | null>(null);
   if (data.status === 'ready') last.current = data.data;
-  if (!last.current) return data.status === 'ready' ? null : <LoadingOrError resource={data} />;
+  if (!last.current) {
+    if (data.status === 'error' && isNotAvailable(data.error)) {
+      return (
+        <div className="stack">
+          <h1>Friends league</h1>
+          <p>Friends aren't available yet.</p>
+        </div>
+      );
+    }
+    return data.status === 'ready' ? null : <LoadingOrError resource={data} />;
+  }
   const { friends, league } = last.current;
 
   if (!friends.allowed) {
