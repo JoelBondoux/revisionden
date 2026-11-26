@@ -602,7 +602,11 @@ Tags: #product #rules #limits #defaults
   `policy_acceptances`) on a "Before you start" page that shows each policy's plain-English
   bullets as cards (word for word, from the policy files; 4 chosen ones first, then "Show all N
   points") with the full text behind "Show the
-  details"; a changed version shows a "We've updated" prompt. A newly linked student
+  details"; a changed version shows a "We've updated" prompt listing, per changed policy, its new version and
+  only the Changes lines newer than the version that parent accepted (plus a link to the policy;
+  a policy never accepted goes through "Before you start" instead): "I've read the changes" stores the new
+  versions for that parent (each parent for themselves); closing it hides it on that device for 24
+  hours for those versions only (`revisionden.policyNotice`). A newly linked student
   device shows the young people's notice once (`revisionden.youngPeopleNotice` in local storage).
 - The young people's notice has a friendly view built from the same file: 6 short-version cards,
   2 to 4 key points per part always visible, "Read more" and "Expand all", original icons and Pip;
