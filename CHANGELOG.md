@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Every Number question, and the pilot questions, now has a short clue that points you to the method without giving the answer away.
 - We have worked out how to make verified questions for every subject, not just maths, and which subjects can be built fastest.
 - A new **Me** button at the end of the menu shows your avatar and opens your settings and personalisation. Get help and your progress have moved there: Get help is the first thing on the page (just as private, nothing is recorded), with My progress right after it. The menu is now Map, Cards, Plan, Papers and Me, and Get help is no longer at the top and bottom of every screen.
 - On small phones with large text, the policy list and other link cards now wrap their words instead of running off the side of the screen.
@@ -200,6 +201,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- S3-N-H: a `hint` (a nudge toward the method, never the answer) on the 164 Number items and 10 pilot items that had none, for the "Need a clue?" button (F10). In three PRs: N1 to N5, N6 to N10, N11 to N16 plus the pilot. Each passed a local check that the hint does not contain the answer and an adversarial review (OpenAI, as Gemini returned HTTP 402).
 - Research (QG): how to generate verified questions per subject, with four guarantee tiers, distractor and diagram methods, owner review estimates, licensing, gaps, a ranked plan and two proofs of concept (physics templates with pint, French vocabulary from DfE annex E), and a plan for in-house teaching notes to replace external "Learn it first" links (`docs/research/question-generation-2026-11.md`, scripts in `docs/research/question-generation-poc/`).
 - Maths templates design (T1, docs only): `docs/TEMPLATES.md` now describes how physics and chemistry calculation templates would work (units with pint, balancing with ChemPy, board data only, exact rounding, the three-way cross-check), and what must be sourced first. Nothing built.
 - Maths engine answer forms (T2, `app/forms.py`): `form` on `/check-working` expected answers and on content `value` and `expression` checks can be `fraction`, `simplest_fraction`, `improper_fraction`, `standard_form` or `index_form`; the answer must have the right value and be written in that form.
