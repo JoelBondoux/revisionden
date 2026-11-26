@@ -14,6 +14,7 @@ import { DAY_MS, reviewCard, type Card } from './spaced-repetition';
 import { recordDay, settleWeek, type StreakState } from './streaks';
 import type { ItemType } from './schemas';
 import {
+  compactSpaces,
   meetsRounding,
   roundingOf,
   indexForm,
@@ -82,16 +83,16 @@ export function markShortAnswer(key: ShortAnswerKey, answer: unknown): MarkResul
 
 /** A plain decimal or a simple fraction such as `3/4`; anything else is not a number. */
 function parseNumber(text: string): number | null {
+  // Spaces may sit around a sign or "/"; any other space is kept, so "3  87" is not 387.
+  const value = compactSpaces(text);
   // A mixed number: "1 1/3" is 4/3, never 11/3.
-  const mixed = /^(-?)(\d+)\s+(\d+)\/(\d+)$/.exec(text.trim());
+  const mixed = /^(-?)(\d+)\s+(\d+)\/(\d+)$/.exec(value);
   if (mixed) {
     const bottom = Number(mixed[4]);
     if (bottom === 0) return null;
     const size = Number(mixed[2]) + Number(mixed[3]) / bottom;
     return mixed[1] ? -size : size;
   }
-  // Spaces may sit around a sign or "/", never between two digits ("3 87" is not 387).
-  const value = text.trim().replace(/(?<!\d)\s+|\s+(?!\d)/g, '');
   if (/^-?\d+(\.\d+)?$/.test(value)) return Number(value);
   const fraction = /^(-?\d+)\/(\d+)$/.exec(value);
   if (fraction && Number(fraction[2]) !== 0) return Number(fraction[1]) / Number(fraction[2]);
