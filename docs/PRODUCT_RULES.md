@@ -640,7 +640,35 @@ Mockups: screens 19 (student) and 20 (parent).
   - Legendary sounds can be skipped with a tap; all reward sounds follow mute and volume, and never
     play in Test mode before submit.
 - Sound is never the only signal: every sound has a matching visual. Reduced motion does not mute
-  sound; the two settings are separate.
+  sound, but animation sounds play at half loudness and vibrations are shorter (U6).
+- **Style sounds and haptics (U6, owner rule: "All animation should have an appropriate movement
+  and sound").** Every animation fires one feedback event: `buttonPress`, `cardFlip`, `correct`,
+  `wrong`, `combo` (step 1–6), `xpTick`, `ringFill`, `rewardWobble`, `rewardOpen`, `rewardUnlock`,
+  `setComplete`, `levelUp`, plus `homeEnter` (Home entrance, once per visit), `nodePop` (topic
+  nodes popping in on the map) and `locked` (tapping something locked) (`useSound().emit(event)`). Each plays the active effect style's sound and
+  a vibration pattern. One sound pack per style, synthesised with Web Audio (no files): Sticker Book
+  (default: paper peel, slap, stamp, pencil tick), Pop Burst (bubbly pops, jelly boings), Starlight
+  (chimes, shimmer, soft swells). Styles without a pack yet use Sticker Book. J's style system calls
+  `useFeedbackStyle(styleId)`. Older `play()` calls for tap, correct (combo when it has a step),
+  wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
+  the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
+  - Vibration: a light tick for presses and flips, a double pulse for right answers, a rising rhythm
+    for combos and a longer pattern for unlocks, set complete and level up; a light tick for the
+    Home entrance and one short buzz for a locked tap; none for fast ticks or map nodes popping in.
+    Sticker Book feels crisp, Pop Burst bouncy, Starlight soft and long.
+  - Settings: a **Vibration** switch next to Sound, on by default, saved per device
+    (`vibration` in `revisionden.sound`). It works on its own: muting sound does not stop vibration,
+    and turning vibration off does not mute sound.
+  - Limits: the same tick sounds at most every 70 ms (XP, map nodes) or 90 ms (ring fill), presses
+    every 40 ms,
+    and no more than 10 feedback sounds a second; vibration needs 100 ms between buzzes and at
+    most 4 a second. Nothing plays or vibrates before the first tap; mute, volume, tap sounds and
+    the Test mode rule all apply.
+  - Devices: vibration uses `navigator.vibrate` where it exists (Android browsers). iPhone and iPad
+    browsers and Home Screen apps have no Vibration API, so there is no vibration there and the
+    Settings switch says so; there is no workaround. The module (`features/sound/feedback/haptics.ts`,
+    `HapticsDriver`) is the plug-in point: a native wrapper (for example Capacitor or React Native)
+    could later pass a driver that uses the platform's real haptics on iOS and Android.
 - Volume levels (master gain): low 0.12, medium 0.25, high 0.45. Settings key on the device:
   `revisionden.sound`; if the browser cannot save, the choice still applies until the app closes.
   The Settings section has a "Play a sample" button and Common, Rare, Epic and Legend reward

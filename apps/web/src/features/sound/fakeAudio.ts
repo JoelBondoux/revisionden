@@ -14,17 +14,22 @@ export interface FakeAudioContext extends AudioContextLike {
   gains: { value: number; peaks: number[] }[];
   resumeCalls: number;
   suspendCalls: number;
+  /** Seconds from each envelope's start to its peak (how slowly each note swells in). */
+  attacks: number[];
 }
 
-function param(record: (value: number) => void, initial = 0) {
+function param(record: (value: number) => void, initial = 0, onRamp?: (seconds: number) => void) {
+  let lastSet = 0;
   return {
     value: initial,
-    setValueAtTime(v: number) {
+    setValueAtTime(v: number, t = 0) {
       record(v);
+      lastSet = t;
       return this;
     },
-    linearRampToValueAtTime(v: number) {
+    linearRampToValueAtTime(v: number, t = 0) {
       record(v);
+      onRamp?.(t - lastSet);
       return this;
     },
     exponentialRampToValueAtTime(v: number) {
@@ -51,6 +56,7 @@ export function createFakeAudioContext(
     gains: [],
     resumeCalls: 0,
     suspendCalls: 0,
+    attacks: [],
     resume() {
       ctx.resumeCalls += 1;
       ctx.state = 'running';
@@ -84,7 +90,11 @@ export function createFakeAudioContext(
     createGain() {
       const rec = { value: 1, peaks: [] as number[] };
       ctx.gains.push(rec);
-      const gain = param((v) => rec.peaks.push(v), 1);
+      const gain = param(
+        (v) => rec.peaks.push(v),
+        1,
+        (s) => void ctx.attacks.push(s),
+      );
       return {
         ...node(),
         gain: Object.defineProperty(gain, 'value', {
