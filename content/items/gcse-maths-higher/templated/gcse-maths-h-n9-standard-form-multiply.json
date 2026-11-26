@@ -8,13 +8,14 @@
     "expected_seconds": 80,
     "prompt": "Work out (6 × 10^2) × (1.6 × 10^8). Give your answer in standard form.",
     "answer": {
-      "expression": "9.6*10^10"
+      "expression": "9.6 × 10^10",
+      "form": "standard_form"
     },
     "verify": {
       "method": "expression",
-      "expression": "(6*10^2)*(1.6*10^8)"
+      "expression": "(6 × 10^2) × (1.6 × 10^8)"
     },
-    "steps": ["(6*10^2)*(1.6*10^8)", "(6*1.6)*10^(2+8)", "9.6*10^10"],
+    "steps": ["(6 × 10^2) × (1.6 × 10^8)", "(6 × 1.6) × 10^(2+8)", "9.6 × 10^10"],
     "marks": 2,
     "mark_scheme": ["M1 for 6 × 1.6 = 9.6 or 10^2 × 10^8 = 10^10", "A1 for 9.6 × 10^10"],
     "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
@@ -49,27 +50,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 3,
+      "version": 5,
       "seed": 1
     },
     "verification": {
       "status": "draft",
-      "version": 4,
+      "version": 6,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
-          "at": "2026-11-26T04:59:35Z",
-          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v5",
+          "at": "2026-11-26T05:58:27Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 5, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:59:35Z",
+          "at": "2026-11-26T05:58:27Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -77,7 +78,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T04:59:46Z",
+          "at": "2026-11-26T05:59:02Z",
           "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -85,15 +86,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T04:59:51Z",
-          "notes": "model answered \"9.6 × 10^10\"; expected \"9.6*10^10\""
+          "at": "2026-11-26T05:59:08Z",
+          "notes": "model answered \"9.6 × 10^10\"; expected \"9.6 × 10^10\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:00:00Z",
+          "at": "2026-11-26T05:59:22Z",
           "notes": "no problems found"
         }
       ]
@@ -108,13 +109,14 @@
     "expected_seconds": 100,
     "prompt": "Work out (9 × 10^9) × (7.8 × 10^6). Give your answer in standard form.",
     "answer": {
-      "expression": "7.02*10^16"
+      "expression": "7.02 × 10^16",
+      "form": "standard_form"
     },
     "verify": {
       "method": "expression",
-      "expression": "(9*10^9)*(7.8*10^6)"
+      "expression": "(9 × 10^9) × (7.8 × 10^6)"
     },
-    "steps": ["(9*10^9)*(7.8*10^6)", "(9*7.8)*10^(9+6)", "70.2*10^15", "7.02*10^16"],
+    "steps": ["(9 × 10^9) × (7.8 × 10^6)", "(9 × 7.8) × 10^(9+6)", "70.2 × 10^15", "7.02 × 10^16"],
     "marks": 2,
     "mark_scheme": ["M1 for 70.2 × 10^15 or 70 200 000 000 000 000", "A1 for 7.02 × 10^16"],
     "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
@@ -149,27 +151,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 3,
+      "version": 5,
       "seed": 2
     },
     "verification": {
       "status": "draft",
-      "version": 3,
+      "version": 5,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
-          "at": "2026-11-26T04:59:35Z",
-          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v5",
+          "at": "2026-11-26T05:58:27Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 5, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:59:35Z",
+          "at": "2026-11-26T05:58:27Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -177,7 +179,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T05:00:01Z",
+          "at": "2026-11-26T05:59:22Z",
           "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -185,15 +187,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:00:08Z",
-          "notes": "model answered \"7.02 × 10^16\"; expected \"7.02*10^16\""
+          "at": "2026-11-26T05:59:30Z",
+          "notes": "model answered \"7.02 × 10^16\"; expected \"7.02 × 10^16\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:00:18Z",
+          "at": "2026-11-26T05:59:41Z",
           "notes": "no problems found"
         }
       ]
@@ -208,13 +210,14 @@
     "expected_seconds": 100,
     "prompt": "Work out (6.6 × 10^2) × (2 × 10^5). Give your answer in standard form.",
     "answer": {
-      "expression": "1.32*10^8"
+      "expression": "1.32 × 10^8",
+      "form": "standard_form"
     },
     "verify": {
       "method": "expression",
-      "expression": "(6.6*10^2)*(2*10^5)"
+      "expression": "(6.6 × 10^2) × (2 × 10^5)"
     },
-    "steps": ["(6.6*10^2)*(2*10^5)", "(6.6*2)*10^(2+5)", "13.2*10^7", "1.32*10^8"],
+    "steps": ["(6.6 × 10^2) × (2 × 10^5)", "(6.6 × 2) × 10^(2+5)", "13.2 × 10^7", "1.32 × 10^8"],
     "marks": 2,
     "mark_scheme": ["M1 for 13.2 × 10^7 or 132 000 000", "A1 for 1.32 × 10^8"],
     "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
@@ -249,27 +252,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 3,
+      "version": 5,
       "seed": 3
     },
     "verification": {
       "status": "draft",
-      "version": 3,
+      "version": 5,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
-          "at": "2026-11-26T04:59:35Z",
-          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v5",
+          "at": "2026-11-26T05:58:27Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 5, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:59:35Z",
+          "at": "2026-11-26T05:58:27Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -277,7 +280,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T05:00:19Z",
+          "at": "2026-11-26T05:59:42Z",
           "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -285,15 +288,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:00:28Z",
-          "notes": "model answered \"1.32 × 10^8\"; expected \"1.32*10^8\""
+          "at": "2026-11-26T05:59:51Z",
+          "notes": "model answered \"1.32 × 10^8\"; expected \"1.32 × 10^8\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:00:37Z",
+          "at": "2026-11-26T05:59:59Z",
           "notes": "no problems found"
         }
       ]
@@ -308,13 +311,14 @@
     "expected_seconds": 100,
     "prompt": "Work out (4.2 × 10^3) × (7 × 10^5). Give your answer in standard form.",
     "answer": {
-      "expression": "2.94*10^9"
+      "expression": "2.94 × 10^9",
+      "form": "standard_form"
     },
     "verify": {
       "method": "expression",
-      "expression": "(4.2*10^3)*(7*10^5)"
+      "expression": "(4.2 × 10^3) × (7 × 10^5)"
     },
-    "steps": ["(4.2*10^3)*(7*10^5)", "(4.2*7)*10^(3+5)", "29.4*10^8", "2.94*10^9"],
+    "steps": ["(4.2 × 10^3) × (7 × 10^5)", "(4.2 × 7) × 10^(3+5)", "29.4 × 10^8", "2.94 × 10^9"],
     "marks": 2,
     "mark_scheme": ["M1 for 29.4 × 10^8 or 2 940 000 000", "A1 for 2.94 × 10^9"],
     "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
@@ -349,27 +353,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 3,
+      "version": 5,
       "seed": 4
     },
     "verification": {
       "status": "draft",
-      "version": 3,
+      "version": 5,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
-          "at": "2026-11-26T04:59:35Z",
-          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v5",
+          "at": "2026-11-26T05:58:27Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 5, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:59:35Z",
+          "at": "2026-11-26T05:58:27Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -377,7 +381,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T05:00:38Z",
+          "at": "2026-11-26T06:00:00Z",
           "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -385,15 +389,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:00:49Z",
-          "notes": "model answered \"2.94 × 10^9\"; expected \"2.94*10^9\""
+          "at": "2026-11-26T06:00:08Z",
+          "notes": "model answered \"2.94 × 10^9\"; expected \"2.94 × 10^9\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:01:00Z",
+          "at": "2026-11-26T06:00:20Z",
           "notes": "no problems found"
         }
       ]
@@ -408,13 +412,14 @@
     "expected_seconds": 100,
     "prompt": "Work out (6 × 10^9) × (4.9 × 10^2). Give your answer in standard form.",
     "answer": {
-      "expression": "2.94*10^12"
+      "expression": "2.94 × 10^12",
+      "form": "standard_form"
     },
     "verify": {
       "method": "expression",
-      "expression": "(6*10^9)*(4.9*10^2)"
+      "expression": "(6 × 10^9) × (4.9 × 10^2)"
     },
-    "steps": ["(6*10^9)*(4.9*10^2)", "(6*4.9)*10^(9+2)", "29.4*10^11", "2.94*10^12"],
+    "steps": ["(6 × 10^9) × (4.9 × 10^2)", "(6 × 4.9) × 10^(9+2)", "29.4 × 10^11", "2.94 × 10^12"],
     "marks": 2,
     "mark_scheme": ["M1 for 29.4 × 10^11 or 2 940 000 000 000", "A1 for 2.94 × 10^12"],
     "hint": "Multiply the numbers, then multiply the powers of 10 by adding their indices.",
@@ -449,27 +454,27 @@
     ],
     "template": {
       "id": "gcse-maths-h-n9-standard-form-multiply",
-      "version": 3,
+      "version": 5,
       "seed": 5
     },
     "verification": {
       "status": "draft",
-      "version": 3,
+      "version": 5,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
-          "tool_version": "gcse-maths-h-n9-standard-form-multiply v3",
-          "at": "2026-11-26T04:59:35Z",
-          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 3, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+          "tool_version": "gcse-maths-h-n9-standard-form-multiply v5",
+          "at": "2026-11-26T05:58:27Z",
+          "notes": "Generated from template gcse-maths-h-n9-standard-form-multiply (version 5, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
           "name": "maths-engine",
           "result": "pass",
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-26T04:59:35Z",
+          "at": "2026-11-26T05:58:27Z",
           "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
         },
         {
@@ -477,7 +482,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-26T05:01:01Z",
+          "at": "2026-11-26T06:00:20Z",
           "notes": "citation 1: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 24 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -485,15 +490,15 @@
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:01:09Z",
-          "notes": "model answered \"2.94 × 10^12\"; expected \"2.94*10^12\""
+          "at": "2026-11-26T06:00:29Z",
+          "notes": "model answered \"2.94 × 10^12\"; expected \"2.94 × 10^12\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "gemini:gemini-2.5-pro",
           "tool_version": "gemini-2.5-pro",
-          "at": "2026-11-26T05:01:19Z",
+          "at": "2026-11-26T06:00:40Z",
           "notes": "no problems found"
         }
       ]

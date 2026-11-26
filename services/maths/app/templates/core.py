@@ -109,7 +109,7 @@ def engine_checks(item: dict) -> list[dict]:
     if item["type"] == "numeric":
         check = {"id": item["id"], "kind": "value", "expression": item["verify"]["expression"],
                  "answer": item["answer"]["value"]}
-        for key in ("tolerance", "decimal_places", "significant_figures"):
+        for key in ("tolerance", "decimal_places", "significant_figures", "form"):
             if key in item["answer"]:
                 check[key] = item["answer"][key]
         checks.append(check)
@@ -124,8 +124,10 @@ def engine_checks(item: dict) -> list[dict]:
             check = {"id": item["id"], "kind": "expression", "expression": verify["expression"],
                      "answer": answer["expression"]}
             expected = {"expression": verify["expression"]}
-            if "form" in verify:
-                check["form"] = expected["form"] = verify["form"]
+            # answer.form (fraction, standard_form, ...) or verify.form (factorised, expanded).
+            form = answer.get("form", verify.get("form"))
+            if form:
+                check["form"] = expected["form"] = form
             checks.append(check)
         checks.append({"id": f"{item['id']}#steps", "kind": "working", "lines": item["steps"],
                        "expected": expected})

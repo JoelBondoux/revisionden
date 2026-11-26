@@ -24,7 +24,7 @@ import sys
 from decimal import ROUND_HALF_UP, Decimal
 from typing import Callable, TextIO
 
-from sympy import N, simplify
+from sympy import N, Rational, simplify
 
 from app import facts
 from app.equivalence import are_equivalent, parse, parse_equation, solutions_match
@@ -49,10 +49,18 @@ def _rounded(value, check: dict) -> Decimal:
     return exact.quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)
 
 
+def _exact_decimal(value) -> Decimal:
+    """A rational value as a Decimal (exact for any terminating decimal, as rounded answers are)."""
+    num, den = (int(v) for v in Rational(value).as_numer_denom())
+    return Decimal(num) / Decimal(den)
+
+
 def _value(check: dict) -> str | None:
     tolerance = check.get("tolerance")
     if "decimal_places" in check or "significant_figures" in check:
-        ok = _rounded(parse(check["expression"], exact=True), check) == Decimal(check["answer"])
+        # The answer may be an expression (6.4*10^8): read it exactly, then compare as a decimal.
+        ok = _rounded(parse(check["expression"], exact=True), check) == _exact_decimal(
+            parse(check["answer"], exact=True))
     elif tolerance is None:
         ok = are_equivalent(check["expression"], check["answer"])
     else:
