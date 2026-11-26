@@ -115,6 +115,15 @@
   white-space: nowrap;
 }
 
+/* On a narrow screen (320px, or large text) a piece may wrap inside itself rather than push the
+   page sideways (J11, WCAG 1.4.10). */
+@media (max-width: 26em) {
+  .version-footer-item {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+
 .app-shell > .version-footer {
   margin-top: -72px;
   padding-bottom: calc(96px + env(safe-area-inset-bottom));

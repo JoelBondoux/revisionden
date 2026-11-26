@@ -520,3 +520,21 @@ test('a new parent sees the terms and privacy notice as cards before onboarding,
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect.poll(() => stored).toMatchObject({ acceptances: expect.any(Array) });
 });
+
+// J11 (WCAG 1.4.4 and 1.4.10): at 320px wide with text at 200%, the policy tiles wrap their text
+// and shrink, so the page never scrolls sideways.
+test('the policies list fits a 320px screen with text at 200%', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.goto('/legal');
+  await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+  await expect(page.getByRole('heading', { level: 1, name: 'Policies' })).toBeVisible();
+  await expectNoSidewaysScroll(page);
+  const widest = await page.evaluate(() =>
+    Math.max(
+      ...Array.from(document.querySelectorAll('.link-tile')).map(
+        (t) => t.getBoundingClientRect().right,
+      ),
+    ),
+  );
+  expect(widest).toBeLessThanOrEqual(320);
+});
