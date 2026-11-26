@@ -201,7 +201,7 @@ formula and its assumptions. Summary of what is built:
 - Changing subjects later (E5): each child's card in Parent home links to "Subjects"
   (`/parent/subjects/:studentId`), where either parent can add a subject (the same picker as
   onboarding, with "Not sure" for the board, and only subjects for the child's level that they
-  do not already take), change its board or tier, or remove it. Removing asks first and says the
+  do not already take), change its board or tier (under the headings "Exam board" and "Tier"), or remove it. Removing asks first and says the
   child's progress is kept and comes back if the subject is added again: only the enrolment is
   deleted, never the answers or mastery. A subject with no questions ready yet shows "Questions
   coming soon". Adding, removing and changing a board or tier are important changes in the family
