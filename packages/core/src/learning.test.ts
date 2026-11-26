@@ -206,20 +206,52 @@ describe('marking', () => {
     expect(markNumeric({ value: '4/3' }, '1 1/0').correct).toBe(false);
   });
 
-  it('needs a fraction in lowest terms when the question asks for simplest form', () => {
-    const key = { value: '23/33', simplest_form: true };
-    expect(markNumeric(key, '23/33').correct).toBe(true);
-    expect(markNumeric(key, '69/99').correct).toBe(false);
-    expect(markNumeric(key, '0.69696969').correct).toBe(false);
-    expect(markNumeric(key, '46/66').correct).toBe(false);
-    expect(markNumeric(key, '24/33').correct).toBe(false);
+  it('needs the asked form: a fraction, a simplest fraction, standard form or index form', () => {
+    const fraction = { value: '3/8', form: 'fraction' as const };
+    expect(markNumeric(fraction, '3/8').correct).toBe(true);
+    expect(markNumeric(fraction, '6/16').correct).toBe(true);
+    expect(markNumeric(fraction, '0.375').correct).toBe(false);
+    expect(markNumeric({ value: '49/20', form: 'fraction' as const }, '2.45').correct).toBe(false);
+    expect(markNumeric({ value: '49/20', form: 'fraction' as const }, '2 9/20').correct).toBe(
+      false,
+    );
+    const simplest = { value: '23/33', form: 'simplest_fraction' as const };
+    expect(markNumeric(simplest, '23/33').correct).toBe(true);
+    expect(markNumeric(simplest, '69/99').correct).toBe(false);
+    expect(markNumeric(simplest, '0.69696969').correct).toBe(false);
+    expect(markNumeric(simplest, '24/33').correct).toBe(false);
+    expect(markNumeric({ value: '-1/6', form: 'simplest_fraction' as const }, '−1/6').correct).toBe(
+      true,
+    );
     expect(markNumeric({ value: '23/33' }, '69/99').correct).toBe(true);
-    const improper = { value: '49/20', simplest_form: true };
-    expect(markNumeric(improper, '49/20').correct).toBe(true);
-    expect(markNumeric(improper, '2 9/20').correct).toBe(true);
-    expect(markNumeric(improper, '98/40').correct).toBe(false);
-    expect(markNumeric(improper, '2.45').correct).toBe(false);
-    expect(markNumeric({ value: '-1/6', simplest_form: true }, '−1/6').correct).toBe(true);
+    const standard = { value: '6.4*10^8', form: 'standard_form' as const };
+    expect(markNumeric(standard, '6.4 × 10^8').correct).toBe(true);
+    expect(markNumeric(standard, '640000000').correct).toBe(false);
+    expect(
+      markNumeric({ value: '640000000', form: 'standard_form' as const }, '6.4 × 10⁸').correct,
+    ).toBe(true);
+    const index = { value: '2^3 × 3^2 × 5', form: 'index_form' as const };
+    expect(markNumeric(index, '2³ × 3² × 5').correct).toBe(true);
+    expect(markNumeric(index, '5 × 3^2 × 2^3').correct).toBe(true);
+    expect(markNumeric(index, '360').correct).toBe(false);
+    expect(markNumeric(index, '2^3 × 3^2 × 7').correct).toBe(false);
+    expect(
+      markNumeric({ value: '360', form: 'index_form' as const }, '2^3 × 3^2 × 5').correct,
+    ).toBe(true);
+  });
+
+  it('accepts area and volume units in words and with ² or ³', () => {
+    const area = { value: '8', unit: 'm^2' };
+    for (const given of ['8 m^2', '8 m²', '8 square metres', '8 sq m', '8 metres squared']) {
+      expect(markNumeric(area, given).correct, given).toBe(true);
+    }
+    expect(markNumeric(area, '8 m').correct).toBe(false);
+    expect(markNumeric(area, '8 cm²').correct).toBe(false);
+    const volume = { value: '2500000', unit: 'cm^3' };
+    for (const given of ['2500000 cm³', '2 500 000 cubic centimetres', '2500000 cm cubed']) {
+      expect(markNumeric(volume, given).correct, given).toBe(true);
+    }
+    expect(markNumeric(volume, '2500000 square centimetres').correct).toBe(false);
   });
 
   it('does not divide by zero in a fraction answer', () => {

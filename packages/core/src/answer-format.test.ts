@@ -3,7 +3,8 @@ import {
   meetsRounding,
   roundingOf,
   shownPrecision,
-  simplestForm,
+  indexForm,
+  inForm,
   standardForm,
   withoutSubject,
   withoutThousands,
@@ -176,27 +177,53 @@ describe('standard form', () => {
   });
 });
 
-describe('simplest form', () => {
-  it('accepts a whole number, a fraction in lowest terms or a mixed number with one', () => {
-    for (const text of ['23/33', '-23/33', '−23/33', '49/20', '2 9/20', '3', '-1 1/3', ' 3/8 ']) {
-      expect(simplestForm(text), text).toBe(true);
+describe('answer forms', () => {
+  it('a fraction is a whole number or a/b, never a decimal or a mixed number', () => {
+    for (const text of ['3/8', '6/16', '-3/8', '−3/8', '49/20', '3', ' 3/8 ']) {
+      expect(inForm(text, 'fraction'), text).toBe(true);
+    }
+    for (const text of ['0.375', '2 9/20', '4/1', '3/0', 'x/2', '3/8.0', '']) {
+      expect(inForm(text, 'fraction'), text).toBe(false);
     }
   });
 
-  it('refuses an unsimplified fraction, a decimal or anything else', () => {
+  it('a simplest fraction is also in lowest terms', () => {
+    for (const text of ['23/33', '-23/33', '49/20', '3']) {
+      expect(inForm(text, 'simplest_fraction'), text).toBe(true);
+    }
+    for (const text of ['69/99', '6/16', '0/5', '2 9/20', '0.697']) {
+      expect(inForm(text, 'simplest_fraction'), text).toBe(false);
+    }
+  });
+
+  it('standard form is a × 10^n with 1 <= a < 10', () => {
+    for (const text of ['6.4 × 10^8', '6.4*10^8', '6.4 × 10⁸', '−3.2 × 10^-4']) {
+      expect(inForm(text, 'standard_form'), text).toBe(true);
+    }
+    for (const text of ['640000000', '64 × 10^7', '0.64 × 10^9', '1e999999999']) {
+      expect(inForm(text, 'standard_form'), text).toBe(false);
+    }
+  });
+
+  it('index form is a product of powers of distinct primes, read as its value', () => {
+    expect(indexForm('2^3 × 3^2 × 5')).toBe(360n);
+    expect(indexForm('2³ × 3² × 5')).toBe(360n);
+    expect(indexForm('2^3*3^2*5')).toBe(360n);
+    expect(indexForm('5 × 2^3 · 3^2')).toBe(360n);
+    expect(indexForm('2^5')).toBe(32n);
     for (const text of [
-      '69/99',
-      '6/16',
-      '2 18/40',
-      '1 4/3',
-      '4/1',
-      '3/0',
-      '0.375',
-      '3 / 8.0',
-      'x/2',
+      '360',
+      '4^2 × 5',
+      '2^3 × 2^2',
+      '2^0 × 3',
+      '6 × 5',
+      '2^3 + 3',
+      '2^999999 × 3',
       '',
     ]) {
-      expect(simplestForm(text), text).toBe(false);
+      expect(indexForm(text), text).toBeNull();
+      expect(inForm(text, 'index_form'), text).toBe(false);
     }
+    expect(inForm('2^3 × 3^2 × 5', 'index_form')).toBe(true);
   });
 });

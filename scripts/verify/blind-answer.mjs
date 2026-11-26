@@ -6,7 +6,8 @@ import { sameAnswer } from '../../packages/core/src/answer-normalise.ts';
 import {
   meetsRounding,
   roundingOf,
-  simplestForm,
+  indexForm,
+  inForm,
   standardForm,
   withMinus,
   withoutSubject,
@@ -111,12 +112,15 @@ function expectation(item) {
         expected: value,
         matches: (typed) => {
           const raw = withMinus(String(typed));
-          // Simplest form as marking reads it: a fraction in lowest terms, never 69/99 or 0.697.
-          if (
-            item.answer.simplest_form &&
-            !simplestForm(withoutSubject(words(raw), item.answer.subject))
-          ) {
-            return false;
+          // The asked form as marking reads it (markNumeric): a fraction, never 0.375; lowest
+          // terms, never 69/99; index form compared by value, never 360.
+          const { form } = item.answer;
+          if (form) {
+            const said = withoutSubject(words(raw), item.answer.subject);
+            if (!inForm(said, form)) return false;
+            if (form === 'index_form') {
+              return indexForm(said) === (indexForm(value) ?? BigInt(value));
+            }
           }
           // Standard form as marking reads it (markNumeric): any common spelling, and proper
           // standard form when the answer is in standard form.

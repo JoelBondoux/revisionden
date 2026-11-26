@@ -7,7 +7,7 @@ import { controlCharacters } from '../verify/record.mjs';
 import {
   roundingOf,
   showsRounding,
-  simplestForm,
+  inForm,
   standardForm,
 } from '../../packages/core/src/answer-format.ts';
 
@@ -173,8 +173,7 @@ function linkErrors(content) {
     if (MATHS_TYPES.has(item.type) && !item.checked_by.includes('maths-engine')) {
       fail('checked_by must include maths-engine for maths items');
     }
-    if (item.type === 'numeric')
-      [...roundingErrors(item), ...simplestFormErrors(item)].forEach(fail);
+    if (item.type === 'numeric') [...roundingErrors(item), ...formErrors(item)].forEach(fail);
     if (item.type === 'worked_maths') {
       const wants = item.verify.method === 'solve' ? 'solutions' : 'expression';
       if (!(wants in item.answer))
@@ -216,19 +215,47 @@ function roundingErrors(item) {
   return errors;
 }
 
-const ASKS_FOR_SIMPLEST_FORM = /simplest form|lowest terms/i;
+// The question asks for the answer in a form: "give / write / express your answer ... in its
+// simplest form", "... as a fraction", "... in standard form", "write 360 in index form". Words
+// about the question ("0.00045 is written in standard form as A × 10^n. Find n") do not count.
+// Simplest form is checked before "as a fraction", since "as a fraction in its simplest form"
+// asks for both.
+const ASKS_FOR_FORM = [
+  ['simplest_fraction', /simplest form|lowest terms/],
+  ['standard_form', /standard form/],
+  ['index_form', /index form/],
+  ['fraction', /\bas an? (?:improper )?fraction/],
+].map(([form, words]) => [
+  form,
+  new RegExp(`\\b(?:give|write|express|leave|answers?)\\b[^.?!]*?(?:${words.source})`, 'i'),
+]);
+const FRACTION_FORMS = new Set(['fraction', 'simplest_fraction']);
 
-/** A numeric answer in simplest form: the question asks for it, the answer says so, and is in it. */
-function simplestFormErrors(item) {
-  const asks = ASKS_FOR_SIMPLEST_FORM.test(item.prompt);
-  if (item.answer.simplest_form !== true) {
-    return asks ? ['the question asks for simplest form: set answer.simplest_form to true'] : [];
-  }
+/** The form a question asks its answer in, or null. */
+function askedForm(prompt) {
+  // A decimal point (0.375) or the dots of a recurring decimal (0.2727...) end no sentence.
+  const text = prompt.replace(/(\d)\.(?=\d)/g, '$1').replace(/\.{3}|…/g, '');
+  return ASKS_FOR_FORM.find(([, asks]) => asks.test(text))?.[0] ?? null;
+}
+
+/** A numeric answer in a form: the question asks for it, the answer says so, and is in it. */
+function formErrors(item) {
+  const asked = askedForm(item.prompt);
+  const { form } = item.answer;
   const errors = [];
-  if (!asks)
-    errors.push('answer sets simplest_form but the question does not ask for simplest form');
-  if (!simplestForm(item.answer.value)) {
-    errors.push(`answer.value ${item.answer.value} is not in its simplest form`);
+  if (asked && form !== asked) {
+    errors.push(`the question asks for ${asked.replace('_', ' ')}: set answer.form to "${asked}"`);
+  }
+  if (!form) return errors;
+  if (!asked) errors.push(`answer.form is ${form} but the question does not ask for it`);
+  if (!inForm(item.answer.value, form)) {
+    errors.push(`answer.value ${item.answer.value} is not written as a ${form}`);
+  }
+  const rounded = ['tolerance', 'decimal_places', 'significant_figures'].some(
+    (key) => item.answer[key] !== undefined,
+  );
+  if (FRACTION_FORMS.has(form) && rounded) {
+    errors.push('a fraction answer cannot also set tolerance or rounding');
   }
   return errors;
 }

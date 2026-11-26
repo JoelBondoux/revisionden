@@ -90,7 +90,7 @@
     "learning_point": "gcse-maths-h-n12-lp-fraction-operator",
     "expected_seconds": 40,
     "prompt": "Work out 2/3 of 4/5. Give your answer as a fraction.",
-    "answer": { "value": "8/15" },
+    "answer": { "value": "8/15", "form": "fraction" },
     "verify": { "expression": "2/3 * 4/5" },
     "marks": 1,
     "explanation": "'Of' means multiply. Multiply the tops and the bottoms: 2/3 × 4/5 = (2 × 4)/(3 × 5) = 8/15.",

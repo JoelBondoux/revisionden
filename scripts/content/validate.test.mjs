@@ -787,35 +787,68 @@ test('only a question that asks for the answer to be rounded needs answer roundi
   }
 });
 
-test('a question that asks for simplest form needs answer.simplest_form, and the other way round', async () => {
-  const fraction = (answer, prompt) => roundedItem(answer, prompt);
-  const asks = 'Write 0.375 as a fraction in its simplest form.';
-  assert.match(
-    messages(await validateItems(fraction({ value: '3/8' }, asks))),
-    /asks for simplest form: set answer\.simplest_form/,
+test('a question that asks for an answer form needs answer.form, and the other way round', async () => {
+  const item = (answer, prompt) => roundedItem(answer, prompt);
+  const needs = async (prompt, form, value = '3/8') => {
+    assert.match(
+      messages(await validateItems(item({ value }, prompt))),
+      new RegExp(`set answer\\.form to "${form}"`),
+      prompt,
+    );
+    assert.deepEqual(await validateItems(item({ value, form }, prompt)), [], prompt);
+  };
+  await needs('Write 0.375 as a fraction in its simplest form.', 'simplest_fraction');
+  await needs('Write 6/16 in its lowest terms.', 'simplest_fraction');
+  await needs(
+    'Write 0.272727... (the digits 27 recur) as a fraction in its simplest form.',
+    'simplest_fraction',
+    '3/11',
   );
-  assert.deepEqual(await validateItems(fraction({ value: '3/8', simplest_form: true }, asks)), []);
-  assert.match(
-    messages(await validateItems(fraction({ value: '3/8' }, 'Write 6/16 in its lowest terms.'))),
-    /asks for simplest form/,
+  await needs('Work out 2/3 of 4/5. Give your answer as a fraction.', 'fraction', '8/15');
+  await needs('Write 2.45 as an improper fraction.', 'fraction', '49/20');
+  await needs(
+    'Work out 6 × 10^8 + 4 × 10^7. Give your answer in standard form.',
+    'standard_form',
+    '6.4*10^8',
   );
+  await needs('Write 360 in index form.', 'index_form', '2^3 × 3^2 × 5');
+  // Describing the working or the question, not the answer's form.
+  for (const prompt of [
+    '0.00045 is written in standard form as A × 10^n. Find the value of n.',
+    'Work out 3.5 + 1.25.',
+  ]) {
+    assert.deepEqual(await validateItems(item({ value: '-4' }, prompt)), [], prompt);
+  }
   assert.match(
-    messages(
-      await validateItems(fraction({ value: '3/8', simplest_form: true }, 'Work out 0.375.')),
-    ),
-    /simplest_form but the question does not ask for simplest form/,
-  );
-  assert.match(
-    messages(await validateItems(fraction({ value: '6/16', simplest_form: true }, asks))),
-    /answer\.value 6\/16 is not in its simplest form/,
+    messages(await validateItems(item({ value: '3/8', form: 'fraction' }, 'Work out 0.375.'))),
+    /answer\.form is fraction but the question does not ask for it/,
   );
   assert.match(
     messages(
       await validateItems(
-        fraction({ value: '0.375', simplest_form: true, decimal_places: 3 }, asks),
+        item(
+          { value: '6/16', form: 'simplest_fraction' },
+          'Write 0.375 as a fraction in its simplest form.',
+        ),
       ),
     ),
-    /must NOT be valid|simplest form/,
+    /answer\.value 6\/16 is not written as a simplest_fraction/,
+  );
+  assert.match(
+    messages(
+      await validateItems(
+        item({ value: '3/8', form: 'fraction' }, 'Write 0.375 as a fraction in its simplest form.'),
+      ),
+    ),
+    /set answer\.form to "simplest_fraction"/,
+  );
+  assert.match(
+    messages(
+      await validateItems(
+        item({ value: '0.375', form: 'fraction', decimal_places: 3 }, 'Write 0.375 as a fraction.'),
+      ),
+    ),
+    /a fraction answer cannot also set tolerance or rounding/,
   );
 });
 

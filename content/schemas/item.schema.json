@@ -276,6 +276,10 @@
       "minLength": 1,
       "maxLength": 200
     },
+    "answer_form": {
+      "enum": ["fraction", "simplest_fraction", "standard_form", "index_form"],
+      "description": "The form the question asks the answer in: a fraction (whole number or a/b, no decimal or mixed number), a fraction in lowest terms, standard form (a × 10^n with 1 <= a < 10) or index form (powers of distinct primes). The value must match as well. Separate from verify.form (factorised or expanded)."
+    },
     "answer_subject": {
       "type": "string",
       "minLength": 1,
@@ -434,19 +438,15 @@
             "subject": {
               "$ref": "#/$defs/answer_subject"
             },
-            "simplest_form": {
-              "const": true,
-              "description": "The question asks for the answer in its simplest form: only a fraction in lowest terms (or a whole or mixed number) with the right value is right, so 69/99 is wrong for 23/33."
+            "form": {
+              "$ref": "#/$defs/answer_form"
             }
           },
           "not": {
             "anyOf": [
               { "required": ["decimal_places", "significant_figures"] },
               { "required": ["tolerance", "decimal_places"] },
-              { "required": ["tolerance", "significant_figures"] },
-              { "required": ["simplest_form", "tolerance"] },
-              { "required": ["simplest_form", "decimal_places"] },
-              { "required": ["simplest_form", "significant_figures"] }
+              { "required": ["tolerance", "significant_figures"] }
             ]
           },
           "additionalProperties": false
@@ -485,6 +485,9 @@
                   "items": {
                     "$ref": "#/$defs/maths"
                   }
+                },
+                "form": {
+                  "$ref": "#/$defs/answer_form"
                 }
               },
               "additionalProperties": false
@@ -498,6 +501,9 @@
                 },
                 "subject": {
                   "$ref": "#/$defs/answer_subject"
+                },
+                "form": {
+                  "$ref": "#/$defs/answer_form"
                 }
               },
               "additionalProperties": false

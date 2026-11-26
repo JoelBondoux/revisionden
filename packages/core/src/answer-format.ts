@@ -38,6 +38,22 @@ const UNIT_SPELLINGS: Record<string, { before?: string[]; after?: string[] }> = 
   'm/s': { after: ['m/s', 'metres per second'] },
 };
 
+/** Area and volume in words: m^2 is also "square metres", "sq m" and "metres squared". */
+function areaAndVolume(unit: string): string[] {
+  const m = /^([a-z]+)(?:\^([23])|([²³]))$/i.exec(unit);
+  if (!m) return [];
+  const symbol = m[1]!;
+  const square = (m[2] ?? (m[3] === '²' ? '2' : '3')) === '2';
+  const words = (UNIT_SPELLINGS[symbol.toLowerCase()]?.after ?? []).filter((w) => w.length > 3);
+  return square
+    ? [
+        `sq ${symbol}`,
+        ...words.flatMap((w) => [`square ${w}`, `${w} squared`]),
+        `${symbol} squared`,
+      ]
+    : [`cu ${symbol}`, ...words.flatMap((w) => [`cubic ${w}`, `${w} cubed`]), `${symbol} cubed`];
+}
+
 const POWERS: [string, string][] = [
   ['^2', '²'],
   ['^3', '³'],
@@ -56,7 +72,7 @@ export function withoutUnit(text: string, unit: string | undefined): string {
     if (trimmed.startsWith(before)) return trimmed.slice(before.length).trim();
   }
   const written = unit.trim();
-  const spellings = new Set([written, ...(known.after ?? [])]);
+  const spellings = new Set([written, ...(known.after ?? []), ...areaAndVolume(written)]);
   for (const [caret, superscript] of POWERS) {
     for (const spelling of [...spellings]) {
       spellings.add(spelling.replace(caret, superscript)).add(spelling.replace(superscript, caret));
@@ -73,20 +89,52 @@ export function withoutUnit(text: string, unit: string | undefined): string {
 
 const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcd(b, a % b));
 
+/** The form a question asks the answer in (`answer.form`), as the maths engine reads it too. */
+export type AnswerForm = 'fraction' | 'simplest_fraction' | 'standard_form' | 'index_form';
+
+const isPrime = (n: bigint): boolean => {
+  if (n < 2n) return false;
+  for (let d = 2n; d * d <= n; d++) if (n % d === 0n) return false;
+  return true;
+};
+
 /**
- * Whether `text` is in its simplest form, as GCSE marks "give your answer in its simplest form":
- * a whole number, a fraction in lowest terms (23/33, 49/20) or a mixed number whose fraction is
- * proper and in lowest terms (2 9/20). An unsimplified fraction (69/99), n/1 or a decimal is not.
+ * The value of a product of powers of distinct primes (2^3 × 3^2 × 5 is 360), or null when the
+ * text is not one: "360", 4^2 × 5, 2^3 × 2^2 and 2^0 × 3 are not index form.
  */
-export function simplestForm(text: string): boolean {
+export function indexForm(text: string): bigint | null {
+  const factors = text.trim().split(/\s*[×xX*·⋅]\s*/);
+  const seen = new Set<bigint>();
+  let value = 1n;
+  for (const factor of factors) {
+    const m = /^(\d{1,6})(?:\^(\d{1,3})|([¹²³⁴-⁹⁰]{1,3}))?$/.exec(factor);
+    if (!m) return null;
+    const base = BigInt(m[1]!);
+    const power = m[2] ?? (m[3] ? [...m[3]].map((c) => SUPERSCRIPT[c]).join('') : '1');
+    const k = BigInt(power);
+    if (k < 1n || k > BigInt(MAX_POWER) || !isPrime(base) || seen.has(base)) return null;
+    seen.add(base);
+    value *= base ** k;
+  }
+  return factors.length > 0 ? value : null;
+}
+
+/**
+ * Whether `text` is written in `form`: a fraction (a whole number or a/b, never a decimal or a
+ * mixed number), a simplest fraction (also in lowest terms, so not 69/99), standard form
+ * (a × 10^n, 1 <= a < 10) or index form (powers of distinct primes).
+ */
+export function inForm(text: string, form: AnswerForm): boolean {
   const t = withMinus(text).trim();
+  if (form === 'standard_form') return standardForm(t)?.proper === true;
+  if (form === 'index_form') return indexForm(t) !== null;
   if (/^-?\d+$/.test(t)) return true;
-  const m = /^-?(?:(\d+)\s+)?(\d+)\/(\d+)$/.exec(t);
+  const m = /^-?(\d+)\/(\d+)$/.exec(t);
   if (!m) return false;
-  const top = BigInt(m[2]!);
-  const bottom = BigInt(m[3]!);
-  if (bottom < 2n || top === 0n || gcd(top, bottom) !== 1n) return false;
-  return m[1] === undefined || top < bottom;
+  const top = BigInt(m[1]!);
+  const bottom = BigInt(m[2]!);
+  if (bottom < 2n) return false;
+  return form === 'fraction' || (top !== 0n && gcd(top, bottom) === 1n);
 }
 
 // A UK thousands separator: a space (also thin or non-breaking) or a comma, between groups of
