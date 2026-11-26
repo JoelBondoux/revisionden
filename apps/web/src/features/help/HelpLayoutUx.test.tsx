@@ -93,28 +93,34 @@ describe('Get help page layout', () => {
   });
 });
 
-describe('finding Get help from the student screens', () => {
-  it('the topic map links to Get help only from the header and the footer, not a third card', async () => {
-    const { container } = renderRoute('/map');
-    await screen.findByRole('heading', { name: 'Topic map' });
-    const links = screen.getAllByRole('link', { name: 'Get help' });
-    expect(links).toHaveLength(2);
-    for (const link of links) expect(link).toHaveAttribute('href', '/help');
-    expect(
-      within(container.querySelector<HTMLElement>('.sound-header')!).getByRole('link', {
-        name: 'Get help',
-      }),
-    ).toBeInTheDocument();
-    expect(
-      within(screen.getByRole('contentinfo')).getByRole('link', { name: 'Get help' }),
-    ).toBeInTheDocument();
-    expect(container.querySelector('.get-help-tile')).toBeNull();
+describe('finding Get help from the student screens (owner, 2026-11-26: Settings only)', () => {
+  it('student screens have no Get help chip in the header and no heart link in the footer', async () => {
+    for (const path of ['/map', '/cards', '/plan', '/progress']) {
+      const { container, unmount } = renderRoute(path);
+      await screen.findByRole('navigation', { name: 'Main' });
+      const header = container.querySelector<HTMLElement>('.sound-header')!;
+      expect(within(header).queryByRole('link', { name: 'Get help' })).toBeNull();
+      expect(
+        within(screen.getByRole('contentinfo')).queryByRole('link', { name: 'Get help' }),
+      ).toBeNull();
+      unmount();
+    }
   });
 
-  it('the student header has a Get help link on every screen', () => {
-    const { container } = renderRoute('/cards');
-    const header = container.querySelector<HTMLElement>('.sound-header')!;
-    expect(within(header).getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/help');
+  it('the main nav reaches Settings, where Get help is the first thing', async () => {
+    renderRoute('/map');
+    const nav = screen.getByRole('navigation', { name: 'Main' });
+    await userEvent.click(
+      within(nav).getByRole('link', { name: 'Me, settings and personalisation' }),
+    );
+    const main = screen.getByRole('main');
+    await within(main).findByRole('heading', { level: 1, name: 'Settings' });
+    const header = main.querySelector('.sound-header')!;
+    const pageLinks = within(main)
+      .getAllByRole('link')
+      .filter((a) => !header.contains(a));
+    expect(pageLinks[0]).toHaveAccessibleName(expect.stringMatching(/^Get help/));
+    expect(pageLinks[0]).toHaveAttribute('href', '/help');
   });
 });
 

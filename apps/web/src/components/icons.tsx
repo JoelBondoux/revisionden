@@ -153,6 +153,14 @@ export const UsersIcon = () => (
   </Icon>
 );
 
+/** One person: a neutral stand-in for the student's own avatar (the Me nav item). */
+export const PersonIcon = () => (
+  <Icon>
+    <circle cx="12" cy="8.5" r="3.8" />
+    <path d="M4.5 20.5c1-4 3.9-6.2 7.5-6.2s6.5 2.2 7.5 6.2" />
+  </Icon>
+);
+
 export const DownloadIcon = () => (
   <Icon>
     <path d="M12 4v11M7 10.5l5 5 5-5M5 20h14" />

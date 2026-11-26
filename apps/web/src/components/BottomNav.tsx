@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import { NavLink } from 'react-router-dom';
-import { CardsIcon, MapIcon, PapersIcon, PlanIcon, ProgressIcon } from './icons';
+import { AvatarSvg } from '../features/avatar/AvatarSvg';
+import { CardsIcon, MapIcon, PapersIcon, PlanIcon, ProgressIcon, PersonIcon } from './icons';
 
 interface NavItem {
   to: string;
@@ -19,10 +20,12 @@ export const navItems: NavItem[] = [
 interface BottomNavProps {
   /** Flashcards due today; shown as a badge on the Cards tab when above zero. */
   cardsDue?: number;
+  /** The student's own avatar code, for the Me item; a neutral placeholder until there is one. */
+  avatarCode?: string | null;
 }
 
 /** Main navigation: a bottom bar on phones, a side rail on tablets and desktops (via CSS). */
-export function BottomNav({ cardsDue = 0 }: BottomNavProps) {
+export function BottomNav({ cardsDue = 0, avatarCode }: BottomNavProps) {
   return (
     <nav className="main-nav" aria-label="Main">
       <ul className="main-nav__list">
@@ -50,6 +53,28 @@ export function BottomNav({ cardsDue = 0 }: BottomNavProps) {
             </li>
           );
         })}
+        {/* Last (far right on phones, bottom of the rail): the student's own settings and
+            personalisation, shown with their avatar (owner, 2026-11-26). Get help is there too. */}
+        <li>
+          <NavLink
+            to="/settings"
+            className="main-nav__link"
+            aria-label="Me, settings and personalisation"
+          >
+            <span>Me</span>{' '}
+            <span className="main-nav__icon">
+              {avatarCode ? (
+                <span className="main-nav__avatar">
+                  <AvatarSvg code={avatarCode} size={28} />
+                </span>
+              ) : (
+                <span className="main-nav__avatar main-nav__avatar--placeholder">
+                  <PersonIcon />
+                </span>
+              )}
+            </span>
+          </NavLink>
+        </li>
       </ul>
     </nav>
   );

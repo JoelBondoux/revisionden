@@ -152,16 +152,18 @@ describe('Get help page', () => {
 });
 
 describe('ways to reach Get help', () => {
-  it('Settings links to it', () => {
+  it('Settings links to it, first on the page and only once', () => {
     renderRoute('/settings');
-    const card = screen.getByRole('region', { name: 'Help and information' });
-    expect(within(card).getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/help');
+    const main = screen.getByRole('main');
+    const links = within(main).getAllByRole('link', { name: /^Get help/ });
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveAttribute('href', '/help');
   });
 
-  it('the student footer has a small heart link to it', () => {
+  it('the student footer has no Get help link any more (it lives on Settings)', () => {
     renderRoute('/map');
     const footer = screen.getByRole('contentinfo');
-    expect(within(footer).getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/help');
+    expect(within(footer).queryByRole('link', { name: 'Get help' })).toBeNull();
   });
 
   it('the signed-out header links to it', () => {

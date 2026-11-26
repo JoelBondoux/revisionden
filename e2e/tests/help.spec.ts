@@ -164,3 +164,82 @@ test.describe('on a 320px screen with text at 200%', () => {
     });
   }
 });
+
+/** A student uses this device; their avatar is a made-up code (the default look). */
+async function asStudent(page: import('@playwright/test').Page) {
+  await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
+  await page.route('**/v1/student/avatar', (route) =>
+    route.fulfill({ json: { avatarCode: '1' + '0'.repeat(28), earnedRewardIds: [] } }),
+  );
+}
+
+test.describe('students find Get help on Settings, through Me (owner, 2026-11-26)', () => {
+  test('student screens show no Get help link; Me opens Settings, where Get help comes first', async ({
+    page,
+  }) => {
+    await asStudent(page);
+    await page.goto('/map');
+    const nav = page.getByRole('navigation', { name: 'Main' });
+    await expect(nav).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Get help' })).toHaveCount(0);
+    const me = nav.getByRole('link', { name: 'Me, settings and personalisation' });
+    await expect(nav.getByRole('link').last()).toHaveAccessibleName(
+      'Me, settings and personalisation',
+    );
+    await expect(me.locator('svg.avatar-svg')).toBeVisible();
+    await me.click();
+    await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
+    await expect(me).toHaveAttribute('aria-current', 'page');
+    const firstLink = page.locator('main > :not(header) a').first();
+    await expect(firstLink).toHaveAttribute('href', '/help');
+    await expect(firstLink).toHaveAccessibleName(/^Get help/);
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+  });
+
+  test.describe('on a 320px screen with text at 200%', () => {
+    test.use({ viewport: { width: 320, height: 640 } });
+
+    test('all six nav items fit with no sideways scroll', async ({ page }) => {
+      await asStudent(page);
+      await page.goto('/settings');
+      await expect(page.getByRole('heading', { level: 1, name: 'Settings' })).toBeVisible();
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      const links = page.getByRole('navigation', { name: 'Main' }).getByRole('link');
+      await expect(links).toHaveCount(6);
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+      expect(overflow).toBeLessThanOrEqual(0);
+      const offScreen = await links.evaluateAll((els) =>
+        els
+          .filter((el) => {
+            const r = el.getBoundingClientRect();
+            return r.left < -0.5 || r.right > window.innerWidth + 0.5;
+          })
+          .map((el) => el.textContent?.trim()),
+      );
+      expect(offScreen).toEqual([]);
+    });
+  });
+
+  test.describe('on a tablet, the side rail', () => {
+    test.use({ viewport: { width: 820, height: 1180 } });
+
+    test('ends with Me, fully on screen', async ({ page }) => {
+      await asStudent(page);
+      await page.goto('/map');
+      const links = page.getByRole('navigation', { name: 'Main' }).getByRole('link');
+      await expect(links).toHaveCount(6);
+      const me = links.last();
+      await expect(me).toHaveAccessibleName('Me, settings and personalisation');
+      await expect(me).toBeInViewport({ ratio: 1 });
+      const boxes = await links.evaluateAll((els) =>
+        els.map((el) => el.getBoundingClientRect().top),
+      );
+      expect(boxes).toEqual([...boxes].sort((a, b) => a - b));
+    });
+  });
+});

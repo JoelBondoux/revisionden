@@ -177,8 +177,10 @@ Tags: #product #rules #limits #defaults
   `explanation` as "Why: …"), hidden when there are none (`learning_point` is never used). On
   2026-11-26, 89 of 287 marked items had none of these: 75 of 78 flashcards, 13 short answers and
   1 numeric (`gcse-maths-h-n7-0001`).
-- Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress (bottom bar on phones, side
-  rail from 768px wide). Welcome and lessons hide the nav to keep focus. Only a linked student
+- Installable PWA. Main nav tabs: Map, Cards, Plan, Papers, Progress, then **Me** last (bottom bar
+  on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
+  until it loads) and opens `/settings`, "settings and personalisation" (owner, 2026-11-26, W7).
+  The six items share the bar and labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
   device gets the student nav: elsewhere (signed out, or a parent) About, Policies, Feedback and
   the other app pages show a small header with the logo, Sign in, Policies and About.
 - Changing screen (I7, `apps/web/src/layout/RouteChange.tsx` around every route): the new screen
@@ -818,9 +820,9 @@ Tags: #product #rules #limits #defaults
   0019); `GET`/`PUT /v1/student/rewards/title`; free to change any time; included in the family data export. Shown under the nickname
   on the Rewards page; the friends league is not built yet, so it shows there once it is.
 - "Get help" page (built): `/help` for students (also signed out) and `/parent/help` (adds the
-  NSPCC adult helpline, parent-only). Reached from Settings, the heart link in the student footer,
-  the signed-out header and parent home, plus (W3) a chip in the student header. No tile on the
-  topic map (removed in W5: header chip and footer link only). There is no separate profile menu yet. Quick exit is sticky at the top;
+  NSPCC adult helpline, parent-only). Students reach it only from Settings, where it is the
+  first tile (via the Me nav item); there is no Get help link in the student header or footer
+  (owner decision, 2026-11-26, W7). Also the signed-out header and parent home. Quick exit is sticky at the top;
   topics are in five categories (Right now first and always open) with a private "Find a topic"
   filter (`features/help/categories.ts`). Help buttons wrap their text, so the page fits a 320px screen at 200% text with no
   sideways scroll (W6).

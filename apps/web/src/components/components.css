@@ -199,14 +199,25 @@
   list-style: none;
 }
 
+/* Six items (with Me) share the bar equally and labels wrap, so they fit a 320px screen even
+   with text at 200% (W7). Each item is still at least 52px tall and about 53px wide there. */
+.main-nav__list > li {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+}
+
 .main-nav__link {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 56px;
+  width: 100%;
+  min-width: 0;
   min-height: 52px;
-  padding: var(--space-1) var(--space-2);
+  text-align: center;
+  overflow-wrap: anywhere;
+  padding: var(--space-1) 2px;
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
   font-weight: var(--font-weight-extrabold);
@@ -237,6 +248,36 @@
   text-align: center;
 }
 
+/* Very narrow phones: a touch smaller, still in rem so it grows with the reader's text size. */
+@media (max-width: 359px) {
+  .main-nav__link {
+    font-size: 0.6875rem;
+    letter-spacing: -0.02em;
+  }
+}
+
+.main-nav__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+
+.main-nav__avatar .avatar-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.main-nav__avatar--placeholder .icon {
+  width: 20px;
+  height: 20px;
+}
+
 .main-nav__link[aria-current='page'] {
   color: var(--color-primary);
   background: var(--color-primary-soft);
@@ -254,6 +295,10 @@
   .main-nav__list {
     flex-direction: column;
     gap: var(--space-2);
+  }
+
+  .main-nav__list > li {
+    flex: none;
   }
 
   .main-nav__link {
