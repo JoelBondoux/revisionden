@@ -40,9 +40,9 @@ A node passes when its halo, ring, border or fill clears 3:1 against every road 
 | turbo-drive | light | done | halo+border+fill | 8.68 | 6.53 | pass |
 | turbo-drive | light | current | border+fill | 5.82 | 7.45 | pass |
 | turbo-drive | light | locked | halo+border+fill | 9.72 | 6.53 | pass |
-| rainbow-parade | light | done | halo+border+fill | 4.87 | 5.1 | pass |
-| rainbow-parade | light | current | border+fill | 4.87 | 5.1 | pass |
-| rainbow-parade | light | locked | halo+border+fill | 10.36 | 5.1 | pass |
+| rainbow-parade | light | done | halo+border+fill | 8.87 | 5.67 | pass |
+| rainbow-parade | light | current | border+fill | 8.87 | 5.67 | pass |
+| rainbow-parade | light | locked | halo+border+fill | 11.31 | 5.67 | pass |
 | doodle-diary | dark | done | halo+ring | 7.83 | 14.17 | pass |
 | doodle-diary | dark | current | halo+ring | 7.83 | 14.17 | pass |
 | doodle-diary | dark | locked | halo+ring | 8.4 | 14.17 | pass |
@@ -70,9 +70,9 @@ A node passes when its halo, ring, border or fill clears 3:1 against every road 
 | turbo-drive | dark | done | halo+border+fill | 8.68 | 6.53 | pass |
 | turbo-drive | dark | current | border+fill | 5.82 | 7.45 | pass |
 | turbo-drive | dark | locked | halo+border+fill | 9.72 | 6.53 | pass |
-| rainbow-parade | dark | done | halo+border+fill | 4.32 | 4.53 | pass |
-| rainbow-parade | dark | current | halo+border+fill | 4.32 | 4.53 | pass |
-| rainbow-parade | dark | locked | halo+border+fill | 10.74 | 4.53 | pass |
+| rainbow-parade | dark | done | halo+border+fill | 7.61 | 6.51 | pass |
+| rainbow-parade | dark | current | border+fill | 7.61 | 6.51 | pass |
+| rainbow-parade | dark | locked | halo+border+fill | 5.48 | 3.5 | pass |
 
 60/60 pass
 
