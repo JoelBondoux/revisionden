@@ -217,66 +217,74 @@ function TopicCard({
 
 function ServiceEntry({ service, level = 4 }: { service: SupportService; level?: 3 | 4 }) {
   const Heading = level === 3 ? 'h3' : 'h4';
+  const primary = service.contacts.filter((c) => c.kind === 'phone' || c.kind === 'text');
+  const secondary = service.contacts.filter((c) => c.kind !== 'phone' && c.kind !== 'text');
   return (
     <li className="help-service">
-      <Heading>{service.service}</Heading>
-      <p>{service.helps_with}</p>
-      {service.note && <p className="help-note">{service.note}</p>}
-      {(service.age_range || service.area) && (
-        <p className="help-meta">
-          {service.age_range && <>For: {service.age_range.text}. </>}
-          {service.area && <>Covers: {service.area.text}.</>}
-        </p>
-      )}
-      <ul className="help-contacts">
-        {service.contacts.map((c, i) => (
+      <div className="help-service__summary">
+        <Heading>{service.service}</Heading>
+        <p>{service.helps_with}</p>
+        {service.note && <p className="help-note">{service.note}</p>}
+      </div>
+      <ul className="help-service__actions">
+        {[...primary, ...secondary].map((c, i) => (
           <li key={i}>
-            <ContactLink contact={c} service={service.service} />
-            {c.hours && <span className="help-meta"> {c.hours.text}</span>}
+            <ContactButton contact={c} service={service.service} />
+            {c.hours && <span className="help-meta">{c.hours.text}</span>}
           </li>
         ))}
       </ul>
+      {(service.age_range || service.area) && (
+        <details className="help-service__more">
+          <summary>More about {service.service}</summary>
+          {service.age_range && <p className="help-meta">For: {service.age_range.text}.</p>}
+          {service.area && <p className="help-meta">Covers: {service.area.text}.</p>}
+        </details>
+      )}
     </li>
   );
 }
 
-function ContactLink({ contact: c, service }: { contact: Contact; service: string }) {
+/**
+ * One way to contact a service, as a clear button (shared LinkButton): calling and texting are
+ * primary; chat, websites, WhatsApp and email are secondary. The wording is unchanged and
+ * websites open in a new tab without a referrer.
+ */
+function ContactButton({ contact: c, service }: { contact: Contact; service: string }) {
   if (c.kind === 'phone') {
     return (
-      <a className="help-action" href={c.href}>
+      <LinkButton href={c.href} variant="primary" block className="help-button">
         Call {c.number}
         {c.label && ` (${c.label})`}
-      </a>
+      </LinkButton>
     );
   }
   if (c.kind === 'text') {
     return (
-      <a className="help-action" href={c.href}>
+      <LinkButton href={c.href} variant="primary" block className="help-button">
         {c.keyword ? `Text ${c.keyword} to ${c.number}` : `Text ${c.number}`}
-      </a>
+      </LinkButton>
     );
   }
   if (c.kind === 'email') {
     return (
-      <a className="help-action" href={c.href}>
+      <LinkButton href={c.href} variant="secondary" block className="help-button">
         Email {c.address}
-      </a>
+      </LinkButton>
     );
   }
   if (c.kind === 'whatsapp') {
     return (
-      <a className="help-action help-action--web" href={c.href} target="_blank" rel="noreferrer">
+      <LinkButton href={c.href} newTab variant="secondary" block className="help-button">
         WhatsApp {c.number}
-        <span className="visually-hidden"> (opens in a new tab)</span>
-      </a>
+      </LinkButton>
     );
   }
   const text = c.label ?? (c.kind === 'web_chat' ? 'Chat online' : `${service} website`);
   return (
-    <a className="help-action help-action--web" href={c.url} target="_blank" rel="noreferrer">
+    <LinkButton href={c.url} newTab variant="secondary" block className="help-button">
       {text}
-      <span className="visually-hidden"> (opens in a new tab)</span>
-    </a>
+    </LinkButton>
   );
 }
 

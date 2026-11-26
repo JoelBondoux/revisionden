@@ -111,3 +111,46 @@ describe('finding Get help from the student screens', () => {
     expect(within(header).getByRole('link', { name: 'Get help' })).toHaveAttribute('href', '/help');
   });
 });
+
+describe('service cards', () => {
+  it('shows call and text actions as primary buttons, keeping tel: and sms: links', () => {
+    renderRoute('/help');
+    const call = screen.getAllByRole('link', { name: 'Call 0800 1111' })[0]!;
+    expect(call).toHaveAttribute('href', 'tel:08001111');
+    expect(call).toHaveClass('btn', 'btn--primary');
+    const text = screen.getAllByRole('link', { name: 'Text SHOUT to 85258' })[0]!;
+    expect(text).toHaveAttribute('href', 'sms:85258?&body=SHOUT');
+    expect(text).toHaveClass('btn', 'btn--primary');
+  });
+
+  it('shows chat and website actions as secondary buttons that open in a new tab', () => {
+    renderRoute('/help');
+    const chat = screen.getAllByRole('link', { name: /1-2-1 counsellor chat/ })[0]!;
+    expect(chat).toHaveClass('btn', 'btn--secondary');
+    expect(chat).toHaveAttribute('target', '_blank');
+    const site = screen.getAllByRole('link', { name: /Childline website/ })[0]!;
+    expect(site).toHaveClass('btn', 'btn--secondary');
+  });
+
+  it('has no plain text links among the service actions', () => {
+    const { container } = renderRoute('/help');
+    for (const a of container.querySelectorAll('.help-service a')) expect(a).toHaveClass('btn');
+  });
+
+  it('keeps age and area details behind "More about <service>"', async () => {
+    renderRoute('/help');
+    const more = screen.getAllByText('More about Childline')[0]!;
+    const details = more.closest('details')!;
+    expect(details).not.toHaveAttribute('open');
+    expect(within(details).getByText('For: Under 19.')).toBeInTheDocument();
+    await userEvent.click(more);
+    expect(details).toHaveAttribute('open');
+  });
+
+  it('keeps each service compact: name, one-line description and its buttons', () => {
+    const { container } = renderRoute('/help');
+    const card = container.querySelector('.help-service')!;
+    expect(card.querySelector('.help-service__summary')).not.toBeNull();
+    expect(card.querySelector('.help-service__actions')).not.toBeNull();
+  });
+});

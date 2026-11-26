@@ -77,7 +77,7 @@
   margin-bottom: var(--space-1);
 }
 
-.help-main .help-page a {
+.help-main .help-page a:not(.btn) {
   color: var(--help-link);
 }
 
@@ -250,8 +250,7 @@
   background: var(--help-surface-alt);
 }
 
-.help-services,
-.help-contacts {
+.help-services {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -262,20 +261,83 @@
   border-top: 1px solid var(--help-border-soft);
 }
 
+.help-service__summary p {
+  margin-bottom: var(--space-2);
+}
+
+.help-service__actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.help-service__actions li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/*
+ * Big, clear actions: at least the 44px touch target, text wraps on narrow phones. Calm on this
+ * page: normal case, no 3D shadow or press movement (no game feel on Get help).
+ */
+.help-main .help-button {
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: none;
+  transform: none;
+  transition: none;
+}
+
+.help-main .btn--secondary.help-button {
+  border: 2px solid var(--help-border);
+}
+
+.help-button {
+  min-height: 48px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.help-service__more {
+  margin-top: var(--space-2);
+}
+
+.help-service__more summary {
+  display: list-item;
+  padding: 10px 0;
+  cursor: pointer;
+  color: var(--help-link);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.help-service__more summary:focus-visible {
+  outline: 3px solid var(--help-link);
+  outline-offset: 2px;
+}
+
+/* Windows High Contrast and other forced colours: keep the key edges visible. */
+@media (forced-colors: active) {
+  .help-danger,
+  .help-topic--urgent,
+  .help-exit,
+  .help-exit-bar,
+  .help-category__summary,
+  .help-search input {
+    border: 2px solid CanvasText;
+  }
+
+  .help-danger {
+    border-left-width: 6px;
+  }
+}
+
 .help-service p {
   margin-bottom: var(--space-2);
-}
-
-.help-contacts li {
-  margin-bottom: var(--space-2);
-}
-
-.help-action {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--tap-target);
-  font-weight: var(--font-weight-extrabold);
-  overflow-wrap: anywhere;
 }
 
 .help-note {

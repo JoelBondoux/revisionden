@@ -762,6 +762,14 @@ Requested by the product owner on 2026-11-25.
   topics and their services; "In danger right now" always stays; a live status says how many
   topics match. The search is component state only: never stored, sent or put in the address.
   Grouping is presentation only: every verified entry and all wording are unchanged.
+- Service cards (W3): each service is a compact card with its name, its one-line description (and
+  any confirmed note), and its contact actions as clear buttons (shared `LinkButton`, at least
+  48px tall): **Call** and **Text** are primary buttons (`tel:`/`sms:` links unchanged); chat,
+  website, WhatsApp and email are secondary buttons (new tab, no referrer). Opening hours show
+  under each button. Age range and area sit behind "More about <service>". No plain text links,
+  no new wording. Buttons are calm on this page (normal case, no 3D shadow or press movement), and
+  in forced colours (Windows High Contrast) the danger panel, Quick exit, category headings and
+  search box keep visible borders.
 - Data: `content/support/uk-services.json`, schema `content/schemas/support-services.schema.json`.
   Each service has topics, one plain sentence of our own (`helps_with`), its official domains,
   optional age range and area, contacts (phone as `tel:`, text number with keyword as
