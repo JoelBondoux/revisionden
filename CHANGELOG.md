@@ -105,6 +105,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- S3-N: the estimation questions n14-0001 and n14-0003 no longer require the estimate to a set number of significant figures (the question asks only for the numbers to be rounded), so an equal estimate written another way, such as 150.0, is marked right (Codex review of #115; needs S2's #178).
 - S3-N: the bounds questions n16-0002 and n16-0003 now say "correct to the nearest 0.1 kg" / "0.01 second" and no longer require the answer to a set number of decimal places, so equal answers such as 4.550 are marked right (Codex review of #115).
 - Effect styles J10e (J): `EffectStyleProvider` moves inside the router (`EffectStyleRoute` in `routes.tsx`, out of `App.tsx`) and makes no request on `/help` or `/parent/help` (Get help makes no API calls, signed in or out). Unlocked styles are checked again when the Settings picker opens (one request at a time) and a failed load is retried on the next screen, so a newly earned style or a load that failed before unlocking no longer needs a reload (Codex review on #176). Tests: provider, picker, routes.
 - Project memory (J): product-facts had a stale duplicate of the Appearance doodle-tile paragraph (naming the removed `doodles.svg`) and the old J10a effect-styles bullet, left by a merge; now one current paragraph and one bullet.
