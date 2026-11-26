@@ -232,6 +232,13 @@
       "when": 1795705249894,
       "tag": "0032_flashcard_session_extra",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1795707041419,
+      "tag": "0033_lesson_tap_unique",
+      "breakpoints": true
     }
   ]
 }

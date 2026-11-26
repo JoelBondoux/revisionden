@@ -407,7 +407,10 @@ positive whole numbers; negatives later).
   steps first in the A4 lesson. Not at exactly 60 or above, not for a topic with no answers yet,
   and never in a unit challenge or subject lesson (`showsInteractivePilot`,
   `arrangeInteractivePilot` in `packages/core/src/interactive/pilot-lesson.ts`; content tag
-  `interactive-pilot`).
+  `interactive-pilot`). The same gate covers warm-ups and "similar question" retries: a pilot
+  step is never picked as either, so it cannot come back into a subject lesson, a unit challenge
+  or a lesson after mastery reaches 60, and keeps its order in an eligible lesson (W8b, Codex
+  review; `apps/api/src/learning/mistakes.ts`).
 - **Steps:** explore (x² + 5x + 6), two guided (x² + 6x + 8, x² + 8x + 12, each with a hint),
   one typed (factorise x² + 9x + 20, checked by the maths engine in factorised form), then the
   topic's normal questions as the hand-over (among them "Factorise x² + 7x + 12").
@@ -417,6 +420,11 @@ positive whole numbers; negatives later).
   lights up its term in the expression in the same colour and says what it is ("It is x by x, so
   its area is x²"). Explore says at once whether the tiles make a rectangle; guided keeps the
   verdict for Check. The answer is the pair ("2,3"), marked on the server.
+- **Tiles are never added or removed** (W8b, Codex review): whatever pair is picked, the picture
+  keeps exactly b strips and c unit squares. The frame for p and q has q strip slots on the right
+  and p along the bottom; the strips fill the right first. If the pair adds to more than b, the
+  empty slots are outlined (dashed); if less, the spare strips sit to the side, faded
+  (`fitStrips` in `packages/core/src/interactive/area-model.ts`).
 - Counts like any question: XP (10, as multiple choice), streak, daily goal and mastery; a wrong
   answer gets the in-lesson retry and becomes a flashcard.
 - **No tile-movement logging.** Only the checked answer is sent, as for any question.
@@ -424,7 +432,9 @@ positive whole numbers; negatives later).
   nothing needs dragging; read aloud lists the pairs; theme colours; fits 320px at 200% text.
 - **"Did this help?"** after the last tile step is checked: one tap, Yes or No, stored as
   feedback kind `lesson_helped` or `lesson_not_helped` with the item and never any text, one
-  answer per student and item, not counted in the daily feedback limit. Parents and the
+  answer per student and item (a second tap changes the first; enforced by the database with a
+  unique partial index and an upsert, migration 0033, W8b), not counted in the daily feedback
+  limit. Parents and the
   operator see it with the family's feedback.
 - **Hidden until verified:** the pilot items are draft content, so production does not serve
   them until they pass `docs/VERIFICATION.md`; development serves drafts with the DRAFT banner.

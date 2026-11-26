@@ -61,6 +61,22 @@ describe('lesson feedback', () => {
     expect(body.feedback.map((f) => f.kind)).toEqual(['lesson_not_helped']);
   });
 
+  it('updates the first answer in place, so overlapping taps cannot leave two (Codex P2)', async () => {
+    const { headers } = await t.familyStudent('tap_upsert');
+    const first = (await (await send(headers, { kind: 'lesson_helped', itemId })).json()) as {
+      id: string;
+    };
+    const [a, b] = await Promise.all([
+      send(headers, { kind: 'lesson_not_helped', itemId }),
+      send(headers, { kind: 'lesson_helped', itemId }),
+    ]);
+    expect([a.status, b.status]).toEqual([201, 201]);
+    const list = await t.app.request('/v1/student/feedback', { headers });
+    const body = (await list.json()) as { feedback: { id: string; kind: string }[] };
+    expect(body.feedback).toHaveLength(1);
+    expect(body.feedback[0]!.id).toBe(first.id);
+  });
+
   it('does not use up the daily feedback limit', async () => {
     const { headers } = await t.familyStudent('tap_limit');
     await send(headers, { kind: 'lesson_helped', itemId });
