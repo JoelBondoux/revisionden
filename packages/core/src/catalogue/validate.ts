@@ -71,6 +71,7 @@ export const STAT_MAX: Record<StatKey, number> = {
   practiceKindsTried: 7,
   plannedWeeks: Infinity,
   perfectSetsLevel2: Infinity,
+  foundingTester: 1,
 } satisfies Record<keyof RewardStats, number>;
 
 export const REWARD_STAT_KEYS = Object.keys(STAT_MAX) as StatKey[];
@@ -91,6 +92,9 @@ function checkReward(r: Reward, parts: CatalogueParts, problems: string[]) {
   }
   if ((r.secret || r.source === 'hidden') && r.target.kind !== 'stat') {
     problems.push(`${r.id}: secret and hidden rewards need a stat target`);
+  }
+  if (r.source === 'special' && r.target.kind !== 'stat') {
+    problems.push(`${r.id}: special rewards need a stat target`);
   }
   if (r.source === 'hidden' && !r.track) problems.push(`${r.id}: hidden rewards need a track`);
   if (r.source === 'secret' && !r.secret)

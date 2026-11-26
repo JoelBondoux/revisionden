@@ -164,6 +164,8 @@ export const TITLE_WORD_ROWS: readonly TitleWordRow[] = [
   { rewardId: 'gift-15-friends', last: 'Good-Egg' },
   { rewardId: 'league-top', last: 'Front-Runner' },
   { rewardId: 'league-wins-5', first: 'Victorious' },
+  // One-off special rewards (R5).
+  { rewardId: 'founding-tester', first: 'Founding', last: 'Tester' },
 ];
 
 /**

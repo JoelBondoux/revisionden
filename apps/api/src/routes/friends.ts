@@ -14,7 +14,7 @@
  * remove, block, unblock and a private label. One parent from each family must approve.
  */
 import { Hono, type MiddlewareHandler } from 'hono';
-import { and, count, eq, gt, inArray, isNotNull, isNull, lt, ne, or } from 'drizzle-orm';
+import { and, count, eq, gt, inArray, isNotNull, isNull, lt, ne, notExists, or } from 'drizzle-orm';
 import { z } from 'zod';
 import {
   FAMILY_CODE_TRIES_PER_DAY,
@@ -208,9 +208,7 @@ async function canBefriend(
 
 /**
  * One family's approval. Only that family's column is written, so two approvals at once cannot
- * overwrite each other (FL4-fix). Once both are set, the friendship is saved first and the request
- * is marked started after (FL4b): if the save fails, the request stays open with both approvals and
- * approving again finishes it. Saving twice is harmless (the pair is the primary key).
+ * overwrite each other (FL4-fix). Once both are set, the request is finalised.
  */
 export async function approveRequest(
   db: Database,
@@ -219,44 +217,98 @@ export async function approveRequest(
   position: number,
   now: Date,
 ): Promise<'waiting_for_other_family' | 'started' | 'closed'> {
-  const open = and(
-    eq(friendRequests.id, r.id),
-    eq(friendRequests.status, 'parents'),
-    gt(friendRequests.expiresAt, now),
-  );
   const [marked] = await db
     .update(friendRequests)
     .set(side === 'from' ? { fromApprovedBy: position } : { toApprovedBy: position })
-    .where(open)
+    .where(
+      and(
+        eq(friendRequests.id, r.id),
+        eq(friendRequests.status, 'parents'),
+        gt(friendRequests.expiresAt, now),
+      ),
+    )
     .returning();
   if (!marked) return 'closed';
   if (marked.fromApprovedBy === null || marked.toApprovedBy === null) {
     return 'waiting_for_other_family';
   }
-  const start = () =>
-    db.update(friendRequests).set({ status: 'started', endedAt: now }).where(open);
-  // Both families said yes. Already friends means an earlier try saved the friendship.
-  if (await areFriends(db, r.fromStudentId, r.toStudentId)) {
-    await start();
-    return 'started';
-  }
+  return finaliseRequest(db, marked, now);
+}
+
+/**
+ * Starts a request both families approved. Safe to run any number of times, at once or later
+ * (FL4b, FL4c): saving the friendship is the single-winner step (the pair is the primary key, so
+ * `ON CONFLICT DO NOTHING`), the friendship existing counts as success, and the request is then
+ * marked started only while it is still waiting. A request whose pair is already friends is never
+ * declined. If a step fails, the request stays waiting with both approvals and the next approval or
+ * Friends view (`healApprovedRequests`) finishes it. No transactions (production uses `neon-http`).
+ */
+export async function finaliseRequest(
+  db: Database,
+  r: RequestRow,
+  now: Date,
+): Promise<'started' | 'closed'> {
+  const waiting = and(eq(friendRequests.id, r.id), eq(friendRequests.status, 'parents'));
+  const [a, b] = pair(r.fromStudentId, r.toStudentId);
+  const saved = and(eq(friendships.studentA, a), eq(friendships.studentB, b));
+  const start = async () => {
+    await db.update(friendRequests).set({ status: 'started', endedAt: now }).where(waiting);
+    return 'started' as const;
+  };
+  if (await areFriends(db, a, b)) return start();
   // Check again (a block or a full list since), then save the friendship, then mark it started.
   const from = await loadStudent(db, r.fromStudentId);
   const to = await loadStudent(db, r.toStudentId);
-  if (!from || !to || !(await canBefriend(db, from, to, now, r.id))) {
+  if (from && to && (await canBefriend(db, from, to, now, r.id))) {
     await db
-      .update(friendRequests)
-      .set({ status: 'declined', endedAt: now })
-      .where(eq(friendRequests.id, r.id));
-    return 'closed';
+      .insert(friendships)
+      .values({ studentA: a, studentB: b, createdAt: now })
+      .onConflictDoNothing();
+    return start();
   }
-  const [a, b] = pair(from.id, to.id);
+  // The rules say no, unless another finaliser saved the friendship meanwhile.
+  const declined = await db
+    .update(friendRequests)
+    .set({ status: 'declined', endedAt: now })
+    .where(and(waiting, notExists(db.select().from(friendships).where(saved))))
+    .returning({ id: friendRequests.id });
+  if (declined.length > 0) return 'closed';
+  return (await areFriends(db, a, b)) ? start() : 'closed';
+}
+
+/** Finishes any of this child's requests left with both approvals (FL4c). */
+async function healApprovedRequests(db: Database, studentId: string, now: Date) {
+  const stuck = await db
+    .select()
+    .from(friendRequests)
+    .where(
+      and(
+        or(eq(friendRequests.fromStudentId, studentId), eq(friendRequests.toStudentId, studentId)),
+        eq(friendRequests.status, 'parents'),
+        isNotNull(friendRequests.fromApprovedBy),
+        isNotNull(friendRequests.toApprovedBy),
+      ),
+    );
+  for (const r of stuck) await finaliseRequest(db, r, now);
+}
+
+/**
+ * Declines every open request (waiting for the child's check or for parents) between `x` and `y`,
+ * or, with no `y`, every open request of `x` (FL4d). Run before a friendship ends or friends is
+ * turned off, so a request left with both approvals cannot be finished later.
+ */
+async function closeOpenRequests(db: Database, now: Date, x: string, y?: string) {
+  const involves = (id: string) =>
+    or(eq(friendRequests.fromStudentId, id), eq(friendRequests.toStudentId, id));
   await db
-    .insert(friendships)
-    .values({ studentA: a, studentB: b, createdAt: now })
-    .onConflictDoNothing();
-  await start();
-  return 'started';
+    .update(friendRequests)
+    .set({ status: 'declined', endedAt: now })
+    .where(
+      and(
+        inArray(friendRequests.status, ['child_confirm', 'parents']),
+        y === undefined ? involves(x) : and(involves(x), involves(y)),
+      ),
+    );
 }
 
 /**
@@ -268,6 +320,9 @@ async function unfriend(db: Database, x: string, y: string, now: Date) {
     const s = await loadStudent(db, id);
     if (s) await settleLeagueWeeks(db, s, now);
   }
+  // Close the pair's open requests first (FL4d), so nothing can start the friendship again
+  // without fresh approval. If this fails, the friendship is not removed (no silent undo).
+  await closeOpenRequests(db, now, x, y);
   const [a, b] = pair(x, y);
   const gone = await db
     .delete(friendships)
@@ -334,6 +389,7 @@ export function studentFriendRoutes(deps: FriendDeps) {
     if (!self.friendsAllowed) {
       return c.json({ allowed: false, hidden: self.leagueHidden, friends: [], waiting: [] });
     }
+    await healApprovedRequests(db, self.id, now);
     const { friends, siblings: sibs } = await friendsOf(db, self);
     const requests = await db
       .select()
@@ -588,6 +644,7 @@ export function parentFriendRoutes(deps: FriendDeps) {
   app.get('/:id/friends', async (c) => {
     const now = clock.now();
     const self = await child(c.var.parent.familyId, c.req.param('id'));
+    await healApprovedRequests(db, self.id, now);
     const { friends, siblings: sibs } = await friendsOf(db, self);
     const links = await db
       .select()
@@ -666,7 +723,10 @@ export function parentFriendRoutes(deps: FriendDeps) {
     const { allowed } = await readJson(c, allowedSchema);
     const self = await child(c.var.parent.familyId, c.req.param('id'));
     // Settle finished weeks while the child's friends still count (FL4-fix).
-    if (!allowed) await settleLeagueWeeks(db, self, clock.now());
+    if (!allowed) {
+      await settleLeagueWeeks(db, self, clock.now());
+      await closeOpenRequests(db, clock.now(), self.id);
+    }
     await db.update(students).set({ friendsAllowed: allowed }).where(eq(students.id, self.id));
     await logFor(
       db,

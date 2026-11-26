@@ -79,4 +79,25 @@ describe('reward reveal', () => {
     const { container } = render(<RewardReveal rewards={[]} />);
     expect(container).toBeEmptyDOMElement();
   });
+
+  it('makes Founding Tester a moment: the badge drawn large, with a thank-you', () => {
+    render(
+      <RewardReveal
+        rewards={[
+          card({
+            id: 'founding-tester',
+            name: 'Founding Tester',
+            rarity: 'legendary',
+            items: [
+              { kind: 'badge', id: 'founding-tester' },
+              { kind: 'titleWord', part: 'first', text: 'Founding' },
+              { kind: 'titleWord', part: 'last', text: 'Tester' },
+            ],
+          }),
+        ]}
+      />,
+    );
+    expect(screen.getByRole('img', { name: 'Founding Tester badge' })).toBeInTheDocument();
+    expect(screen.getByText(/Thank you for helping build RevisionDen/)).toBeInTheDocument();
+  });
 });

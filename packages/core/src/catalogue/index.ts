@@ -3,6 +3,7 @@ import { CHAPTER_REWARDS } from './chapters';
 import { withEffectStyles } from './effect-styles';
 import { COLLECTIONS, COLLECTION_REWARDS } from './collections';
 import { BUG_HUNTER_REWARDS, MORE_HIDDEN_TRACK_REWARDS, SECRET_REWARDS } from './hidden';
+import { SPECIAL_REWARDS } from './special';
 import { LEVEL_REWARDS } from './levels';
 import { MILESTONE_REWARDS } from './milestones';
 import { SEASONS, SEASON_REWARDS } from './seasons';
@@ -13,6 +14,7 @@ export * from './types';
 export * from './validate';
 export { CHAPTER_REWARDS, COLLECTIONS, COLLECTION_REWARDS, LEVEL_REWARDS, MILESTONE_REWARDS };
 export { SEASONS, SEASON_REWARDS, BUG_HUNTER_REWARDS, MORE_HIDDEN_TRACK_REWARDS, SECRET_REWARDS };
+export { SPECIAL_REWARDS };
 export { EFFECT_STYLE_UNLOCKS, effectStylesFor, withEffectStyles } from './effect-styles';
 
 /** Every reward as written in the source files, with the old single titles (before R8). */
@@ -25,6 +27,7 @@ export const SOURCE_REWARDS: readonly Reward[] = [
   ...BUG_HUNTER_REWARDS,
   ...MORE_HIDDEN_TRACK_REWARDS,
   ...SECRET_REWARDS,
+  ...SPECIAL_REWARDS,
 ];
 
 /**

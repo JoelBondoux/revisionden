@@ -83,7 +83,7 @@ describe('haptics', () => {
     for (const style of FEEDBACK_STYLES) {
       for (const event of FEEDBACK_EVENTS) {
         const p = hapticPattern(style, event, 3);
-        if (event === 'xpTick' || event === 'ringFill' || event === 'nodePop') {
+        if (['xpTick', 'ringFill', 'nodePop', 'pageTransition'].includes(event)) {
           expect(p).toBeNull();
           continue;
         }
@@ -91,5 +91,11 @@ describe('haptics', () => {
         expect(Math.max(...p!)).toBeLessThanOrEqual(150);
       }
     }
+  });
+
+  it('the three-styles reveal has its own long celebration pattern', () => {
+    const p = hapticPattern('doodle-diary', 'stylesUnlocked')!;
+    expect(p.filter((_, i) => i % 2 === 0).length).toBeGreaterThanOrEqual(5);
+    expect(Math.max(...p)).toBeLessThanOrEqual(150);
   });
 });
