@@ -431,6 +431,23 @@ A wrong or very slow answer is not just marked and forgotten: the learning point
 - Implemented: `packages/core/src/mistakes.ts`, `apps/api/src/learning/mistakes.ts`, the attempts,
   lesson and daily routes, `apps/web/src/features/learn/LessonPlayer.tsx`. Migration 0026.
 
+## Showing maths (F9, owner 2026-11-26)
+
+- Powers are shown as superscripts wherever students see maths: x^2 is shown as x², 10^-3 as
+  10⁻³, 10^(2 + 8) as 10²⁺⁸ (a raised bracket loses its brackets). Only the power is raised
+  (x^2y is x²y), and a^b^c is a to the power b^c, read right to left as in maths. This covers
+  prompts, options, units, flashcards (both faces and the card list), Explain steps, answers and
+  explanations in feedback, hints, and the review batch screens. Stored content keeps its ^.
+- Screen readers hear the words from the read-aloud rules ("x squared", "to the power minus 3").
+- A ^ with nothing it can raise stays as it is (content says "Use ^ for powers", which is how a
+  power is typed).
+- Typed-answer boxes and worked maths have a "Power" key that types ^ where the cursor is, and a
+  "Shows as:" preview with the powers raised. ^ and ² typed straight in are still accepted.
+- Computing subjects (subject or topic id containing "comput") show ^ as typed, with no Power
+  key: there ^ is a real symbol (owner).
+- Implemented in `packages/core/src/powers.ts` and `apps/web/src/components/MathText.tsx`; the
+  e2e sweep `e2e/tests/powers.spec.ts` checks every real item that shows a power.
+
 ## Flashcards and mastery
 
 - Flashcards follow SM-2: intervals 1 day, 6 days, then interval × ease; a wrong card comes back
@@ -1108,9 +1125,8 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
 - **Learn more** (owner request, 2026-11-26: "link out to authoritative, age-appropriate sources
   for further tuition guidance when a question needs more explanation"): on a flashcard's Explain
   panel and after a wrong answer in a lesson, behind a "Learn more" tap. It shows the most specific
-  links: those for the item, else for its learning point, else the whole topic's. Lessons match by
-  learning point (a lesson item does not carry its content id yet, so item links cannot match);
-  flashcards use the topic's (a card does not carry its learning point yet).
+  links: those for the item, else for its learning point, else the whole topic's. Lesson items and
+  flashcards carry their content id and learning point (Q6b), so both match all three levels.
 - Links only (open in a new tab on tap; nothing loaded from those sites until then, nothing
   recorded about taps), stored as data per topic with the page title, URL and dates.
 - A link shows only when it is both **reachable** (`checked_at`: the CI job requests every link and
@@ -1126,6 +1142,13 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   Oak lessons and BBC Bitesize pages). `pnpm content:check-links --coverage` prints the numbers.
 - Links point at the right level (GCSE or A-Level) and the student's board where the page is
   board-specific.
+- **Oak links go to the pupil lesson page** (owner decision, 2026-11-26): the page made for
+  students, with the lesson video and no sign-in, not Oak's teacher page. The link is the pupil
+  lesson's overview page (`/pupils/lessons/<lesson>/overview`). The validator refuses an Oak
+  teacher page (`/teachers/...`) unless the link is marked `no_pupil_page` (the lesson has no
+  pupil page). BBC Bitesize and Isaac pages are already made for students.
+  All 90 Oak links (84 lessons) were switched and re-read on 2026-11-26; every lesson had a pupil
+  page, so none is marked `no_pupil_page`.
 
 ### Read aloud and reading comfort
 

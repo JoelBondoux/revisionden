@@ -432,3 +432,82 @@ test('the link check only requests web links, never an in-house route', () => {
     [link().url],
   );
 });
+
+const oakPupil = (extra = {}) =>
+  link({
+    provider: 'oak',
+    url: 'https://www.thenational.academy/pupils/lessons/solving-linear-equations/overview',
+    match: match({ page_title: 'Solving linear equations | Oak National Academy' }),
+    ...extra,
+  });
+const oakTeacher =
+  'https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/u/lessons/solving-linear-equations';
+
+test('Oak links point to the pupil lesson page, not the teacher page', () => {
+  assert.deepEqual(
+    learnLinkErrors(content({ topic: 'gcse-maths-h-a17', links: [oakPupil()] })),
+    [],
+  );
+  const errors = learnLinkErrors(
+    content({ topic: 'gcse-maths-h-a17', links: [oakPupil({ url: oakTeacher })] }),
+  );
+  assert.deepEqual(
+    errors.map((e) => e.message),
+    [
+      `oak links must be the pupil lesson page (/pupils/lessons/<lesson>/overview), or marked no_pupil_page: ${oakTeacher}`,
+    ],
+  );
+});
+
+test('a teacher page is allowed only for a lesson marked as having no pupil page', () => {
+  assert.deepEqual(
+    learnLinkErrors(
+      content({
+        topic: 'gcse-maths-h-a17',
+        links: [oakPupil({ url: oakTeacher, no_pupil_page: true })],
+      }),
+    ),
+    [],
+  );
+  const errors = learnLinkErrors(
+    content({
+      topic: 'gcse-maths-h-a17',
+      links: [oakPupil({ no_pupil_page: true }), link({ no_pupil_page: true })],
+    }),
+  );
+  assert.deepEqual(
+    errors.map((e) => e.message),
+    [
+      `no_pupil_page is only for an Oak teacher page: ${oakPupil().url}`,
+      `no_pupil_page is only for an Oak teacher page: ${link().url}`,
+    ],
+  );
+});
+
+test('an Oak pupil link is the overview page, which answers 200 so the title check runs', () => {
+  // The bare /pupils/lessons/<lesson> answers 308 to /overview, and the link check reads the
+  // title only on a 200, so a bare link would never have its match re-checked.
+  const bare = 'https://www.thenational.academy/pupils/lessons/solving-linear-equations';
+  const errors = learnLinkErrors(
+    content({ topic: 'gcse-maths-h-a17', links: [oakPupil({ url: bare })] }),
+  );
+  assert.match(errors[0].message, /must be the pupil lesson page/);
+});
+
+test('the schema accepts no_pupil_page as true only', () => {
+  const { learnLinks } = createValidators();
+  const ok = (l) => learnLinks({ topic: 'gcse-maths-h-a17', links: [l] });
+  assert.equal(ok(oakPupil({ url: oakTeacher, no_pupil_page: true })), true);
+  assert.equal(ok(oakPupil({ url: oakTeacher, no_pupil_page: false })), false);
+  assert.equal(ok(oakPupil({ url: oakTeacher, no_pupil_page: 'yes' })), false);
+});
+
+test('the link check reads the title of an Oak pupil page', async () => {
+  const url = oakPupil().url;
+  const html = `<html><head><title>${oakPupil().match.page_title}</title></head></html>`;
+  const fakeFetch = async () => ({ status: 200, text: async () => html });
+  const [r] = await checkLinks([{ file: 'a.json', url, match: oakPupil().match }], {
+    fetch: fakeFetch,
+  });
+  assert.deepEqual([r.ok, r.status], [true, 200]);
+});

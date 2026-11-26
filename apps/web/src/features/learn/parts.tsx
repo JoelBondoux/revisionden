@@ -1,6 +1,7 @@
-import { useId, useState, type ReactNode } from 'react';
-import type { LearnItem, Progress } from '@revisionden/core';
+import { useId, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { hasPowers, showsPowers, type LearnItem, type Progress } from '@revisionden/core';
 import { Button } from '../../components/Button';
+import { MathText } from '../../components/MathText';
 import { Pill } from '../../components/Pill';
 import { ProgressBar } from '../../components/ProgressBar';
 import './learn.css';
@@ -77,10 +78,14 @@ function FlashcardCheck({
   const [revealed, setRevealed] = useState(false);
   return (
     <div className="question">
-      <p className="question__prompt">{item.front}</p>
+      <p className="question__prompt">
+        <MathText text={item.front} subject={item.topicId} />
+      </p>
       {revealed ? (
         <>
-          <p className="question__reveal">{item.back}</p>
+          <p className="question__reveal">
+            <MathText text={item.back} subject={item.topicId} />
+          </p>
           {!disabled && (
             <div className="self-check">
               <Button variant="secondary" onClick={() => onSelfCheck?.(false)}>
@@ -101,6 +106,50 @@ function FlashcardCheck({
   );
 }
 
+/**
+ * F9: a "Power" key that types ^ where the cursor is (phone keypads often have no ^), and a
+ * preview of the answer with its powers raised. ² typed straight in still works. Not in
+ * computing, where ^ is a real symbol and is shown as typed.
+ */
+function PowerTools({
+  field,
+  text,
+  subject,
+  disabled,
+  onChange,
+}: {
+  field: RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
+  text: string;
+  subject: string;
+  disabled: boolean;
+  onChange: (draft: Draft) => void;
+}) {
+  if (!showsPowers(subject)) return null;
+  function typePower() {
+    const box = field.current;
+    const at = box?.selectionStart ?? text.length;
+    const end = box?.selectionEnd ?? at;
+    onChange(`${text.slice(0, at)}^${text.slice(end)}`);
+    box?.focus();
+    requestAnimationFrame(() => box?.setSelectionRange(at + 1, at + 1));
+  }
+  return (
+    <div className="power-tools">
+      <Button variant="secondary" disabled={disabled} onClick={typePower}>
+        Power{' '}
+        <span aria-hidden="true">
+          x<sup>n</sup>
+        </span>
+      </Button>
+      {hasPowers(text) && (
+        <p className="secondary-text answer-preview" data-testid="answer-preview">
+          Shows as: <MathText text={text} subject={subject} />
+        </p>
+      )}
+    </div>
+  );
+}
+
 function TextAnswer({
   item,
   text,
@@ -113,15 +162,19 @@ function TextAnswer({
   onChange: (draft: Draft) => void;
 }) {
   const id = useId();
+  const field = useRef<HTMLInputElement>(null);
   return (
     <div className="question">
-      <p className="question__prompt">{item.prompt}</p>
+      <p className="question__prompt">
+        <MathText text={item.prompt} subject={item.topicId} />
+      </p>
       <div className="field">
         <label className="field__label" htmlFor={id}>
           Your answer
         </label>
         <span className="field__row">
           <input
+            ref={field}
             id={id}
             className="field__input"
             value={text}
@@ -130,10 +183,25 @@ function TextAnswer({
             inputMode={item.type === 'numeric' ? 'decimal' : undefined}
             onChange={(event) => onChange(event.target.value)}
           />
-          {item.type === 'numeric' && item.unit && <span className="field__unit">{item.unit}</span>}
+          {item.type === 'numeric' && item.unit && (
+            <span className="field__unit">
+              <MathText text={item.unit} subject={item.topicId} />
+            </span>
+          )}
         </span>
       </div>
-      {item.hint && <p className="secondary-text">Hint: {item.hint}</p>}
+      <PowerTools
+        field={field}
+        text={text}
+        subject={item.topicId}
+        disabled={disabled}
+        onChange={onChange}
+      />
+      {item.hint && (
+        <p className="secondary-text">
+          Hint: <MathText text={item.hint} subject={item.topicId} />
+        </p>
+      )}
     </div>
   );
 }
@@ -148,11 +216,14 @@ export function ItemInput({
   optionMark,
 }: ItemInputProps) {
   const text = typeof draft === 'string' ? draft : '';
+  const working = useRef<HTMLTextAreaElement>(null);
   switch (item.type) {
     case 'multiple_choice':
       return (
         <fieldset className="question">
-          <legend className="question__prompt">{item.prompt}</legend>
+          <legend className="question__prompt">
+            <MathText text={item.prompt} subject={item.topicId} />
+          </legend>
           <div className="answer-grid">
             {item.options.map((option, index) => {
               const mark = optionMark?.(index);
@@ -168,7 +239,9 @@ export function ItemInput({
                     disabled={disabled}
                     onChange={() => onChange(index)}
                   />
-                  <span>{option}</span>
+                  <span>
+                    <MathText text={option} subject={item.topicId} />
+                  </span>
                   {mark?.extra}
                 </label>
               );
@@ -182,12 +255,15 @@ export function ItemInput({
     case 'extended_answer':
       return (
         <div className="question">
-          <p className="question__prompt">{item.prompt}</p>
+          <p className="question__prompt">
+            <MathText text={item.prompt} subject={item.topicId} />
+          </p>
           <label className="field">
             <span className="field__label">
               {item.type === 'worked_maths' ? 'Your working (one step per line)' : 'Your answer'}
             </span>
             <textarea
+              ref={working}
               className="field__input field__input--multiline"
               value={text}
               disabled={disabled}
@@ -195,6 +271,15 @@ export function ItemInput({
               onChange={(event) => onChange(event.target.value)}
             />
           </label>
+          {item.type === 'worked_maths' && (
+            <PowerTools
+              field={working}
+              text={text}
+              subject={item.topicId}
+              disabled={disabled}
+              onChange={onChange}
+            />
+          )}
           {item.type === 'extended_answer' && (
             <p className="secondary-text">
               Long answers will be marked by AI soon. For now, write your answer and compare it with
