@@ -82,7 +82,7 @@ function Feedback({
       ) : (
         feedback && (
           <p>
-            Answer: <MathText text={feedback.correctAnswer} subject={topicId} />
+            Answer: <MathText text={feedback.correctAnswer} subject={item.topicId} />
           </p>
         )
       )}
@@ -91,7 +91,7 @@ function Feedback({
       )}
       {feedback?.explanation && (
         <p>
-          <MathText text={feedback.explanation} subject={topicId} />
+          <MathText text={feedback.explanation} subject={item.topicId} />
         </p>
       )}
       {result.flashcardAdded && <p>Added to your flashcards for another go later.</p>}
