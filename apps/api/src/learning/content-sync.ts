@@ -65,6 +65,9 @@ export interface ItemBody {
   hint?: string;
   front?: string;
   back?: string;
+  /** Area model items (lesson pilot W8): explore or guided, and the quadratic x^2 + bx + c. */
+  mode?: 'explore' | 'guided';
+  quadratic?: { b: number; c: number };
 }
 
 /** answer: kept on the server. key is the content item's answer; markScheme its mark points. */
@@ -91,6 +94,8 @@ export function itemBody(item: ContentItem): ItemBody {
     hint: item.hint,
     front: item.front,
     back: item.back,
+    mode: item.type === 'area_model' ? (item.mode as ItemBody['mode']) : undefined,
+    quadratic: item.type === 'area_model' ? (item.quadratic as ItemBody['quadratic']) : undefined,
   });
 }
 
