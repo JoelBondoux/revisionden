@@ -17,13 +17,13 @@ describe('Family screen', () => {
   it('opens the parent home for the chosen child, never the student screens', async () => {
     const { router } = renderRoute('/family', { studentId: null });
     const nova = await screen.findByRole('link', { name: /^NovaFox/ });
-    expect(nova).toHaveAttribute('href', '/parent?student=8f6d2b1e-4c3a-4d5e-9f00-000000000001');
+    expect(nova).toHaveAttribute('href', '/parent?student=00000000-0000-4000-8000-0000000000a1');
     await userEvent.click(nova);
     expect(
       await screen.findByRole('heading', { level: 1, name: 'Parent home' }),
     ).toBeInTheDocument();
     expect(router.state.location.pathname).toBe('/parent');
-    expect(router.state.location.search).toBe('?student=8f6d2b1e-4c3a-4d5e-9f00-000000000001');
+    expect(router.state.location.search).toBe('?student=00000000-0000-4000-8000-0000000000a1');
     expect(screen.queryByRole('heading', { name: 'Topic map' })).not.toBeInTheDocument();
   });
 
@@ -31,10 +31,10 @@ describe('Family screen', () => {
     renderRoute('/family', { studentId: null });
     expect(
       await screen.findByRole('link', { name: 'Rewards you set for NovaFox' }),
-    ).toHaveAttribute('href', '/family/8f6d2b1e-4c3a-4d5e-9f00-000000000001/rewards');
+    ).toHaveAttribute('href', '/family/00000000-0000-4000-8000-0000000000a1/rewards');
     expect(screen.getByRole('link', { name: 'Link a device for NovaFox' })).toHaveAttribute(
       'href',
-      '/onboarding?link=8f6d2b1e-4c3a-4d5e-9f00-000000000001',
+      '/onboarding?link=00000000-0000-4000-8000-0000000000a1',
     );
   });
 

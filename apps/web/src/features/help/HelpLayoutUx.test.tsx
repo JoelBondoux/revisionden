@@ -94,15 +94,21 @@ describe('Get help page layout', () => {
 });
 
 describe('finding Get help from the student screens', () => {
-  it('the topic map has a clear Get help tile', async () => {
+  it('the topic map links to Get help only from the header and the footer, not a third card', async () => {
     const { container } = renderRoute('/map');
     await screen.findByRole('heading', { name: 'Topic map' });
-    const tile = container.querySelector<HTMLElement>('.get-help-tile')!;
-    const link = within(tile).getByRole('link', { name: 'Get help' });
-    expect(link).toHaveAttribute('href', '/help');
-    expect(link).toHaveAccessibleDescription(
-      'Private support if something is worrying you. Nobody is told you looked.',
-    );
+    const links = screen.getAllByRole('link', { name: 'Get help' });
+    expect(links).toHaveLength(2);
+    for (const link of links) expect(link).toHaveAttribute('href', '/help');
+    expect(
+      within(container.querySelector<HTMLElement>('.sound-header')!).getByRole('link', {
+        name: 'Get help',
+      }),
+    ).toBeInTheDocument();
+    expect(
+      within(screen.getByRole('contentinfo')).getByRole('link', { name: 'Get help' }),
+    ).toBeInTheDocument();
+    expect(container.querySelector('.get-help-tile')).toBeNull();
   });
 
   it('the student header has a Get help link on every screen', () => {

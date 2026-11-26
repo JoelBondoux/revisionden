@@ -86,3 +86,56 @@ describe('Explain on a flashcard (F7)', () => {
     expect(screen.queryByRole('button', { name: 'Explain' })).not.toBeInTheDocument();
   });
 });
+
+describe('Explain on a phone (F7b, morning screenshots #185)', () => {
+  function spyScroll() {
+    const calls: { panel: boolean; options: ScrollIntoViewOptions | boolean | undefined }[] = [];
+    Element.prototype.scrollIntoView = function (this: Element, options) {
+      calls.push({ panel: this.getAttribute('aria-label') === 'Explain', options });
+    };
+    return calls;
+  }
+  function reducedMotion(on: boolean) {
+    window.matchMedia = ((query: string) => ({
+      matches: on && query.includes('reduce'),
+      media: query,
+      onchange: null,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      addListener: () => {},
+      removeListener: () => {},
+      dispatchEvent: () => false,
+    })) as typeof window.matchMedia;
+  }
+  const original = { scroll: Element.prototype.scrollIntoView, media: window.matchMedia };
+  afterEach(() => {
+    Element.prototype.scrollIntoView = original.scroll;
+    window.matchMedia = original.media;
+  });
+
+  it('scrolls the panel into view when it opens and on each step', async () => {
+    reducedMotion(false);
+    const calls = spyScroll();
+    await openCards();
+    await click('Show answer');
+    await click('Explain');
+    const panel = screen.getByRole('region', { name: 'Explain' });
+    expect(calls.filter((c) => c.panel)).toHaveLength(1);
+    expect(calls.at(-1)!.options).toEqual({ block: 'nearest', behavior: 'smooth' });
+    await userEvent.click(within(panel).getByRole('button', { name: 'Next step' }));
+    await userEvent.click(within(panel).getByRole('button', { name: 'Back' }));
+    expect(calls.filter((c) => c.panel)).toHaveLength(3);
+  });
+
+  it('jumps instantly under reduced motion', async () => {
+    reducedMotion(true);
+    const calls = spyScroll();
+    await openCards();
+    await click('Show answer');
+    await click('Explain');
+    expect(calls.filter((c) => c.panel).at(-1)!.options).toEqual({
+      block: 'nearest',
+      behavior: 'auto',
+    });
+  });
+});

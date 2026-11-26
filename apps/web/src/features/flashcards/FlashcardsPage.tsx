@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
 import {
   FLASHCARD_SESSION_MAX_CARDS,
   formatReviewDelay,
@@ -11,7 +11,7 @@ import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
-import { ArenaProgress } from '../juice';
+import { ArenaProgress, useReducedMotion } from '../juice';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
 import { NewRewards } from '../learn/NewRewards';
 import { DraftBanner } from '../learn/parts';
@@ -86,8 +86,15 @@ function FlipCard({
 function ExplainSteps({ steps, onClose }: { steps: readonly string[]; onClose: () => void }) {
   const [step, setStep] = useState(0);
   const last = step === steps.length - 1;
+  const panel = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  // On a phone the panel opens below the fold, behind the bottom bar (F7b): bring it into view
+  // when it opens and on each step. Its scroll margin keeps it above the bar.
+  useEffect(() => {
+    panel.current?.scrollIntoView?.({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
+  }, [step, reduced]);
   return (
-    <section className="explain card" aria-label="Explain">
+    <section ref={panel} className="explain card" aria-label="Explain">
       <p className="explain__count secondary-text">
         Step {step + 1} of {steps.length}
       </p>

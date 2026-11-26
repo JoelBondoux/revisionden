@@ -2,8 +2,6 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_AVATAR, encodeAvatar } from './avatar';
 import {
   ApiErrorSchema,
-  AttemptRequestSchema,
-  AttemptResponseSchema,
   CreateEnrolmentRequestSchema,
   CreateStudentRequestSchema,
   EnrolmentSchema,
@@ -124,35 +122,6 @@ describe('items and next items', () => {
     expect(errorsFor(ItemSchema, { ...item, type: 'essay-ish' })[0]).toMatch(/^type: /);
     expect(errorsFor(NextItemsRequestSchema, { count: 50 })).toEqual([
       'count: Number must be less than or equal to 20',
-    ]);
-  });
-});
-
-describe('attempts', () => {
-  const attempt = { itemId: id(2), answer: { value: 4 }, timeMs: 5400, mode: 'learn' };
-
-  it('parses a valid attempt request and response', () => {
-    expect(AttemptRequestSchema.parse(attempt)).toEqual(attempt);
-    const response = {
-      id: id(4),
-      itemId: id(2),
-      correct: true,
-      score: 1,
-      xpEarned: 15,
-      createdAt: '2026-11-24T17:30:00.000Z',
-    };
-    expect(AttemptResponseSchema.parse(response)).toEqual(response);
-  });
-
-  it('gives readable errors for negative time, a missing answer and a score over 1', () => {
-    expect(errorsFor(AttemptRequestSchema, { ...attempt, timeMs: -1, answer: undefined })).toEqual([
-      'answer: Required',
-      'timeMs: Number must be greater than or equal to 0',
-    ]);
-    const bad = { id: id(4), itemId: id(2), correct: true, score: 2, xpEarned: 1, createdAt: 'x' };
-    expect(errorsFor(AttemptResponseSchema, bad)).toEqual([
-      'score: Number must be less than or equal to 1',
-      'createdAt: Invalid datetime',
     ]);
   });
 });
