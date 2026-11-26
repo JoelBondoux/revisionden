@@ -359,10 +359,15 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
     ignored.
 - **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with
   200% text nothing scrolls sideways (it used to push the page 120 px; `e2e/tests/lesson.spec.ts`).
-- **Built in J14a:** Pip's reactions and the field reflow. **Next (J14b):** compact the header so
-  the older speech-bubble Pip (`PipSays`) becomes a short line beside Pip v3, show the student's
-  framed avatar there so it can nod, hop and "hmm" (the mapping above is ready in
-  `pipReactionFor`), and add the growing burst on a streak with W's `useCelebrate` (J17).
+- **One compact header (J14b).** The lesson shows Pip v3 in its own header row with the way out
+  (×), the progress bar and the XP; while it does, the layout leaves out its separate Pip row
+  (`lessonPip.ts`; that row stays for a lesson's loading and error screens, so there is always a way
+  Home). The older speech-bubble Pip (`PipSays`) is gone: Pip's line is a speech bubble pointing up
+  at him, beside the combo and the **student's framed avatar** (`LessonAvatar`), which holds still
+  between answers and nods, hops or goes "hmm" with Pip (none with reduced motion). The question
+  starts about 68 px higher at 390 × 844 (`e2e/tests/lesson.spec.ts`). The growing burst on a streak
+  is W's `celebrate('correct', …, { combo })` (J17).
+- Built: J14a (reactions, field reflow), J14b (compact header, avatar).
 
 ## Themed particles and the prize box (J17, owner-approved mockup 2026-11-26)
 

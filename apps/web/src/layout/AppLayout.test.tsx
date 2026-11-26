@@ -52,8 +52,10 @@ describe('Pip, the Home button', () => {
     async (path) => {
       renderRoute(path);
       await screen.findByRole('heading', { level: 1 });
+      // J14b: one Pip, in the lesson's own header row; the layout's Pip row steps aside.
       const pip = screen.getByRole('button', { name: 'Home' });
-      expect(pip.closest('header')).toHaveClass('lesson-top-row');
+      expect(pip.closest('.lesson__top')).not.toBeNull();
+      expect(document.querySelector('.lesson-top-row')).toBeNull();
       pip.click();
       expect(await screen.findByRole('dialog', { name: 'Leave this lesson?' })).toBeInTheDocument();
     },

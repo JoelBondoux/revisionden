@@ -250,7 +250,7 @@ Tags: #product #rules #limits #defaults
   topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
   reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
   a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
-  stops after 60 s without input, keeps still in lessons and with reduced motion. In a lesson he reacts once to each marked answer (J14): a nod, a cheer from 3 right in a row or for today's goal, a gentle nod after help, an encouraging head tilt for a wrong answer; none with reduced motion (`features/juice/pip/reactions.ts`). He wears one item for the current subject
+  stops after 60 s without input, keeps still in lessons and with reduced motion. In a lesson he reacts once to each marked answer (J14): a nod, a cheer from 3 right in a row or for today's goal, a gentle nod after help, an encouraging head tilt for a wrong answer; none with reduced motion (`features/juice/pip/reactions.ts`). Since J14b the lesson shows him in its own header row (with ×, progress and XP) and the layout's separate Pip row steps aside; his line is a speech bubble beside the student's framed avatar, which reacts with him. He wears one item for the current subject
   and holds its prop in front of his ring (Pip v3, J15b-2: bigger head leaning out of the ring,
   shoulders only, no arm; Maths a calculator, English Literature a book; soft flag washes for
   French, German and Spanish), plus one of three gently-leaning looks that rotates by day (never

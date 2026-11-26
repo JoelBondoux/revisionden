@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { StudentProvider } from '../../session/StudentContext';
@@ -14,6 +14,29 @@ vi.mock('../juice/pip/reactions', async (original) => ({
 // J14: every lesson screen (topic lessons, practice, command words, the 5-a-day and recall) uses
 // the lesson player, so it sends each marked answer to Pip unless a page passes its own handler.
 describe('the lesson player and Pip (J14)', () => {
+  it("has one Pip, in the lesson's own header with the progress bar, and his line beside the avatar (J14b)", async () => {
+    const storage = new Map([['revisionden.studentId', 'student-1']]);
+    const { container } = render(
+      <StudentProvider
+        storage={{
+          getItem: (k) => storage.get(k) ?? null,
+          setItem: (k, v) => void storage.set(k, v),
+        }}
+      >
+        <MemoryRouter>
+          <LessonPlayer title="Demo lesson" items={[demoItems[1]!]} draftContent={false} />
+        </MemoryRouter>
+      </StudentProvider>,
+    );
+    await screen.findByLabelText('Your answer');
+    const top = container.querySelector('.lesson__top') as HTMLElement;
+    expect(within(top).getByRole('button', { name: 'Home' })).toBeInTheDocument();
+    expect(within(top).getByRole('progressbar', { name: 'Lesson progress' })).toBeInTheDocument();
+    expect(container.querySelectorAll('.pip-figure')).toHaveLength(1);
+    expect(container.querySelector('.pip-says')).toBeNull();
+    expect(container.querySelector('.lesson__pip-line')).toHaveTextContent(/\S/);
+  });
+
   it("sends each marked answer to Pip's reactions by default", async () => {
     const storage = new Map([['revisionden.studentId', 'student-1']]);
     render(
