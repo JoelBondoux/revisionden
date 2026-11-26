@@ -113,7 +113,11 @@ describe('the Doodle Diary skin (J13a)', () => {
       }
     }
     // Questions and answers never change font.
-    expect(skin.replace(/\/\*[\s\S]*?\*\//g, '')).not.toMatch(/question|answer|flip-card/);
+    for (const [, selectors, body] of skin
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      if (/question|answer|flip-card/.test(selectors!)) expect(body).not.toMatch(/font/);
+    }
   });
 
   it('draws focus as an outline outside the edge, which no wobble or shadow can hide', () => {
@@ -132,5 +136,44 @@ describe('the Doodle Diary skin (J13a)', () => {
 
   it('presses buttons down without movement when less motion is asked for', () => {
     expect(media(skin, '(prefers-reduced-motion: reduce)')).toMatch(/transform:\s*none/);
+  });
+
+  // Moved from Doodle Diary when it became the base for every style (J13a).
+  it('puts the question and answers on a plain card: no tilt, texture or motion', () => {
+    for (const selector of [':root .lesson__stage', ':root .answer-option']) {
+      const body = rule(skin, selector);
+      expect(body, selector).toMatch(/border:\s*2px solid var\(--ink\)/);
+      expect(body, selector).not.toMatch(/rotate|animation|background-image|gradient/);
+    }
+  });
+
+  it('marks a right answer in the success colour with a light wash, never red (J10f)', () => {
+    const right = [...skin.matchAll(/([^{}]*answer-option--right[^{}]*)\{([^}]*)\}/g)];
+    expect(right.length).toBeGreaterThanOrEqual(2);
+    for (const [, , body] of right) {
+      expect(body).toMatch(/var\(--color-success/);
+      expect(body).not.toMatch(/danger|red/);
+    }
+    expect(
+      right.some(([, , body]) => /background:\s*var\(--color-success-soft\)/.test(body!)),
+    ).toBe(true);
+  });
+
+  it('shows earned levels in dark ink on solid highlighter, never on a pattern (J10g)', () => {
+    const earned = rule(skin, ':root .rewards__step--earned');
+    expect(earned).toMatch(/background:\s*var\(--highlight\)/);
+    expect(earned).toMatch(/color:\s*var\(--highlight-ink\)/);
+    expect(earned).not.toMatch(/gradient|url\(/);
+  });
+
+  it('colours mastered topics in with highlighter hatching from the accent set', () => {
+    expect(rule(skin, ':root .hex--mastered .hex__shape')).toMatch(/--hex-border:\s*var\(--ink\)/);
+    expect(rule(skin, ':root .hex--mastered .hex__shape::before')).toMatch(
+      /var\(--mastered-a\)[^;]*var\(--mastered-b\)/,
+    );
+  });
+
+  it('underlines page titles with a wavy pen line', () => {
+    expect(rule(skin, ':root .page-header h1')).toMatch(/underline wavy/);
   });
 });

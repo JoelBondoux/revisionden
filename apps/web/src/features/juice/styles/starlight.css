@@ -2,8 +2,17 @@
  * Starlight, an unlockable effect style (J10b, docs/GAME_FEEL.md). Glowing and dreamy: night-sky
  * cards, wins that light up like stars, soft sparkles. Every rule is scoped to the style.
  * Transforms and opacity only (glows are static shadows). Colours chosen for AA.
+ * Since J13a a style sets only its accent set and its moments; the screens themselves are the
+ * shared Doodle Diary skin (design/skin.css).
  */
 :root[data-effect-style='starlight'] {
+  /* The accent set (J13a): what is chosen, progress scribbles and the mastered fill. */
+  --highlight: #d6e4ff;
+  --highlight-ink: #2b2a3a;
+  --scribble-a: #8fb0ff;
+  --scribble-b: #c9d8ff;
+  --mastered-a: #ffe45c;
+  --mastered-b: #fff4b8;
   --sl-night: #241a6b;
   --sl-deep: #120d3a;
   --sl-text: #f2f0ff;
@@ -12,56 +21,6 @@
   --sl-pink: #ff7ad9;
   --sl-star: #fff6b0;
   --sl-glow: 0 0 24px rgb(180 140 255 / 35%);
-}
-
-/* ---------- Home ---------- */
-:root[data-effect-style='starlight'] .page-header .pill {
-  box-shadow: 0 0 12px rgb(255 214 90 / 60%);
-}
-
-:root[data-effect-style='starlight'] .today-strip,
-:root[data-effect-style='starlight'] .today-strip__mission,
-:root[data-effect-style='starlight'] .today-strip__daily {
-  border: 1px solid rgb(255 255 255 / 18%);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(170deg, var(--sl-night), var(--sl-deep));
-  color: var(--sl-text);
-  box-shadow: var(--sl-glow);
-}
-
-:root[data-effect-style='starlight'] .today-strip {
-  padding: var(--space-2) var(--space-3) var(--space-1);
-}
-
-:root[data-effect-style='starlight'] .today-strip__heading {
-  color: #c4b5ff;
-}
-
-:root[data-effect-style='starlight'] .today-strip__xp,
-:root[data-effect-style='starlight'] .today-strip__daily .today-strip__eyebrow,
-:root[data-effect-style='starlight'] .today-strip__daily .today-strip__title,
-:root[data-effect-style='starlight'] .today-strip__mission .today-strip__meta {
-  color: var(--sl-soft);
-}
-
-:root[data-effect-style='starlight'] .today-strip__mission .today-strip__eyebrow {
-  color: var(--sl-cyan);
-}
-
-/* Mastered topics glow like stars. */
-:root[data-effect-style='starlight'] .hex--mastered .hex__shape {
-  --hex-border: var(--sl-star);
-}
-
-/* ---------- Rewards ---------- */
-:root[data-effect-style='starlight'] .rewards__step {
-  border-radius: 50%;
-}
-
-:root[data-effect-style='starlight'] .rewards__step--earned {
-  background: var(--sl-star);
-  color: #3a2a00;
-  box-shadow: 0 0 10px var(--sl-star);
 }
 
 /* ---------- Lesson moments ---------- */

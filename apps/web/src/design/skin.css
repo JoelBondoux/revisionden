@@ -22,6 +22,11 @@
   letter-spacing: 0;
 }
 
+:root .page-header h1 {
+  text-decoration: underline wavy var(--color-primary-edge) 2px;
+  text-underline-offset: 6px;
+}
+
 /* ---------- Focus: an outline outside the drawn edge, so neither wobble nor shadow hides it ---------- */
 :root :focus-visible {
   outline: 3px solid var(--color-primary-edge);
@@ -168,6 +173,71 @@
   --hex-border: var(--ink-soft);
 }
 
+/* Mastered topics are outlined in pen and coloured in with highlighter hatching (accent set). */
+:root .hex--mastered .hex__shape {
+  --hex-border: var(--ink);
+  --hex-fill: var(--mastered-a);
+  color: var(--highlight-ink);
+}
+
+:root .hex--mastered .hex__shape::before {
+  background: repeating-linear-gradient(-45deg, var(--mastered-a) 0 3px, var(--mastered-b) 3px 6px);
+}
+
+/* ---------- Rewards: earned levels on solid highlighter, locked ones in dashed pencil ---------- */
+:root .rewards__step {
+  border: 2px dashed var(--ink-soft);
+  border-radius: 50% 45% 55% 48%;
+}
+
+:root .rewards__step--earned {
+  border: 2px solid var(--ink);
+  background: var(--highlight);
+  color: var(--highlight-ink);
+}
+
+/* ---------- Lesson: the question and answers sit on a plain card (no tilt, texture or motion) ---------- */
+:root .lesson__stage {
+  /* Inside the paper card, the arena's text colours are the page's own (readable on paper). */
+  --arena-text: var(--color-text);
+  --arena-text-secondary: var(--color-text-secondary);
+  padding: var(--space-4);
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+:root .answer-option {
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+:root .answer-option:has(input:checked) {
+  border-color: var(--color-primary-edge);
+  box-shadow: 3px 3px 0 var(--color-primary-edge);
+}
+
+/* A right answer: a ring and a light wash in the success colour (green, or blue with colour-blind
+   friendly colours); red is for wrong only (J10f). Written to outrank the chosen-answer rule. */
+:root .answer-option.answer-option--right:has(input) {
+  background: var(--color-success-soft);
+  border-color: var(--color-success);
+  box-shadow:
+    0 0 0 3px var(--color-surface),
+    0 0 0 6px var(--color-success);
+}
+
+:root[data-theme='dark'] .answer-option.answer-option--right:has(input) {
+  border-color: var(--color-success-edge);
+  box-shadow:
+    0 0 0 3px var(--color-surface),
+    0 0 0 6px var(--color-success-edge);
+}
+
 /* ---------- Inputs ---------- */
 :root main select,
 :root .field__input {
@@ -249,9 +319,20 @@
     text-decoration: underline;
   }
 
+  :root .main-nav__link:not([aria-current='page']) {
+    border-style: none;
+  }
+
   :root .progress__fill {
     forced-color-adjust: none;
     background: Highlight;
+  }
+
+  /* A hexagon's shape is its background, which forced colours would remove: keep its own colours
+     (all AA), so mastered, weak and locked topics still look different. */
+  :root .hex__shape,
+  :root .unit-badge__hex {
+    forced-color-adjust: none;
   }
 
   :root :focus-visible {

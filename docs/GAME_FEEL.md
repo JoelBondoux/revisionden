@@ -131,10 +131,52 @@ tab say so to screen readers.
 - Locked items get their spoken name from the visible text plus hidden words ("Crown, locked.
   Unlock: 100-day streak"), so what is seen is what is said (WCAG 2.5.3).
 
+## One look: the Doodle Diary skin (J13a, owner decision 2026-11-26)
+
+The owner: "yes, build the doodle look across the whole app". Doodle Diary is the base look of
+every screen, whatever effect style is chosen (`apps/web/src/design/skin.css`, with the tokens in
+`tokens.ts` and `themes.ts`):
+
+- **Tokens:** `--ink` and `--ink-soft` (pen colour), `--paper` (cards, now the default surface)
+  and `--page` (the notebook page, now the default background), `--highlight` and
+  `--highlight-ink` (what is chosen), `--scribble-a` and `--scribble-b` (progress), `--mastered-a`
+  and `--mastered-b` (mastered topics), `--wobble` and `--wobble-sm` (hand-drawn corners),
+  `--lift` (a hard 3 × 4 px pen shadow) and `--font-hand` (Patrick Hand). Light and dark sets; AA
+  pairs in light, dark and colour-blind are in `themes.ts` (`THEME_PAIRS`, `NON_TEXT_PAIRS`).
+- **Components:** buttons, cards, settings rows (link tiles), chips, tabs, the Week, Term and Year
+  toggle, pills, inputs and selects, icon buttons, toasts and sheets have a 2 px ink edge with
+  wobbly corners, and cards and buttons the pen shadow. What is chosen (a chip, a tab, the current
+  tab in the bottom bar or tablet rail) is coloured in with highlighter, with dark ink on it.
+  Progress bars are an inked outline with a highlighter scribble whose end is marked in ink (the
+  scribble alone is too pale on paper for 3:1). Topic hexes are outlined in ink; mastered ones are
+  coloured in with highlighter hatching. Earned levels on Rewards are solid highlighter; locked
+  ones are dashed pencil. The question and answers sit on a plain paper card (no tilt, texture or
+  motion); a right answer gets a ring and a light wash in the success colour.
+- **Fonts:** Patrick Hand for page titles (h1, with a wavy pen underline on page headers) and card
+  titles only. Body text, labels, questions and answers stay in Nunito; the dyslexia-friendly
+  font setting still replaces Nunito everywhere.
+- **Focus** is a 3 px outline drawn 3 px outside the edge, so neither the wobble nor the pen
+  shadow can hide it. **Reduced motion:** buttons press by changing their shadow only.
+  **Forced colours:** edges stay, chosen items get a thick Highlight border and an underline,
+  progress fills use Highlight, and topic hexes keep their own colours (their shape is a
+  background).
+- **Unlockable styles change accents and moments only.** A style sets its accent set
+  (`--highlight`, `--highlight-ink`, `--scribble-a`, `--scribble-b`, `--mastered-a`,
+  `--mastered-b`; each checked for AA), its lesson surround colours (`--arena-*`) and its moments
+  (combo badge, stars, bursts, confetti, "+XP"). It never restyles a shared surface: a test in
+  `features/juice/styles/stylesheets.test.ts` fails if a style's rule targets a card, button,
+  chip, pill, progress bar, the tab bar, a link tile, a hex, the Today strip, the unit card or
+  badges, a Rewards step, the question card or an answer. The moments' own lettering (Doodle
+  Diary's red-pen "COMBO" and "+XP") is part of the effect, not body text.
+- Accent sets: Doodle Diary keeps the base (highlighter yellow); Sticker Book pink, Pop Burst gold
+  with pink scribbles, Starlight pale star blue, Comic Pop comic yellow with red scribbles, Garden
+  Grow leaf green, Pixel Arcade neon green. All keep dark ink on the highlighter (AA).
+
 ## Effect styles (J10, owner decision 2026-11-26)
 
 - One effect style is active at a time. It sets the look and motion of the game-feel moments
-  (combo badge, stars, bursts, confetti, "+XP"), the Home screen (topic map) and Rewards. The
+  (combo badge, stars, bursts, confetti, "+XP") and, since J13a, only the accents of the screens
+  (see "One look" above); before J13a it also restyled the Home screen and Rewards. The
   owner picked **Doodle Diary** as the free default (J10d). The other styles unlock through normal
   progress on the owner's ladder, never by buying (J10b, `docs/REWARDS.md` "Effect styles"):
   Sticker Book at level 3, Pop Burst at level 5, Garden Grow at

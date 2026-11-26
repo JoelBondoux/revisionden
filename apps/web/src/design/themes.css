@@ -46,6 +46,8 @@
   --highlight: #ffe45c;
   --highlight-ink: #2b2a3a;
   --lift: 3px 4px 0 #000000;
+  --mastered-a: #ffe45c;
+  --mastered-b: #fff4b8;
   --focus-ring: 0 0 0 3px #14112a, 0 0 0 6px #c4b5ff;
   --pattern-ink: rgb(196 181 255 / 7%);
   color-scheme: dark;

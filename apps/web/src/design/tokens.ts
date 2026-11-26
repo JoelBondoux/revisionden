@@ -48,6 +48,9 @@ export const tokens = {
   '--highlight-ink': '#2B2A3A',
   '--scribble-a': '#FFC83D',
   '--scribble-b': '#FFE45C',
+  /** Mastered topics are coloured in with highlighter hatching in these two shades. */
+  '--mastered-a': '#FFE45C',
+  '--mastered-b': '#FFF4B8',
   '--wobble': '255px 12px 225px 12px / 12px 225px 12px 255px',
   '--wobble-sm': '18px 6px 16px 7px / 7px 16px 6px 18px',
   '--lift': '3px 4px 0 #2B2A3A',

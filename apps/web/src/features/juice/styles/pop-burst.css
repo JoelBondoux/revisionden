@@ -2,71 +2,23 @@
  * Pop Burst, an unlockable effect style (J10b, docs/GAME_FEEL.md). Loud, bouncy and saturated:
  * jelly cards with a chunky bottom edge, gold for wins, round confetti. Every rule is scoped to
  * the style. Transforms and opacity only. Colours chosen for AA with the text on them.
+ * Since J13a a style sets only its accent set and its moments; the screens themselves are the
+ * shared Doodle Diary skin (design/skin.css).
  */
 :root[data-effect-style='pop-burst'] {
+  /* The accent set (J13a): what is chosen, progress scribbles and the mastered fill. */
+  --highlight: #ffd23f;
+  --highlight-ink: #2b2a3a;
+  --scribble-a: #ff6fb5;
+  --scribble-b: #ffb3d9;
+  --mastered-a: #ffd23f;
+  --mastered-b: #fff0a8;
   --pb-night: #5b33d6;
   --pb-plum: #8a2bc2;
   --pb-gold: #ffe066;
   --pb-gold-edge: #e0a800;
   --pb-ink: #3a1a7a;
   --pb-violet: #5a2fc0;
-}
-
-/* ---------- Home ---------- */
-:root[data-effect-style='pop-burst'] .page-header .pill {
-  box-shadow: 0 3px 0 rgb(0 0 0 / 22%);
-}
-
-:root[data-effect-style='pop-burst'] .today-strip {
-  padding: var(--space-2) var(--space-3) var(--space-1);
-  border-radius: 22px;
-  background: linear-gradient(160deg, var(--pb-night), var(--pb-plum));
-  color: #fff;
-  box-shadow: 0 6px 0 var(--pb-ink);
-}
-
-:root[data-effect-style='pop-burst'] .today-strip__heading,
-:root[data-effect-style='pop-burst'] .today-strip__xp,
-:root[data-effect-style='pop-burst'] .today-strip__daily .today-strip__eyebrow {
-  color: #fff;
-}
-
-:root[data-effect-style='pop-burst'] .today-strip__daily {
-  border: 3px solid var(--pb-night);
-  border-radius: 22px;
-  box-shadow: 0 6px 0 var(--pb-violet);
-}
-
-/* Today's mission is a big gold jelly button-card. */
-:root[data-effect-style='pop-burst'] .today-strip__mission {
-  border-radius: 24px;
-  background: var(--pb-gold);
-  color: var(--pb-ink);
-  box-shadow: 0 6px 0 var(--pb-gold-edge);
-}
-
-:root[data-effect-style='pop-burst'] .today-strip__mission .today-strip__eyebrow {
-  color: var(--pb-violet);
-}
-
-:root[data-effect-style='pop-burst'] .today-strip__mission .today-strip__meta {
-  color: var(--pb-ink);
-}
-
-:root[data-effect-style='pop-burst'] .hex--mastered .hex__shape {
-  --hex-border: var(--pb-gold-edge);
-  --hex-fill: var(--pb-gold);
-}
-
-/* ---------- Rewards ---------- */
-:root[data-effect-style='pop-burst'] .rewards__step {
-  border-radius: 10px;
-}
-
-:root[data-effect-style='pop-burst'] .rewards__step--earned {
-  background: var(--pb-gold);
-  color: var(--pb-violet);
-  box-shadow: 0 3px 0 var(--pb-gold-edge);
 }
 
 /* ---------- Lesson moments ---------- */

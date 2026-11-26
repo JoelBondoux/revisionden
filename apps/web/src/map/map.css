@@ -113,10 +113,11 @@
 /* ---------- Today strip ---------- */
 .today-strip {
   padding: var(--space-2) var(--space-3) var(--space-1);
-  border-radius: var(--radius-lg);
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble);
   background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--lift);
 }
 
 .today-strip__head {
@@ -128,7 +129,9 @@
 
 .today-strip__heading {
   margin: 0;
-  font-size: var(--font-size-lg);
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  font-weight: 400;
 }
 
 .today-strip__goal {
@@ -168,7 +171,7 @@
   /* Inset a little, so a style that draws the row as a card does not crowd its text. */
   margin-inline: calc(var(--space-2) * -1);
   padding: 4px var(--space-2);
-  border-top: 2px dashed var(--color-track);
+  border-top: 2px dashed var(--ink-soft);
 }
 
 .today-strip__list > li + li {
@@ -317,12 +320,13 @@
 }
 
 .unit-badge[aria-pressed='true'] {
-  border-color: var(--color-text);
+  border-color: var(--ink);
+  border-radius: var(--wobble-sm);
   background: var(--color-surface);
 }
 
 .unit-badge__hex {
-  --badge-edge: var(--color-text);
+  --badge-edge: var(--ink);
   --badge-fill: var(--color-surface);
   display: grid;
   place-items: center;
@@ -355,15 +359,15 @@
 }
 
 .unit-badge[aria-pressed='true'] .unit-badge__hex {
-  --badge-fill: var(--color-gold);
+  --badge-fill: var(--highlight);
 }
 
 .unit-badge[aria-pressed='true'] .unit-badge__inner {
-  color: var(--color-text-on-gold);
+  color: var(--highlight-ink);
 }
 
 .unit-badge--locked .unit-badge__hex {
-  --badge-edge: var(--color-track);
+  --badge-edge: var(--ink-soft);
   --badge-fill: var(--color-locked-soft);
 }
 
@@ -378,10 +382,11 @@
 /* ---------- The chosen unit ---------- */
 .unit-card {
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-lg);
+  border: 2px solid var(--ink);
+  border-radius: var(--wobble);
   background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--lift);
 }
 
 .unit-card__head {
@@ -391,7 +396,7 @@
   justify-content: space-between;
   gap: 0 var(--space-3);
   padding-bottom: var(--space-1);
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 2px dashed var(--ink-soft);
 }
 
 .unit-card__title,
@@ -400,7 +405,9 @@
 }
 
 .unit-card__title {
-  font-size: var(--font-size-lg);
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  font-weight: 400;
 }
 
 .unit-card__mastery {

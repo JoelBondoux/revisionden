@@ -59,6 +59,8 @@ const requiredTokens = [
   '--lift',
   '--scribble-a',
   '--scribble-b',
+  '--mastered-a',
+  '--mastered-b',
   '--font-hand',
 ] as const;
 

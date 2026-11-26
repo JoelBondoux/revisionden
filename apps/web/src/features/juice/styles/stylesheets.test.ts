@@ -22,18 +22,43 @@ function selectors(source: string): string[] {
     .filter((s) => s && !s.startsWith('@') && !s.startsWith('('));
 }
 
+// J13a: every style restyles the same moments; the screens themselves are the shared Doodle
+// Diary skin (design/skin.css), which no style may restyle.
 const HOOKS = [
   '.combo-badge',
   '.star--earned',
   '.burst__particle',
   '.confetti__piece',
   '.float-up',
+];
+
+/** Shared surfaces that belong to the base skin: no style restyles them (J13a). */
+const BASE_SURFACES = [
   '.today-strip',
-  '.today-strip__mission',
-  '.today-strip__daily',
-  '.hex--mastered',
-  '.page-header .pill',
-  '.rewards__step--earned',
+  '.unit-card',
+  '.unit-badge',
+  '.page-header',
+  '.rewards__step',
+  '.lesson__stage',
+  '.answer-option',
+  '.card',
+  '.btn',
+  '.chip',
+  '.pill',
+  '.progress',
+  '.main-nav',
+  '.link-tile',
+  '.hex',
+];
+
+/** The accent set each unlockable style sets: what is chosen, scribbles and the mastered fill. */
+const ACCENTS = [
+  '--highlight',
+  '--highlight-ink',
+  '--scribble-a',
+  '--scribble-b',
+  '--mastered-a',
+  '--mastered-b',
 ];
 
 describe.each(EFFECT_STYLE_IDS)('the %s stylesheet', (id) => {
@@ -50,8 +75,43 @@ describe.each(EFFECT_STYLE_IDS)('the %s stylesheet', (id) => {
     }
   });
 
-  it('restyles the lesson moments, the Home screen and the Rewards page', () => {
+  it('restyles the lesson and reward moments', () => {
     for (const hook of HOOKS) expect(css, hook).toContain(`${scope} ${hook}`);
+  });
+
+  it('leaves the screens to the shared skin (no base surface restyled)', () => {
+    for (const list of selectors(css)) {
+      for (const selector of list.split(',')) {
+        for (const surface of BASE_SURFACES) {
+          // The block itself and its BEM parts (.today-strip__title, .btn--gold).
+          expect(selector, `${id}: ${surface}`).not.toMatch(
+            new RegExp(`\\${surface}(?:__|--|(?![\\w-]))`),
+          );
+        }
+      }
+    }
+  });
+
+  it('sets a full accent set, readable in light and dark (AA)', () => {
+    const start = css.indexOf(`${scope} {`);
+    const block = css.slice(start, css.indexOf('}', start));
+    const value = (name: string) => new RegExp(`${name}:\\s*(#[0-9a-f]{6})`, 'i').exec(block)?.[1];
+    if (id === 'doodle-diary') {
+      // The base look: it keeps the skin's own accents.
+      for (const name of ACCENTS) expect(value(name), name).toBeUndefined();
+      return;
+    }
+    for (const name of ACCENTS) expect(value(name), `${id} ${name}`).toBeDefined();
+    // Dark text on what is chosen (chips, tabs, the current tab) in every theme ...
+    expect(contrastRatio(value('--highlight-ink')!, value('--highlight')!)).toBeGreaterThanOrEqual(
+      4.5,
+    );
+    // ... and the tick on a mastered topic (an icon: 3:1).
+    for (const fill of ['--mastered-a', '--mastered-b']) {
+      expect(contrastRatio('#2b2a3a', value(fill)!), `${id} ${fill}`).toBeGreaterThanOrEqual(3);
+    }
+    // No dark-mode override of the accents: they work on night paper as they are.
+    expect(css).not.toMatch(/\[data-theme='dark'\] \{[^}]*--highlight/);
   });
 
   it('never puts a shadow filter on a topic hex, which would double its name', () => {
@@ -69,21 +129,13 @@ describe('the default style', () => {
   });
 });
 
-// J10a2: styles that turn the lesson surround away from the dark arena keep the question on a
-// plain card, and their surround colours meet AA in light and dark.
+// J10a2: styles that turn the lesson surround away from the dark arena re-colour it readably in
+// light and dark. (The question card and answers are the shared skin's: design/skin.css.)
 const SURROUND_STYLES = ['doodle-diary', 'sticker-book'] as const;
 
 describe.each(SURROUND_STYLES)('the %s lesson surround', (id) => {
   const css = read(`${id}.css`);
   const scope = `:root[data-effect-style='${id}']`;
-
-  it('puts the question and answers on a plain card', () => {
-    expect(css).toContain(`${scope} .lesson__stage`);
-    expect(css).toContain(`${scope} .answer-option`);
-    const stage = css.slice(css.indexOf(`${scope} .lesson__stage {`));
-    const rule = stage.slice(0, stage.indexOf('}'));
-    expect(rule).not.toMatch(/rotate|animation|background-image|gradient/);
-  });
 
   it('re-colours the arena readably (AA), in light and in dark', () => {
     for (const selector of [scope, `${scope}[data-theme='dark']`]) {
@@ -118,8 +170,10 @@ describe('the Doodle Diary handwriting', () => {
     JSON.parse(readFileSync(path, 'utf8')) as Record<string, never>;
 
   it('is self-hosted and loaded with the app', () => {
-    expect(provider).toContain(`import '@fontsource/patrick-hand/400.css';`);
-    expect(read('doodle-diary.css')).toContain("'Patrick Hand'");
+    expect(read('../../../design/base.css')).toContain(
+      `@import '@fontsource/patrick-hand/400.css';`,
+    );
+    expect(read('../../../design/tokens.css')).toContain("--font-hand: 'Patrick Hand'");
   });
 
   it('is listed under the open-source licences', () => {
@@ -129,45 +183,5 @@ describe('the Doodle Diary handwriting', () => {
     expect(licences).toContainEqual(
       expect.objectContaining({ name: '@fontsource/patrick-hand', licence: 'OFL-1.1' }),
     );
-  });
-});
-
-// J10f: Doodle Diary marks a right answer in the success colour (green, or blue for colour-blind
-// friendly colours) with a light wash, so it never reads as a red "wrong" mark.
-describe('the Doodle Diary right answer', () => {
-  const css = read('doodle-diary.css');
-  const rules = [...css.matchAll(/([^{}]*answer-option--right[^{}]*)\{([^}]*)\}/g)];
-
-  it('uses the success colour and a wash, never red', () => {
-    expect(rules.length).toBeGreaterThanOrEqual(2);
-    for (const [, , body] of rules) {
-      expect(body).not.toMatch(/--dd-red|#b8322a|#c8382e|#ff8a80/i);
-      expect(body).toMatch(/var\(--color-success/);
-    }
-    expect(
-      rules.some(([, , body]) => /background:\s*var\(--color-success-soft\)/.test(body!)),
-    ).toBe(true);
-  });
-});
-
-// J10g: an earned level's number sits on a plain fill, never on hatching, and is readable (AA).
-describe.each(EFFECT_STYLE_IDS)('the %s earned levels on Rewards', (id) => {
-  const css = read(`${id}.css`);
-
-  it('never puts a pattern behind the level number', () => {
-    for (const [, body] of css.matchAll(/rewards__step--earned[^{]*\{([^}]*)\}/g)) {
-      expect(body).not.toMatch(/gradient|url\(/);
-    }
-  });
-});
-
-describe('the Doodle Diary earned level', () => {
-  it('shows its number in dark ink on solid highlighter, in light and dark mode (AA)', () => {
-    const css = read('doodle-diary.css');
-    const rule = /\.rewards__step--earned \{([^}]*)\}/.exec(css)![1]!;
-    const background = /background:\s*(#[0-9a-f]{6})/i.exec(rule)?.[1];
-    const colour = /\bcolor:\s*(#[0-9a-f]{6})/i.exec(rule)?.[1];
-    expect(contrastRatio(colour!, background!)).toBeGreaterThanOrEqual(4.5);
-    expect(css).not.toMatch(/\[data-theme='dark'\] \.rewards__step--earned/);
   });
 });

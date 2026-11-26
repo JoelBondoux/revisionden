@@ -3,8 +3,17 @@
  * stickers slapped onto the page (white die-cut edge, a slight tilt, a soft offset shadow), with
  * paper confetti. Every rule is scoped to the style, so another style can replace it completely.
  * Stickers keep their paper colours in dark mode, like real stickers. Transforms and opacity only.
+ * Since J13a a style sets only its accent set and its moments; the screens themselves are the
+ * shared Doodle Diary skin (design/skin.css).
  */
 :root[data-effect-style='sticker-book'] {
+  /* The accent set (J13a): what is chosen, progress scribbles and the mastered fill. */
+  --highlight: #ffd6e8;
+  --highlight-ink: #2b2a3a;
+  --scribble-a: #ff8fb8;
+  --scribble-b: #ffd6e8;
+  --mastered-a: #ffc83d;
+  --mastered-b: #ffe08a;
   --sb-paper: #fffdf7;
   --sb-ink: #2f2a3d;
   --sb-ink-soft: #5a5470;
@@ -31,158 +40,6 @@
   --arena-text: #f3eefc;
   --arena-text-secondary: #c9c2e0;
   --arena-glow: #6fe0cf;
-}
-
-/* ---------- Home ---------- */
-:root[data-effect-style='sticker-book'] .page-header .pill {
-  rotate: -3deg;
-  box-shadow: var(--sb-sticker);
-}
-
-:root[data-effect-style='sticker-book'] .today-strip {
-  position: relative;
-  padding: var(--space-2) var(--space-3) var(--space-1);
-  border-radius: 6px;
-  background: var(--sb-paper);
-  color: var(--sb-ink);
-  box-shadow: var(--sb-sticker);
-  rotate: -0.6deg;
-}
-
-:root[data-effect-style='sticker-book'] .today-strip__xp {
-  color: var(--sb-ink-soft);
-}
-
-/* Today's mission: a card taped into the book. */
-:root[data-effect-style='sticker-book'] .today-strip__mission {
-  position: relative;
-  margin-top: var(--space-3);
-  border-radius: 6px;
-  background: var(--sb-paper);
-  color: var(--sb-ink);
-  box-shadow: var(--sb-sticker);
-  rotate: -1.2deg;
-}
-
-:root[data-effect-style='sticker-book'] .today-strip__mission::before,
-:root[data-effect-style='sticker-book'] .today-strip::before {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  width: 84px;
-  height: 22px;
-  margin-left: -42px;
-  background: var(--sb-tape);
-  rotate: 3deg;
-  pointer-events: none;
-}
-
-:root[data-effect-style='sticker-book'] .today-strip__mission .today-strip__eyebrow {
-  color: var(--sb-coral);
-}
-
-:root[data-effect-style='sticker-book'] .today-strip__mission .today-strip__meta {
-  color: var(--sb-ink-soft);
-}
-
-/* The 5-a-day card sits on the page like a paper note, tilted the other way. */
-:root[data-effect-style='sticker-book'] .today-strip__daily {
-  border: 0;
-  border-radius: 6px;
-  background: var(--sb-paper);
-  color: var(--sb-ink);
-  box-shadow: var(--sb-sticker);
-  rotate: 0.8deg;
-}
-
-:root[data-effect-style='sticker-book'] .today-strip__daily .today-strip__eyebrow,
-:root[data-effect-style='sticker-book'] .today-strip__daily .today-strip__title {
-  color: var(--sb-ink-soft);
-}
-
-/* Mastered topics are gold stickers, each stuck on at its own slight angle. */
-:root[data-effect-style='sticker-book'] .hex--mastered .hex__shape {
-  --hex-border: #fff;
-  rotate: -5deg;
-}
-
-:root[data-effect-style='sticker-book']
-  .unit-path__step:nth-child(even)
-  .hex--mastered
-  .hex__shape {
-  rotate: 4deg;
-}
-
-/* ---------- Rewards ---------- */
-:root[data-effect-style='sticker-book'] .rewards__step {
-  border: 2px dashed var(--sb-edge);
-}
-
-:root[data-effect-style='sticker-book'] .rewards__step--earned {
-  border: 2px solid #fff;
-  box-shadow:
-    0 0 0 2px var(--sb-edge),
-    2px 3px 0 var(--sb-shadow);
-  rotate: -6deg;
-}
-
-:root[data-effect-style='sticker-book'] .rewards__step--earned:nth-child(even) {
-  rotate: 5deg;
-}
-
-/* ---------- Lesson surround ---------- */
-/* The question and answers sit on a plain white card: no tilt, tape, texture or motion. */
-:root[data-effect-style='sticker-book'] .lesson__stage {
-  padding: var(--space-4);
-  border-radius: 8px;
-  background: #fff;
-  color: var(--sb-ink);
-  box-shadow: 0 0 0 2px var(--sb-edge);
-}
-
-:root[data-effect-style='sticker-book'] .answer-option {
-  border: 2px solid var(--sb-edge);
-  background: #fff;
-  color: var(--sb-ink);
-  box-shadow: 0 4px 0 var(--sb-edge);
-}
-
-:root[data-effect-style='sticker-book'] .answer-option:has(input:checked) {
-  border-color: var(--sb-ink);
-}
-
-:root[data-effect-style='sticker-book'] .answer-option--right {
-  background: #dff5ec !important;
-  border-color: #0b8457;
-  box-shadow: 0 4px 0 #0b8457 !important;
-  color: var(--sb-ink);
-}
-
-:root[data-effect-style='sticker-book'][data-theme='dark'] .lesson__stage,
-:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option {
-  background: var(--arena-raised);
-  color: var(--arena-text);
-}
-
-:root[data-effect-style='sticker-book'][data-theme='dark'] .lesson__stage {
-  box-shadow: 0 0 0 2px rgb(255 255 255 / 18%);
-}
-
-:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option {
-  border-color: rgb(255 255 255 / 22%);
-  box-shadow: 0 4px 0 rgb(0 0 0 / 35%);
-}
-
-:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option:has(input:checked) {
-  border-color: var(--arena-text);
-}
-
-:root[data-effect-style='sticker-book'][data-theme='dark'] .answer-option--right {
-  background: #163a2c !important;
-  border-color: #3ccf91;
-  box-shadow: 0 4px 0 #0b8457 !important;
-  color: var(--arena-text);
 }
 
 /* ---------- Lesson moments ---------- */

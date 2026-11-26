@@ -2,69 +2,22 @@
  * Comic Pop, an unlockable effect style (J10c, docs/GAME_FEEL.md). Bold ink outlines, flat comic
  * colours and hard offset shadows; wins slam in. Every rule is scoped to the style. Transforms
  * and opacity only. Colours chosen for AA with the text on them.
+ * Since J13a a style sets only its accent set and its moments; the screens themselves are the
+ * shared Doodle Diary skin (design/skin.css).
  */
 :root[data-effect-style='comic-pop'] {
+  /* The accent set (J13a): what is chosen, progress scribbles and the mastered fill. */
+  --highlight: #ffe14d;
+  --highlight-ink: #2b2a3a;
+  --scribble-a: #ff6b6b;
+  --scribble-b: #ffb3b3;
+  --mastered-a: #ffe14d;
+  --mastered-b: #fff3a8;
   --cp-ink: #111;
   --cp-yellow: #ffe14d;
   --cp-red: #d42020;
   --cp-blue: #1565c0;
   --cp-paper: #fff;
-}
-
-/* ---------- Home ---------- */
-:root[data-effect-style='comic-pop'] .page-header .pill {
-  border: 2px solid var(--cp-ink);
-  box-shadow: 3px 3px 0 var(--cp-ink);
-}
-
-:root[data-effect-style='comic-pop'] .today-strip,
-:root[data-effect-style='comic-pop'] .today-strip__daily,
-:root[data-effect-style='comic-pop'] .today-strip__mission {
-  border: 3px solid var(--cp-ink);
-  border-radius: 6px;
-  background: var(--cp-paper);
-  color: var(--cp-ink);
-  box-shadow: 6px 6px 0 var(--cp-ink);
-}
-
-:root[data-effect-style='comic-pop'] .today-strip {
-  padding: var(--space-2) var(--space-3) var(--space-1);
-}
-
-:root[data-effect-style='comic-pop'] .today-strip__heading {
-  color: var(--cp-blue);
-}
-
-:root[data-effect-style='comic-pop'] .today-strip__xp,
-:root[data-effect-style='comic-pop'] .today-strip__daily .today-strip__eyebrow,
-:root[data-effect-style='comic-pop'] .today-strip__daily .today-strip__title,
-:root[data-effect-style='comic-pop'] .today-strip__mission .today-strip__meta {
-  color: var(--cp-ink);
-}
-
-/* Today's mission is a comic panel. */
-:root[data-effect-style='comic-pop'] .today-strip__mission {
-  background: var(--cp-yellow);
-  rotate: -1deg;
-}
-
-:root[data-effect-style='comic-pop'] .today-strip__mission .today-strip__eyebrow {
-  color: #9b0f0f;
-}
-
-:root[data-effect-style='comic-pop'] .hex--mastered .hex__shape {
-  --hex-border: var(--cp-ink);
-}
-
-/* ---------- Rewards ---------- */
-:root[data-effect-style='comic-pop'] .rewards__step {
-  border: 2px solid var(--cp-ink);
-  border-radius: 4px;
-}
-
-:root[data-effect-style='comic-pop'] .rewards__step--earned {
-  background: var(--cp-blue);
-  color: #fff;
 }
 
 /* ---------- Lesson moments ---------- */

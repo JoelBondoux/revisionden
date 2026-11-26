@@ -123,6 +123,12 @@ formula and its assumptions. Summary of what is built:
   in `REWARDS.md`). Styles are never bought, never random and never tied to a streak. Doodle Diary
   is the free default (J10d). The child chooses in Settings
   → Effect style.
+- One look (J13a, owner decision 2026-11-26): every screen uses the Doodle Diary skin as its base
+  (pen-ink edges, paper, highlighter, Patrick Hand for page and card titles only, Nunito for
+  everything else including questions and answers). An effect style changes only its accent set,
+  its lesson surround colours and its moments; it never changes layout, shapes, fonts or anything
+  in a question. Each accent set meets AA in light, dark and colour-blind themes. Detail:
+  `docs/GAME_FEEL.md` "One look".
 - Rewards are celebrated where they are earned (workstream F4, product owner via lead,
   2026-11-25): an answer or a finished flashcard session saves any new reward once and shows
   "New reward: …" with the reward sound on that screen (the starting test waits for its results

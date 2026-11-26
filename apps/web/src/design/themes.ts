@@ -47,6 +47,8 @@ export const darkTokens = {
   '--highlight': '#FFE45C',
   '--highlight-ink': '#2B2A3A',
   '--lift': '3px 4px 0 #000000',
+  '--mastered-a': '#FFE45C',
+  '--mastered-b': '#FFF4B8',
 } as const;
 
 /**
@@ -107,6 +109,7 @@ export const THEME_PAIRS: PairSpec[] = [
   ['soft ink on paper', '--ink-soft', '--paper'],
   ['soft ink on page', '--ink-soft', '--page'],
   ['text on highlighter (chosen chip, tab, nav item)', '--highlight-ink', '--highlight'],
+  ['text on highlighter (earned level on Rewards)', '--highlight-ink', '--highlight'],
 ];
 
 /** Shapes that carry meaning, and what they sit on: these need 3:1 (WCAG 1.4.11, J10f). */
@@ -120,6 +123,8 @@ export const NON_TEXT_PAIRS: PairSpec[] = [
   ['drawn ink edge on paper', '--ink', '--paper'],
   ['drawn ink edge on page', '--ink', '--page'],
   ['progress end mark on paper', '--ink', '--paper'],
+  ['tick on a mastered topic (highlighter hatching)', '--highlight-ink', '--mastered-a'],
+  ['tick on a mastered topic (pale hatching)', '--highlight-ink', '--mastered-b'],
 ];
 
 /** The non-text pairs with real colours from one palette. */

@@ -810,11 +810,16 @@ Tags: #product #rules #limits #defaults
   (Get help, About, policies, long explanations, parent stats) may scroll. At 320 px or 200% text,
   vertical scrolling is allowed, but never page sideways scrolling or clipped content. Contained scrollers are allowed (lead ruling): a sideways chip or badge row (snap, edge fade, Tab reaches every item, 44 px targets) or a labelled, focusable list scrolling inside a card; at 320 px, 200% text or on short screens, the inner vertical scroll gives way to page scrolling. Agreed, not yet
   applied everywhere: see `docs/PRODUCT_RULES.md` (Screen layout) and `docs/design/j12/`.
-- One look (J12, proposed, owner choice pending): the owner wants one consistent style across the
-  student app instead of the current mix of doodle and default. J12's proposal: Doodle Diary is
-  the app's base skin for every shared component, body text stays Nunito (the hand font is for
-  headings only), and the unlockable styles change effects, sounds and accents only. Mockups in
-  `docs/design/j12/SKIN.md`.
+- One look (owner decision 2026-11-26, built in J13a): the Doodle Diary skin is the base look of
+  every screen, whatever effect style is chosen. Cards are paper (`--color-surface` #FDFBF4) on a
+  notebook page (`--color-background` #F6F2E4) in light mode; shared components have a 2 px ink
+  edge with wobbly corners and a hard pen shadow; what is chosen is highlighter yellow (#FFE45C)
+  with dark ink; progress is a scribble whose end is marked in ink; Patrick Hand is for page and
+  card titles only (Nunito for everything else, questions and answers included); focus is an
+  outline outside the edge; forced colours keep edges, chosen items and focus. Unlockable styles
+  set only an accent set (highlight, scribbles, mastered fill), their lesson surround and their
+  moments, never a shared surface (a test enforces it). Code: `apps/web/src/design/skin.css`,
+  tokens in `design/tokens.ts` and `design/themes.ts`. J13b applies it screen by screen.
 
 ## Exam practice (planned)
 
