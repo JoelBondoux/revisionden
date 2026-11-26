@@ -56,10 +56,12 @@ vi.mock('./links', async (importOriginal) => {
             match,
           },
           {
+            // For one question, so not a legacy whole-topic link: needs a match check to show.
             title: 'Reachable but not match-checked',
             url: 'https://www.thenational.academy/teachers/unmatched',
             provider: 'oak',
             level: 'GCSE',
+            items: ['demo-item'],
             checked_at: '2026-11-25',
           },
         ],

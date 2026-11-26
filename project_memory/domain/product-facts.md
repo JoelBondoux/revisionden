@@ -921,7 +921,12 @@ Tags: #product #rules #limits #defaults
   record (`page_title` as fetched, `teaches`, `level`, `checked_at`), recorded only for a page
   actually opened. The CI link check fails a match-checked page whose title changed; it also runs
   `--probe-providers` (what each provider's home page answers from the runner) and `--coverage`.
-  On 2026-11-26 no link had a match record yet, so no Learn it first or Learn more button shows.
+  Legacy (lead decision 2026-11-26): the 11 Q5 Oak links (`LEGACY_UNMATCHED_URLS`) are reachable
+  with no match record; they still show as whole-topic links and CI warns about them. Any other
+  reachable link without a match check fails validation. On 2026-11-26 no link had a match record.
+- In-house notes (planned; external links are interim): provider `revisionden` with `route` (an
+  app path, no URL), listed first, optional `hide_external`; refused by validation until the
+  notes exist (`IN_HOUSE_NOTES_BUILT` in `scripts/content/learn-links.mjs`).
 - Learn it first (Q5, built): data in `content/learn-links/<topic id>.json` (title, URL, provider
   `oak` on www.thenational.academy or `bitesize` on www.bbc.co.uk/bitesize/, level, optional
   board, `checked_at` date or null). Validated by `pnpm content:validate`; every URL requested by

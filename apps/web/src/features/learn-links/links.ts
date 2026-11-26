@@ -1,9 +1,12 @@
 /**
  * "Learn it first" and "Learn more" links (workstream Q): free lessons from the allowed providers
  * in content/learn-links/*.json, bundled into the app at build time (no request until a tap).
- * A link is shown only when it is reachable (checked_at) and match-checked (match).
+ * A web link is shown only when it is reachable (checked_at) and match-checked (match), or is a
+ * legacy whole-topic link from Q5 (reachable, no match record yet; the validator allows only
+ * those). External links are interim: `revisionden` is our own note (planned), with an app route
+ * instead of a URL, always listed first, and it can hide the external links it covers.
  */
-export type LearnLinkProvider = 'oak' | 'bitesize' | 'isaac';
+export type LearnLinkProvider = 'oak' | 'bitesize' | 'isaac' | 'revisionden';
 
 export interface LearnLinkMatch {
   /** The page's title as fetched when it was read. */
@@ -16,7 +19,12 @@ export interface LearnLinkMatch {
 
 export interface LearnLink {
   title: string;
-  url: string;
+  /** A web page (every provider but revisionden). */
+  url?: string;
+  /** An in-house note's app route (revisionden only). */
+  route?: string;
+  /** revisionden only: hide the external links for the same item, point or topic. */
+  hide_external?: boolean;
   provider: LearnLinkProvider;
   level: 'GCSE' | 'A-Level';
   board?: string;
@@ -34,6 +42,7 @@ export const PROVIDER_NAMES: Record<LearnLinkProvider, string> = {
   oak: 'Oak National Academy',
   bitesize: 'BBC Bitesize',
   isaac: 'Isaac',
+  revisionden: 'RevisionDen notes',
 };
 
 const PROVIDERS = new Set<unknown>(Object.keys(PROVIDER_NAMES));
@@ -45,8 +54,9 @@ function isLink(value: unknown): value is LearnLink {
   const l = value as Record<string, unknown>;
   return (
     typeof l.title === 'string' &&
-    typeof l.url === 'string' &&
-    l.url.startsWith('https://') &&
+    (l.provider === 'revisionden'
+      ? typeof l.route === 'string' && /^\/[a-z0-9/-]+$/.test(l.route)
+      : typeof l.url === 'string' && l.url.startsWith('https://')) &&
     PROVIDERS.has(l.provider) &&
     (l.checked_at === null || typeof l.checked_at === 'string') &&
     isIdList(l.learning_points) &&
@@ -54,17 +64,29 @@ function isLink(value: unknown): value is LearnLink {
   );
 }
 
-/** Reachable and match-checked: the only links the app shows. */
+const isWholeTopic = (l: LearnLink) => !l.learning_points && !l.items;
+export const isInHouse = (l: LearnLink) => l.provider === 'revisionden';
+
+/** Shown: an in-house note, a reachable match-checked web link, or a legacy whole-topic link. */
 export function isShown(link: LearnLink): boolean {
+  if (isInHouse(link)) return true;
+  if (link.checked_at === null) return false;
   const m = link.match;
+  if (m === undefined) return isWholeTopic(link);
   return (
-    link.checked_at !== null &&
     typeof m === 'object' &&
     m !== null &&
     typeof m.page_title === 'string' &&
     typeof m.teaches === 'string' &&
     typeof m.checked_at === 'string'
   );
+}
+
+/** In-house notes first; when one says so, the external links beside it are hidden. */
+function arrange(links: LearnLink[]): LearnLink[] {
+  const ours = links.filter(isInHouse);
+  if (ours.some((l) => l.hide_external)) return ours;
+  return [...ours, ...links.filter((l) => !isInHouse(l))];
 }
 
 /** Links by topic id. The content validator checks the files; this only skips bad shapes. */
@@ -79,11 +101,9 @@ export function parseLearnLinkFiles(files: readonly unknown[]): Map<string, Lear
   return byTopic;
 }
 
-const isWholeTopic = (l: LearnLink) => !l.learning_points && !l.items;
-
 /** The topic's shown whole-topic links ("Learn it first"); the button shows only with one. */
 export function checkedLinksFor(byTopic: Map<string, LearnLink[]>, topicId: string): LearnLink[] {
-  return (byTopic.get(topicId) ?? []).filter((l) => isShown(l) && isWholeTopic(l));
+  return arrange((byTopic.get(topicId) ?? []).filter((l) => isShown(l) && isWholeTopic(l)));
 }
 
 /**
@@ -97,12 +117,12 @@ export function learnMoreLinks(
   const shown = (byTopic.get(where.topicId) ?? []).filter(isShown);
   const { itemId, learningPoint } = where;
   const forItem = itemId ? shown.filter((l) => l.items?.includes(itemId)) : [];
-  if (forItem.length) return forItem;
+  if (forItem.length) return arrange(forItem);
   const forPoint = learningPoint
     ? shown.filter((l) => l.learning_points?.includes(learningPoint))
     : [];
-  if (forPoint.length) return forPoint;
-  return shown.filter(isWholeTopic);
+  if (forPoint.length) return arrange(forPoint);
+  return arrange(shown.filter(isWholeTopic));
 }
 
 const files = import.meta.glob('../../../../../content/learn-links/*.json', {

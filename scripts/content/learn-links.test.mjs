@@ -2,8 +2,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   checkLinks,
+  isLegacyLink,
   isShownLink,
   isWorkingStatus,
+  LEGACY_UNMATCHED_URLS,
   learnLinkErrors,
   linkCoverage,
   listLinks,
@@ -29,8 +31,14 @@ const link = (extra = {}) => ({
   provider: 'bitesize',
   level: 'GCSE',
   checked_at: '2026-11-25',
+  match: match(),
   ...extra,
 });
+const unmatched = (extra = {}) => {
+  const l = link(extra);
+  delete l.match;
+  return l;
+};
 const item = (id, learning_point) => ({
   file: 'items/a17.json',
   data: { id, topic: 'gcse-maths-h-a17', ...(learning_point ? { learning_point } : {}) },
@@ -46,13 +54,15 @@ const content = (data, file = 'learn-links/gcse-maths-h-a17.json') => ({
   items,
   learnLinks: [{ file, data }],
 });
-const match = (extra = {}) => ({
-  page_title: 'Solving linear equations - GCSE Maths Revision - BBC Bitesize',
-  teaches: 'Solving linear equations with unknowns on both sides, at GCSE.',
-  level: 'GCSE',
-  checked_at: '2026-11-26',
-  ...extra,
-});
+function match(extra = {}) {
+  return {
+    page_title: 'Solving linear equations - GCSE Maths Revision - BBC Bitesize',
+    teaches: 'Solving linear equations with unknowns on both sides, at GCSE.',
+    level: 'GCSE',
+    checked_at: '2026-11-26',
+    ...extra,
+  };
+}
 
 test('the learn links schema accepts a well-formed file', () => {
   const { learnLinks } = createValidators();
@@ -82,7 +92,10 @@ test('the learn links schema rejects missing fields, other providers and plain h
 });
 
 test('a good learn links file has no errors', () => {
-  assert.deepEqual(learnLinkErrors(content({ topic: 'gcse-maths-h-a17', links: [link()] })), []);
+  assert.deepEqual(
+    learnLinkErrors(content({ topic: 'gcse-maths-h-a17', links: [link({ match: match() })] })),
+    [],
+  );
 });
 
 test('links must belong to a real topic, named in the file name', () => {
@@ -116,7 +129,7 @@ test("a link's level and board must match the topic's subject and topic tree", (
     content({
       topic: 'gcse-maths-h-a17',
       links: [
-        link({ level: 'A-Level' }),
+        link({ level: 'A-Level', match: match({ level: 'A-Level' }) }),
         link({ url: 'https://www.bbc.co.uk/bitesize/b', board: 'aqa' }),
       ],
     }),
@@ -172,7 +185,10 @@ test('the link check requests every URL and reports broken ones and network erro
 test('listLinks flattens every file into one list of URLs', () => {
   assert.deepEqual(
     listLinks([
-      { file: 'f.json', data: { topic: 't', links: [link(), link({ url: 'https://u' })] } },
+      {
+        file: 'f.json',
+        data: { topic: 't', links: [unmatched(), unmatched({ url: 'https://u' })] },
+      },
     ]),
     [
       { file: 'f.json', topic: 't', url: link().url },
@@ -266,7 +282,7 @@ test("the match check's level must be the link's level", () => {
 
 test('a link is shown only when it is both reachable and match-checked', () => {
   assert.equal(isShownLink(link({ match: match() })), true);
-  assert.equal(isShownLink(link()), false);
+  assert.equal(isShownLink(unmatched()), false);
   assert.equal(isShownLink(link({ checked_at: null, match: match() })), false);
 });
 
@@ -331,7 +347,7 @@ test('coverage counts topics and learning points with items that have a shown li
       topic: 'gcse-maths-h-a17',
       links: [
         shown({ learning_points: ['gcse-maths-h-a17-lp-solve-linear'] }),
-        link({ url: 'https://www.bbc.co.uk/bitesize/unmatched' }),
+        unmatched({ url: 'https://www.bbc.co.uk/bitesize/unmatched', checked_at: null }),
       ],
     }),
     items: [
@@ -358,4 +374,68 @@ test('coverage counts topics and learning points with items that have a shown li
   // A topic-wide link covers every point in the topic, though not with a link of its own.
   const wide = linkCoverage(content({ topic: 'gcse-maths-h-a17', links: [shown()] }));
   assert.deepEqual(wide.points, { withItems: 2, withOwnLink: 0, withAnyLink: 2, missing: [] });
+});
+
+const LEGACY_URL =
+  'https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/algebraic-manipulation/lessons/checking-and-securing-understanding-of-solving-and-interpreting-linear-equations';
+
+test('the 11 Q5 Oak links are legacy: shown without a match check until re-read', () => {
+  assert.equal(LEGACY_UNMATCHED_URLS.size, 11);
+  const legacy = unmatched({ provider: 'oak', url: LEGACY_URL });
+  assert.equal(isLegacyLink(legacy), true);
+  assert.equal(isLegacyLink(link({ provider: 'oak', url: LEGACY_URL, match: match() })), false);
+  assert.equal(
+    isLegacyLink(unmatched({ provider: 'oak', url: LEGACY_URL, checked_at: null })),
+    false,
+  );
+  assert.deepEqual(learnLinkErrors(content({ topic: 'gcse-maths-h-a17', links: [legacy] })), []);
+});
+
+test('any other reachable link needs a full match check', () => {
+  const errors = learnLinkErrors(content({ topic: 'gcse-maths-h-a17', links: [unmatched()] }));
+  assert.match(errors[0].message, /needs a match check/);
+  // Not yet reachable: no match check needed yet.
+  assert.deepEqual(
+    learnLinkErrors(
+      content({ topic: 'gcse-maths-h-a17', links: [unmatched({ checked_at: null })] }),
+    ),
+    [],
+  );
+});
+
+const note = (extra = {}) => ({
+  title: 'Solving linear equations',
+  route: '/notes/gcse-maths-h-a17',
+  provider: 'revisionden',
+  level: 'GCSE',
+  checked_at: null,
+  ...extra,
+});
+
+test('the schema leaves room for in-house notes: an internal route, never a URL', () => {
+  const { learnLinks } = createValidators();
+  const ok = (l) => learnLinks({ topic: 'gcse-maths-h-a17', links: [l] });
+  assert.equal(ok(note()), true);
+  assert.equal(
+    ok(note({ hide_external: true, learning_points: ['gcse-maths-h-a17-lp-solve-linear'] })),
+    true,
+  );
+  assert.equal(ok(note({ route: 'https://revisionden.com/notes/x' })), false);
+  assert.equal(ok({ ...note(), url: 'https://www.thenational.academy/x' }), false);
+  assert.equal(ok(link({ provider: 'oak', route: '/notes/x' })), false);
+  assert.equal(ok(link({ hide_external: true })), false);
+});
+
+test('in-house notes are refused until they are built', () => {
+  const errors = learnLinkErrors(content({ topic: 'gcse-maths-h-a17', links: [note()] }));
+  assert.match(errors[0].message, /in-house notes are not built yet/);
+});
+
+test('the link check only requests web links, never an in-house route', () => {
+  assert.deepEqual(
+    listLinks([{ file: 'f.json', data: { topic: 't', links: [note(), link()] } }]).map(
+      (l) => l.url,
+    ),
+    [link().url],
+  );
 });

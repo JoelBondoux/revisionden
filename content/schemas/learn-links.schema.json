@@ -17,7 +17,7 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["title", "url", "provider", "level", "checked_at"],
+        "required": ["title", "provider", "level", "checked_at"],
         "additionalProperties": false,
         "properties": {
           "title": {
@@ -32,7 +32,8 @@
             "maxLength": 500
           },
           "provider": {
-            "enum": ["oak", "bitesize", "isaac"]
+            "enum": ["oak", "bitesize", "isaac", "revisionden"],
+            "description": "revisionden is our own verified note (planned): it has a route, not a URL."
           },
           "level": {
             "enum": ["GCSE", "A-Level"]
@@ -102,8 +103,49 @@
                 "description": "ISO date the page was read."
               }
             }
+          },
+          "route": {
+            "type": "string",
+            "pattern": "^/[a-z0-9]+(-[a-z0-9]+)*(/[a-z0-9]+(-[a-z0-9]+)*)*$",
+            "maxLength": 200,
+            "description": "Only for provider revisionden: the app route of the in-house note, e.g. /notes/gcse-maths-h-a17."
+          },
+          "hide_external": {
+            "type": "boolean",
+            "description": "Only for provider revisionden: once shown, the external links for the same item, learning point or topic are hidden."
           }
-        }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "provider": {
+                  "const": "revisionden"
+                }
+              },
+              "required": ["provider"]
+            },
+            "then": {
+              "required": ["route"],
+              "not": {
+                "required": ["url"]
+              }
+            },
+            "else": {
+              "required": ["url"],
+              "not": {
+                "anyOf": [
+                  {
+                    "required": ["route"]
+                  },
+                  {
+                    "required": ["hide_external"]
+                  }
+                ]
+              }
+            }
+          }
+        ]
       }
     }
   }

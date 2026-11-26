@@ -1029,6 +1029,10 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   secondary pupils, no ads, no comments or social feeds, no sign-up needed to read. Ad-supported
   sites and exam-board pages were not chosen. Isaac links are refused until its exact host is
   confirmed on Isaac's own site.
+- **External links are interim** (owner goal): all of this teaching is to be in-house, as our own
+  verified notes. The data is ready for that: provider `revisionden` points at an in-app route (not
+  a URL), is always listed first, and can hide the external links for the item, point or topic it
+  covers (`hide_external`). The notes are not built yet, so the validator refuses them for now.
 - Each topic can link to free lessons from those providers (and, later, our own verified notes).
   A link can be for the whole topic, or only for some of its learning points or items.
 - **Learn it first**: at the top of a topic lesson (and on the parent's "Worth a look together"),
@@ -1045,6 +1049,10 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   recorded its title as fetched, what it teaches, its level and the date). A page that was not
   opened is never recorded. The CI job also fails when a match-checked page's title changes, so the
   match is re-checked.
+- **Legacy** (lead decision, 2026-11-26): the 11 Oak links from Q5 were checked reachable before
+  match checks existed. Until each is re-read, they still show as whole-topic links (Learn it first
+  and Learn more's topic fallback), and the CI job lists them as a warning. Every other link needs
+  the full match check; the validator refuses a reachable link without one.
 - Links point at the right level (GCSE or A-Level) and the student's board where the page is
   board-specific.
 

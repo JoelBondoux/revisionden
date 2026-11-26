@@ -26,13 +26,57 @@ describe('Learn it first links', () => {
   it('only offer links that are both reachable and match-checked', () => {
     expect(isShown(link() as never)).toBe(true);
     expect(isShown(link({ checked_at: null }) as never)).toBe(false);
-    expect(isShown(link({ match: undefined }) as never)).toBe(false);
+    // A reachable whole-topic link with no match record is a legacy Q5 link: still shown.
+    expect(isShown(link({ match: undefined }) as never)).toBe(true);
+    expect(isShown(link({ match: undefined, learning_points: ['p'] }) as never)).toBe(false);
     const byTopic = parseLearnLinkFiles([
-      file('a', [link(), link({ url: 'https://www.thenational.academy/m', match: undefined })]),
+      file('a', [
+        link(),
+        link({ url: 'https://www.thenational.academy/m', match: undefined, items: ['a-1'] }),
+      ]),
     ]);
     expect(checkedLinksFor(byTopic, 'a').map((l) => l.url)).toEqual([
       'https://www.thenational.academy/teachers/x',
     ]);
+    expect(learnMoreLinks(byTopic, { topicId: 'a', itemId: 'a-1' }).map((l) => l.url)).toEqual([
+      'https://www.thenational.academy/teachers/x',
+    ]);
+  });
+
+  it('keep legacy links (reachable, no match record yet) in Learn it first and the topic fallback', () => {
+    const byTopic = parseLearnLinkFiles([file('a', [link({ match: undefined })])]);
+    expect(checkedLinksFor(byTopic, 'a')).toHaveLength(1);
+    expect(learnMoreLinks(byTopic, { topicId: 'a', learningPoint: 'a-lp' })).toHaveLength(1);
+  });
+
+  it('list an in-house note first and let it hide the external links it covers', () => {
+    const inHouse = (extra = {}) => ({
+      title: 'Our note',
+      route: '/notes/t',
+      provider: 'revisionden',
+      level: 'GCSE',
+      checked_at: null,
+      ...extra,
+    });
+    const both = parseLearnLinkFiles([file('t', [link(), inHouse()])]);
+    expect(checkedLinksFor(both, 't').map((l) => l.provider)).toEqual(['revisionden', 'oak']);
+    const point = parseLearnLinkFiles([
+      file('t', [
+        link(),
+        link({ url: 'https://www.thenational.academy/p', learning_points: ['t-lp'] }),
+        inHouse({ learning_points: ['t-lp'], hide_external: true }),
+      ]),
+    ]);
+    expect(
+      learnMoreLinks(point, { topicId: 't', learningPoint: 't-lp' }).map((l) => l.provider),
+    ).toEqual(['revisionden']);
+    // Only the point it covers: the whole topic still has its external link.
+    expect(checkedLinksFor(point, 't').map((l) => l.provider)).toEqual(['oak']);
+    // A route must be an in-app path; a web link must be https.
+    const bad = parseLearnLinkFiles([
+      file('x', [inHouse({ route: 'https://evil.example' }), link({ url: 'http://x' })]),
+    ]);
+    expect(bad.get('x')).toEqual([]);
   });
 
   it('only offer links that have been checked', () => {
@@ -52,6 +96,7 @@ describe('Learn it first links', () => {
       oak: 'Oak National Academy',
       bitesize: 'BBC Bitesize',
       isaac: 'Isaac',
+      revisionden: 'RevisionDen notes',
     });
   });
 
@@ -69,7 +114,7 @@ describe('Learn it first links', () => {
     const { learnLinksByTopic } = await import('./links');
     for (const links of learnLinksByTopic.values()) {
       for (const l of links) {
-        expect(['www.thenational.academy', 'www.bbc.co.uk']).toContain(new URL(l.url).host);
+        expect(['www.thenational.academy', 'www.bbc.co.uk']).toContain(new URL(l.url!).host);
       }
     }
     expect(learnLinksByTopic.get('gcse-maths-h-a17')?.length).toBeGreaterThan(0);
@@ -101,7 +146,7 @@ describe('Learn it first links', () => {
       ]),
     ]);
     const urls = (where: Parameters<typeof learnMoreLinks>[1]) =>
-      learnMoreLinks(byTopic, where).map((l) => l.url.split('/').pop());
+      learnMoreLinks(byTopic, where).map((l) => l.url!.split('/').pop());
     expect(urls({ topicId: 't', learningPoint: 't-lp-one', itemId: 't-0001' })).toEqual(['item']);
     expect(urls({ topicId: 't', learningPoint: 't-lp-one', itemId: 't-0009' })).toEqual(['point']);
     expect(urls({ topicId: 't', learningPoint: 't-lp-two' })).toEqual(['topic']);

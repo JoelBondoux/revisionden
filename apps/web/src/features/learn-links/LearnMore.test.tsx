@@ -39,3 +39,30 @@ describe('Learn more', () => {
     expect(link).toHaveAccessibleName(/Oak National Academy.*opens in a new tab/);
   });
 });
+
+describe('Learn more with an in-house note', () => {
+  it('opens our own note in the app, not in a new tab', async () => {
+    const { MemoryRouter } = await import('react-router-dom');
+    render(
+      <MemoryRouter>
+        <LearnMore
+          links={[
+            {
+              title: 'Solving quadratics',
+              route: '/notes/gcse-maths-h-a18',
+              provider: 'revisionden',
+              level: 'GCSE',
+              checked_at: null,
+            },
+          ]}
+        />
+      </MemoryRouter>,
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Learn more' }));
+    const link = screen.getByRole('link', { name: /Solving quadratics/ });
+    expect(link).toHaveAttribute('href', '/notes/gcse-maths-h-a18');
+    expect(link).not.toHaveAttribute('target');
+    expect(link).toHaveAccessibleName(/RevisionDen notes/);
+    expect(link).not.toHaveAccessibleName(/new tab/);
+  });
+});

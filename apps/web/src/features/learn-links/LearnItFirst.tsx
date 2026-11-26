@@ -1,4 +1,5 @@
 import { useId, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { PROVIDER_NAMES, type LearnLink } from './links';
 import './learn-links.css';
 
@@ -28,19 +29,26 @@ function LessonLinks({ links, label }: LinksProps & { label: string }) {
       {open && (
         <ul id={listId} className="learn-first__list">
           {links.map((link) => (
-            <li key={link.url}>
-              <a
-                className="learn-first__link"
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="learn-first__title">{link.title}</span>
-                <span className="learn-first__provider">
-                  {PROVIDER_NAMES[link.provider]}
-                  <span className="visually-hidden"> (opens in a new tab)</span>
-                </span>
-              </a>
+            <li key={link.url ?? link.route}>
+              {link.route ? (
+                <Link className="learn-first__link" to={link.route}>
+                  <span className="learn-first__title">{link.title}</span>
+                  <span className="learn-first__provider">{PROVIDER_NAMES[link.provider]}</span>
+                </Link>
+              ) : (
+                <a
+                  className="learn-first__link"
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="learn-first__title">{link.title}</span>
+                  <span className="learn-first__provider">
+                    {PROVIDER_NAMES[link.provider]}
+                    <span className="visually-hidden"> (opens in a new tab)</span>
+                  </span>
+                </a>
+              )}
             </li>
           ))}
         </ul>

@@ -14,8 +14,43 @@ export const PROVIDER_HOSTS = {
   isaac: [],
 };
 
-/** Shown in the app: reachable (checked_at) and match-checked (match). */
+/**
+ * Legacy (lead decision 2026-11-26): the 11 Oak links from Q5 were checked reachable before match
+ * checks existed. They keep showing in Learn it first until they are re-read and match-checked;
+ * the link check warns about them. No other link may skip the match check. Remove this list (and
+ * the legacy path) once they all have a match record (docs/BACKLOG.md Q10).
+ */
+const OAK_KS4_HIGHER =
+  'https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/';
+export const LEGACY_UNMATCHED_URLS = new Set(
+  [
+    'algebraic-manipulation/lessons/checking-and-securing-understanding-of-solving-and-interpreting-linear-equations',
+    'algebraic-manipulation/lessons/solving-quadratic-equations-by-factorising',
+    'algebraic-manipulation/lessons/factorising-a-quadratic-expression',
+    'functions-and-proof/lessons/proving-or-disproving-a-statement',
+    '2d-and-3d-shape-surface-area-and-volume-pyramids-spheres-and-cones/lessons/the-volume-of-a-cone',
+    '2d-and-3d-shape-surface-area-and-volume-pyramids-spheres-and-cones/lessons/the-surface-area-of-a-sphere',
+    'circle-theorems/lessons/checking-and-securing-understanding-of-the-parts-of-a-circle',
+    'arithmetic-procedures-index-laws/lessons/checking-and-securing-understanding-of-lcm-and-hcf',
+    'arithmetic-procedures-index-laws/lessons/checking-and-securing-understanding-of-prime-factorisation',
+    'arithmetic-procedures-index-laws/lessons/the-laws-of-indices-fractional-exponents',
+    'percentages/lessons/checking-and-securing-understanding-of-percentage-increase',
+  ].map((path) => OAK_KS4_HIGHER + path),
+);
+
+/** A legacy link: reachable, on the legacy list, for the whole topic, and not match-checked yet. */
+export const isLegacyLink = (link) =>
+  link.checked_at !== null &&
+  !link.match &&
+  !link.learning_points &&
+  !link.items &&
+  LEGACY_UNMATCHED_URLS.has(link.url);
+
+/** Shown in the app with a full check: reachable (checked_at) and match-checked (match). */
 export const isShownLink = (link) => link.checked_at !== null && Boolean(link.match);
+
+/** In-house notes (provider revisionden, planned): refused until the notes exist. */
+export const IN_HOUSE_NOTES_BUILT = false;
 
 function* walkTopics(nodes) {
   for (const node of nodes ?? []) {
@@ -54,8 +89,15 @@ export function learnLinkErrors(content) {
     }
     const urls = new Set();
     for (const link of data.links) {
+      if (link.provider === 'revisionden') {
+        if (!IN_HOUSE_NOTES_BUILT) add(`in-house notes are not built yet (${link.route})`);
+        continue;
+      }
       if (urls.has(link.url)) add(`${link.url} is listed twice`);
       urls.add(link.url);
+      if (link.checked_at !== null && !link.match && !isLegacyLink(link)) {
+        add(`${link.url} is reachable but needs a match check before it can show`);
+      }
       const where = PROVIDER_HOSTS[link.provider];
       let url;
       try {
@@ -95,12 +137,14 @@ export function learnLinkErrors(content) {
 /** Every link as { file, topic, url } (and its match check, when it has one). */
 export function listLinks(learnLinks) {
   return learnLinks.flatMap(({ file, data }) =>
-    data.links.map((link) => ({
-      file,
-      topic: data.topic,
-      url: link.url,
-      ...(link.match ? { match: link.match } : {}),
-    })),
+    data.links
+      .filter((link) => link.url)
+      .map((link) => ({
+        file,
+        topic: data.topic,
+        url: link.url,
+        ...(link.match ? { match: link.match } : {}),
+      })),
   );
 }
 
