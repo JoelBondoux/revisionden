@@ -212,7 +212,7 @@ Tags: #product #rules #limits #defaults
   phone screen: avatar, nickname and **Edit my avatar** (E's builder in a sheet; Save, or Cancel
   with a "Throw away your changes?" check; the nav avatar updates at once; the API only checks
   items are unlocked, no parent approval or rate limit), then Get help, My progress, My rewards,
-  and two sub-pages: Look and sound (`/settings/look-and-sound`: reading comfort, appearance,
+  as button tiles with 2–3 word labels (J15a), and two sub-pages: Look and sound (`/settings/look-and-sound`: reading comfort, appearance,
   effect style, read aloud, sound) and More (`/settings/more`: subjects, reminders, device,
   parents, feedback, policies, about, what your parent can see). A parent on `/settings` gets a
   Parent home tile instead of the avatar header. Items share the bar and

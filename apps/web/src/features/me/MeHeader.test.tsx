@@ -96,6 +96,45 @@ describe('the Me header (W9)', () => {
     expect(save).not.toHaveBeenCalled();
   });
 
+  it('keeps the focus on the item just picked, so keyboard users are not thrown back (Codex P2)', async () => {
+    renderHeader(fakeApi().api);
+    await userEvent.click(await screen.findByRole('button', { name: 'Edit my avatar' }));
+    const sheet = screen.getByRole('dialog', { name: 'Edit my avatar' });
+    const options = () =>
+      sheet.querySelectorAll<HTMLButtonElement>(
+        '.avatar-option[aria-pressed="false"]:not([aria-disabled])',
+      );
+    const first = options()[0]!;
+    first.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(document.activeElement).toBe(first);
+    const second = options()[0]!;
+    second.focus();
+    await userEvent.keyboard('{Enter}');
+    expect(document.activeElement).toBe(second);
+  });
+
+  it('checks for newly unlocked items each time the editor opens (Codex P2)', async () => {
+    const { api } = fakeApi();
+    const read = api.getMyAvatar as ReturnType<typeof vi.fn>;
+    renderHeader(api);
+    await userEvent.click(await screen.findByRole('button', { name: 'Edit my avatar' }));
+    const lockedCount = () =>
+      within(screen.getByRole('dialog', { name: 'Edit my avatar' })).queryAllByText(
+        /locked\. Unlock:/,
+      ).length;
+    const before = lockedCount();
+    expect(before).toBeGreaterThan(0);
+    // A reward earned since the page loaded (say, in a flashcard session) unlocks its item.
+    read.mockResolvedValue({ avatarCode: START, earnedRewardIds: ['streak-100'] });
+    await userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+    const callsBefore = read.mock.calls.length;
+    await userEvent.click(screen.getByRole('button', { name: 'Edit my avatar' }));
+    await waitFor(() => expect(read.mock.calls.length).toBeGreaterThan(callsBefore));
+    // The Alien skin (100-day streak) is on the first tab, so one fewer item shows as locked.
+    await waitFor(() => expect(lockedCount()).toBe(before - 1));
+  });
+
   it('keeps the sheet open and says so when saving fails', async () => {
     const { api } = fakeApi(
       vi.fn(async () => {
