@@ -47,7 +47,11 @@ release. In short:
    defects allowed; 3% (at least 10) for batches made only of items from owner-approved templates
    (decision 0010); items with no official source are always approved individually.
 5. **Release.** Content merges like code: pull request into `dev`.
-6. **Readability (decision 0010).** Notes and explanations are scored with `textstat` (subject
+6. **Teaching notes (decision 0010).** Approved individually until 50 consecutive clean approvals,
+   then batch-sampled; Oak open-licence lessons (after 1 September 2022) may be a starting draft
+   with attribution, never a citation. A notes schema with an `adapted_from` field is still to be
+   built.
+7. **Readability (decision 0010).** Notes and explanations are scored with `textstat` (subject
    terms left out). It warns, never blocks: the aim is a reading age of 13 to 14 for GCSE and 15 to
    16 for A-Level. Not built into the pipeline yet.
 

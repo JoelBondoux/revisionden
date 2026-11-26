@@ -1,0 +1,60 @@
+{
+  "topic": "gcse-maths-h-n15",
+  "links": [
+    {
+      "title": "How to round numbers",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/z7nqs82",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "How to round numbers - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Rounding to the nearest whole number, decimal places and significant figures, truncation, and estimating calculations.",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing understanding of rounding and truncating",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-foundation/units/rounding-estimation-and-bounds/lessons/checking-and-securing-understanding-of-rounding-and-truncating",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n15-lp-rounding"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing understanding of rounding and truncating GCSE | KS4 | Y10 Maths Foundation | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Foundation (GCSE) lesson. Its learning outcome: \"I can estimate a value by rounding or truncating to a given degree of accuracy.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Upper and lower bounds",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/rounding-estimation-and-bounds/lessons/upper-and-lower-bounds",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n15-lp-error-intervals"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Upper and lower bounds GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can calculate the lower and upper bounds of values and express these as a ≤ x < b.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "What is accuracy in maths?",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zmf2ywx",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n15-lp-error-intervals"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What is accuracy in maths? - GCSE Revision - BBC Bitesize",
+        "teaches": "Limits of accuracy: the range of values a rounded number could have, written with ≤ and <, and upper and lower bounds (Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

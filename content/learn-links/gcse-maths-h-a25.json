@@ -1,0 +1,60 @@
+{
+  "topic": "gcse-maths-h-a25",
+  "links": [
+    {
+      "title": "Sequences",
+      "url": "https://www.bbc.co.uk/bitesize/topics/z3hv2p3/articles/zwwcmbk",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Sequences - GCSE Maths Revision - BBC Bitesize",
+        "teaches": "Term-to-term rules, nth term (position-to-term) rules of linear sequences and the nth term of a quadratic sequence (Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Checking and securing rules for generating arithmetic sequences",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/further-sequences/lessons/checking-and-securing-rules-for-generating-arithmetic-sequences",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a25-lp-linear-nth"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Checking and securing rules for generating arithmetic sequences GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can identify the term-to-term rule and the position-to-term rule and express the latter algebraically.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Quadratic sequences",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/further-sequences/lessons/quadratic-sequences",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a25-lp-quadratic-nth"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Quadratic sequences GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can find the n^th term formula for a quadratic sequence.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Introducing quadratic sequences",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/further-sequences/lessons/introducing-quadratic-sequences",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-a25-lp-quadratic-nth"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Introducing quadratic sequences GCSE | KS4 | Y11 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can recognise the features of a quadratic sequence.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}

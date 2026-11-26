@@ -53,6 +53,14 @@ describe('wrangler config', () => {
     expect(config.vars.SERVE_DRAFT_CONTENT).toBeUndefined();
   });
 
+  it('offers the style tester in dev only (J12c)', () => {
+    expect(config.env.dev!.vars.STYLE_TESTER).toBe('true');
+    for (const name of ['staging', 'production']) {
+      expect(config.env[name]!.vars.STYLE_TESTER, name).toBeUndefined();
+    }
+    expect(config.vars.STYLE_TESTER).toBeUndefined();
+  });
+
   it('points production at the app on app.revisionden.com, with passkeys for the whole domain', () => {
     const vars = config.env.production!.vars;
     expect(vars.WEB_ORIGIN).toBe('https://app.revisionden.com');

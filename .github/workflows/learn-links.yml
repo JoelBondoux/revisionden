@@ -1,8 +1,9 @@
 name: Learn it first links
 
-# Requests every link in content/learn-links/ and fails on anything other than 2xx or 3xx
-# (scripts/content/check-links.mjs). Runs when the links change, and weekly to catch pages that
-# have been moved or removed.
+# Requests every link in content/learn-links/ and fails on anything other than 2xx or 3xx, or on a
+# match-checked page whose title has changed (scripts/content/check-links.mjs). Runs when the links
+# change, and weekly to catch pages that have been moved, removed or rewritten. It also reports what
+# each provider's home page answers from the runner, and the link coverage (neither can fail).
 on:
   pull_request:
     branches: [dev, staging, main]
@@ -10,6 +11,7 @@ on:
       - 'content/learn-links/**'
       - 'scripts/content/check-links.mjs'
       - 'scripts/content/learn-links.mjs'
+      - 'content/schemas/learn-links.schema.json'
       - '.github/workflows/learn-links.yml'
   push:
     branches: [dev]
@@ -32,4 +34,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+      - name: What each provider answers from this runner
+        run: node scripts/content/check-links.mjs --probe-providers
+      - name: Link coverage
+        run: node scripts/content/check-links.mjs --coverage
       - run: node scripts/content/check-links.mjs

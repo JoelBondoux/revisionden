@@ -1,0 +1,59 @@
+{
+  "topic": "gcse-maths-h-n16",
+  "links": [
+    {
+      "title": "Upper and lower bounds",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/rounding-estimation-and-bounds/lessons/upper-and-lower-bounds",
+      "provider": "oak",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Upper and lower bounds GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can calculate the lower and upper bounds of values and express these as a ≤ x < b.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "What is accuracy in maths?",
+      "url": "https://www.bbc.co.uk/bitesize/topics/zgnbxsg/articles/zmf2ywx",
+      "provider": "bitesize",
+      "level": "GCSE",
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "What is accuracy in maths? - GCSE Revision - BBC Bitesize",
+        "teaches": "Limits of accuracy: the range of values a rounded number could have, written with ≤ and <, and upper and lower bounds (Higher).",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Upper and lower bounds in additive calculations",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/rounding-estimation-and-bounds/lessons/upper-and-lower-bounds-in-additive-calculations",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n16-lp-bounds-calculations"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Upper and lower bounds in additive calculations GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can calculate upper and lower bounds for calculations involving rounded numbers.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    },
+    {
+      "title": "Upper and lower bounds in multiplicative calculations",
+      "url": "https://www.thenational.academy/teachers/programmes/maths-secondary-ks4-higher/units/rounding-estimation-and-bounds/lessons/upper-and-lower-bounds-in-multiplicative-calculations",
+      "provider": "oak",
+      "level": "GCSE",
+      "learning_points": ["gcse-maths-h-n16-lp-bounds-calculations"],
+      "checked_at": "2026-11-26",
+      "match": {
+        "page_title": "Upper and lower bounds in multiplicative calculations GCSE | KS4 | Y10 Maths Higher | Lesson Resources | Oak National Academy",
+        "teaches": "Oak KS4 Maths Higher (GCSE) lesson. Its learning outcome: \"I can calculate upper and lower bounds for calculations involving rounded numbers.\"",
+        "level": "GCSE",
+        "checked_at": "2026-11-26"
+      }
+    }
+  ]
+}
