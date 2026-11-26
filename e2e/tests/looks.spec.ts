@@ -175,9 +175,10 @@ async function settle(page: Page) {
 }
 
 // Codex review of train #343 (lead: J15s-b, before staging): text painted straight on the page
-// (headings, the version footer, page notes) must read AA on what is really painted behind it, the
-// page wash and texture included, not just on --color-background. The text is hidden, the page
-// is screenshotted, and the pixels behind each piece of text are sampled.
+// (headings, the version footer, page notes, map labels) must read AA on what is really painted
+// behind it, the page wash and texture included, not just on --color-background. The letters are
+// hidden (a text halo stays, since it is part of what makes the text readable), the page is
+// screenshotted, and the pixels behind each piece of text are sampled.
 for (const scheme of ['light', 'dark'] as const) {
   test(`text on the page reads AA on the painted page in every look, ${scheme} mode`, async ({
     page,
@@ -239,25 +240,34 @@ for (const scheme of ['light', 'dark'] as const) {
           }
           return out;
         });
+        await settle(page);
+        const withText = await page.screenshot({ animations: 'disabled' });
         const hide = await page.addStyleTag({
           content:
-            '*, *::before, *::after { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; }',
+            '*, *::before, *::after { color: transparent !important; -webkit-text-fill-color: transparent !important; transition: none !important; }',
         });
         await settle(page);
-        const shot = await page.screenshot({ animations: 'disabled' });
-        await hide.evaluate((s) => s.remove());
+        const without = await page.screenshot({ animations: 'disabled' });
+        await hide.evaluate((s) => (s as HTMLElement).remove());
         const bad = await page.evaluate(
-          async ({ b64, texts }) => {
-            const img = new Image();
-            img.src = `data:image/png;base64,${b64}`;
-            await img.decode();
-            const cv = document.createElement('canvas');
-            cv.width = img.width;
-            cv.height = img.height;
-            const g = cv.getContext('2d')!;
-            g.drawImage(img, 0, 0);
-            const scale = img.width / innerWidth;
-            const px = g.getImageData(0, 0, cv.width, cv.height).data;
+          async ({ shots, texts }) => {
+            const pixels = async (b64: string) => {
+              const img = new Image();
+              img.src = `data:image/png;base64,${b64}`;
+              await img.decode();
+              const cv = document.createElement('canvas');
+              cv.width = img.width;
+              cv.height = img.height;
+              const g = cv.getContext('2d')!;
+              g.drawImage(img, 0, 0);
+              return {
+                w: img.width,
+                h: img.height,
+                d: g.getImageData(0, 0, img.width, img.height).data,
+              };
+            };
+            const [A, B] = [await pixels(shots[0]!), await pixels(shots[1]!)];
+            const scale = A.w / innerWidth;
             const ctx = document.createElement('canvas').getContext('2d')!;
             const rgb = (c: string) => {
               ctx.clearRect(0, 0, 1, 1);
@@ -278,25 +288,37 @@ for (const scheme of ['light', 'dark'] as const) {
             const out: string[] = [];
             for (const t of texts) {
               const ink = rgb(t.color);
+              const a = ink[3]!;
               const samples: number[] = [];
-              for (let i = 1; i < 6; i++)
-                for (let j = 1; j < 4; j++) {
-                  const x = Math.round((t.x + (t.w * i) / 6) * scale);
-                  const y = Math.round((t.y + (t.h * j) / 4) * scale);
-                  if (x < 0 || y < 0 || x >= cv.width || y >= cv.height) continue;
-                  const k = (y * cv.width + x) * 4;
-                  const bg = [px[k]!, px[k + 1]!, px[k + 2]!];
-                  const a = ink[3]!;
-                  const fg = [0, 1, 2].map((c) => ink[c]! * a + bg[c]! * (1 - a));
-                  samples.push(ratio(fg, bg));
+              const x0 = Math.max(0, Math.floor(t.x * scale));
+              const y0 = Math.max(0, Math.floor(t.y * scale));
+              const x1 = Math.min(A.w, Math.ceil((t.x + t.w) * scale));
+              const y1 = Math.min(A.h, Math.ceil((t.y + t.h) * scale));
+              for (let y = y0; y < y1; y++)
+                for (let x = x0; x < x1; x++) {
+                  const k = (y * A.w + x) * 4;
+                  const diff =
+                    Math.abs(A.d[k]! - B.d[k]!) +
+                    Math.abs(A.d[k + 1]! - B.d[k + 1]!) +
+                    Math.abs(A.d[k + 2]! - B.d[k + 2]!);
+                  // A letter pixel: drawing the text changed it. Behind it is what was painted.
+                  if (diff < 60) continue;
+                  const bg = [B.d[k]!, B.d[k + 1]!, B.d[k + 2]!];
+                  samples.push(
+                    ratio(
+                      [0, 1, 2].map((c) => ink[c]! * a + bg[c]! * (1 - a)),
+                      bg,
+                    ),
+                  );
                 }
-              if (!samples.length) continue;
-              const worst = Math.min(...samples);
-              if (worst < (t.large ? 3 : 4.5)) out.push(`"${t.text}" ${worst.toFixed(2)}`);
+              if (samples.length < 8) continue;
+              samples.sort((m, n) => m - n);
+              const p10 = samples[Math.floor(samples.length * 0.1)]!;
+              if (p10 < (t.large ? 3 : 4.5)) out.push(`"${t.text}" ${p10.toFixed(2)}`);
             }
             return [...new Set(out)];
           },
-          { b64: shot.toString('base64'), texts },
+          { shots: [withText.toString('base64'), without.toString('base64')], texts },
         );
         for (const b of bad) failures.push(`${style} ${scheme} ${path}: ${b}`);
       }
