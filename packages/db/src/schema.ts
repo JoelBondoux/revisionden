@@ -1068,6 +1068,11 @@ export const feedback = pgTable(
     check('feedback_text_length', sql`char_length(${t.text}) <= 500`),
     check('feedback_outcome_values', sql`${t.outcome} in ('confirmed', 'duplicate')`),
     index('feedback_student_confirmed_idx').on(t.studentId, t.confirmedAt),
+    // One "Did this help?" tap per student and item (W8b): a second tap updates the first. The
+    // route's ON CONFLICT repeats this WHERE exactly, so Postgres can use the partial index.
+    uniqueIndex('feedback_lesson_tap_unique')
+      .on(t.studentId, t.itemId)
+      .where(sql`${t.kind} in ('lesson_helped', 'lesson_not_helped')`),
   ],
 );
 

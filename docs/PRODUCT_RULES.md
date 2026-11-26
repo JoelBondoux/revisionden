@@ -421,7 +421,9 @@ positive whole numbers; negatives later).
   nothing needs dragging; read aloud lists the pairs; theme colours; fits 320px at 200% text.
 - **"Did this help?"** after the last tile step is checked: one tap, Yes or No, stored as
   feedback kind `lesson_helped` or `lesson_not_helped` with the item and never any text, one
-  answer per student and item, not counted in the daily feedback limit. Parents and the
+  answer per student and item (a second tap changes the first; enforced by the database with a
+  unique partial index and an upsert, migration 0031, W8b), not counted in the daily feedback
+  limit. Parents and the
   operator see it with the family's feedback.
 - **Hidden until verified:** the pilot items are draft content, so production does not serve
   them until they pass `docs/VERIFICATION.md`; development serves drafts with the DRAFT banner.
