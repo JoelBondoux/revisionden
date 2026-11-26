@@ -590,8 +590,9 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
 ### Feedback and bug reports
 
 - **Bug icon:** a small bug button is on every screen, never covering content: in the student app
-  it sits in the top row beside Get help and the sound button; on focused and public screens it
-  sits in a corner, with room left below the page. It is hidden during timed papers and Test mode
+  it sits in the top row beside Get help and the sound button, and on parent screens in a top row
+  of its own; on other focused and public screens (lessons, welcome, About) it sits in a corner,
+  with room left below the page. It is hidden during timed papers and Test mode
   questions. It opens the bug report
   sheet straight away, with the current screen filled in. Students can turn the icon off in
   Settings.
