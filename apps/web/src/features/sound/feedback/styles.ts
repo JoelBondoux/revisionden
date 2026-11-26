@@ -23,7 +23,7 @@ export const FEEDBACK_STYLES = [
   'garden-grow',
   'pixel-arcade',
   'doodle-diary',
-  // U7: unlocked together by finishing the starting test. Ids are placeholders until J confirms.
+  // U7: unlocked together by finishing the starting test (owner-approved 2026-11-26).
   'petal-glow',
   'turbo-drive',
   'rainbow-parade',

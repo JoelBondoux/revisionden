@@ -773,10 +773,10 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   default is one value, `DEFAULT_STYLE` in `features/sound/feedback/styles.ts` (Doodle Diary,
   owner-approved; Sticker Book is now an unlockable style like the others). Unknown styles use the default. Style
   ids: `sticker-book`, `pop-burst`, `starlight`, `comic-pop`, `garden-grow`, `pixel-arcade`,
-  `doodle-diary`. U7 (prototype, waiting for the owner to approve J's mockups) adds three styles
-  unlocked together by the starting test, never labelled by gender: placeholder ids `petal-glow`
-  (music-box bells and petal swishes), `turbo-drive` (low thumps, clicks, whooshes and
-  power-fifth stabs) and `rainbow-parade` (bright major-scale colour runs). J's style system calls
+  `doodle-diary`. U7 (owner-approved 2026-11-26) adds three styles
+  unlocked together by the starting test, never labelled by gender: Petal Glow (`petal-glow`,
+  music-box bells and petal swishes), Turbo Drive (`turbo-drive`, low thumps, clicks, whooshes and
+  power-fifth stabs) and Rainbow Parade (`rainbow-parade`, bright major-scale colour runs). J's style system calls
   `useFeedbackStyle(styleId)`. Older `play()` calls for tap, correct (combo when it has a step),
   wrong, card flip, celebration, level up and reward unlocked follow the style too; the rest keep
   the main bank, and reward tiers (U4) keep their own sounds but add the matching vibration.
