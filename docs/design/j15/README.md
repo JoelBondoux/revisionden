@@ -91,3 +91,12 @@ same per-style transition idea as J15a.
 - Whether Home replaces the Map as the first screen after sign-in (the mockups assume yes).
 - How often Pip moves: the recording is sped up; the build would rest about 8 seconds between
   actions, and stop after a minute without input so it never nags.
+
+## Pip's outfits and touches (owner direction, 2026-11-26)
+
+`pip-outfits.png` shows the real, code-drawn Pip that the build uses (J15b).
+
+- **He leans out of his round frame:** the top of the ring sits behind his head, the bottom in front of his body. The arm grows from the shoulder in every pose.
+- **Outfits by subject:** one worn item (a pencil, glasses, goggles, a collar, a hat, a headset...). On Home he also has a subject prop and a faint tint.
+- **Unisex touches:** a moustache, a bow, freckles or nothing. They rotate by day and are never tied to a subject or to the student.
+- **Idle actions:** the third row shows them as stills. With reduced motion only the still shows.
