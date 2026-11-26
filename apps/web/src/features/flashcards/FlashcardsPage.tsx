@@ -17,6 +17,7 @@ import { NewRewards } from '../learn/NewRewards';
 import { DraftBanner } from '../learn/parts';
 import { useSound } from '../sound';
 import { ReadAloudButton } from '../read-aloud';
+import { LearnMore, learnLinksByTopic, learnMoreLinks } from '../learn-links';
 import './flashcards.css';
 
 const RATINGS: {
@@ -83,7 +84,15 @@ function FlipCard({
 }
 
 /** Steps from the item's verified content, one at a time, ending on the answer (F7). */
-function ExplainSteps({ steps, onClose }: { steps: readonly string[]; onClose: () => void }) {
+function ExplainSteps({
+  steps,
+  topicId,
+  onClose,
+}: {
+  steps: readonly string[];
+  topicId: string;
+  onClose: () => void;
+}) {
   const [step, setStep] = useState(0);
   const last = step === steps.length - 1;
   const panel = useRef<HTMLElement>(null);
@@ -113,6 +122,7 @@ function ExplainSteps({ steps, onClose }: { steps: readonly string[]; onClose: (
           <Button onClick={() => setStep(step + 1)}>Next step</Button>
         )}
       </div>
+      <LearnMore links={learnMoreLinks(learnLinksByTopic, { topicId })} />
     </section>
   );
 }
@@ -305,7 +315,11 @@ function ReviewSession({
         </Button>
       )}
       {explaining && card.explain && (
-        <ExplainSteps steps={card.explain} onClose={() => setExplaining(false)} />
+        <ExplainSteps
+          steps={card.explain}
+          topicId={card.topicId}
+          onClose={() => setExplaining(false)}
+        />
       )}
       {revealed ? (
         <div className="ratings">

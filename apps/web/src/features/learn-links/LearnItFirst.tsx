@@ -2,11 +2,15 @@ import { useId, useState } from 'react';
 import { PROVIDER_NAMES, type LearnLink } from './links';
 import './learn-links.css';
 
+interface LinksProps {
+  links: readonly LearnLink[];
+}
+
 /**
- * The "Learn it first" button: free official lessons for this topic. Plain links that open in a
- * new tab, so nothing is loaded from those sites until the student taps one.
+ * A button that opens a list of free lessons. Plain links that open in a new tab, so nothing is
+ * loaded from those sites until the student taps one, and nothing is recorded about the tap.
  */
-export function LearnItFirst({ links }: { links: readonly LearnLink[] }) {
+function LessonLinks({ links, label }: LinksProps & { label: string }) {
   const [open, setOpen] = useState(false);
   const listId = useId();
   if (links.length === 0) return null;
@@ -19,7 +23,7 @@ export function LearnItFirst({ links }: { links: readonly LearnLink[] }) {
         aria-controls={listId}
         onClick={() => setOpen(!open)}
       >
-        Learn it first
+        {label}
       </button>
       {open && (
         <ul id={listId} className="learn-first__list">
@@ -43,4 +47,14 @@ export function LearnItFirst({ links }: { links: readonly LearnLink[] }) {
       )}
     </div>
   );
+}
+
+/** "Learn it first" before a topic's lesson: the whole topic's free lessons. */
+export function LearnItFirst({ links }: LinksProps) {
+  return <LessonLinks links={links} label="Learn it first" />;
+}
+
+/** "Learn more" on Explain and after a wrong answer: the most specific free lessons. */
+export function LearnMore({ links }: LinksProps) {
+  return <LessonLinks links={links} label="Learn more" />;
 }

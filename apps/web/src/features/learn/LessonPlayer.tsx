@@ -12,7 +12,7 @@ import { Button, ButtonLink } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
 import { ReadAloudButton, itemSpeechText } from '../read-aloud';
-import { LearnItFirst, checkedLinksFor, learnLinksByTopic } from '../learn-links';
+import { LearnMore, learnLinksByTopic, learnMoreLinks } from '../learn-links';
 import {
   ArenaProgress,
   ComboBadge,
@@ -52,12 +52,12 @@ type MissOutcome = 'retry' | 'stepDown' | 'none';
 
 function Feedback({
   result,
-  topicId,
+  item,
   miss,
   comeback,
 }: {
   result: LearnAttemptResponse;
-  topicId: string;
+  item: LearnItem;
   miss: MissOutcome | null;
   comeback: boolean;
 }) {
@@ -89,10 +89,16 @@ function Feedback({
       {comeback && <p className="feedback__comeback">Comeback! You got it this time.</p>}
       {miss === 'retry' && <p>No worries: we&apos;ll have another go at this in a moment.</p>}
       {miss === 'stepDown' && (
-        <>
-          <p>This one&apos;s tricky today, so we&apos;ll come back to it another day.</p>
-          <LearnItFirst links={checkedLinksFor(learnLinksByTopic, topicId)} />
-        </>
+        <p>This one&apos;s tricky today, so we&apos;ll come back to it another day.</p>
+      )}
+      {!result.correct && (
+        <LearnMore
+          links={learnMoreLinks(learnLinksByTopic, {
+            topicId: item.topicId,
+            learningPoint: item.learningPoint,
+            itemId: item.id,
+          })}
+        />
       )}
       {result.shaky && (
         <p>
@@ -367,9 +373,7 @@ export function LessonPlayer({
             Couldn&apos;t check that answer. Please try again.
           </p>
         )}
-        {result && (
-          <Feedback result={result} topicId={item.topicId} miss={miss} comeback={comeback} />
-        )}
+        {result && <Feedback result={result} item={item} miss={miss} comeback={comeback} />}
         {result && <NewRewards rewards={result.newlyEarned} />}
         {result || unmarked ? (
           <Button block variant={result?.correct ? 'success' : 'primary'} onClick={advance}>
