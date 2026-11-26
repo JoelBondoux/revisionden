@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { parse } from 'smol-toml';
 import { describe, expect, it } from 'vitest';
+import { CLEANUP_CRON, REMINDER_CRONS } from './crons';
 
 interface EnvBlock {
   name: string;
@@ -79,10 +80,41 @@ describe('wrangler config', () => {
     }
   });
 
-  it.each(['dev', 'staging', 'production'])(
-    'runs the reminder cron every 15 minutes in %s',
+  // Neon suspends an idle database after 5 minutes, and every cron tick that opens it wakes it.
+  // Cloudflare leaves deployed crons in place when `triggers` is missing; only `crons = []`
+  // removes them (https://developers.cloudflare.com/workers/configuration/cron-triggers/).
+  it.each(['dev', 'staging'])(
+    'has no cron in %s, written as an explicit empty list so a redeploy removes any old one',
     (name) => {
-      expect(config.env[name]!.triggers?.crons).toEqual(['*/15 * * * *']);
+      expect(config.env[name]!.triggers).toEqual({ crons: [] });
     },
   );
+
+  it('has no cron for local development, as an explicit empty list', () => {
+    expect(config.triggers).toEqual({ crons: [] });
+  });
+
+  it('runs the clean-up once a day and reminders every 30 minutes in daytime in production', () => {
+    expect(config.env.production!.triggers?.crons).toEqual([CLEANUP_CRON, ...REMINDER_CRONS]);
+    expect(CLEANUP_CRON).toBe('17 3 * * *');
+    expect(REMINDER_CRONS).toEqual(['30 6 * * *', '*/30 7-20 * * *']);
+  });
+
+  it('keeps the production reminder ticks between 06:30 and 20:30 UTC (UK waking hours, GMT and BST)', () => {
+    const ticks: string[] = [];
+    for (const cron of REMINDER_CRONS) {
+      const [minute, hour] = cron.split(' ') as [string, string];
+      const step = minute.startsWith('*/') ? Number(minute.slice(2)) : 60;
+      const minutes = minute.startsWith('*/')
+        ? Array.from({ length: 60 / step }, (_, i) => i * step)
+        : [Number(minute)];
+      const [from, to] = hour.includes('-')
+        ? hour.split('-').map(Number)
+        : [Number(hour), Number(hour)];
+      for (let h = from!; h <= to!; h++) for (const m of minutes) ticks.push(`${h}:${m}`);
+    }
+    expect(ticks).toHaveLength(29);
+    expect(ticks[0]).toBe('6:30');
+    expect(ticks.at(-1)).toBe('20:30');
+  });
 });

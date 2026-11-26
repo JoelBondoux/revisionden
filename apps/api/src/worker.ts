@@ -13,6 +13,7 @@ import { createWebPushSender } from './notifications/web-push';
 import { runFamilyEventNotifications as defaultRunFamilyEvents } from './family-events';
 import { createProviders } from './ai/providers';
 import { cleanUpExpiredData as defaultCleanUp } from './cleanup';
+import { CLEANUP_CRON, REMINDER_CRONS } from './crons';
 
 const systemClock = { now: () => new Date() };
 
@@ -97,13 +98,18 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
     },
 
     /**
-     * Cron trigger (every 15 minutes, see wrangler.toml): deletes data past its retention
-     * period (expired link codes, sessions and challenges; feedback 12 months after closing;
-     * families unused for 12 months), then sends due reminders, then tells parents about
-     * parent-set reward targets met and about the other parent's important changes.
+     * Cron trigger (schedules in crons.ts and wrangler.toml; all UTC).
+     * - The daily clean-up tick deletes data past its retention period (expired link codes,
+     *   sessions and challenges; feedback 12 months after closing; families unused for 12
+     *   months) and does nothing else.
+     * - A reminder tick sends due reminders, then tells parents about parent-set reward targets
+     *   met and about the other parent's important changes. Until web push is configured it
+     *   returns without opening the database.
+     * - An unknown schedule (for example wrangler dev --test-scheduled) does everything.
+     * Neon suspends an idle database after 5 minutes, so each tick that opens it wakes it.
      */
     async scheduled(
-      controller: Pick<ScheduledController, 'scheduledTime'>,
+      controller: Pick<ScheduledController, 'scheduledTime'> & { cron?: string },
       env: Record<string, unknown>,
     ): Promise<void> {
       let config: ReturnType<typeof parseEnv>;
@@ -114,9 +120,16 @@ export function createWorker(version: string, options: WorkerOptions = {}) {
         return;
       }
       const now = new Date(controller.scheduledTime);
+      const isCleanUpTick = controller.cron === CLEANUP_CRON;
+      const isReminderTick = (REMINDER_CRONS as readonly (string | undefined)[]).includes(
+        controller.cron,
+      );
+      const doCleanUp = isCleanUpTick || !isReminderTick;
+      const doReminders = (isReminderTick || !isCleanUpTick) && config.push !== null;
+      if (!doCleanUp && !doReminders) return;
       const db = createNeonDatabase(config.databaseUrl);
-      console.log('clean-up', JSON.stringify(await cleanUp({ db, now })));
-      if (!config.push) return;
+      if (doCleanUp) console.log('clean-up', JSON.stringify(await cleanUp({ db, now })));
+      if (!config.push || !doReminders) return;
       const sender = createWebPushSender({
         keys: config.push.keys,
         subject: config.webOrigin,

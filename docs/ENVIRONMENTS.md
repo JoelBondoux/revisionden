@@ -68,7 +68,7 @@ Every resource is named `revisionden` or starts `revisionden-` (decision 0003). 
   cannot upload Workers static assets, so they bundle the files into the Worker script instead.
   The first GitHub Actions deploy replaces them with the normal static-assets Worker
   (`apps/web/wrangler.toml`); nothing else changes.
-- The production API's 15-minute cron did not register on the first deploy (Cloudflare said the
+- The production API's cron (then every 15 minutes) did not register on the first deploy (Cloudflare said the
   trigger update was only partly applied; the account's other projects may already use the free
   plan's cron triggers). The first production deploy from GitHub Actions retries it; if it fails
   again, free a cron trigger or move to Workers Paid. Without it, reminders and the 12-month
@@ -255,11 +255,15 @@ added"; a production build (`VITE_ENVIRONMENT=production`) fails without `VITE_O
 `VITE_CONTACT_EMAIL` and `VITE_POLICY_EFFECTIVE_DATE`
 (`apps/web/src/features/legal/productionGuard.ts`).
 
-**Cron trigger:** every 15 minutes (`[triggers] crons` in `wrangler.toml`) the Worker deletes
-data past its retention period (`apps/api/src/cleanup.ts`: expired link codes, sessions,
+**Cron triggers (production only):** Neon suspends an idle database after 5 minutes, so every
+tick that opens it wakes it. Dev, staging and local have `crons = []` (an explicit empty list: Cloudflare
+keeps a deployed cron when `[triggers]` is left out, and only an empty list removes it). Production
+has, in UTC, one clean-up a day at 03:17 (`apps/api/src/cleanup.ts`: expired link codes, sessions,
 passkey challenges and sign-in checks; feedback closed more than 12 months ago; families unused
-for 12 months), then sends due reminders. Reminders do nothing until
-both VAPID keys are set.
+for 12 months) and reminders every 30 minutes from 06:30 to 20:30 (UK waking hours in GMT and BST).
+The schedules live in `apps/api/src/crons.ts` and `wrangler.toml`. Reminders do nothing, and do not
+open the database, until both VAPID keys are set. Expired data in dev and staging is not
+cleaned up unless you run `wrangler dev --test-scheduled`.
 
 **VAPID keys:** generate once per environment, for example with
 `npx web-push generate-vapid-keys` (any tool that gives a P-256 key pair as base64url works:

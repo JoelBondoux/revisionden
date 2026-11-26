@@ -5,6 +5,17 @@
 
 ## Open
 
+- [x] **Clean-up cadence vs "within 15 minutes" retention promise.** The clean-up now runs once
+      a day in production (`apps/api/src/crons.ts`, `apps/api/wrangler.toml`) to let the Neon database
+      suspend, but `docs/legal/data-retention.md` (summary, and the table rows for parent sessions, invite
+      codes, device link codes and student sessions, and section 3.1), and `docs/PRIVACY.md` (line
+      ~119) say expired codes and sessions are deleted "within 15 minutes" / "every 15 minutes".
+      Expired codes and sessions are already refused on use (`gt(expiresAt, now)`), so only deletion is
+      later. Decided by the product owner on 25 November 2026: "For RDen let's change the 15min
+      cleanup to within 24h." The legal and privacy text is to say "within 24 hours"; that wording
+      change is with the policies workstream (L). Resolved by L: `docs/legal/data-retention.md` 1.11 now says
+      expired codes and sessions are deleted within 24 hours, 2026-11-26.
+
 - [ ] **ICO complaint wording awaiting owner check.** `docs/legal/complaints-policy.md` 6.1 has a
       marked placeholder instead of the ICO's complaint page and phone number, and the parent's
       complaint page (`apps/web/src/features/complaints/ComplaintsPage.tsx`) names the ICO without

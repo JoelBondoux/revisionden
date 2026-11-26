@@ -36,9 +36,11 @@ name = "OPERATOR_RATE_LIMITER"
 namespace_id = "1003"
 simple = { limit = 120, period = 60 }
 
-# Reminder cron (web push): checks every 15 minutes which reminders are due.
+# No cron locally. Neon suspends an idle database after 5 minutes and every tick wakes it; use
+# `wrangler dev --test-scheduled` to run the scheduled handler by hand.
+# `crons = []` (not leaving [triggers] out) is what removes a cron from an already deployed Worker.
 [triggers]
-crons = ["*/15 * * * *"]
+crons = []
 
 # ---------------------------------------------------------------------------------------------
 [env.dev]
@@ -54,8 +56,10 @@ PASSKEY_RP_ID = "dev.revisionden.com"
 # development, and the config test checks staging and production never set it.
 SERVE_DRAFT_CONTENT = "true"
 
+# No cron in dev: it would wake the database every few minutes for nobody. The explicit empty
+# list removes the cron already deployed; leaving [triggers] out would keep it.
 [env.dev.triggers]
-crons = ["*/15 * * * *"]
+crons = []
 
 [[env.dev.r2_buckets]]
 binding = "UPLOADS"
@@ -89,8 +93,9 @@ API_ORIGIN = "https://api-staging.revisionden.com"
 WEB_ORIGIN = "https://staging.revisionden.com"
 PASSKEY_RP_ID = "staging.revisionden.com"
 
+# No cron in staging, for the same reason as dev.
 [env.staging.triggers]
-crons = ["*/15 * * * *"]
+crons = []
 
 [[env.staging.r2_buckets]]
 binding = "UPLOADS"
@@ -125,8 +130,11 @@ WEB_ORIGIN = "https://app.revisionden.com"
 # The registrable domain: valid for app.revisionden.com and keeps passkeys working across subdomains.
 PASSKEY_RP_ID = "revisionden.com"
 
+# Keep in step with src/crons.ts (a test checks it). All times are UTC.
+# 03:17 daily: delete data past its retention period.
+# 06:30, then every 30 minutes from 07:00 to 20:30: reminders (UK waking hours in GMT and BST).
 [env.production.triggers]
-crons = ["*/15 * * * *"]
+crons = ["17 3 * * *", "30 6 * * *", "*/30 7-20 * * *"]
 
 [[env.production.r2_buckets]]
 binding = "UPLOADS"
