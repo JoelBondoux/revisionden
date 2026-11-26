@@ -7,6 +7,7 @@ import { ProgressBar } from '../../components/ProgressBar';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { BarChart } from './BarChart';
+import { GrowIn } from './countUp';
 import { DailyLimitPanel } from './DailyLimit';
 import { ParentRewardsCard } from './ParentRewardsCard';
 import { TargetGradesPanel } from './TargetGrades';
@@ -133,22 +134,41 @@ function DashboardView({
       <div className="stat-tiles">
         <Tile
           label="Active study time"
-          value={formatMinutes(tiles.activeMinutes.value)}
+          count={{ value: tiles.activeMinutes.value, format: formatMinutes }}
+          index={0}
+          of={4}
           note={minutesNote(tiles.activeMinutes.value, tiles.activeMinutes.previous)}
         />
         <Tile
           label="Plan kept"
-          value={tiles.planKept ? `${tiles.planKept.done} of ${tiles.planKept.planned}` : '–'}
+          value="–"
+          count={
+            tiles.planKept && {
+              value: tiles.planKept.done,
+              format: (n) => `${n} of ${tiles.planKept!.planned}`,
+            }
+          }
+          index={1}
+          of={4}
           note={tiles.planKept ? 'sessions done' : 'No plan yet'}
         />
         <Tile
           label="Accuracy"
-          value={tiles.accuracy.value === null ? '–' : `${tiles.accuracy.value}%`}
+          value="–"
+          count={
+            tiles.accuracy.value === null
+              ? null
+              : { value: tiles.accuracy.value, format: (n) => `${n}%` }
+          }
+          index={2}
+          of={4}
           note={signedNote(tiles.accuracy.value, tiles.accuracy.previous)}
         />
         <Tile
           label="Streak"
-          value={plural(tiles.streak.current, 'day')}
+          count={{ value: tiles.streak.current, format: (n) => plural(n, 'day') }}
+          index={3}
+          of={4}
           note={`best ${tiles.streak.best}`}
         />
       </div>
@@ -278,12 +298,14 @@ function AiAllowanceCard({ allowance }: { allowance: ParentDashboard['aiAllowanc
   const resetDay = resetDayLabel(resetsOn);
   return (
     <Card title="AI marking allowance">
-      <ProgressBar
-        label="AI marking allowance"
-        value={percentUsed}
-        max={100}
-        valueText={`${percentUsed}% used`}
-      />
+      <GrowIn>
+        <ProgressBar
+          label="AI marking allowance"
+          value={percentUsed}
+          max={100}
+          valueText={`${percentUsed}% used`}
+        />
+      </GrowIn>
       <p className="secondary-text">
         {usedUp
           ? `This month’s AI marking allowance is used up. It resets on ${resetDay}.`

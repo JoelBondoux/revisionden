@@ -4,6 +4,7 @@ import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { Pill } from '../../components';
 import { ProgressBar } from '../../components/ProgressBar';
+import { GrowIn } from './countUp';
 import { defaultBaseUrl } from '../../api/ApiContext';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
@@ -63,13 +64,15 @@ export function ParentRewardsCard({ studentId, api }: { studentId: string; api?:
                 r.reached && <Pill tone="gold">Reached</Pill>
               )}
             </span>
-            <ProgressBar
-              label={r.title}
-              value={Math.min(r.current, r.goal)}
-              max={r.goal}
-              valueText={`${r.current} of ${r.goal} (${r.targetLabel})`}
-              tone="gold"
-            />
+            <GrowIn>
+              <ProgressBar
+                label={r.title}
+                value={Math.min(r.current, r.goal)}
+                max={r.goal}
+                valueText={`${r.current} of ${r.goal} (${r.targetLabel})`}
+                tone="gold"
+              />
+            </GrowIn>
             <span className="secondary-text">{`${r.targetLabel}: ${r.current} of ${r.goal}`}</span>
             {!r.givenAt &&
               (removing === r.id ? (

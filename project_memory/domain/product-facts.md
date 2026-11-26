@@ -133,6 +133,11 @@ Tags: #product #rules #limits #defaults
   F5-flagged points (one row per topic, a count, "Learn it first" where checked lessons exist),
   from `GET /v1/students/:id/worth-a-look`. Hidden when empty; never shown to the child. Learning
   point ids are internal, so parents see topic titles only.
+- Stats motion (K5, owner 2026-11-26): stat tiles count up and bar charts / progress bars grow
+  in once when first in view (700ms ease-out, stagger ≤60ms, all within 1s); none with reduced
+  motion or in print; screen readers get final values only. Parent pages silent; My stats plays
+  one soft `ringFill` settle sound when the counts finish. Helpers: `packages/core/src/count-up.ts`,
+  `apps/web/src/features/stats/countUp.tsx`. Detail: `docs/PRODUCT_RULES.md`.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown

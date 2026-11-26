@@ -249,3 +249,75 @@
   justify-content: space-between;
   gap: var(--space-3);
 }
+
+/* K5: count-up numbers and charts that grow in, once, the first time they come into view. */
+.stat-tile__value,
+.count-up__digits {
+  font-variant-numeric: tabular-nums;
+}
+
+.count-up__digits {
+  display: inline-block;
+}
+
+.bar-chart--waiting .bar-chart__fill {
+  transform: scale(1, 0);
+}
+
+.stats-grow--waiting .progress__fill {
+  transform: scale(0, 1);
+}
+
+.bar-chart__fill,
+.stats-grow .progress__fill {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.stats-grow .progress__fill {
+  transform-origin: 0 50%;
+}
+
+.bar-chart--growing .bar-chart__fill {
+  animation: stats-grow-up 700ms cubic-bezier(0.33, 1, 0.68, 1) both;
+  animation-delay: var(--stats-delay, 0ms);
+}
+
+.stats-grow--running .progress__fill {
+  animation: stats-grow-across 700ms cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+@keyframes stats-grow-up {
+  from {
+    transform: scale(1, 0);
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes stats-grow-across {
+  from {
+    transform: scale(0, 1);
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+
+/* Never animate with reduced motion, and print (Save as PDF) always shows the full bars. */
+@media (prefers-reduced-motion: reduce) {
+  .bar-chart__fill,
+  .stats-grow .progress__fill {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@media print {
+  .bar-chart__fill,
+  .stats-grow .progress__fill {
+    animation: none !important;
+    transform: none !important;
+  }
+}

@@ -1,5 +1,7 @@
 import { Button } from '../../components/Button';
-import { useId, useState } from 'react';
+import { useId, useState, type CSSProperties } from 'react';
+import { COUNT_UP_MS, staggerDelay } from '@revisionden/core';
+import { useEnterOnce, type EnterPhase } from './countUp';
 
 export interface ChartBar {
   label: string;
@@ -22,6 +24,11 @@ const AXIS = 18;
 const GAP = 2;
 const RADIUS = 4;
 
+const ENTER_CLASS: Partial<Record<EnterPhase, string>> = {
+  waiting: 'bar-chart--waiting',
+  running: 'bar-chart--growing',
+};
+
 /** A bar with a 4px rounded top, anchored to the baseline. */
 function barPath(x: number, y: number, w: number, h: number): string {
   if (h <= 0) return '';
@@ -33,7 +40,8 @@ function barPath(x: number, y: number, w: number, h: number): string {
  * The one chart style for the stats dashboards: a single violet series on one axis, a dashed
  * reference line for a goal or plan, the value of a bar in a tooltip on hover or keyboard
  * focus, and a table view (always there for screen readers, and on screen with "Show table").
- * There is no animation at all, so reduced motion is respected.
+ * The bars grow up from the baseline once, the first time the chart comes into view (K5);
+ * never with reduced motion, and never again on a re-render or a new period.
  */
 export function BarChart({ title, buckets, unit, reference, format }: BarChartProps) {
   const [active, setActive] = useState<number | null>(null);
@@ -46,9 +54,11 @@ export function BarChart({ title, buckets, unit, reference, format }: BarChartPr
   const y = (value: number) => plotHeight - (value / max) * (plotHeight - 8);
   const describe = (b: ChartBar) => `${b.label}: ${show(b.value)}`;
   const activeBar = active === null ? undefined : buckets[active];
+  const count = buckets.length;
+  const { ref, phase } = useEnterOnce<HTMLDivElement>(COUNT_UP_MS + staggerDelay(count - 1, count));
 
   return (
-    <div className="bar-chart">
+    <div ref={ref} className={ENTER_CLASS[phase] ? `bar-chart ${ENTER_CLASS[phase]}` : 'bar-chart'}>
       {!showTable && (
         <div className="bar-chart__plot">
           <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="bar-chart__svg">
@@ -70,6 +80,7 @@ export function BarChart({ title, buckets, unit, reference, format }: BarChartPr
                 <path
                   d={barPath(i * slot + GAP, y(b.value), slot - 2 * GAP, plotHeight - y(b.value))}
                   className="bar-chart__fill"
+                  style={{ '--stats-delay': `${staggerDelay(i, count)}ms` } as CSSProperties}
                 />
                 <text x={i * slot + slot / 2} y={HEIGHT - 4} className="bar-chart__label">
                   {b.label}
