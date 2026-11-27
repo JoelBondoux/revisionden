@@ -128,7 +128,8 @@ and write answer.value to exactly that accuracy. When the answer is the value of
 function ("make t the subject", "find f^-1(x)"), set answer.subject (e.g. "t" or "f^-1(x)") so
 answers written "t = ..." are accepted.
 Short answers need only one written form: spaces, capitals, minus signs, × or *, ÷, superscripts,
-≤ and √ are matched automatically. Set answer.any_order: true when order does not matter (a
+≤ and √ are matched automatically (and units in their usual spellings, F25). Set
+answer.kind: "hex" for a hexadecimal answer (F24: 0x2F, 2f and 02F all match 2F). Set answer.any_order: true when order does not matter (a
 product, a sum, a list of values, x = 3, y = 2), and answer.units for units the answer may add
 (e.g. ["cm"]). Still list different forms of the value (√32 and 4√2, three and 3).
 Each interchangeable item goes through the pipeline on its own.
