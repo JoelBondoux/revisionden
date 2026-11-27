@@ -151,14 +151,16 @@ test('a tap on a power switches every power between x² and x^2, and it is remem
   );
   await page.goto('/cards');
   const flip = page.getByTestId('flip-card');
-  await expect(flip.locator('sup')).toHaveCount(2);
+  // The question side only: the answer is on the page, hidden, until the card turns (F21).
+  const front = flip.locator('.flip-card__face--front');
+  await expect(front.locator('sup')).toHaveCount(2);
   await flip.locator('.math-text').first().click();
   // The tap switched the powers, and did not turn the card.
   await expect(flip).not.toHaveClass(/flip-card--flipped/);
-  await expect(flip.locator('sup')).toHaveCount(0);
+  await expect(front.locator('sup')).toHaveCount(0);
   await expect(flip).toContainText('x^2 + 10^3');
   await page.reload();
   await expect(page.getByTestId('flip-card')).toContainText('x^2 + 10^3');
   await page.getByTestId('flip-card').locator('.math-text').first().click();
-  await expect(page.getByTestId('flip-card').locator('sup')).toHaveCount(2);
+  await expect(front.locator('sup')).toHaveCount(2);
 });
