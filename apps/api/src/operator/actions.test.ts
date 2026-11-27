@@ -391,6 +391,7 @@ describe('operator undo of a triage outcome (L14)', () => {
       trackStep: true,
       confirmedAt: t.clock.now(),
       reviewedBy: 'triage',
+      rewardSeenAt: t.clock.now(),
     });
     expect((await post(`/tickets/${row.id}/undo-triage`)).data).toEqual({ ok: true });
     const [saved] = await t.db.select().from(feedback).where(eq(feedback.id, row.id));
@@ -399,7 +400,15 @@ describe('operator undo of a triage outcome (L14)', () => {
       rewardXp: 0,
       trackStep: false,
       confirmedAt: null,
+      rewardSeenAt: null,
     });
+    // A new outcome after the undo is told to the student again.
+    expect((await post(`/tickets/${row.id}/confirm-bug`)).data).toEqual({ ok: true });
+    const res = await t.app.request('/v1/student/feedback/rewards', {
+      headers: await t.signInStudent(f.studentId),
+    });
+    const { rewards } = (await res.json()) as { rewards: { id: string }[] };
+    expect(rewards.map((r) => r.id)).toEqual([row.id]);
   });
 
   it('refuses after 7 days, and for an outcome the operator chose', async () => {

@@ -630,6 +630,8 @@ export async function undoTriage(
       duplicateOf: null,
       rewardXp: 0,
       trackStep: false,
+      // So the student is told about whatever the report is decided as next.
+      rewardSeenAt: null,
       confirmedAt: null,
       notABugAt: null,
       reviewedBy: null,
