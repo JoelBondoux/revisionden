@@ -239,3 +239,42 @@ test('words scattered far apart are not a match', () => {
   const r = locateQuote({ quote: 'calculate with roots and indices', location: 'N7' }, pages);
   assert.equal(r.found, false);
 });
+
+// UK legislation pages (legislation.gov.uk, lead's ruling for S4) have no pages or spec codes;
+// a "Part III" location must be the nearest Part heading before the quote.
+const act = [
+  'Schedule 1 Part I U.K. Measurement of Length Metric units Kilometre = 1000 metres. ' +
+    'Centimetre = 1/100 metre. Part III U.K. Measurement of Volume Metric units ' +
+    'Cubic centimetre = 1/1000 cubic decimetre. LITRE = a cubic decimetre. ' +
+    'Millilitre = 1/1000 litre. Part V U.K. Measurement of Mass Gram = 1/1000 kilogram.',
+];
+
+test('reads a legislation Part from a location', () => {
+  assert.deepEqual(parseLocation('Schedule 1, Part III (Measurement of Volume)').parts, ['III']);
+  assert.deepEqual(parseLocation('page 4').parts, []);
+});
+
+test('a legislation quote passes under the Part heading that comes before it', () => {
+  const r = locateQuote(
+    {
+      quote: 'Millilitre = 1/1000 litre.',
+      location: 'Schedule 1, Part III (Measurement of Volume)',
+    },
+    act,
+    { paged: false },
+  );
+  assert.equal(r.found, true);
+  assert.equal(r.locationConfirmed, true);
+});
+
+test('a legislation quote fails under the wrong Part', () => {
+  const r = locateQuote(
+    { quote: 'Gram = 1/1000 kilogram.', location: 'Schedule 1, Part III' },
+    act,
+    {
+      paged: false,
+    },
+  );
+  assert.equal(r.locationConfirmed, false);
+  assert.match(r.reason, /Part V, not Part III/);
+});

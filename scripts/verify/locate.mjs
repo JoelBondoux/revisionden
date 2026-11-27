@@ -2,6 +2,8 @@
 import { normaliseText } from './normalise.mjs';
 
 const PAGE_PHRASE = /\b(?:pages?|pp?\.?)\s*(\d+)(?:\s*[-\u2013\u2014]\s*(\d+))?/gi;
+// A Part of a UK Act or regulation (legislation.gov.uk pages): "Schedule 1, Part III".
+const PART = /\bPart\s+([IVXLC]+)\b/gi;
 const CODE = /(?<![A-Za-z0-9.])([A-Z]{1,3}\d+[a-z]?|\d+(?:\.\d+)+[a-z]?)(?![A-Za-z0-9]|\.\d)/g;
 
 /** Page numbers and specification codes (N7, A17, 4.2.1a) named in a citation location. */
@@ -13,7 +15,8 @@ export function parseLocation(location) {
   }
   const rest = location.replace(PAGE_PHRASE, ' ');
   const codes = [...rest.matchAll(CODE)].map((m) => m[1]);
-  return { pages, codes };
+  const parts = [...rest.matchAll(PART)].map((m) => m[1].toUpperCase());
+  return { pages, codes, parts };
 }
 
 function joinPages(pages, joinHyphens) {
@@ -187,7 +190,17 @@ function locationProblems({ text, at, page, length }, loc, { paged, window, labe
     const problem = codeProblem(code, before, quoted);
     if (problem) problems.push(problem);
   }
-  if (!loc.pages.length && !loc.codes.length) {
+  for (const part of loc.parts ?? []) {
+    const nearest = [...before.matchAll(PART)].map((m) => m[1].toUpperCase()).at(-1);
+    if (nearest !== part) {
+      problems.push(
+        nearest
+          ? `the nearest Part before the quote is Part ${nearest}, not Part ${part}`
+          : `Part ${part} does not appear before the quote`,
+      );
+    }
+  }
+  if (!loc.pages.length && !loc.codes.length && !loc.parts?.length) {
     problems.push('the location has no page number or specification code to check');
   }
   return problems;
