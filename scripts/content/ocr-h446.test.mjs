@@ -1,4 +1,4 @@
-// Checks the real A-Level Computer Science topic tree (OCR H446, board provisional).
+// Checks the real A-Level Computer Science topic tree (OCR H446, board confirmed by the owner).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { dirname, join } from 'node:path';
@@ -59,12 +59,13 @@ test('the A-Level Computer Science subject offers OCR H446', () => {
   assert.deepEqual(subject.data.boards, [{ board: 'ocr', spec_code: 'H446' }]);
 });
 
-test('the H446 tree exists, links to the subject and says the board is provisional', () => {
+test('the H446 tree exists, links to the subject and says the board is confirmed', () => {
   assert.ok(tree, 'content/topic-trees should hold alevel-computer-science-ocr-h446');
   assert.equal(tree.data.subject, 'alevel-computer-science');
   assert.equal(tree.data.board, 'ocr');
   assert.equal(tree.data.specification.code, 'H446');
-  assert.match(tree.data.notes, /provisional/i);
+  assert.match(tree.data.notes, /confirmed/i);
+  assert.doesNotMatch(tree.data.notes, /provisional/i);
 });
 
 test('the H446 tree is at most three levels deep', () => {

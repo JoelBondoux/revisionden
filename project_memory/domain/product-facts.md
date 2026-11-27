@@ -105,6 +105,8 @@ Tags: #product #rules #limits #defaults
   training rights (not confirmed); no AI clause found for OCR or WJEC Eduqas. Figures, quotes and
   the recommended build order: `docs/research/board-shares-2026-11.md` (research, 2026-11-25; not
   yet a decision).
+- A-Level target boards (owner, 2026-11-27): Maths and Further Maths = Pearson Edexcel, Computer
+  Science = OCR H446, Physics = AQA.
 - Specialist tools research (2026-11-25, not yet a decision): quick wins are self-hosted and free
   for paid use (KaTeX, MathLive, pint, ChemPy, RDKit, SmilesDrawer, textstat, on-device Web Speech,
   the DfE French required-words list under OGL, and public-domain set texts: all 6 AQA Shakespeare
@@ -444,8 +446,8 @@ Tags: #product #rules #limits #defaults
   steps 1 to 6 and wait for the owner (G9 under decision 0008 and the A6 proof with individual
   approval; A18-0002 after it was compared by formula, #111). The topic tree's 2 near matches (A22,
   A25) were confirmed by the owner. Owner's review steps: `docs/REVIEW_GUIDE.md`.
-- A-Level Computer Science (S5, 2026-11-27): board **OCR H446, provisional** until the owner
-  confirms it (most-used board; no OCR AI clause found). Subject `alevel-computer-science`; topic
+- A-Level Computer Science (S5, 2026-11-27): board **OCR H446**, confirmed by the owner on
+  2026-11-27 (most-used board; no OCR AI clause found). Subject `alevel-computer-science`; topic
   tree `content/topic-trees/alevel-computer-science-ocr-h446.json` from specification version 3.0
   (April 2026), Components 01 and 02 only (the programming project is non-exam assessment): 111
   leaves, one per lettered point (1.1.1(a) to 2.3.1(f); 1.5.2 is one leaf). Every leaf has a
@@ -523,6 +525,12 @@ Tags: #product #rules #limits #defaults
   Items whose hint or explanation states a rule the specification does not (two's complement
   place values, normalisation, shift and mask rules) list `facts` and need individual human
   approval (decision 0009); 70 of the 119.
+- A-Level Computer Science items, strand 2 (S5, 2026-11-27): 63 draft template items for Boolean
+  algebra (1.4.3 (a) to (e)) from `app/templates/alevel_cs_boolean.py`. A Boolean expression is
+  never marked as free text: a question asks for a column of bits, one bit, a count, or one of four
+  options (`multiple_choice`) of which exactly one is equivalent. Truth tables list rows in
+  counting order, top row first; Karnaugh maps use the order 00, 01, 11, 10 for rows and columns,
+  and the question says so; a Karnaugh map question asks for the simplest sum of products. All 63 list `facts` and need individual human approval.
 - Computer Science engine (S5, 2026-11-27): `services/maths/app/cs/` (`bases`, `floating`,
   `logic`), no AI. Binary answers must show every bit (spaces ignored); hexadecimal is read by
   value. Floating point is a two's complement mantissa and exponent with the binary point after

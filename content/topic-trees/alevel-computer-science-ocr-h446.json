@@ -8,7 +8,7 @@
     "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
     "version": "3.0 (April 2026)"
   },
-  "notes": "Board provisional: OCR H446 is the likely board until the owner confirms it. Structure and references (1.1.1(a) to 2.3.1(f)) follow section 2c of the specification (Components 01 and 02); the programming project (Component 03 or 04) is non-exam assessment and is not in this tree. One leaf per lettered point; 1.5.2 has no lettered points, so it is one leaf. Topic titles are short summaries written for RevisionDen, not specification text.",
+  "notes": "Board confirmed: the owner chose OCR H446 on 2026-11-27. Structure and references (1.1.1(a) to 2.3.1(f)) follow section 2c of the specification (Components 01 and 02); the programming project (Component 03 or 04) is non-exam assessment and is not in this tree. One leaf per lettered point; 1.5.2 has no lettered points, so it is one leaf. Topic titles are short summaries written for RevisionDen, not specification text.",
   "verification": {
     "status": "draft",
     "version": 1,

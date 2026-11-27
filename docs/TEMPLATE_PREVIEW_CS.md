@@ -1,4 +1,4 @@
-# Template questions: preview (A-Level Computer Science (OCR H446, board provisional))
+# Template questions: preview (A-Level Computer Science (OCR H446))
 
 Made by `pnpm content:templates` from the files in `content/items/alevel-computer-science/templated`. Do not edit: rebuild instead. How templates work: `docs/TEMPLATES.md`.
 
@@ -868,3 +868,462 @@ Made by `pnpm content:templates` from the files in `content/items/alevel-compute
 - **Explanation:** Bit by bit, AND gives 1 only where both bits are 1: 10000100 AND 10001001 = 10000000.
 - **Hint:** Line the two numbers up and combine each pair of bits: AND gives 1 only where both bits are 1.
 - Seed 7, difficulty 2, `alevel-cs-ocr-1-4-1-i-t-masks-07`. Checks: grounded-writing pass, maths-engine pass, quote-check pass.
+
+## alevel-cs-ocr-1-4-3-a-define-a-problem (alevel-cs-ocr-1-4-3-a, 7 questions)
+
+### 1. The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 when B and A are both 1, and also whenever C is 1. Which expression defines Q?
+
+- **Answer:** C ∧ (A ∨ B) | C ∨ B | **(B ∧ A) ∨ C** | C ∨ A
+- **Explanation:** (B ∧ A) ∨ C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.
+- **Hint:** Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?
+- Seed 1, difficulty 2, `alevel-cs-ocr-1-4-3-a-t-define-a-problem-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 2. The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when C and B are both 1. Which expression defines Q?
+
+- **Answer:** ¬B ∧ C | B ∧ ¬C | **C ∧ B** | B ∨ C
+- **Explanation:** C ∧ B is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.
+- **Hint:** Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?
+- Seed 2, difficulty 2, `alevel-cs-ocr-1-4-3-a-t-define-a-problem-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 3. The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 when exactly one of B and A is 1. Which expression defines Q?
+
+- **Answer:** (A ∧ ¬B) ∨ (A ∧ B) | **B ⊕ A** | (A ∧ ¬B) ∨ (¬A ∧ ¬B) | ¬A ∧ B
+- **Explanation:** B ⊕ A is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.
+- **Hint:** Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?
+- Seed 3, difficulty 2, `alevel-cs-ocr-1-4-3-a-t-define-a-problem-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 4. The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when C is 0 and exactly one of B and A is 1. Which expression defines Q?
+
+- **Answer:** (¬B ∧ ¬C) ∨ (¬A ∧ B ∧ ¬C) | (A ∧ ¬C) ∨ (¬A ∧ B ∧ ¬C) | (A ∧ ¬B) ∨ (¬A ∧ B ∧ ¬C) | **(B ⊕ A) ∧ ¬C**
+- **Explanation:** (B ⊕ A) ∧ ¬C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.
+- **Hint:** Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?
+- Seed 4, difficulty 2, `alevel-cs-ocr-1-4-3-a-t-define-a-problem-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
+
+### 5. The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when A and C are both 1. Which expression defines Q?
+
+- **Answer:** **A ∧ C** | ¬A ∧ C | A ∧ ¬C | A ∨ C
+- **Explanation:** A ∧ C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.
+- **Hint:** Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?
+- Seed 5, difficulty 2, `alevel-cs-ocr-1-4-3-a-t-define-a-problem-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
+
+### 6. The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when B is 0 and C is 1. Which expression defines Q?
+
+- **Answer:** C | **¬B ∧ C** | ¬B | ¬(B ∨ C)
+- **Explanation:** ¬B ∧ C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.
+- **Hint:** Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?
+- Seed 6, difficulty 2, `alevel-cs-ocr-1-4-3-a-t-define-a-problem-06`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 7. The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when C and A are both 0. Which expression defines Q?
+
+- **Answer:** ¬A | (C ∧ A) ∨ B | **¬(C ∨ A)** | (C ∨ A) ∧ B
+- **Explanation:** ¬(C ∨ A) is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.
+- **Hint:** Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?
+- Seed 7, difficulty 2, `alevel-cs-ocr-1-4-3-a-t-define-a-problem-07`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+## alevel-cs-ocr-1-4-3-b-simplify-expression (alevel-cs-ocr-1-4-3-b, 7 questions)
+
+### 1. Which of these is equivalent to (A ∧ ¬B) ∨ (¬A ∧ ¬B) ∨ (¬A ∧ ¬C)?
+
+- **Answer:** **¬B ∨ (¬A ∧ ¬C)** | ¬B ∨ (A ∧ ¬C) | ¬B ∨ (¬A ∧ C) | ¬A ∧ ¬C
+- **Explanation:** ¬B ∨ (¬A ∧ ¬C) has the same truth table as (A ∧ ¬B) ∨ (¬A ∧ ¬B) ∨ (¬A ∧ ¬C) on all 8 rows; each other option differs on at least one row.
+- **Hint:** Compare truth tables, or look for terms that share letters and simplify them together.
+- Seed 1, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-simplify-expression-01`. Checks: grounded-writing pass, maths-engine pass.
+
+### 2. Which of these is equivalent to (¬A ∧ C) ∨ (¬A ∧ ¬C) ∨ (¬B ∧ C)?
+
+- **Answer:** ¬A ∨ C | ¬A ∨ ¬B | ¬A ∧ C | **¬A ∨ (¬B ∧ C)**
+- **Explanation:** ¬A ∨ (¬B ∧ C) has the same truth table as (¬A ∧ C) ∨ (¬A ∧ ¬C) ∨ (¬B ∧ C) on all 8 rows; each other option differs on at least one row.
+- **Hint:** Compare truth tables, or look for terms that share letters and simplify them together.
+- Seed 2, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-simplify-expression-02`. Checks: grounded-writing pass, maths-engine pass.
+
+### 3. Which of these is equivalent to (¬A ∧ ¬B) ∨ (¬A ∧ ¬C) ∨ (B ∧ C)?
+
+- **Answer:** B ∧ C | **¬A ∨ (B ∧ C)** | ¬A | ¬A ∧ (B ∨ C)
+- **Explanation:** ¬A ∨ (B ∧ C) has the same truth table as (¬A ∧ ¬B) ∨ (¬A ∧ ¬C) ∨ (B ∧ C) on all 8 rows; each other option differs on at least one row.
+- **Hint:** Compare truth tables, or look for terms that share letters and simplify them together.
+- Seed 3, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-simplify-expression-03`. Checks: grounded-writing pass, maths-engine pass.
+
+### 4. Which of these is equivalent to (¬A ∧ B) ∨ (¬A ∧ ¬B) ∨ (B ∧ C)?
+
+- **Answer:** ¬A ∨ (B ∧ ¬C) | B ∧ C | **¬A ∨ (B ∧ C)** | ¬A
+- **Explanation:** ¬A ∨ (B ∧ C) has the same truth table as (¬A ∧ B) ∨ (¬A ∧ ¬B) ∨ (B ∧ C) on all 8 rows; each other option differs on at least one row.
+- **Hint:** Compare truth tables, or look for terms that share letters and simplify them together.
+- Seed 4, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-simplify-expression-04`. Checks: grounded-writing pass, maths-engine pass.
+
+### 5. Which of these is equivalent to (A ∧ B) ∨ (¬A ∧ B) ∨ (A ∧ ¬C)?
+
+- **Answer:** **B ∨ (A ∧ ¬C)** | ¬B ∨ (A ∧ ¬C) | B ∨ (¬A ∧ ¬C) | B ∨ (A ∧ C)
+- **Explanation:** B ∨ (A ∧ ¬C) has the same truth table as (A ∧ B) ∨ (¬A ∧ B) ∨ (A ∧ ¬C) on all 8 rows; each other option differs on at least one row.
+- **Hint:** Compare truth tables, or look for terms that share letters and simplify them together.
+- Seed 5, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-simplify-expression-05`. Checks: grounded-writing pass, maths-engine pass.
+
+### 6. Which of these is equivalent to (A ∧ B) ∨ (¬A ∧ B) ∨ (¬A ∧ ¬C)?
+
+- **Answer:** ¬B ∨ (¬A ∧ ¬C) | B ∨ (A ∧ ¬C) | B ∨ (¬A ∧ C) | **B ∨ (¬A ∧ ¬C)**
+- **Explanation:** B ∨ (¬A ∧ ¬C) has the same truth table as (A ∧ B) ∨ (¬A ∧ B) ∨ (¬A ∧ ¬C) on all 8 rows; each other option differs on at least one row.
+- **Hint:** Compare truth tables, or look for terms that share letters and simplify them together.
+- Seed 6, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-simplify-expression-06`. Checks: grounded-writing pass, maths-engine pass.
+
+### 7. Which of these is equivalent to (A ∧ B) ∨ (A ∧ ¬B) ∨ (¬B ∧ ¬C)?
+
+- **Answer:** ¬A ∨ (¬B ∧ ¬C) | A ∨ (B ∧ ¬C) | A ∨ (¬B ∧ C) | **A ∨ (¬B ∧ ¬C)**
+- **Explanation:** A ∨ (¬B ∧ ¬C) has the same truth table as (A ∧ B) ∨ (A ∧ ¬B) ∨ (¬B ∧ ¬C) on all 8 rows; each other option differs on at least one row.
+- **Hint:** Compare truth tables, or look for terms that share letters and simplify them together.
+- Seed 7, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-simplify-expression-07`. Checks: grounded-writing pass, maths-engine pass.
+
+## alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters (alevel-cs-ocr-1-4-3-b, 7 questions)
+
+### 1. This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 0 1 0 0; A = 1: 0 1 1 0. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** **(A ∧ C) ∨ (¬B ∧ C)** | A ∨ (¬B ∧ C) | (A ∧ C) ∨ C | (A ∧ C) ∨ ¬B
+- **Explanation:** (A ∧ C) ∨ (¬B ∧ C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 1, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-01`. Checks: grounded-writing pass, maths-engine pass.
+
+### 2. This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 0 1 0 0; A = 1: 0 1 1 1. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** **(A ∧ B) ∨ (¬B ∧ C)** | (A ∨ B) ∧ (¬B ∨ C) | B ∨ (¬B ∧ C) | A ∨ (¬B ∧ C)
+- **Explanation:** (A ∧ B) ∨ (¬B ∧ C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 2, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-02`. Checks: grounded-writing pass, maths-engine pass.
+
+### 3. This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 1 0 0; A = 1: 0 1 1 0. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** (A ∧ C) ∨ ¬B | (A ∧ C) ∨ ¬A | **(A ∧ C) ∨ (¬A ∧ ¬B)** | (¬A ∧ C) ∨ (¬A ∧ ¬B)
+- **Explanation:** (A ∧ C) ∨ (¬A ∧ ¬B) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 4, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-04`. Checks: grounded-writing pass, maths-engine pass.
+
+### 4. This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 1 1 1; A = 1: 1 0 0 0. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** ¬A ∨ ¬B | A ∨ (¬B ∧ ¬C) | **¬A ∨ (¬B ∧ ¬C)** | ¬A ∨ (B ∧ ¬C)
+- **Explanation:** ¬A ∨ (¬B ∧ ¬C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 5, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-05`. Checks: grounded-writing pass, maths-engine pass.
+
+### 5. This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 0 1 1; A = 1: 0 0 1 1. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** B ∧ (¬A ∨ ¬C) | B ∨ ¬C | B ∨ ¬A | **B ∨ (¬A ∧ ¬C)**
+- **Explanation:** B ∨ (¬A ∧ ¬C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 6, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-06`. Checks: grounded-writing pass, maths-engine pass.
+
+### 6. This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 0 0 0; A = 1: 0 0 0 1. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** (A ∧ B ∧ ¬C) ∨ (¬A ∧ ¬B ∧ C) | ¬A ∧ ¬B ∧ ¬C | A ∧ B ∧ ¬C | **(A ∧ B ∧ ¬C) ∨ (¬A ∧ ¬B ∧ ¬C)**
+- **Explanation:** (A ∧ B ∧ ¬C) ∨ (¬A ∧ ¬B ∧ ¬C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 7, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-07`. Checks: grounded-writing pass, maths-engine pass.
+
+### 7. This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 1 1 0; A = 1: 1 1 0 0. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** ¬A ∧ C | ¬B | ¬B ∧ (¬A ∨ C) | **¬B ∨ (¬A ∧ C)**
+- **Explanation:** ¬B ∨ (¬A ∧ C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 8, difficulty 3, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-08`. Checks: grounded-writing pass, maths-engine pass.
+
+## alevel-cs-ocr-1-4-3-b-karnaugh-map-four-letters (alevel-cs-ocr-1-4-3-b, 7 questions)
+
+### 1. This Karnaugh map shows the output Q for inputs A, B, C and D. The rows are AB in the order 00, 01, 11, 10; the columns are CD in the order 00, 01, 11, 10. AB = 00: 1 0 0 1; AB = 01: 0 1 1 0; AB = 11: 0 0 0 0; AB = 10: 0 1 1 0. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** (A ∧ ¬B ∧ D) ∨ (¬A ∧ B ∧ D) ∨ (¬B ∧ ¬D) | **(A ∧ ¬B ∧ D) ∨ (¬A ∧ B ∧ D) ∨ (¬A ∧ ¬B ∧ ¬D)** | (A ∧ ¬B ∧ D) ∨ (¬A ∧ B ∧ D) ∨ (¬A ∧ ¬D) | (A ∧ ¬B ∧ D) ∨ (¬A ∧ B ∧ D) ∨ (¬A ∧ ¬B)
+- **Explanation:** (A ∧ ¬B ∧ D) ∨ (¬A ∧ B ∧ D) ∨ (¬A ∧ ¬B ∧ ¬D) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 1, difficulty 4, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-four-letters-01`. Checks: grounded-writing pass, maths-engine pass.
+
+### 2. This Karnaugh map shows the output Q for inputs A, B, C and D. The rows are AB in the order 00, 01, 11, 10; the columns are CD in the order 00, 01, 11, 10. AB = 00: 0 1 1 1; AB = 01: 0 1 1 0; AB = 11: 0 0 0 0; AB = 10: 1 0 0 1. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** **(¬A ∧ D) ∨ (A ∧ ¬B ∧ ¬D) ∨ (¬A ∧ ¬B ∧ C)** | (¬A ∧ D) ∨ (¬B ∧ ¬D) ∨ (¬A ∧ ¬B ∧ C) | (¬A ∧ D) ∨ (A ∧ ¬D) ∨ (¬A ∧ ¬B ∧ C) | (¬A ∧ D) ∨ (A ∧ ¬B) ∨ (¬A ∧ ¬B ∧ C)
+- **Explanation:** (¬A ∧ D) ∨ (A ∧ ¬B ∧ ¬D) ∨ (¬A ∧ ¬B ∧ C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 2, difficulty 4, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-four-letters-02`. Checks: grounded-writing pass, maths-engine pass.
+
+### 3. This Karnaugh map shows the output Q for inputs A, B, C and D. The rows are AB in the order 00, 01, 11, 10; the columns are CD in the order 00, 01, 11, 10. AB = 00: 1 1 0 1; AB = 01: 1 1 1 1; AB = 11: 0 1 0 0; AB = 10: 1 1 0 1. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** (¬A ∧ B) ∨ (¬B ∧ ¬D) | (¬A ∧ B) ∨ (¬C ∧ D) | **(¬A ∧ B) ∨ (¬C ∧ D) ∨ (¬B ∧ ¬D)** | (¬A ∨ B) ∧ (¬C ∨ D) ∧ (¬B ∨ ¬D)
+- **Explanation:** (¬A ∧ B) ∨ (¬C ∧ D) ∨ (¬B ∧ ¬D) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 3, difficulty 4, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-four-letters-03`. Checks: grounded-writing pass, maths-engine pass.
+
+### 4. This Karnaugh map shows the output Q for inputs A, B, C and D. The rows are AB in the order 00, 01, 11, 10; the columns are CD in the order 00, 01, 11, 10. AB = 00: 1 0 0 0; AB = 01: 1 0 0 1; AB = 11: 1 1 0 1; AB = 10: 1 1 0 0. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** **(A ∧ ¬C) ∨ (B ∧ ¬D) ∨ (¬C ∧ ¬D)** | (A ∧ C) ∨ (B ∧ ¬D) ∨ (¬C ∧ ¬D) | (A ∧ ¬C) ∨ (¬B ∧ ¬D) ∨ (¬C ∧ ¬D) | (A ∧ ¬C) ∨ (B ∧ D) ∨ (¬C ∧ ¬D)
+- **Explanation:** (A ∧ ¬C) ∨ (B ∧ ¬D) ∨ (¬C ∧ ¬D) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 4, difficulty 4, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-four-letters-04`. Checks: grounded-writing pass, maths-engine pass.
+
+### 5. This Karnaugh map shows the output Q for inputs A, B, C and D. The rows are AB in the order 00, 01, 11, 10; the columns are CD in the order 00, 01, 11, 10. AB = 00: 0 0 0 1; AB = 01: 1 1 1 1; AB = 11: 1 1 0 0; AB = 10: 0 0 0 0. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** (B ∧ ¬C) ∨ (¬A ∧ B) ∨ (A ∧ C ∧ ¬D) | **(B ∧ ¬C) ∨ (¬A ∧ B) ∨ (¬A ∧ C ∧ ¬D)** | (B ∧ ¬C) ∨ (¬A ∧ B) ∨ (¬A ∧ ¬C ∧ ¬D) | (B ∧ ¬C) ∨ (¬A ∧ B) ∨ (¬A ∧ C ∧ D)
+- **Explanation:** (B ∧ ¬C) ∨ (¬A ∧ B) ∨ (¬A ∧ C ∧ ¬D) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 5, difficulty 4, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-four-letters-05`. Checks: grounded-writing pass, maths-engine pass.
+
+### 6. This Karnaugh map shows the output Q for inputs A, B, C and D. The rows are AB in the order 00, 01, 11, 10; the columns are CD in the order 00, 01, 11, 10. AB = 00: 1 0 0 1; AB = 01: 0 0 0 0; AB = 11: 1 0 0 1; AB = 10: 1 0 0 1. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** ¬D ∨ (¬B ∧ ¬D) | A ∨ (¬B ∧ ¬D) | **(A ∧ ¬D) ∨ (¬B ∧ ¬D)** | (A ∧ ¬D) ∨ ¬D
+- **Explanation:** (A ∧ ¬D) ∨ (¬B ∧ ¬D) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 6, difficulty 4, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-four-letters-06`. Checks: grounded-writing pass, maths-engine pass.
+
+### 7. This Karnaugh map shows the output Q for inputs A, B, C and D. The rows are AB in the order 00, 01, 11, 10; the columns are CD in the order 00, 01, 11, 10. AB = 00: 0 0 1 1; AB = 01: 0 0 0 0; AB = 11: 1 1 1 1; AB = 10: 0 0 1 0. Which expression gives Q as its simplest sum of products?
+
+- **Answer:** (¬A ∧ B) ∨ (¬B ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C) | (A ∧ ¬B) ∨ (¬B ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C) | (A ∧ B) ∨ (B ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C) | **(A ∧ B) ∨ (¬B ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C)**
+- **Explanation:** (A ∧ B) ∨ (¬B ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.
+- **Hint:** Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.
+- Seed 7, difficulty 4, `alevel-cs-ocr-1-4-3-b-t-karnaugh-map-four-letters-07`. Checks: grounded-writing pass, maths-engine pass.
+
+## alevel-cs-ocr-1-4-3-c-de-morgan (alevel-cs-ocr-1-4-3-c, 7 questions)
+
+### 1. Using De Morgan's laws, which of these is equivalent to ¬(A ∨ ¬B)?
+
+- **Answer:** A ∨ ¬B | ¬A ∧ ¬B | A ∧ B | **¬A ∧ B**
+- **Explanation:** ¬(A ∨ ¬B) becomes ¬A ∧ B: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.
+- **Hint:** Move the NOT inside the bracket: what happens to each letter, and to the operation between them?
+- Seed 1, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-de-morgan-01`. Checks: grounded-writing pass, maths-engine pass.
+
+### 2. Using De Morgan's laws, which of these is equivalent to ¬(B ∨ C)?
+
+- **Answer:** B ∨ C | ¬B ∧ C | **¬B ∧ ¬C** | B ∧ ¬C
+- **Explanation:** ¬(B ∨ C) becomes ¬B ∧ ¬C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.
+- **Hint:** Move the NOT inside the bracket: what happens to each letter, and to the operation between them?
+- Seed 2, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-de-morgan-02`. Checks: grounded-writing pass, maths-engine pass.
+
+### 3. Using De Morgan's laws, which of these is equivalent to ¬(¬A ∨ ¬B)?
+
+- **Answer:** A ∧ ¬B | **A ∧ B** | ¬A ∧ B | A ∨ B
+- **Explanation:** ¬(¬A ∨ ¬B) becomes A ∧ B: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.
+- **Hint:** Move the NOT inside the bracket: what happens to each letter, and to the operation between them?
+- Seed 3, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-de-morgan-03`. Checks: grounded-writing pass, maths-engine pass.
+
+### 4. Using De Morgan's laws, which of these is equivalent to ¬(A ∧ ¬C)?
+
+- **Answer:** ¬A ∨ ¬C | A ∨ C | ¬A ∧ C | **¬A ∨ C**
+- **Explanation:** ¬(A ∧ ¬C) becomes ¬A ∨ C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.
+- **Hint:** Move the NOT inside the bracket: what happens to each letter, and to the operation between them?
+- Seed 5, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-de-morgan-05`. Checks: grounded-writing pass, maths-engine pass.
+
+### 5. Using De Morgan's laws, which of these is equivalent to ¬(¬B ∨ C)?
+
+- **Answer:** **B ∧ ¬C** | B ∧ C | ¬B ∧ ¬C | B ∨ ¬C
+- **Explanation:** ¬(¬B ∨ C) becomes B ∧ ¬C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.
+- **Hint:** Move the NOT inside the bracket: what happens to each letter, and to the operation between them?
+- Seed 6, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-de-morgan-06`. Checks: grounded-writing pass, maths-engine pass.
+
+### 6. Using De Morgan's laws, which of these is equivalent to ¬(¬B ∨ ¬C)?
+
+- **Answer:** **B ∧ C** | B ∨ C | ¬B ∧ ¬C | ¬B ∨ ¬C
+- **Explanation:** ¬(¬B ∨ ¬C) becomes B ∧ C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.
+- **Hint:** Move the NOT inside the bracket: what happens to each letter, and to the operation between them?
+- Seed 7, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-de-morgan-07`. Checks: grounded-writing pass, maths-engine pass.
+
+### 7. Using De Morgan's laws, which of these is equivalent to ¬(A ∨ ¬C)?
+
+- **Answer:** ¬A ∧ ¬C | **¬A ∧ C** | A ∧ C | ¬A ∨ C
+- **Explanation:** ¬(A ∨ ¬C) becomes ¬A ∧ C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.
+- **Hint:** Move the NOT inside the bracket: what happens to each letter, and to the operation between them?
+- Seed 8, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-de-morgan-08`. Checks: grounded-writing pass, maths-engine pass.
+
+## alevel-cs-ocr-1-4-3-c-name-the-rule (alevel-cs-ocr-1-4-3-c, 7 questions)
+
+### 1. Which rule of Boolean algebra turns (C ∨ A) ∨ B into C ∨ (A ∨ B)?
+
+- **Answer:** Commutation | Double negation | **Association** | Distribution
+- **Explanation:** (C ∨ A) ∨ B and C ∨ (A ∨ B) have the same truth table, and the step from one to the other is association.
+- **Hint:** Look at what changes: the order, the brackets, the NOTs, or the operations.
+- Seed 1, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-name-the-rule-01`. Checks: grounded-writing pass, maths-engine pass.
+
+### 2. Which rule of Boolean algebra turns ¬(A ∧ B) into ¬A ∨ ¬B?
+
+- **Answer:** Distribution | Association | Commutation | **De Morgan's laws**
+- **Explanation:** ¬(A ∧ B) and ¬A ∨ ¬B have the same truth table, and the step from one to the other is one of De Morgan's laws.
+- **Hint:** Look at what changes: the order, the brackets, the NOTs, or the operations.
+- Seed 2, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-name-the-rule-02`. Checks: grounded-writing pass, maths-engine pass.
+
+### 3. Which rule of Boolean algebra turns (A ∧ B) ∧ C into A ∧ (B ∧ C)?
+
+- **Answer:** Commutation | Double negation | **Association** | Distribution
+- **Explanation:** (A ∧ B) ∧ C and A ∧ (B ∧ C) have the same truth table, and the step from one to the other is association.
+- **Hint:** Look at what changes: the order, the brackets, the NOTs, or the operations.
+- Seed 3, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-name-the-rule-03`. Checks: grounded-writing pass, maths-engine pass.
+
+### 4. Which rule of Boolean algebra turns (B ∨ C) ∨ A into B ∨ (C ∨ A)?
+
+- **Answer:** Distribution | Commutation | Double negation | **Association**
+- **Explanation:** (B ∨ C) ∨ A and B ∨ (C ∨ A) have the same truth table, and the step from one to the other is association.
+- **Hint:** Look at what changes: the order, the brackets, the NOTs, or the operations.
+- Seed 4, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-name-the-rule-04`. Checks: grounded-writing pass, maths-engine pass.
+
+### 5. Which rule of Boolean algebra turns ¬¬C ∨ A into C ∨ A?
+
+- **Answer:** De Morgan's laws | Distribution | Association | **Double negation**
+- **Explanation:** ¬¬C ∨ A and C ∨ A have the same truth table, and the step from one to the other is double negation.
+- **Hint:** Look at what changes: the order, the brackets, the NOTs, or the operations.
+- Seed 5, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-name-the-rule-05`. Checks: grounded-writing pass, maths-engine pass.
+
+### 6. Which rule of Boolean algebra turns (B ∧ C) ∧ A into B ∧ (C ∧ A)?
+
+- **Answer:** Double negation | **Association** | Distribution | Commutation
+- **Explanation:** (B ∧ C) ∧ A and B ∧ (C ∧ A) have the same truth table, and the step from one to the other is association.
+- **Hint:** Look at what changes: the order, the brackets, the NOTs, or the operations.
+- Seed 6, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-name-the-rule-06`. Checks: grounded-writing pass, maths-engine pass.
+
+### 7. Which rule of Boolean algebra turns ¬¬C ∧ B into C ∧ B?
+
+- **Answer:** **Double negation** | De Morgan's laws | Association | Commutation
+- **Explanation:** ¬¬C ∧ B and C ∧ B have the same truth table, and the step from one to the other is double negation.
+- **Hint:** Look at what changes: the order, the brackets, the NOTs, or the operations.
+- Seed 7, difficulty 2, `alevel-cs-ocr-1-4-3-c-t-name-the-rule-07`. Checks: grounded-writing pass, maths-engine pass.
+
+## alevel-cs-ocr-1-4-3-d-truth-table (alevel-cs-ocr-1-4-3-d, 7 questions)
+
+### 1. Complete the truth table for Q = ¬(¬A ⊕ B) ∧ C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.
+
+- **Answer:** 00010100
+- **Explanation:** Row by row (ABC): 000 gives 0; 001 gives 0; 010 gives 0; 011 gives 1; 100 gives 0; 101 gives 1; 110 gives 0; 111 gives 0. So the Q column is 00010100.
+- **Hint:** Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.
+- Seed 1, difficulty 2, `alevel-cs-ocr-1-4-3-d-t-truth-table-01`. Checks: grounded-writing pass, maths-engine pass.
+
+### 2. Complete the truth table for Q = (A ∨ B) ∧ C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.
+
+- **Answer:** 00010101
+- **Explanation:** Row by row (ABC): 000 gives 0; 001 gives 0; 010 gives 0; 011 gives 1; 100 gives 0; 101 gives 1; 110 gives 0; 111 gives 1. So the Q column is 00010101.
+- **Hint:** Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.
+- Seed 2, difficulty 2, `alevel-cs-ocr-1-4-3-d-t-truth-table-02`. Checks: grounded-writing pass, maths-engine pass.
+
+### 3. Complete the truth table for Q = ¬A ∨ ¬B. Work row by row with AB = 00, 01, 10, 11 (top row first) and give the Q column as one string of bits, top row first.
+
+- **Answer:** 1110
+- **Explanation:** Row by row (AB): 00 gives 1; 01 gives 1; 10 gives 1; 11 gives 0. So the Q column is 1110.
+- **Hint:** Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.
+- Seed 3, difficulty 2, `alevel-cs-ocr-1-4-3-d-t-truth-table-03`. Checks: grounded-writing pass, maths-engine pass.
+
+### 4. Complete the truth table for Q = (A ∧ ¬B) ∨ (¬B ∧ ¬C). Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.
+
+- **Answer:** 10001100
+- **Explanation:** Row by row (ABC): 000 gives 1; 001 gives 0; 010 gives 0; 011 gives 0; 100 gives 1; 101 gives 1; 110 gives 0; 111 gives 0. So the Q column is 10001100.
+- **Hint:** Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.
+- Seed 4, difficulty 2, `alevel-cs-ocr-1-4-3-d-t-truth-table-04`. Checks: grounded-writing pass, maths-engine pass.
+
+### 5. Complete the truth table for Q = (¬A ⊕ B) ∨ C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.
+
+- **Answer:** 11010111
+- **Explanation:** Row by row (ABC): 000 gives 1; 001 gives 1; 010 gives 0; 011 gives 1; 100 gives 0; 101 gives 1; 110 gives 1; 111 gives 1. So the Q column is 11010111.
+- **Hint:** Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.
+- Seed 5, difficulty 2, `alevel-cs-ocr-1-4-3-d-t-truth-table-05`. Checks: grounded-writing pass, maths-engine pass.
+
+### 6. Complete the truth table for Q = (¬A ⊕ B) ∨ ¬C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.
+
+- **Answer:** 11101011
+- **Explanation:** Row by row (ABC): 000 gives 1; 001 gives 1; 010 gives 1; 011 gives 0; 100 gives 1; 101 gives 0; 110 gives 1; 111 gives 1. So the Q column is 11101011.
+- **Hint:** Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.
+- Seed 6, difficulty 2, `alevel-cs-ocr-1-4-3-d-t-truth-table-06`. Checks: grounded-writing pass, maths-engine pass.
+
+### 7. Complete the truth table for Q = (A ⊕ B) ∧ ¬C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.
+
+- **Answer:** 00101000
+- **Explanation:** Row by row (ABC): 000 gives 0; 001 gives 0; 010 gives 1; 011 gives 0; 100 gives 1; 101 gives 0; 110 gives 0; 111 gives 0. So the Q column is 00101000.
+- **Hint:** Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.
+- Seed 7, difficulty 2, `alevel-cs-ocr-1-4-3-d-t-truth-table-07`. Checks: grounded-writing pass, maths-engine pass.
+
+## alevel-cs-ocr-1-4-3-e-full-adder (alevel-cs-ocr-1-4-3-e, 7 questions)
+
+### 1. A full adder has inputs A = 0, B = 0 and carry in 1. What is the value of the carry out?
+
+- **Answer:** 0
+- **Explanation:** 1 input is 1, so the three bits add up to 1, which is 01 in binary: carry out 0, sum 1. The carry out is 0.
+- **Hint:** A full adder adds the three input bits together, as in a column of binary addition.
+- Seed 1, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-full-adder-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 2. A full adder has inputs A = 0, B = 1 and carry in 1. What is the value of the sum?
+
+- **Answer:** 0
+- **Explanation:** 2 inputs are 1, so the three bits add up to 2, which is 10 in binary: carry out 1, sum 0. The sum is 0.
+- **Hint:** A full adder adds the three input bits together, as in a column of binary addition.
+- Seed 2, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-full-adder-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 3. A full adder has inputs A = 1, B = 1 and carry in 0. What is the value of the sum?
+
+- **Answer:** 0
+- **Explanation:** 2 inputs are 1, so the three bits add up to 2, which is 10 in binary: carry out 1, sum 0. The sum is 0.
+- **Hint:** A full adder adds the three input bits together, as in a column of binary addition.
+- Seed 3, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-full-adder-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 4. A full adder has inputs A = 0, B = 0 and carry in 1. What is the value of the sum?
+
+- **Answer:** 1
+- **Explanation:** 1 input is 1, so the three bits add up to 1, which is 01 in binary: carry out 0, sum 1. The sum is 1.
+- **Hint:** A full adder adds the three input bits together, as in a column of binary addition.
+- Seed 4, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-full-adder-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
+
+### 5. A full adder has inputs A = 1, B = 0 and carry in 0. What is the value of the sum?
+
+- **Answer:** 1
+- **Explanation:** 1 input is 1, so the three bits add up to 1, which is 01 in binary: carry out 0, sum 1. The sum is 1.
+- **Hint:** A full adder adds the three input bits together, as in a column of binary addition.
+- Seed 5, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-full-adder-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 6. A full adder has inputs A = 1, B = 0 and carry in 0. What is the value of the carry out?
+
+- **Answer:** 0
+- **Explanation:** 1 input is 1, so the three bits add up to 1, which is 01 in binary: carry out 0, sum 1. The carry out is 0.
+- **Hint:** A full adder adds the three input bits together, as in a column of binary addition.
+- Seed 7, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-full-adder-07`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 7. A full adder has inputs A = 0, B = 0 and carry in 0. What is the value of the sum?
+
+- **Answer:** 0
+- **Explanation:** 0 inputs are 1, so the three bits add up to 0, which is 00 in binary: carry out 0, sum 0. The sum is 0.
+- **Hint:** A full adder adds the three input bits together, as in a column of binary addition.
+- Seed 9, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-full-adder-09`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+## alevel-cs-ocr-1-4-3-e-d-type-flip-flop (alevel-cs-ocr-1-4-3-e, 7 questions)
+
+### 1. A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 0. At the 1st, 2nd, 3rd and 4th rising edges D is 1, 1, 1 and 0. How many times does Q change value over the four rising edges?
+
+- **Answer:** 2
+- **Explanation:** Q goes 0, 1, 1, 1, 0: it changes 2 times.
+- **Hint:** Write down Q after each rising edge, starting from its first value, and count the changes.
+- Seed 1, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer fail, adversarial-review pass.
+
+### 2. A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 1. At the 1st, 2nd, 3rd and 4th rising edges D is 0, 0, 1 and 0. How many times does Q change value over the four rising edges?
+
+- **Answer:** 3
+- **Explanation:** Q goes 1, 0, 0, 1, 0: it changes 3 times.
+- **Hint:** Write down Q after each rising edge, starting from its first value, and count the changes.
+- Seed 2, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-02`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer fail, adversarial-review pass.
+
+### 3. A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 1. At the 1st, 2nd, 3rd and 4th rising edges D is 0, 1, 1 and 0. How many times does Q change value over the four rising edges?
+
+- **Answer:** 3
+- **Explanation:** Q goes 1, 0, 1, 1, 0: it changes 3 times.
+- **Hint:** Write down Q after each rising edge, starting from its first value, and count the changes.
+- Seed 3, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-03`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer fail, adversarial-review fail.
+
+### 4. A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 1. At the 1st, 2nd, 3rd and 4th rising edges D is 1, 1, 0 and 0. What is Q just after the 4th rising edge?
+
+- **Answer:** 0
+- **Explanation:** At the 4th rising edge D is 0, so Q becomes 0 and holds it until the next rising edge.
+- **Hint:** At a rising edge, look only at D at that moment.
+- Seed 4, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-04`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
+
+### 5. A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 1. At the 1st, 2nd, 3rd and 4th rising edges D is 1, 0, 0 and 1. How many times does Q change value over the four rising edges?
+
+- **Answer:** 2
+- **Explanation:** Q goes 1, 1, 0, 0, 1: it changes 2 times.
+- **Hint:** Write down Q after each rising edge, starting from its first value, and count the changes.
+- Seed 5, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-05`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 6. A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 0. At the 1st, 2nd, 3rd and 4th rising edges D is 1, 1, 1 and 0. What is Q just after the 1st rising edge?
+
+- **Answer:** 1
+- **Explanation:** At the 1st rising edge D is 1, so Q becomes 1 and holds it until the next rising edge.
+- **Hint:** At a rising edge, look only at D at that moment.
+- Seed 6, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-06`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+
+### 7. A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 0. At the 1st, 2nd, 3rd and 4th rising edges D is 0, 1, 1 and 1. What is Q just after the 2nd rising edge?
+
+- **Answer:** 1
+- **Explanation:** At the 2nd rising edge D is 1, so Q becomes 1 and holds it until the next rising edge.
+- **Hint:** At a rising edge, look only at D at that moment.
+- Seed 7, difficulty 2, `alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-07`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.

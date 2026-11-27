@@ -1,0 +1,539 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-01",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-karnaugh-map-three-letters",
+    "expected_seconds": 150,
+    "prompt": "This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 0 1 0 0; A = 1: 0 1 1 0. Which expression gives Q as its simplest sum of products?",
+    "answer": { "option": 0 },
+    "options": ["(A ∧ C) ∨ (¬B ∧ C)", "A ∨ (¬B ∧ C)", "(A ∧ C) ∨ C", "(A ∧ C) ∨ ¬B"],
+    "marks": 1,
+    "hint": "Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.",
+    "explanation": "(A ∧ C) ∨ (¬B ∧ C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "In a Karnaugh map, each group of 1s must be a rectangle of 1, 2, 4 or 8 cells, groups may wrap around the edges of the map, and each group gives one term of the simplified expression.",
+        "ask": "What shapes and sizes can the groups of 1s in a Karnaugh map be, can they wrap around the edges, and what does each group give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:11Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-02",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-karnaugh-map-three-letters",
+    "expected_seconds": 150,
+    "prompt": "This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 0 1 0 0; A = 1: 0 1 1 1. Which expression gives Q as its simplest sum of products?",
+    "answer": { "option": 0 },
+    "options": ["(A ∧ B) ∨ (¬B ∧ C)", "(A ∨ B) ∧ (¬B ∨ C)", "B ∨ (¬B ∧ C)", "A ∨ (¬B ∧ C)"],
+    "marks": 1,
+    "hint": "Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.",
+    "explanation": "(A ∧ B) ∨ (¬B ∧ C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "In a Karnaugh map, each group of 1s must be a rectangle of 1, 2, 4 or 8 cells, groups may wrap around the edges of the map, and each group gives one term of the simplified expression.",
+        "ask": "What shapes and sizes can the groups of 1s in a Karnaugh map be, can they wrap around the edges, and what does each group give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:12Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-04",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-karnaugh-map-three-letters",
+    "expected_seconds": 150,
+    "prompt": "This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 1 0 0; A = 1: 0 1 1 0. Which expression gives Q as its simplest sum of products?",
+    "answer": { "option": 2 },
+    "options": ["(A ∧ C) ∨ ¬B", "(A ∧ C) ∨ ¬A", "(A ∧ C) ∨ (¬A ∧ ¬B)", "(¬A ∧ C) ∨ (¬A ∧ ¬B)"],
+    "marks": 1,
+    "hint": "Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.",
+    "explanation": "(A ∧ C) ∨ (¬A ∧ ¬B) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "In a Karnaugh map, each group of 1s must be a rectangle of 1, 2, 4 or 8 cells, groups may wrap around the edges of the map, and each group gives one term of the simplified expression.",
+        "ask": "What shapes and sizes can the groups of 1s in a Karnaugh map be, can they wrap around the edges, and what does each group give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:13Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-05",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-karnaugh-map-three-letters",
+    "expected_seconds": 150,
+    "prompt": "This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 1 1 1; A = 1: 1 0 0 0. Which expression gives Q as its simplest sum of products?",
+    "answer": { "option": 2 },
+    "options": ["¬A ∨ ¬B", "A ∨ (¬B ∧ ¬C)", "¬A ∨ (¬B ∧ ¬C)", "¬A ∨ (B ∧ ¬C)"],
+    "marks": 1,
+    "hint": "Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.",
+    "explanation": "¬A ∨ (¬B ∧ ¬C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "In a Karnaugh map, each group of 1s must be a rectangle of 1, 2, 4 or 8 cells, groups may wrap around the edges of the map, and each group gives one term of the simplified expression.",
+        "ask": "What shapes and sizes can the groups of 1s in a Karnaugh map be, can they wrap around the edges, and what does each group give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:14Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-06",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-karnaugh-map-three-letters",
+    "expected_seconds": 150,
+    "prompt": "This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 0 1 1; A = 1: 0 0 1 1. Which expression gives Q as its simplest sum of products?",
+    "answer": { "option": 3 },
+    "options": ["B ∧ (¬A ∨ ¬C)", "B ∨ ¬C", "B ∨ ¬A", "B ∨ (¬A ∧ ¬C)"],
+    "marks": 1,
+    "hint": "Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.",
+    "explanation": "B ∨ (¬A ∧ ¬C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "In a Karnaugh map, each group of 1s must be a rectangle of 1, 2, 4 or 8 cells, groups may wrap around the edges of the map, and each group gives one term of the simplified expression.",
+        "ask": "What shapes and sizes can the groups of 1s in a Karnaugh map be, can they wrap around the edges, and what does each group give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters",
+      "version": 1,
+      "seed": 6
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:15Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-07",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-karnaugh-map-three-letters",
+    "expected_seconds": 150,
+    "prompt": "This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 0 0 0; A = 1: 0 0 0 1. Which expression gives Q as its simplest sum of products?",
+    "answer": { "option": 3 },
+    "options": [
+      "(A ∧ B ∧ ¬C) ∨ (¬A ∧ ¬B ∧ C)",
+      "¬A ∧ ¬B ∧ ¬C",
+      "A ∧ B ∧ ¬C",
+      "(A ∧ B ∧ ¬C) ∨ (¬A ∧ ¬B ∧ ¬C)"
+    ],
+    "marks": 1,
+    "hint": "Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.",
+    "explanation": "(A ∧ B ∧ ¬C) ∨ (¬A ∧ ¬B ∧ ¬C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "In a Karnaugh map, each group of 1s must be a rectangle of 1, 2, 4 or 8 cells, groups may wrap around the edges of the map, and each group gives one term of the simplified expression.",
+        "ask": "What shapes and sizes can the groups of 1s in a Karnaugh map be, can they wrap around the edges, and what does each group give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters",
+      "version": 1,
+      "seed": 7
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:15Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-karnaugh-map-three-letters-08",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-karnaugh-map-three-letters",
+    "expected_seconds": 150,
+    "prompt": "This Karnaugh map shows the output Q for inputs A, B and C. The rows are A; the columns are BC in the order 00, 01, 11, 10. A = 0: 1 1 1 0; A = 1: 1 1 0 0. Which expression gives Q as its simplest sum of products?",
+    "answer": { "option": 3 },
+    "options": ["¬A ∧ C", "¬B", "¬B ∧ (¬A ∨ C)", "¬B ∨ (¬A ∧ C)"],
+    "marks": 1,
+    "hint": "Find the largest blocks of neighbouring 1s, then write one term for each block using only the letters that stay the same across it.",
+    "explanation": "¬B ∨ (¬A ∧ C) is 1 in exactly the cells that hold 1, and no sum of products with fewer letters is; each other option gives a different map.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "In a Karnaugh map, each group of 1s must be a rectangle of 1, 2, 4 or 8 cells, groups may wrap around the edges of the map, and each group gives one term of the simplified expression.",
+        "ask": "What shapes and sizes can the groups of 1s in a Karnaugh map be, can they wrap around the edges, and what does each group give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters",
+      "version": 1,
+      "seed": 8
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters (version 1, seed 8) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:16Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

@@ -185,17 +185,22 @@ GCSE Maths Higher, Pearson Edexcel 1MA1: `content/topic-trees/gcse-maths-edexcel
 and what is still unsupported is in [`sourcing/gcse-maths-1ma1-pilot.md`](sourcing/gcse-maths-1ma1-pilot.md).
 All pilot content is still `draft` until it passes the rest of the pipeline.
 
-## A-Level Computer Science (OCR H446, board provisional)
+## A-Level Computer Science (OCR H446)
 
 `content/topic-trees/alevel-computer-science-ocr-h446.json`: one leaf per lettered point of
 Components 01 and 02 in specification version 3.0 (April 2026), 111 leaves, each with a verbatim
-quote that passes the quote check exactly. The board stays provisional until the owner confirms
-it. Record: [`sourcing/alevel-cs-ocr-h446.md`](sourcing/alevel-cs-ocr-h446.md). Still `draft`.
+quote that passes the quote check exactly. The owner confirmed the board on
+2026-11-27. Record: [`sourcing/alevel-cs-ocr-h446.md`](sourcing/alevel-cs-ocr-h446.md). Still `draft`.
 
 Items, strand 1 (data representation, 1.4.1 (b) to (i)): 119 template items in
 `content/items/alevel-computer-science/templated/` (`docs/TEMPLATES.md`), all draft, all quotes
 exact. 70 of them state a rule no cited source states, so they list `facts` and need individual
 human approval (decision 0009).
+
+Items, strand 2 (Boolean algebra, 1.4.3 (a) to (e)): 63 template items (9 templates), all draft,
+all quotes exact. All 63 list `facts` (OCR's notation, Karnaugh map grouping, De Morgan's laws
+and the other named rules, the full adder, the D type flip-flop) and need individual human
+approval.
 
 ## Citation conventions (settled while sourcing the pilot)
 

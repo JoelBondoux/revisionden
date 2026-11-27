@@ -162,7 +162,7 @@ def make_item(template: Template, seed: int, now: str) -> dict:
         "prompt": q["prompt"],
         "answer": q["answer"],
     }
-    for key in ("verify", "steps"):
+    for key in ("options", "verify", "steps"):
         if key in q:
             item[key] = q[key]
     item["marks"] = template.marks

@@ -1,0 +1,625 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-full-adder-01",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-full-adder",
+    "expected_seconds": 60,
+    "prompt": "A full adder has inputs A = 0, B = 0 and carry in 1. What is the value of the carry out?",
+    "answer": {
+      "accepted": ["0"]
+    },
+    "marks": 1,
+    "hint": "A full adder adds the three input bits together, as in a column of binary addition.",
+    "explanation": "1 input is 1, so the three bits add up to 1, which is 01 in binary: carry out 0, sum 1. The carry out is 0.",
+    "facts": [
+      {
+        "statement": "A full adder adds three bits (A, B and carry in): its sum output is 1 when an odd number of the inputs are 1, and its carry out is 1 when two or more of the inputs are 1.",
+        "ask": "What are the sum and carry out of a full adder for each combination of its three inputs?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-full-adder",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-full-adder v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-full-adder (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:06Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:06Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:07Z",
+          "notes": "no problems found; confidence medium"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-full-adder-02",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-full-adder",
+    "expected_seconds": 60,
+    "prompt": "A full adder has inputs A = 0, B = 1 and carry in 1. What is the value of the sum?",
+    "answer": {
+      "accepted": ["0"]
+    },
+    "marks": 1,
+    "hint": "A full adder adds the three input bits together, as in a column of binary addition.",
+    "explanation": "2 inputs are 1, so the three bits add up to 2, which is 10 in binary: carry out 1, sum 0. The sum is 0.",
+    "facts": [
+      {
+        "statement": "A full adder adds three bits (A, B and carry in): its sum output is 1 when an odd number of the inputs are 1, and its carry out is 1 when two or more of the inputs are 1.",
+        "ask": "What are the sum and carry out of a full adder for each combination of its three inputs?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-full-adder",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-full-adder v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-full-adder (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:06Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:09Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:11Z",
+          "notes": "unsupported_claim (hint): The hint states that 'A full adder adds the three input bits together, as in a column of binary addition.' The only quoted source says students should know 'the logic associated with ... full adders' and does not explicitly support this descriptive claim about how a full adder works.; unsupported_claim (explanation): The explanation states that '2 inputs are 1, so the three bits add up to 2, which is 10 in binary: carry out 1, sum 0.' The quoted source only names 'the logic associated with ... full adders' and does not explicitly support these factual claims about the operation and outputs of a full adder.; confidence medium"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-full-adder-03",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-full-adder",
+    "expected_seconds": 60,
+    "prompt": "A full adder has inputs A = 1, B = 1 and carry in 0. What is the value of the sum?",
+    "answer": {
+      "accepted": ["0"]
+    },
+    "marks": 1,
+    "hint": "A full adder adds the three input bits together, as in a column of binary addition.",
+    "explanation": "2 inputs are 1, so the three bits add up to 2, which is 10 in binary: carry out 1, sum 0. The sum is 0.",
+    "facts": [
+      {
+        "statement": "A full adder adds three bits (A, B and carry in): its sum output is 1 when an odd number of the inputs are 1, and its carry out is 1 when two or more of the inputs are 1.",
+        "ask": "What are the sum and carry out of a full adder for each combination of its three inputs?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-full-adder",
+      "version": 1,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-full-adder v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-full-adder (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:07Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:13Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:16Z",
+          "notes": "unsupported_claim (hint): The hint states that 'A full adder adds the three input bits together, as in a column of binary addition.' The only quoted source says the specification includes 'The logic associated with ... full adders' and does not explicitly support this explanatory claim.; unsupported_claim (explanation): The explanation states that two inputs are 1, the bits add to 2, this is 10 in binary, and therefore carry out 1 and sum 0. These are factual claims not backed by the quoted source, which only names full adders in the specification and does not provide these details."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-full-adder-04",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-full-adder",
+    "expected_seconds": 60,
+    "prompt": "A full adder has inputs A = 0, B = 0 and carry in 1. What is the value of the sum?",
+    "answer": {
+      "accepted": ["1"]
+    },
+    "marks": 1,
+    "hint": "A full adder adds the three input bits together, as in a column of binary addition.",
+    "explanation": "1 input is 1, so the three bits add up to 1, which is 01 in binary: carry out 0, sum 1. The sum is 1.",
+    "facts": [
+      {
+        "statement": "A full adder adds three bits (A, B and carry in): its sum output is 1 when an odd number of the inputs are 1, and its carry out is 1 when two or more of the inputs are 1.",
+        "ask": "What are the sum and carry out of a full adder for each combination of its three inputs?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-full-adder",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-full-adder v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-full-adder (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:08Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:17Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:18Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-full-adder-05",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-full-adder",
+    "expected_seconds": 60,
+    "prompt": "A full adder has inputs A = 1, B = 0 and carry in 0. What is the value of the sum?",
+    "answer": {
+      "accepted": ["1"]
+    },
+    "marks": 1,
+    "hint": "A full adder adds the three input bits together, as in a column of binary addition.",
+    "explanation": "1 input is 1, so the three bits add up to 1, which is 01 in binary: carry out 0, sum 1. The sum is 1.",
+    "facts": [
+      {
+        "statement": "A full adder adds three bits (A, B and carry in): its sum output is 1 when an odd number of the inputs are 1, and its carry out is 1 when two or more of the inputs are 1.",
+        "ask": "What are the sum and carry out of a full adder for each combination of its three inputs?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-full-adder",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-full-adder v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-full-adder (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:09Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:20Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:22Z",
+          "notes": "unsupported_claim (hint): The hint states that 'A full adder adds the three input bits together, as in a column of binary addition.' The provided source only says students should know 'The logic associated with ... full adders' and does not explicitly support this descriptive claim.; unsupported_claim (explanation): The explanation states that one input is 1, the three bits add up to 1, that this is 01 in binary, and that this gives carry out 0 and sum 1. The provided source only says students should know the logic associated with full adders; it does not explicitly support these factual claims.; confidence medium"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-full-adder-07",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-full-adder",
+    "expected_seconds": 60,
+    "prompt": "A full adder has inputs A = 1, B = 0 and carry in 0. What is the value of the carry out?",
+    "answer": {
+      "accepted": ["0"]
+    },
+    "marks": 1,
+    "hint": "A full adder adds the three input bits together, as in a column of binary addition.",
+    "explanation": "1 input is 1, so the three bits add up to 1, which is 01 in binary: carry out 0, sum 1. The carry out is 0.",
+    "facts": [
+      {
+        "statement": "A full adder adds three bits (A, B and carry in): its sum output is 1 when an odd number of the inputs are 1, and its carry out is 1 when two or more of the inputs are 1.",
+        "ask": "What are the sum and carry out of a full adder for each combination of its three inputs?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-full-adder",
+      "version": 1,
+      "seed": 7
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-full-adder v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-full-adder (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:10Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:24Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:25Z",
+          "notes": "no problems found; confidence medium"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-full-adder-09",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-full-adder",
+    "expected_seconds": 60,
+    "prompt": "A full adder has inputs A = 0, B = 0 and carry in 0. What is the value of the sum?",
+    "answer": {
+      "accepted": ["0"]
+    },
+    "marks": 1,
+    "hint": "A full adder adds the three input bits together, as in a column of binary addition.",
+    "explanation": "0 inputs are 1, so the three bits add up to 0, which is 00 in binary: carry out 0, sum 0. The sum is 0.",
+    "facts": [
+      {
+        "statement": "A full adder adds three bits (A, B and carry in): its sum output is 1 when an odd number of the inputs are 1, and its carry out is 1 when two or more of the inputs are 1.",
+        "ask": "What are the sum and carry out of a full adder for each combination of its three inputs?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-full-adder",
+      "version": 1,
+      "seed": 9
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-full-adder v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-full-adder (version 1, seed 9) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:11Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:27Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:30Z",
+          "notes": "unsupported_claim (hint): The hint states that 'A full adder adds the three input bits together, as in a column of binary addition.' The only quoted source says students should know 'the logic associated with ... full adders' and does not explicitly support this descriptive claim.; unsupported_claim (explanation): The explanation says '0 inputs are 1, so the three bits add up to 0, which is 00 in binary: carry out 0, sum 0.' The quoted source does not support these specific factual claims about how a full adder works or about this input combination."
+        }
+      ]
+    }
+  }
+]

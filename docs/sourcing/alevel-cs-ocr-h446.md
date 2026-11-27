@@ -4,9 +4,9 @@
 
 ## Board
 
-OCR H446 is **provisional**: it is the most-used A-Level Computer Science board in England and no
-OCR AI clause has been found (`docs/research/board-shares-2026-11.md`,
-`docs/research/question-generation-2026-11.md`). The owner has not confirmed it yet.
+OCR H446 is **confirmed**: the owner chose it on 2026-11-27. It is the most-used A-Level Computer
+Science board in England and no OCR AI clause has been found (`docs/research/board-shares-2026-11.md`,
+`docs/research/question-generation-2026-11.md`).
 
 ## Source read
 
@@ -68,7 +68,18 @@ committed (public repository); the quote checker caches it outside the repo.
   template's independent recheck agreed; every floating point item is also hand-checkable in
   `docs/TEMPLATE_PREVIEW_CS.md`.
 
+## Items, strand 2 (Boolean algebra)
+
+- 63 template items (9 templates) for 1.4.3 (a) to (e), cited the same way as strand 1.
+- Quote check, 2026-11-27: all 63 items pass (exact).
+- Unsupported by any cited source (listed in `facts`, decision 0009): what OCR's symbols mean,
+  how Karnaugh map groups are formed, what De Morgan's laws, commutation, association,
+  distribution and double negation say (the specification names them in 1.4.3 (c) but does not
+  state them), how a full adder's outputs follow from its inputs, and how a D type flip-flop
+  responds to the clock. All 63 items need individual human approval.
+- Model checks (OpenAI `gpt-5.4-2026-03-05`, blind answer and adversarial review) on every item:
+  see the PR for results.
+
 ## Still open
 
-- Owner to confirm the board.
 - Leaf titles are RevisionDen summaries, not specification text.

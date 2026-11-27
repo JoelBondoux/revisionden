@@ -1,4 +1,5 @@
-"""A-Level Computer Science templates (OCR H446, board provisional): strand 1, data representation.
+"""A-Level Computer Science templates (OCR H446): strand 1 (data representation) and strand 2
+(Boolean algebra).
 
 Answers come from the CS engine (app/cs) and each instance is rechecked by a second method.
 """
@@ -55,6 +56,8 @@ def test_items_have_the_content_item_shape(template):
         assert 1 <= item["difficulty"] <= 5
         assert item["verification"]["status"] == "draft"
         assert item["source_ref"].startswith("OCR H446 specification")
+        if item["type"] == "multiple_choice":
+            assert item["options"] and "accepted" not in item["answer"]
 
 
 @pytest.mark.parametrize("template", TEMPLATES, ids=lambda t: t.id)
@@ -76,6 +79,12 @@ def test_every_question_states_the_conventions_it_depends_on():
                 assert re.search(r"\d+-bit|\d+ bits", prompt), item["id"]
             if "shift" in prompt:
                 assert re.search(r"logical|arithmetic|circular", prompt), item["id"]
+            if "Karnaugh map" in prompt:
+                assert "00, 01, 11, 10" in prompt, item["id"]  # Gray code order, stated
+            if "truth table" in prompt:
+                assert "row by row" in prompt and "top row first" in prompt, item["id"]
+            if "flip-flop" in prompt:
+                assert "rising edge" in prompt, item["id"]
 
 
 def test_each_learning_point_has_at_least_three_items():
@@ -93,6 +102,9 @@ def _broken(template, change):
 
 def _wrong_answer(q):
     q = dict(q)
+    if "option" in q["answer"]:
+        q["answer"] = {"option": (q["answer"]["option"] + 1) % len(q["options"])}
+        return q
     if "value" in q["answer"]:
         q["answer"] = {**q["answer"], "value": str(Fraction(q["answer"]["value"]) + 1)}
         return q
@@ -113,13 +125,23 @@ def test_a_wrong_answer_is_caught(template):
 def test_question_text_that_disagrees_with_its_numbers_is_caught(template):
     def change(q):
         q = dict(q)
+        if re.search(r"[∧∨]", q["prompt"]):  # a Boolean expression: change its first operator
+            q["prompt"] = re.sub(r"[∧∨]", lambda m: "∨" if m.group() == "∧" else "∧",
+                                 q["prompt"], count=1)
+            return q
+        if "Karnaugh map" in q["prompt"]:  # change the first cell of the map
+            q["prompt"] = re.sub(r"(: )([01])", lambda m: m.group(1) + str(1 - int(m.group(2))),
+                                 q["prompt"], count=1)
+            return q
         # Swap the first 0 and 1 (or digits) in the question's data so it no longer matches.
         q["prompt"] = re.sub(r"\b([01]{4,})\b", lambda m: m.group(1)[::-1] if m.group(1) !=
                              m.group(1)[::-1] else m.group(1)[1:] + "1", q["prompt"], count=1) \
             if re.search(r"\b[01]{4,}\b", q["prompt"]) else re.sub(
                 r"(-?\d+(?:\.\d+)?|[0-9A-F]{2,3}\b)", lambda m: _bump(m.group(1)), q["prompt"],
                 count=1)
+        assert q["prompt"] != template.write(_params)["prompt"], "the change did nothing"
         return q
+    _params = draw_params(template, 1)
     with pytest.raises(GenerationError):
         make_item(_broken(template, change), 1, NOW)
 
@@ -143,6 +165,8 @@ RULE_TEMPLATES = {
     "denary-to-twos-complement", "twos-complement-to-denary", "denary-to-sign-magnitude",
     "twos-complement-subtraction", "floating-point-to-denary", "denary-to-floating-point",
     "normalise-floating-point", "floating-point-addition", "shifts", "masks",
+    "define-a-problem", "simplify-expression", "truth-table", "karnaugh-map-three-letters", "karnaugh-map-four-letters", "de-morgan",
+    "name-the-rule", "full-adder", "d-type-flip-flop",
 }
 
 
@@ -204,5 +228,5 @@ def test_denary_answers_are_marked_by_value_and_hex_in_its_usual_forms(template)
         elif slug in HEX_RESULTS:
             hexa = item["answer"]["accepted"][0]
             assert {f"0x{hexa}", f"0{hexa}"} <= set(item["answer"]["accepted"]), item["id"]
-        else:
+        elif not template.topic.startswith("alevel-cs-ocr-1-4-3-"):
             assert item["type"] == "short_answer", item["id"]

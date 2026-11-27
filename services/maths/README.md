@@ -58,9 +58,15 @@ cross-checked by the content checks and an independent recheck before it is writ
 `pnpm content:templates` builds them; `python -m app.templates.build --check` fails if the
 committed items are stale. How to add one: `docs/TEMPLATES.md`.
 
+## Computer Science templates
+
+`app/templates/alevel_cs.py` (strand 1, data representation) and `alevel_cs_boolean.py`
+(strand 2, Boolean algebra) write A-Level Computer Science items from the CS engine; each
+template's recheck confirms the answer by a second method. See `docs/TEMPLATES.md`.
+
 ## Computer Science engine
 
-`app/cs/` (workstream S5, A-Level Computer Science, OCR H446, board provisional) computes CS
+`app/cs/` (workstream S5, A-Level Computer Science, OCR H446) computes CS
 answers by code, with no AI:
 
 - `bases.py`: binary and hexadecimal conversion, sign and magnitude, two's complement, column

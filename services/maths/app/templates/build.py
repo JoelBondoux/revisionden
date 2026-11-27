@@ -36,7 +36,7 @@ COURSES = {
                                 "GCSE Maths Higher"),
     "alevel-cs": Course("alevel-cs", tuple(alevel_cs.TEMPLATES),
                         Path("content/items/alevel-computer-science/templated"), 7,
-                        "A-Level Computer Science (OCR H446, board provisional)"),
+                        "A-Level Computer Science (OCR H446)"),
 }
 DEFAULT = COURSES["gcse-maths-higher"]
 TEMPLATES = DEFAULT.templates
@@ -109,6 +109,9 @@ def _answer(item: dict) -> str:
         return " or ".join(f"x = {s}" for s in answer["solutions"])
     if "expression" in answer:
         return answer["expression"].replace("*", " × ")
+    if "option" in answer:
+        return " | ".join(f"**{o}**" if i == answer["option"] else o
+                          for i, o in enumerate(item["options"]))
     if "accepted" in answer:
         return answer["accepted"][0]
     return f"{answer.get('unit', '')}{answer['value']}"

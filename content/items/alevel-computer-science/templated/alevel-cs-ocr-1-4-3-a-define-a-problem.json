@@ -1,0 +1,637 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-3-a-t-define-a-problem-01",
+    "topic": "alevel-cs-ocr-1-4-3-a",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-a-lp-define-a-problem",
+    "expected_seconds": 90,
+    "prompt": "The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 when B and A are both 1, and also whenever C is 1. Which expression defines Q?",
+    "answer": {
+      "option": 2
+    },
+    "options": ["C ∧ (A ∨ B)", "C ∨ B", "(B ∧ A) ∨ C", "C ∨ A"],
+    "marks": 1,
+    "hint": "Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?",
+    "explanation": "(B ∧ A) ∨ C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(a)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (a) (page 9; PDF page 15)",
+        "quote": "Define problems using Boolean logic.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-a-define-a-problem",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-a-define-a-problem v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-a-define-a-problem (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:12:10Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:20Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:23Z",
+          "notes": "unsupported_claim (explanation): The explanation claims that '(B ∧ A) ∨ C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.' The only cited source supports 'Define problems using Boolean logic' and does not support this specific truth-value claim about these expressions. Under the instruction that any factual claim in the explanation needs a quoted source, this claim is unsupported."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-a-t-define-a-problem-02",
+    "topic": "alevel-cs-ocr-1-4-3-a",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-a-lp-define-a-problem",
+    "expected_seconds": 90,
+    "prompt": "The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when C and B are both 1. Which expression defines Q?",
+    "answer": {
+      "option": 2
+    },
+    "options": ["¬B ∧ C", "B ∧ ¬C", "C ∧ B", "B ∨ C"],
+    "marks": 1,
+    "hint": "Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?",
+    "explanation": "C ∧ B is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(a)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (a) (page 9; PDF page 15)",
+        "quote": "Define problems using Boolean logic.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-a-define-a-problem",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-a-define-a-problem v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-a-define-a-problem (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:12:15Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:24Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:27Z",
+          "notes": "unsupported_claim (explanation): The explanation claims that 'C ∧ B is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.' The only cited source says learners should 'Define problems using Boolean logic' and does not explicitly support these truth-value claims about the options. Since every factual claim in the explanation needs quoted source support, this is unsupported by the provided source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-a-t-define-a-problem-03",
+    "topic": "alevel-cs-ocr-1-4-3-a",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-a-lp-define-a-problem",
+    "expected_seconds": 90,
+    "prompt": "The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 when exactly one of B and A is 1. Which expression defines Q?",
+    "answer": {
+      "option": 1
+    },
+    "options": ["(A ∧ ¬B) ∨ (A ∧ B)", "B ⊕ A", "(A ∧ ¬B) ∨ (¬A ∧ ¬B)", "¬A ∧ B"],
+    "marks": 1,
+    "hint": "Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?",
+    "explanation": "B ⊕ A is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(a)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (a) (page 9; PDF page 15)",
+        "quote": "Define problems using Boolean logic.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-a-define-a-problem",
+      "version": 1,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-a-define-a-problem v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-a-define-a-problem (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:12:16Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:29Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:33Z",
+          "notes": "outside_specification (question): The only cited source says students should 'Define problems using Boolean logic.' It does not evidence specific Boolean operators or notation such as XOR (⊕), NOT (¬), AND (∧), OR (∨), or evaluation of equivalent expressions in multiple-choice form. The item relies on knowledge not supported by the quoted source.; unsupported_claim (explanation): The explanation claims 'B ⊕ A is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.' The quoted source does not support this specific truth-functional claim or the meaning of ⊕, so this explanatory claim is not backed by the provided source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-a-t-define-a-problem-04",
+    "topic": "alevel-cs-ocr-1-4-3-a",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-a-lp-define-a-problem",
+    "expected_seconds": 90,
+    "prompt": "The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when C is 0 and exactly one of B and A is 1. Which expression defines Q?",
+    "answer": {
+      "option": 3
+    },
+    "options": [
+      "(¬B ∧ ¬C) ∨ (¬A ∧ B ∧ ¬C)",
+      "(A ∧ ¬C) ∨ (¬A ∧ B ∧ ¬C)",
+      "(A ∧ ¬B) ∨ (¬A ∧ B ∧ ¬C)",
+      "(B ⊕ A) ∧ ¬C"
+    ],
+    "marks": 1,
+    "hint": "Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?",
+    "explanation": "(B ⊕ A) ∧ ¬C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(a)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (a) (page 9; PDF page 15)",
+        "quote": "Define problems using Boolean logic.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-a-define-a-problem",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-a-define-a-problem v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-a-define-a-problem (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:12:17Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:35Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:36Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-a-t-define-a-problem-05",
+    "topic": "alevel-cs-ocr-1-4-3-a",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-a-lp-define-a-problem",
+    "expected_seconds": 90,
+    "prompt": "The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when A and C are both 1. Which expression defines Q?",
+    "answer": {
+      "option": 0
+    },
+    "options": ["A ∧ C", "¬A ∧ C", "A ∧ ¬C", "A ∨ C"],
+    "marks": 1,
+    "hint": "Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?",
+    "explanation": "A ∧ C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(a)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (a) (page 9; PDF page 15)",
+        "quote": "Define problems using Boolean logic.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-a-define-a-problem",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-a-define-a-problem v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-a-define-a-problem (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:12:18Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:37Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:38Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-a-t-define-a-problem-06",
+    "topic": "alevel-cs-ocr-1-4-3-a",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-a-lp-define-a-problem",
+    "expected_seconds": 90,
+    "prompt": "The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when B is 0 and C is 1. Which expression defines Q?",
+    "answer": {
+      "option": 1
+    },
+    "options": ["C", "¬B ∧ C", "¬B", "¬(B ∨ C)"],
+    "marks": 1,
+    "hint": "Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?",
+    "explanation": "¬B ∧ C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(a)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (a) (page 9; PDF page 15)",
+        "quote": "Define problems using Boolean logic.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-a-define-a-problem",
+      "version": 1,
+      "seed": 6
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-a-define-a-problem v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-a-define-a-problem (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:12:18Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:40Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:42Z",
+          "notes": "unsupported_claim (explanation): The explanation states that \"¬B ∧ C is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.\" The only cited source says learners should \"Define problems using Boolean logic\" and does not explicitly support these truth-value claims about the listed expressions. Since every factual claim in the explanation needs quoted source support, this is unsupported by the provided source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-a-t-define-a-problem-07",
+    "topic": "alevel-cs-ocr-1-4-3-a",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-a-lp-define-a-problem",
+    "expected_seconds": 90,
+    "prompt": "The inputs A, B and C are each 1 (true) or 0 (false). Q is 1 only when C and A are both 0. Which expression defines Q?",
+    "answer": {
+      "option": 2
+    },
+    "options": ["¬A", "(C ∧ A) ∨ B", "¬(C ∨ A)", "(C ∨ A) ∧ B"],
+    "marks": 1,
+    "hint": "Turn each part of the sentence into symbols: which letters must be 1, which must be 0, and are the parts joined by AND or by OR?",
+    "explanation": "¬(C ∨ A) is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(a)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (a) (page 9; PDF page 15)",
+        "quote": "Define problems using Boolean logic.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-a-define-a-problem",
+      "version": 1,
+      "seed": 7
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-a-define-a-problem v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-a-define-a-problem (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:12:19Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:44Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:13:48Z",
+          "notes": "unsupported_claim (question): The prompt requires interpreting the symbols 1 and 0 as true/false and recognising logical operators such as ¬, ∧ and ∨, but the only cited source is the very broad specification point 'Define problems using Boolean logic.' No quoted source is provided to support these specific claims or notation.; unsupported_claim (explanation): The explanation claims that '¬(C ∨ A) is 1 for exactly the inputs the sentence describes; each other option is 1 for a different set of inputs.' This is mathematically true, but the claim is not backed by any quoted source beyond the broad specification statement."
+        }
+      ]
+    }
+  }
+]

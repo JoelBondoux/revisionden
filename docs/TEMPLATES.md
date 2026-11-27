@@ -124,7 +124,7 @@ The recheck for N10 does long division of the answer; for N5 it counts the meals
 
 ## A-Level Computer Science, strand 1: data representation (S5, 2026-11-27)
 
-OCR H446, board provisional. `app/templates/alevel_cs.py`, built with
+OCR H446 (board confirmed by the owner). `app/templates/alevel_cs.py`, built with
 `python -m app.templates.build --course alevel-cs` (part of `pnpm content:templates`) into
 `content/items/alevel-computer-science/templated/`, 7 items per template; preview for the owner:
 `docs/TEMPLATE_PREVIEW_CS.md`.
@@ -163,6 +163,39 @@ OCR H446, board provisional. `app/templates/alevel_cs.py`, built with
 | `alevel-cs-ocr-1-4-1-h-floating-point-addition`     | 1-4-1-h | 7     | yes          |
 | `alevel-cs-ocr-1-4-1-i-masks`                       | 1-4-1-i | 7     | yes          |
 | `alevel-cs-ocr-1-4-1-i-shifts`                      | 1-4-1-i | 7     | yes          |
+
+## A-Level Computer Science, strand 2: Boolean algebra (S5, 2026-11-27)
+
+`app/templates/alevel_cs_boolean.py`, joined to `alevel_cs.TEMPLATES`, so the same build and
+preview make it. 9 templates, 7 items each, for 1.4.3 (a) to (e).
+
+- Answers come from the CS engine (`app/cs/logic.py`: truth tables, `simplify`, Karnaugh maps,
+  `full_adder`). Each `recheck` reads the question back and checks it without `app.cs.logic`:
+  its own evaluator built on Python's `ast` module (OCR's binding, NOT, AND, XOR, OR, is Python's
+  for `~ & ^ |`), the shapes of the two expressions for the named rules, binary arithmetic for the
+  full adder and an edge-by-edge simulation for the flip-flop.
+- A Boolean expression cannot be marked as text (one function has many right forms), so a
+  question asks for something with one right form: a column of bits, one bit, a count, or one of
+  four options (`multiple_choice`) where exactly one is equivalent to what the question
+  describes. Wrong options are near misses (a literal negated, a term dropped, AND and OR
+  swapped), each checked not to be equivalent.
+- Questions state what they depend on: truth table rows in counting order, top row first;
+  Karnaugh map rows and columns in the order 00, 01, 11, 10; when a D type flip-flop changes.
+- `core.make_item` now copies `options`; the preview shows them with the right one in bold.
+- A Karnaugh map question asks for the simplest sum of products (a factored form can have fewer
+  letters). Every item that uses OCR's symbols lists what they mean as a fact (decision 0009).
+
+| Template                                           | Topic   | Type              | Facts (0009) |
+| -------------------------------------------------- | ------- | ----------------- | ------------ |
+| `alevel-cs-ocr-1-4-3-a-define-a-problem`           | 1-4-3-a | `multiple_choice` | yes          |
+| `alevel-cs-ocr-1-4-3-b-simplify-expression`        | 1-4-3-b | `multiple_choice` | yes          |
+| `alevel-cs-ocr-1-4-3-b-karnaugh-map-three-letters` | 1-4-3-b | `multiple_choice` | yes          |
+| `alevel-cs-ocr-1-4-3-b-karnaugh-map-four-letters`  | 1-4-3-b | `multiple_choice` | yes          |
+| `alevel-cs-ocr-1-4-3-c-de-morgan`                  | 1-4-3-c | `multiple_choice` | yes          |
+| `alevel-cs-ocr-1-4-3-c-name-the-rule`              | 1-4-3-c | `multiple_choice` | yes          |
+| `alevel-cs-ocr-1-4-3-d-truth-table`                | 1-4-3-d | `short_answer`    | yes          |
+| `alevel-cs-ocr-1-4-3-e-full-adder`                 | 1-4-3-e | `short_answer`    | yes          |
+| `alevel-cs-ocr-1-4-3-e-d-type-flip-flop`           | 1-4-3-e | `short_answer`    | yes          |
 
 ## Later
 

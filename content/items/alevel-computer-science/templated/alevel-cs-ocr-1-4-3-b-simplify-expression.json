@@ -1,0 +1,478 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-simplify-expression-01",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-simplify-expression",
+    "expected_seconds": 150,
+    "prompt": "Which of these is equivalent to (A ∧ ¬B) ∨ (¬A ∧ ¬B) ∨ (¬A ∧ ¬C)?",
+    "answer": { "option": 0 },
+    "options": ["¬B ∨ (¬A ∧ ¬C)", "¬B ∨ (A ∧ ¬C)", "¬B ∨ (¬A ∧ C)", "¬A ∧ ¬C"],
+    "marks": 1,
+    "hint": "Compare truth tables, or look for terms that share letters and simplify them together.",
+    "explanation": "¬B ∨ (¬A ∧ ¬C) has the same truth table as (A ∧ ¬B) ∨ (¬A ∧ ¬B) ∨ (¬A ∧ ¬C) on all 8 rows; each other option differs on at least one row.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-b-simplify-expression", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-simplify-expression v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-simplify-expression (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:17Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-simplify-expression-02",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-simplify-expression",
+    "expected_seconds": 150,
+    "prompt": "Which of these is equivalent to (¬A ∧ C) ∨ (¬A ∧ ¬C) ∨ (¬B ∧ C)?",
+    "answer": { "option": 3 },
+    "options": ["¬A ∨ C", "¬A ∨ ¬B", "¬A ∧ C", "¬A ∨ (¬B ∧ C)"],
+    "marks": 1,
+    "hint": "Compare truth tables, or look for terms that share letters and simplify them together.",
+    "explanation": "¬A ∨ (¬B ∧ C) has the same truth table as (¬A ∧ C) ∨ (¬A ∧ ¬C) ∨ (¬B ∧ C) on all 8 rows; each other option differs on at least one row.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-b-simplify-expression", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-simplify-expression v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-simplify-expression (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:18Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-simplify-expression-03",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-simplify-expression",
+    "expected_seconds": 150,
+    "prompt": "Which of these is equivalent to (¬A ∧ ¬B) ∨ (¬A ∧ ¬C) ∨ (B ∧ C)?",
+    "answer": { "option": 1 },
+    "options": ["B ∧ C", "¬A ∨ (B ∧ C)", "¬A", "¬A ∧ (B ∨ C)"],
+    "marks": 1,
+    "hint": "Compare truth tables, or look for terms that share letters and simplify them together.",
+    "explanation": "¬A ∨ (B ∧ C) has the same truth table as (¬A ∧ ¬B) ∨ (¬A ∧ ¬C) ∨ (B ∧ C) on all 8 rows; each other option differs on at least one row.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-b-simplify-expression", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-simplify-expression v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-simplify-expression (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:19Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-simplify-expression-04",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-simplify-expression",
+    "expected_seconds": 150,
+    "prompt": "Which of these is equivalent to (¬A ∧ B) ∨ (¬A ∧ ¬B) ∨ (B ∧ C)?",
+    "answer": { "option": 2 },
+    "options": ["¬A ∨ (B ∧ ¬C)", "B ∧ C", "¬A ∨ (B ∧ C)", "¬A"],
+    "marks": 1,
+    "hint": "Compare truth tables, or look for terms that share letters and simplify them together.",
+    "explanation": "¬A ∨ (B ∧ C) has the same truth table as (¬A ∧ B) ∨ (¬A ∧ ¬B) ∨ (B ∧ C) on all 8 rows; each other option differs on at least one row.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-b-simplify-expression", "version": 1, "seed": 4 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-simplify-expression v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-simplify-expression (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:20Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-simplify-expression-05",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-simplify-expression",
+    "expected_seconds": 150,
+    "prompt": "Which of these is equivalent to (A ∧ B) ∨ (¬A ∧ B) ∨ (A ∧ ¬C)?",
+    "answer": { "option": 0 },
+    "options": ["B ∨ (A ∧ ¬C)", "¬B ∨ (A ∧ ¬C)", "B ∨ (¬A ∧ ¬C)", "B ∨ (A ∧ C)"],
+    "marks": 1,
+    "hint": "Compare truth tables, or look for terms that share letters and simplify them together.",
+    "explanation": "B ∨ (A ∧ ¬C) has the same truth table as (A ∧ B) ∨ (¬A ∧ B) ∨ (A ∧ ¬C) on all 8 rows; each other option differs on at least one row.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-b-simplify-expression", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-simplify-expression v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-simplify-expression (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:21Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-simplify-expression-06",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-simplify-expression",
+    "expected_seconds": 150,
+    "prompt": "Which of these is equivalent to (A ∧ B) ∨ (¬A ∧ B) ∨ (¬A ∧ ¬C)?",
+    "answer": { "option": 3 },
+    "options": ["¬B ∨ (¬A ∧ ¬C)", "B ∨ (A ∧ ¬C)", "B ∨ (¬A ∧ C)", "B ∨ (¬A ∧ ¬C)"],
+    "marks": 1,
+    "hint": "Compare truth tables, or look for terms that share letters and simplify them together.",
+    "explanation": "B ∨ (¬A ∧ ¬C) has the same truth table as (A ∧ B) ∨ (¬A ∧ B) ∨ (¬A ∧ ¬C) on all 8 rows; each other option differs on at least one row.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-b-simplify-expression", "version": 1, "seed": 6 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-simplify-expression v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-simplify-expression (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:22Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-b-t-simplify-expression-07",
+    "topic": "alevel-cs-ocr-1-4-3-b",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-3-b-lp-simplify-expression",
+    "expected_seconds": 150,
+    "prompt": "Which of these is equivalent to (A ∧ B) ∨ (A ∧ ¬B) ∨ (¬B ∧ ¬C)?",
+    "answer": { "option": 3 },
+    "options": ["¬A ∨ (¬B ∧ ¬C)", "A ∨ (B ∧ ¬C)", "A ∨ (¬B ∧ C)", "A ∨ (¬B ∧ ¬C)"],
+    "marks": 1,
+    "hint": "Compare truth tables, or look for terms that share letters and simplify them together.",
+    "explanation": "A ∨ (¬B ∧ ¬C) has the same truth table as (A ∧ B) ∨ (A ∧ ¬B) ∨ (¬B ∧ ¬C) on all 8 rows; each other option differs on at least one row.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+        "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-b-simplify-expression", "version": 1, "seed": 7 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-b-simplify-expression v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-b-simplify-expression (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:23Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

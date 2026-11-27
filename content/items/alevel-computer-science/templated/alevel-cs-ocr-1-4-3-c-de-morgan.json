@@ -1,0 +1,534 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-3-c-t-de-morgan-01",
+    "topic": "alevel-cs-ocr-1-4-3-c",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-c-lp-de-morgan",
+    "expected_seconds": 90,
+    "prompt": "Using De Morgan's laws, which of these is equivalent to ¬(A ∨ ¬B)?",
+    "answer": { "option": 3 },
+    "options": ["A ∨ ¬B", "¬A ∧ ¬B", "A ∧ B", "¬A ∧ B"],
+    "marks": 1,
+    "hint": "Move the NOT inside the bracket: what happens to each letter, and to the operation between them?",
+    "explanation": "¬(A ∨ ¬B) becomes ¬A ∧ B: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "De Morgan's laws: ¬(A ∧ B) is equivalent to ¬A ∨ ¬B, and ¬(A ∨ B) is equivalent to ¬A ∧ ¬B.",
+        "ask": "What do De Morgan's laws say in Boolean algebra?"
+      },
+      {
+        "statement": "Double negation: ¬¬A is equivalent to A.",
+        "ask": "What does the double negation rule say in Boolean algebra?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (c) (page 9; PDF page 15)",
+        "quote": "Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-c-de-morgan", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-c-de-morgan v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-c-de-morgan (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:24Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-c-t-de-morgan-02",
+    "topic": "alevel-cs-ocr-1-4-3-c",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-c-lp-de-morgan",
+    "expected_seconds": 90,
+    "prompt": "Using De Morgan's laws, which of these is equivalent to ¬(B ∨ C)?",
+    "answer": { "option": 2 },
+    "options": ["B ∨ C", "¬B ∧ C", "¬B ∧ ¬C", "B ∧ ¬C"],
+    "marks": 1,
+    "hint": "Move the NOT inside the bracket: what happens to each letter, and to the operation between them?",
+    "explanation": "¬(B ∨ C) becomes ¬B ∧ ¬C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "De Morgan's laws: ¬(A ∧ B) is equivalent to ¬A ∨ ¬B, and ¬(A ∨ B) is equivalent to ¬A ∧ ¬B.",
+        "ask": "What do De Morgan's laws say in Boolean algebra?"
+      },
+      {
+        "statement": "Double negation: ¬¬A is equivalent to A.",
+        "ask": "What does the double negation rule say in Boolean algebra?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (c) (page 9; PDF page 15)",
+        "quote": "Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-c-de-morgan", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-c-de-morgan v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-c-de-morgan (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:24Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-c-t-de-morgan-03",
+    "topic": "alevel-cs-ocr-1-4-3-c",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-c-lp-de-morgan",
+    "expected_seconds": 90,
+    "prompt": "Using De Morgan's laws, which of these is equivalent to ¬(¬A ∨ ¬B)?",
+    "answer": { "option": 1 },
+    "options": ["A ∧ ¬B", "A ∧ B", "¬A ∧ B", "A ∨ B"],
+    "marks": 1,
+    "hint": "Move the NOT inside the bracket: what happens to each letter, and to the operation between them?",
+    "explanation": "¬(¬A ∨ ¬B) becomes A ∧ B: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "De Morgan's laws: ¬(A ∧ B) is equivalent to ¬A ∨ ¬B, and ¬(A ∨ B) is equivalent to ¬A ∧ ¬B.",
+        "ask": "What do De Morgan's laws say in Boolean algebra?"
+      },
+      {
+        "statement": "Double negation: ¬¬A is equivalent to A.",
+        "ask": "What does the double negation rule say in Boolean algebra?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (c) (page 9; PDF page 15)",
+        "quote": "Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-c-de-morgan", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-c-de-morgan v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-c-de-morgan (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:25Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-c-t-de-morgan-05",
+    "topic": "alevel-cs-ocr-1-4-3-c",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-c-lp-de-morgan",
+    "expected_seconds": 90,
+    "prompt": "Using De Morgan's laws, which of these is equivalent to ¬(A ∧ ¬C)?",
+    "answer": { "option": 3 },
+    "options": ["¬A ∨ ¬C", "A ∨ C", "¬A ∧ C", "¬A ∨ C"],
+    "marks": 1,
+    "hint": "Move the NOT inside the bracket: what happens to each letter, and to the operation between them?",
+    "explanation": "¬(A ∧ ¬C) becomes ¬A ∨ C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "De Morgan's laws: ¬(A ∧ B) is equivalent to ¬A ∨ ¬B, and ¬(A ∨ B) is equivalent to ¬A ∧ ¬B.",
+        "ask": "What do De Morgan's laws say in Boolean algebra?"
+      },
+      {
+        "statement": "Double negation: ¬¬A is equivalent to A.",
+        "ask": "What does the double negation rule say in Boolean algebra?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (c) (page 9; PDF page 15)",
+        "quote": "Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-c-de-morgan", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-c-de-morgan v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-c-de-morgan (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:26Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-c-t-de-morgan-06",
+    "topic": "alevel-cs-ocr-1-4-3-c",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-c-lp-de-morgan",
+    "expected_seconds": 90,
+    "prompt": "Using De Morgan's laws, which of these is equivalent to ¬(¬B ∨ C)?",
+    "answer": { "option": 0 },
+    "options": ["B ∧ ¬C", "B ∧ C", "¬B ∧ ¬C", "B ∨ ¬C"],
+    "marks": 1,
+    "hint": "Move the NOT inside the bracket: what happens to each letter, and to the operation between them?",
+    "explanation": "¬(¬B ∨ C) becomes B ∧ ¬C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "De Morgan's laws: ¬(A ∧ B) is equivalent to ¬A ∨ ¬B, and ¬(A ∨ B) is equivalent to ¬A ∧ ¬B.",
+        "ask": "What do De Morgan's laws say in Boolean algebra?"
+      },
+      {
+        "statement": "Double negation: ¬¬A is equivalent to A.",
+        "ask": "What does the double negation rule say in Boolean algebra?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (c) (page 9; PDF page 15)",
+        "quote": "Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-c-de-morgan", "version": 1, "seed": 6 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-c-de-morgan v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-c-de-morgan (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:27Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-c-t-de-morgan-07",
+    "topic": "alevel-cs-ocr-1-4-3-c",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-c-lp-de-morgan",
+    "expected_seconds": 90,
+    "prompt": "Using De Morgan's laws, which of these is equivalent to ¬(¬B ∨ ¬C)?",
+    "answer": { "option": 0 },
+    "options": ["B ∧ C", "B ∨ C", "¬B ∧ ¬C", "¬B ∨ ¬C"],
+    "marks": 1,
+    "hint": "Move the NOT inside the bracket: what happens to each letter, and to the operation between them?",
+    "explanation": "¬(¬B ∨ ¬C) becomes B ∧ C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "De Morgan's laws: ¬(A ∧ B) is equivalent to ¬A ∨ ¬B, and ¬(A ∨ B) is equivalent to ¬A ∧ ¬B.",
+        "ask": "What do De Morgan's laws say in Boolean algebra?"
+      },
+      {
+        "statement": "Double negation: ¬¬A is equivalent to A.",
+        "ask": "What does the double negation rule say in Boolean algebra?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (c) (page 9; PDF page 15)",
+        "quote": "Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-c-de-morgan", "version": 1, "seed": 7 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-c-de-morgan v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-c-de-morgan (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:28Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-c-t-de-morgan-08",
+    "topic": "alevel-cs-ocr-1-4-3-c",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-c-lp-de-morgan",
+    "expected_seconds": 90,
+    "prompt": "Using De Morgan's laws, which of these is equivalent to ¬(A ∨ ¬C)?",
+    "answer": { "option": 1 },
+    "options": ["¬A ∧ ¬C", "¬A ∧ C", "A ∧ C", "¬A ∨ C"],
+    "marks": 1,
+    "hint": "Move the NOT inside the bracket: what happens to each letter, and to the operation between them?",
+    "explanation": "¬(A ∨ ¬C) becomes ¬A ∧ C: each part inside the bracket is negated (two NOTs cancel) and the operation between them changes.",
+    "facts": [
+      {
+        "statement": "In OCR's Boolean notation ∧ means AND, ∨ means OR, ¬ means NOT and ⊕ means XOR (exclusive OR).",
+        "ask": "In OCR A-Level Computer Science Boolean algebra, what do the symbols ∧, ∨, ¬ and ⊕ mean?"
+      },
+      {
+        "statement": "De Morgan's laws: ¬(A ∧ B) is equivalent to ¬A ∨ ¬B, and ¬(A ∨ B) is equivalent to ¬A ∧ ¬B.",
+        "ask": "What do De Morgan's laws say in Boolean algebra?"
+      },
+      {
+        "statement": "Double negation: ¬¬A is equivalent to A.",
+        "ask": "What does the double negation rule say in Boolean algebra?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (c) (page 9; PDF page 15)",
+        "quote": "Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-3-c-de-morgan", "version": 1, "seed": 8 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-c-de-morgan v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-c-de-morgan (version 1, seed 8) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:29Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

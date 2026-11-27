@@ -1,5 +1,6 @@
-"""A-Level Computer Science templates (OCR H446, board provisional). Strand 1: data
-representation, specification 1.4.1 (b) to (i).
+"""A-Level Computer Science templates (OCR H446). Strand 1: data
+representation, specification 1.4.1 (b) to (i). Strand 2 (Boolean algebra, 1.4.3) is in
+``alevel_cs_boolean`` and joins ``TEMPLATES`` at the end of this file.
 
 Answers are written with the CS engine (``app.cs.bases``, ``app.cs.floating``). Each template's
 ``recheck`` reads the question text back and recomputes the answer by a second method (place
@@ -19,6 +20,7 @@ from fractions import Fraction
 from pathlib import Path
 
 from app.cs import bases, floating
+from app.templates import alevel_cs_boolean
 from app.templates.core import IntParam, Rule, Template
 
 _TREE = Path(__file__).resolve().parents[4] / "content/topic-trees/alevel-computer-science-ocr-h446.json"
@@ -672,3 +674,6 @@ TEMPLATES = [
            != bases.to_binary(p["n"], 8))],
        difficulty=2, seconds=90, facts=(MASK_RULES,)),
 ]
+
+# Strand 2: Boolean algebra (1.4.3), in its own module.
+TEMPLATES += alevel_cs_boolean.TEMPLATES

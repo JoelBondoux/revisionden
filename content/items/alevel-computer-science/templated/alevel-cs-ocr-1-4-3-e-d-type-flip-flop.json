@@ -1,0 +1,625 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-01",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-d-type-flip-flop",
+    "expected_seconds": 90,
+    "prompt": "A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 0. At the 1st, 2nd, 3rd and 4th rising edges D is 1, 1, 1 and 0. How many times does Q change value over the four rising edges?",
+    "answer": {
+      "accepted": ["2"]
+    },
+    "marks": 1,
+    "hint": "Write down Q after each rising edge, starting from its first value, and count the changes.",
+    "explanation": "Q goes 0, 1, 1, 1, 0: it changes 2 times.",
+    "facts": [
+      {
+        "statement": "A D type flip-flop is edge-triggered: at each rising edge of the clock its output Q takes the value of the D input, and Q holds that value until the next rising edge.",
+        "ask": "How does the output of a D type flip-flop respond to its D input and the clock?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-d-type-flip-flop (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:12:59Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:40Z",
+          "notes": "model answered \"1\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:41Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-02",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-d-type-flip-flop",
+    "expected_seconds": 90,
+    "prompt": "A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 1. At the 1st, 2nd, 3rd and 4th rising edges D is 0, 0, 1 and 0. How many times does Q change value over the four rising edges?",
+    "answer": {
+      "accepted": ["3"]
+    },
+    "marks": 1,
+    "hint": "Write down Q after each rising edge, starting from its first value, and count the changes.",
+    "explanation": "Q goes 1, 0, 0, 1, 0: it changes 3 times.",
+    "facts": [
+      {
+        "statement": "A D type flip-flop is edge-triggered: at each rising edge of the clock its output Q takes the value of the D input, and Q holds that value until the next rising edge.",
+        "ask": "How does the output of a D type flip-flop respond to its D input and the clock?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-d-type-flip-flop (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:00Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:42Z",
+          "notes": "model answered \"2\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:43Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-03",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-d-type-flip-flop",
+    "expected_seconds": 90,
+    "prompt": "A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 1. At the 1st, 2nd, 3rd and 4th rising edges D is 0, 1, 1 and 0. How many times does Q change value over the four rising edges?",
+    "answer": {
+      "accepted": ["3"]
+    },
+    "marks": 1,
+    "hint": "Write down Q after each rising edge, starting from its first value, and count the changes.",
+    "explanation": "Q goes 1, 0, 1, 1, 0: it changes 3 times.",
+    "facts": [
+      {
+        "statement": "A D type flip-flop is edge-triggered: at each rising edge of the clock its output Q takes the value of the D input, and Q holds that value until the next rising edge.",
+        "ask": "How does the output of a D type flip-flop respond to its D input and the clock?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop",
+      "version": 1,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-d-type-flip-flop (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:01Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:46Z",
+          "notes": "model answered \"2\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:49Z",
+          "notes": "unsupported_claim (question): The prompt states detailed behavioural rules for a D type flip-flop ('changes its output Q only at a rising edge of the clock', 'at each rising edge Q takes the value D has at that moment', and 'between rising edges Q holds its value'), but the only quoted source merely says 'The logic associated with D type flip flops...' and does not explicitly support these specific operational claims.; unsupported_claim (hint): The hint assumes and applies the specific edge-triggered behaviour of Q after each rising edge, but the quoted source does not explicitly back up these operational details.; unsupported_claim (explanation): The explanation states a full sequence for Q ('Q goes 1, 0, 1, 1, 0') based on specific edge-triggered D flip-flop behaviour, but the quoted source provided does not explicitly support these detailed claims."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-04",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-d-type-flip-flop",
+    "expected_seconds": 90,
+    "prompt": "A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 1. At the 1st, 2nd, 3rd and 4th rising edges D is 1, 1, 0 and 0. What is Q just after the 4th rising edge?",
+    "answer": {
+      "accepted": ["0"]
+    },
+    "marks": 1,
+    "hint": "At a rising edge, look only at D at that moment.",
+    "explanation": "At the 4th rising edge D is 0, so Q becomes 0 and holds it until the next rising edge.",
+    "facts": [
+      {
+        "statement": "A D type flip-flop is edge-triggered: at each rising edge of the clock its output Q takes the value of the D input, and Q holds that value until the next rising edge.",
+        "ask": "How does the output of a D type flip-flop respond to its D input and the clock?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-d-type-flip-flop (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:02Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:51Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:51Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-05",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-d-type-flip-flop",
+    "expected_seconds": 90,
+    "prompt": "A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 1. At the 1st, 2nd, 3rd and 4th rising edges D is 1, 0, 0 and 1. How many times does Q change value over the four rising edges?",
+    "answer": {
+      "accepted": ["2"]
+    },
+    "marks": 1,
+    "hint": "Write down Q after each rising edge, starting from its first value, and count the changes.",
+    "explanation": "Q goes 1, 1, 0, 0, 1: it changes 2 times.",
+    "facts": [
+      {
+        "statement": "A D type flip-flop is edge-triggered: at each rising edge of the clock its output Q takes the value of the D input, and Q holds that value until the next rising edge.",
+        "ask": "How does the output of a D type flip-flop respond to its D input and the clock?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-d-type-flip-flop (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:03Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:54Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:57Z",
+          "notes": "unsupported_claim (question): The prompt states detailed operational behaviour of a D-type flip-flop ('changes its output Q only at a rising edge of the clock', 'at each rising edge Q takes the value D has at that moment', and 'between rising edges Q holds its value'). The only cited source says the specification includes 'The logic associated with D type flip flops' and does not quote or evidence these specific behavioural rules.; unsupported_claim (explanation): The explanation's sequence 'Q goes 1, 1, 0, 0, 1' depends on detailed behavioural claims about how a D-type flip-flop updates on rising edges and holds state between them. Those claims are not supported by the quoted source provided."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-06",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-d-type-flip-flop",
+    "expected_seconds": 90,
+    "prompt": "A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 0. At the 1st, 2nd, 3rd and 4th rising edges D is 1, 1, 1 and 0. What is Q just after the 1st rising edge?",
+    "answer": {
+      "accepted": ["1"]
+    },
+    "marks": 1,
+    "hint": "At a rising edge, look only at D at that moment.",
+    "explanation": "At the 1st rising edge D is 1, so Q becomes 1 and holds it until the next rising edge.",
+    "facts": [
+      {
+        "statement": "A D type flip-flop is edge-triggered: at each rising edge of the clock its output Q takes the value of the D input, and Q holds that value until the next rising edge.",
+        "ask": "How does the output of a D type flip-flop respond to its D input and the clock?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop",
+      "version": 1,
+      "seed": 6
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-d-type-flip-flop (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:04Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:16:58Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:02Z",
+          "notes": "unsupported_claim (question): The question states detailed behaviour of a D type flip-flop ('changes its output Q only at a rising edge of the clock', 'Q takes the value D has at that moment', 'between rising edges Q holds its value', and 'Q starts at 0'), but the only quoted source merely lists 'The logic associated with D type flip flops' and does not provide these specific behavioural claims.; unsupported_claim (hint): The hint says 'At a rising edge, look only at D at that moment.' This is a factual claim about D type flip-flop behaviour, but the quoted source does not explicitly support that statement.; unsupported_claim (explanation): The explanation claims 'At the 1st rising edge D is 1, so Q becomes 1 and holds it until the next rising edge.' These behavioural statements are not backed by the quoted source, which only names D type flip-flops without specifying their edge-triggered operation."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-3-e-t-d-type-flip-flop-07",
+    "topic": "alevel-cs-ocr-1-4-3-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-3-e-lp-d-type-flip-flop",
+    "expected_seconds": 90,
+    "prompt": "A D type flip-flop changes its output Q only at a rising edge of the clock: at each rising edge Q takes the value D has at that moment, and between rising edges Q holds its value. Q starts at 0. At the 1st, 2nd, 3rd and 4th rising edges D is 0, 1, 1 and 1. What is Q just after the 2nd rising edge?",
+    "answer": {
+      "accepted": ["1"]
+    },
+    "marks": 1,
+    "hint": "At a rising edge, look only at D at that moment.",
+    "explanation": "At the 2nd rising edge D is 1, so Q becomes 1 and holds it until the next rising edge.",
+    "facts": [
+      {
+        "statement": "A D type flip-flop is edge-triggered: at each rising edge of the clock its output Q takes the value of the D input, and Q holds that value until the next rising edge.",
+        "ask": "How does the output of a D type flip-flop respond to its D input and the clock?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.3(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+        "quote": "The logic associated with D type flip flops, half and full adders.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop",
+      "version": 1,
+      "seed": 7
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-3-e-d-type-flip-flop v1",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-3-e-d-type-flip-flop (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T00:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:13:05Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:03Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:17:04Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]
