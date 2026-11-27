@@ -194,6 +194,12 @@ sweep does not cover. Data comes from the web app's own mock handlers
   (`CONTRAST_VARIANTS=1`, 12 shards; also on a pull request labelled `contrast-variants`), and
   with the standard palette on demand, on pull requests
   that touch looks or design CSS, and before staging (4 shards). Helpers:
+  every box (down the whole page, a screen at a time), UI parts' edges and the first three focus
+  rings, measured on screenshots in two
+  passes (a finding counts only when both passes see it, so a ring caught mid-animation cannot
+  flake the run). Text too faint to sample is a failure, not a skip (decision 0012). Nightly,
+  on demand, on pull requests that touch looks or design CSS, and before staging (every
+  `deploy-staging.yml` run calls it as job `contrast` and the app deploy needs it; G11). Helpers:
   `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
   `e2e/tests/support/painted.ts`.
 - **Blocking everywhere** (decision 0012): every tier 2 run fails on new or fixed rows, pull

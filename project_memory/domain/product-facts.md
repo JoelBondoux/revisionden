@@ -590,6 +590,8 @@ Tags: #product #rules #limits #defaults
   production deploys after the release bump on `main`. Each deploy migrates the database first,
   then (dev and staging only) loads `content/` with `content:sync`, then the API, then the web
   app, then checks `/health` shows the new version. Production content is not synced by deploys.
+  A staging deploy first runs the painted contrast sweep (`contrast-painted.yml`) on that commit;
+  the app deploy only starts if it passes (G11). The public website deploy is not gated.
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.

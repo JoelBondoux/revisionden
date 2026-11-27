@@ -10,7 +10,14 @@ permissions:
   contents: read
 
 jobs:
+  # Staging gate (W21, decision 0012): the painted contrast sweep runs on this commit every time,
+  # because its own pull request trigger only fires on style paths. Its "Contrast tier 2 passed"
+  # job must pass before the app deploys.
+  contrast:
+    uses: ./.github/workflows/contrast-painted.yml
+
   deploy:
+    needs: contrast
     uses: ./.github/workflows/deploy.yml
     with:
       environment: staging
