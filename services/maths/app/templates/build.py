@@ -1,7 +1,7 @@
 """Writes template items into content/ (``pnpm content:templates``) or checks they are current.
 
-``python -m app.templates.build`` writes ``COUNT`` items per template, one JSON file per
-template in ``OUT_DIR``. A rebuild keeps the review record (``verification`` and
+``python -m app.templates.build [--course <name>]`` writes each template's items, one JSON file
+per template in the course's folder (``COURSES``; GCSE Maths Higher by default). A rebuild keeps the review record (``verification`` and
 ``checked_by``) of every item whose content has not changed, so pipeline results survive; a
 changed item starts again as a new draft version. ``--check`` fails if the files differ from a
 fresh generation (a hand edit, or a template changed without a rebuild).
@@ -10,16 +10,38 @@ fresh generation (a hand edit, or a template changed without a rebuild).
 import argparse
 import json
 import sys
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+from app.templates import alevel_cs, gcse_maths_higher
 from app.templates.core import GenerationError, generate
-from app.templates.gcse_maths_higher import TEMPLATES
 
 REPO = Path(__file__).resolve().parents[4]
-OUT_DIR = Path("content/items/gcse-maths-higher/templated")
-COUNT = 5
 REVIEW_KEYS = ("verification", "checked_by")
+
+
+@dataclass(frozen=True)
+class Course:
+    name: str
+    templates: tuple
+    out_dir: Path
+    count: int
+    title: str
+
+
+COURSES = {
+    "gcse-maths-higher": Course("gcse-maths-higher", tuple(gcse_maths_higher.TEMPLATES),
+                                Path("content/items/gcse-maths-higher/templated"), 5,
+                                "GCSE Maths Higher"),
+    "alevel-cs": Course("alevel-cs", tuple(alevel_cs.TEMPLATES),
+                        Path("content/items/alevel-computer-science/templated"), 7,
+                        "A-Level Computer Science (OCR H446, board provisional)"),
+}
+DEFAULT = COURSES["gcse-maths-higher"]
+TEMPLATES = DEFAULT.templates
+OUT_DIR = DEFAULT.out_dir
+COUNT = DEFAULT.count
 
 
 def _content(item: dict) -> dict:
@@ -61,10 +83,11 @@ def build_file(template, out_dir: Path, now: str, count: int = COUNT) -> Path:
     return path
 
 
-def check(out_dir: Path, count: int = COUNT) -> list[str]:
+def check(out_dir: Path, count: int | None = None, course: Course = DEFAULT) -> list[str]:
+    count = course.count if count is None else count
     problems = []
     names = set()
-    for template in TEMPLATES:
+    for template in course.templates:
         path = Path(out_dir) / f"{template.id}.json"
         names.add(path.name)
         if not path.exists():
@@ -91,13 +114,14 @@ def _answer(item: dict) -> str:
     return f"{answer.get('unit', '')}{answer['value']}"
 
 
-def preview(out_dir: Path) -> str:
+def preview(out_dir: Path, course: Course = DEFAULT) -> str:
     """Every template item as plain markdown, for the owner to read before review."""
-    lines = ["# Template questions: preview", "",
+    title = "" if course is DEFAULT else f" ({course.title})"
+    lines = [f"# Template questions: preview{title}", "",
              "Made by `pnpm content:templates` from the files in "
-             f"`{OUT_DIR.as_posix()}`. Do not edit: rebuild instead. How templates work: "
+             f"`{course.out_dir.as_posix()}`. Do not edit: rebuild instead. How templates work: "
              "`docs/TEMPLATES.md`.", ""]
-    for template in TEMPLATES:
+    for template in course.templates:
         items = _load(Path(out_dir) / f"{template.id}.json")
         lines += [f"## {template.id} ({template.topic}, {len(items)} questions)", ""]
         for n, item in enumerate(items, 1):
@@ -118,22 +142,25 @@ def preview(out_dir: Path) -> str:
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--out", default=str(REPO / OUT_DIR))
+    parser.add_argument("--course", default=DEFAULT.name, choices=sorted(COURSES))
+    parser.add_argument("--out")
     parser.add_argument("--now", default=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--preview", help="write the owner preview (markdown) to this path")
     args = parser.parse_args(argv)
+    course = COURSES[args.course]
+    out = Path(args.out) if args.out else REPO / course.out_dir
     if args.preview:
-        Path(args.preview).write_text(preview(Path(args.out)))
+        Path(args.preview).write_text(preview(out, course))
         return 0
     if args.check:
-        problems = check(Path(args.out))
+        problems = check(out, course=course)
         for problem in problems:
             print(problem, file=sys.stderr)
         return 1 if problems else 0
     try:
-        for template in TEMPLATES:
-            print(build_file(template, Path(args.out), args.now))
+        for template in course.templates:
+            print(build_file(template, out, args.now, count=course.count))
     except GenerationError as err:  # pragma: no cover - every template is tested to generate
         print(f"generation failed: {err}", file=sys.stderr)
         return 1
