@@ -511,7 +511,10 @@ Tags: #product #rules #limits #defaults
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
   reordered lists (each item as written: `HT` is not `TH` in a list, F23) and, for a single
   answer, commuted products and sums and swapped equation sides (never coordinates or
-  inequalities); outer set braces `{…}` are optional (F23); `answer.units` lists optional units. A multiply sign before a sign is kept
+  inequalities); outer set braces `{…}` are optional (F23); `answer.units` lists optional units,
+  accepted in any spelling numeric answers accept (F25: `unitSpellings`, now with °/degrees,
+  ml/mL/millilitres, mg, %, days, N/m², m/s², kg/m³, g/cm³, l/min, km/min). `answer.kind: "hex"`
+  (F24, opt-in) ignores case, `0x` and leading zeros. A multiply sign before a sign is kept
   (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
   and `a = x` either way round). Repeated alternatives on a final line count once, and a line
   with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is
@@ -638,6 +641,12 @@ Tags: #product #rules #limits #defaults
   app, then checks `/health` shows the new version. Production content is not synced by deploys.
   A staging deploy first runs the painted contrast sweep (`contrast-painted.yml`) on that commit;
   the app deploy only starts if it passes (G11). The public website deploy is not gated.
+- Changelog (G13): each pull request adds a fragment, `changes/unreleased/<branch>.md`, with
+  `### What's new` / `Added` / `Changed` / `Fixed` bullets, instead of editing `CHANGELOG.md`. The
+  release workflow on `main` folds them under `## [Unreleased]` (`pnpm changelog:assemble`) and
+  deletes them before dating the section; deploys fold them into the build's copy so the About
+  page shows unreleased What's new lines. The **Changelog fragment** check fails a PR into `dev`
+  without one, unless it is labelled `no-changelog` or only touches tests or CI.
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.

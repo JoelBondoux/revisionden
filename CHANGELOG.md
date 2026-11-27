@@ -1,13 +1,14 @@
 # Changelog
 
 All notable changes are recorded here. Versions use the format `xx.xx.xxx` (major.minor.patch).
-Every push to `main` bumps the version automatically; add entries under **Unreleased** in each PR.
+Every push to `main` bumps the version automatically; each PR adds a fragment in
+`changes/unreleased/` (see `changes/README.md`) rather than editing this file.
 
 ## [Unreleased]
 
 ### What's new
 
-- Flashcards: cards made from multiple choice questions now show their choices. Tap one to answer, and the card turns over to show if you were right. The Explain button now sits on the card itself, so the buttons below no longer jump when you reveal an answer.
+- Typed answers are marked more fairly: units written out in words now count ("60 degrees", "250 millilitres", "20 per cent"), and hexadecimal answers accept 0x2F, 2f or 02F for 2F.
 - No more empty lessons: topics whose questions aren't ready yet show as "coming soon" on the map, and if a lesson ever has nothing to show, it offers a topic that's ready.
 - Bug reports: if the app showed you a problem code (like RD-7K2M9Q) in the last 15 minutes, a parent's report now includes it (you can remove it), and a student can tick "Include it" to add it.
 - The privacy notices now say that a bug report can carry the code of a problem the app showed you in the last 15 minutes (just the short code, such as RD-7K2M9Q). Parents can remove it; students choose to add it. Signing out forgets it.
@@ -185,7 +186,6 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
-- F20 (owner bug with screenshot): flashcards made from multiple choice questions showed the prompt ("Which of these is an equation?") with no options. Cards now carry `options` and `answerOption` (core `FlashcardSchema`, API `choicesOf`); the front shows the choices as buttons; a tap is the answer, the card turns to "Right!" or "Not quite. The answer is:", and "Next card" rates it (right Good, wrong Again). Plain recall cards keep Show answer and self-rating. The topic no longer shows twice (the card's own topic line is gone; the header has it). Guard test: every served card from a multiple choice question has its options. F21 (owner): Explain moved onto the turned-over card face (bottom corner, 44px target), and the card keeps one height (faces share a grid cell), so the rating buttons take Show answer's exact place. Tests: API `flashcards.test.ts`, web `FlashcardsPage.choices.test.tsx`, e2e `flashcard-card-face.spec.ts` at 412x915 with axe.
 - W26: the lesson look checks (`"+XP" and the combo`, `the XP count and come-back notes`) run as one test per look and mode instead of one loop of ten looks, so none comes near the 30s timeout (the come-back loop took about 28s and timed out on a CI runner). Home's 320px at 200% test now waits for fonts and the reflow to settle, using the shared `settle` from `support/painted.ts`.
 - F19 (UX-3, owner-approved UX report): no dead-end lessons. The map and the subject's topic list count only questions a lesson would serve (`lessonReadyItem`: typed working only with the maths engine, never interactive pilot steps alone), so a topic that is open never opens "No questions are ready here yet". A locked topic now says "<topic> is coming soon: its questions are still being checked." (it said "Finish the topics before…", but locked only ever meant no questions). An empty topic lesson offers "Try a topic that's ready" (the map's next mission) above Back. The 5-a-day and starting test already pick items, so they never show empty topics. Tests: `ready-topics.test.ts` (API), `LessonPlayer.test.tsx`, `MapPage.test.tsx`.
 - S4: `scripts/content/s4-marking.test.mjs` gains the guards from the Ratio fix for Codex on #442 (a numeric answer typed with the unit the question asks in is marked right; a subscripted unknown needs `answer.subject`). This strand already passes them.
@@ -314,6 +314,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- F24: `answer.kind: "hex"` for short answers (opt-in per item; content schema, `sameAnswer`, `markShortAnswer`, blind check): case, a `0x` prefix and leading zeros are ignored, so `0x2F`, `2f` and `02F` match `2F`; ordinary answers are unchanged. F25: more unit spellings in `UNIT_SPELLINGS` (° as degrees or deg, ml/mL/millilitres, mg, %, days, N/m², m/s², kg/m³, g/cm³, litres per minute and km per minute), found by listing every unit in `content/items`; a shared `unitSpellings` now serves short-answer `units` too, so "60 degrees" marks right where the unit is °. Tests in `answer-normalise.test.ts`, `answer-format.test.ts` and `blind-answer.test.mjs`.
 - S4 (Statistics): 67 draft GCSE Maths Higher items for 1MA1 Statistics, S1 to S6 (`content/items/gcse-maths-higher/statistics/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point; data is given in the question, so no diagrams. Quote check, maths engine and schema pass for all; blind answer and adversarial review by OpenAI; 22 need individual approval (decision 0008).
 - S4 (Ratio): 185 draft GCSE Maths Higher items for 1MA1 Ratio, proportion and rates of change, R1 to R16 (`content/items/gcse-maths-higher/ratio/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point. Quote check and schema pass for all; blind answer and adversarial review by OpenAI (Gemini is over its spend cap); 41 need individual approval (unit and scale definitions, decision 0008).
 - S4 (Probability): 95 draft GCSE Maths Higher items for 1MA1 Probability, P1 to P9 (`content/items/gcse-maths-higher/probability/`), 9 to 12 a topic, each with a hint, an explanation and a cited specification point; terms such as relative frequency are defined in the question. Quote check, maths engine and schema pass for all; blind answer and adversarial review by OpenAI; 8 need individual approval (decision 0008) and 27 list standard facts for the fact-check stage.
