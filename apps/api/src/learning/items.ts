@@ -1,6 +1,7 @@
-import { and, inArray, ne, type SQL } from 'drizzle-orm';
+import { and, inArray, ne, sql, type SQL } from 'drizzle-orm';
 import {
   explainSteps,
+  INTERACTIVE_PILOT_TAG,
   checkAreaModelPair,
   factorisedForm,
   parseAreaModelAnswer,
@@ -35,6 +36,17 @@ export const selectableItem = (serveDrafts: boolean, canMarkWorking: boolean): S
   canMarkWorking
     ? servableItem(serveDrafts)
     : and(servableItem(serveDrafts), ne(items.type, 'worked_maths'))!;
+
+/**
+ * What makes a topic ready for a lesson (UX-3): a selectable item that is not an interactive
+ * pilot step (those only lead a weak spot's lesson, W8). The map and the subject's topic list
+ * count these, so a topic that is open there never opens a lesson with no questions.
+ */
+export const lessonReadyItem = (serveDrafts: boolean, canMarkWorking: boolean): SQL =>
+  and(
+    selectableItem(serveDrafts, canMarkWorking),
+    sql`not coalesce(${items.tags} @> ${JSON.stringify([INTERACTIVE_PILOT_TAG])}::jsonb, false)`,
+  )!;
 
 const body = (row: ItemRow) => row.body as ItemBody;
 const answerOf = (row: ItemRow) => row.answer as ItemAnswer;
