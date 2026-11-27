@@ -271,7 +271,7 @@ export const LOOKS: Record<EffectStyleId, { light: Look; dark: Look }> = {
       '--color-surface': '#221a5c',
       '--color-border': '#8f86d6',
       '--color-text': '#f2f0ff',
-      '--color-text-secondary': '#c9c2ef',
+      '--color-text-secondary': '#e4e0ff',
       '--color-primary': '#6a4cff',
       '--color-primary-edge': '#9ef0ff',
       '--color-primary-soft': '#1d2a63',

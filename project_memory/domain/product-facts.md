@@ -444,6 +444,13 @@ Tags: #product #rules #limits #defaults
   steps 1 to 6 and wait for the owner (G9 under decision 0008 and the A6 proof with individual
   approval; A18-0002 after it was compared by formula, #111). The topic tree's 2 near matches (A22,
   A25) were confirmed by the owner. Owner's review steps: `docs/REVIEW_GUIDE.md`.
+- A-Level Computer Science (S5, 2026-11-27): board **OCR H446, provisional** until the owner
+  confirms it (most-used board; no OCR AI clause found). Subject `alevel-computer-science`; topic
+  tree `content/topic-trees/alevel-computer-science-ocr-h446.json` from specification version 3.0
+  (April 2026), Components 01 and 02 only (the programming project is non-exam assessment): 111
+  leaves, one per lettered point (1.1.1(a) to 2.3.1(f); 1.5.2 is one leaf). Every leaf has a
+  verbatim quote; all 111 pass the quote check exactly. Draft. Sourcing record:
+  `docs/sourcing/alevel-cs-ocr-h446.md`.
 - Citation `supports` names only what the quote itself backs. A specification quote backs the
   question being in scope (`question`, `topic`); maths answers are backed by the maths engine,
   not by a citation. Sourcing record: `docs/sourcing/gcse-maths-1ma1-pilot.md`.
@@ -899,6 +906,9 @@ Tags: #product #rules #limits #defaults
   `--color-control-edge` border, `--color-selected` fill when checked; system controls in forced colours); icon-only
   buttons have a control-edge border; the flashcard tabs' current tab is filled like a selected chip; the prize box keeps
   light text inside a lesson. Comic Pop's light edge colour is #0a3d7a and Garden Grow's light secondary text #3d5a46.
+- Settled in J17x part 3 (W21b CI contrast list): every typing box without its own class (text, number, date, time and
+  the other text-like types, untyped inputs, textareas) has a 2px `--color-control-edge` border (`design/base.css`,
+  zero specificity). Starlight's dark secondary text is #e4e0ff.
 - Settled in J17y (student report "touch areas don't match the buttons", Galaxy Fold 7 open, 750×832): a pressed
   button only sinks, at most 3px (`translateY`, or `translate` up to 3px each way for hard-shadow looks), with
   no squash or shrink (`apps/web/src/design/press.test.ts`). The report was filed at 05:01 on 26 Nov, 23
