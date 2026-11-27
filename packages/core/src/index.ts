@@ -6,6 +6,7 @@ export * from './spaced-repetition';
 export * from './mastery';
 export * from './mistakes';
 export * from './rng';
+export * from './option-order';
 export * from './next-item';
 export * from './xp';
 export * from './streaks';

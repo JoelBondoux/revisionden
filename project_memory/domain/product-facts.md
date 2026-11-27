@@ -172,6 +172,8 @@ Tags: #product #rules #limits #defaults
   `apps/web/src/features/stats/countUp.tsx`. Detail: `docs/PRODUCT_RULES.md`.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
+- Multiple choice options are shuffled each serve (F22; "None/All/Both/Neither of …" stay last);
+  marking uses the option's original position, never where it was shown.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
   and Alien skin). They are now part of the five-year catalogue (see "Rewards progression").
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, worked maths
