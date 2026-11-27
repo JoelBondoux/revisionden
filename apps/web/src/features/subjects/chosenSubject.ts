@@ -89,7 +89,16 @@ export function reportMap(studentId: string | null, map: TopicMap): void {
     known.current.subjectId === subjectId &&
     known.current.subject === map.subject &&
     known.subjects.length === subjects.length &&
-    known.subjects.every((s, i) => s.subjectId === subjects[i]?.subjectId)
+    // Every field the sheet shows or sorts by, so new practice times re-order it (Codex on #438).
+    known.subjects.every((s, i) => {
+      const t = subjects[i];
+      return (
+        s.subjectId === t?.subjectId &&
+        s.subject === t.subject &&
+        s.hasContent === t.hasContent &&
+        (s.lastPractisedAt ?? null) === (t.lastPractisedAt ?? null)
+      );
+    })
   )
     return;
   known = {

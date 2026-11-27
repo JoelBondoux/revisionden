@@ -71,6 +71,19 @@ describe('the chosen subject (UX-1)', () => {
     expect(result.current?.subjects.map((s) => s.subject)).toEqual(['Maths', 'Biology']);
   });
 
+  // Codex on #438: practising updates lastPractisedAt, so the sheet's order must follow it.
+  it('takes in new practice times, so the sheet re-orders after practice', () => {
+    const { result } = renderHook(() => useKnownSubjects('s1'));
+    act(() => reportMap('s1', mapFor('maths', 'Maths')));
+    const practised = subjects.map((s) =>
+      s.subjectId === 'biology' ? { ...s, lastPractisedAt: '2026-11-27T10:00:00.000Z' } : s,
+    );
+    act(() => reportMap('s1', { ...mapFor('maths', 'Maths'), subjects: practised }));
+    expect(result.current?.subjects.find((s) => s.subjectId === 'biology')?.lastPractisedAt).toBe(
+      '2026-11-27T10:00:00.000Z',
+    );
+  });
+
   it('shows the one subject on screen when the map lists none', () => {
     const { result } = renderHook(() => useKnownSubjects('s1'));
     act(() => reportMap('s1', { ...topicMap, subjectId: 'maths', subjects: undefined }));
