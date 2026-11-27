@@ -557,6 +557,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- Verification (S4, lead's ruling): the adversarial review now sees an item's declared facts and decision-0008 definition, treats a matching claim as checked elsewhere, still reports false or misapplied ones and anything undeclared, and records which facts it relied on. The blind check compares number flashcards and number worked answers by their final value, and other worked expressions with the maths engine.
 - docs(legal): privacy notice 1.11 (9.2) and young people's notice 1.8 list the bug-report content id, last-problem code and display details, and rule out reading comfort and colour choices (L12); the young people's notice's Changes list is whole again (1.5 and 1.7 had been left in the wrong place).
 - CI (G10): the full Playwright end-to-end and accessibility suite now runs on pull requests into `dev` as well as `staging` and `main`. The web app is built once and shared with four parallel shards, and one "End-to-end result" check sums them up for branch protection.
 - Maths templates (T1): the expanding-brackets template (A4, v2) now says "Use the Power key (^) for powers.", matching F9's Power key in answer boxes (#254). Its 5 items were regenerated with the same numbers and re-verified.

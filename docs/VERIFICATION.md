@@ -274,6 +274,24 @@ quoted sources (and, for typed answers, a note of the marking normaliser's rules
 option, content outside the specification, unsupported claims or poor wording; any problem or
 an unsure reviewer fails. Tests use recorded fixtures only.
 
+**Declared facts and definitions in the review (S4, lead's ruling, 2026-11-27).** When an item
+lists `facts` (decision 0009), the reviewer sees them, numbered, and is told each is checked
+separately at step 4b. When an item needs individual approval under decision 0008, the reviewer
+also sees the definition named in its grounded-writing note ("Decision 0008: … (the definition)
+that …"). A claim that matches a declared fact or definition is not `unsupported_claim`. The
+reviewer must still report `factual_error` for a declared fact or definition that is false or
+misapplied, and `unsupported_claim` for any claim that is neither cited nor declared. Its output
+lists `facts_relied_on`, recorded in the check notes ("relied on declared fact 1 (…)") so the
+reliance can be audited. The bar is unchanged: every declared fact still has to pass step 4b, and
+0008 items still go to a person.
+
+**Number answers in the blind check (S4, 2026-11-27).** A flashcard whose back is a number or a
+fraction, optionally with £ or a unit ("0.1", "1/4", "20 heads", "£121", "180°"), passes when the
+final value of the answer (after its last "=") equals it as a number, so "3/30 = 0.1" matches 0.1;
+any other back is still compared word for word. A worked expression that is a number is compared
+the same way ("£75", "150/2 = 75"). Any other worked expression that is not written the same is
+sent to the maths engine's `expression` check, so "3.6v" matches 18v/5 and "3.5v" does not.
+
 **Hints (S3-A-H, 2026-11-26).** A `hint` is educational content and goes through the same checks
 as the rest of the item (the adversarial review sees it; the blind answer does not). It is a one- or
 two-sentence nudge toward the method, grounded in the item's own steps, explanation and citations,

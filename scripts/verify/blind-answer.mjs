@@ -90,6 +90,23 @@ function closeEnough(given, expected, tolerance) {
   return Math.abs(a - b) <= (tolerance ?? 1e-9 * Math.max(1, Math.abs(b)));
 }
 
+/** The value after the last "=" ("3/30 = 0.1" gives "0.1"), as text. */
+function finalValue(text) {
+  return String(text).split('=').pop().trim();
+}
+
+/**
+ * The number on a flashcard back that is a number or fraction, optionally with a leading £ and a
+ * trailing unit of letters or symbols ("20 heads", "£121", "180°"); otherwise null.
+ */
+function numberOnBack(back) {
+  const m =
+    /^\s*£?\s*(-?\d+(?:\.\d+)?(?:\s*\/\s*\d+(?:\.\d+)?)?)\s*[A-Za-z°²³%][A-Za-z°²³%\s]*$|^\s*£?\s*(-?\d+(?:\.\d+)?(?:\s*\/\s*\d+(?:\.\d+)?)?)\s*$/.exec(
+      String(back),
+    );
+  return m ? (m[1] ?? m[2]).replace(/\s+/g, '') : null;
+}
+
 function sameValue(given, expected) {
   return isPlainNumber(expected) ? closeEnough(given, expected) : tight(given) === tight(expected);
 }
@@ -156,8 +173,16 @@ function expectation(item) {
           ),
       };
     }
-    case 'flashcard':
-      return { expected: item.back, matches: (a) => words(a) === words(item.back) };
+    case 'flashcard': {
+      // A number on the back (S4): compare the final value of the answer as a number, so
+      // "3/30 = 0.1" matches 0.1 and "20" matches "20 heads". Words stay word for word.
+      const number = numberOnBack(item.back);
+      return {
+        expected: item.back,
+        matches: (a) =>
+          words(a) === words(item.back) || (number !== null && closeEnough(finalValue(a), number)),
+      };
+    }
     case 'worked_maths':
       if (item.answer.solutions) {
         const want = item.answer.solutions;
@@ -175,8 +200,15 @@ function expectation(item) {
       }
       return {
         expected: item.answer.expression,
-        matches: (a) =>
-          tight(withoutSubject(String(a), item.answer.subject)) === tight(item.answer.expression),
+        matches: (a) => {
+          const given = withoutSubject(String(a), item.answer.subject);
+          if (tight(given) === tight(item.answer.expression)) return true;
+          // A number answer (S4): compare the final value as a number ("£75", "150/2 = 75").
+          return (
+            isPlainNumber(item.answer.expression) &&
+            closeEnough(finalValue(given), item.answer.expression)
+          );
+        },
       };
     default:
       return null;
@@ -228,6 +260,25 @@ async function formulaVerdict(item, answer, maths) {
   return { ok: Boolean(result?.ok) && missing.length === 0, notes };
 }
 
+/** A worked expression answer compared by the maths engine's expression check. { ok, notes }. */
+async function expressionVerdict(item, answer, maths) {
+  const given = withoutSubject(String(answer), item.answer.subject).trim();
+  const [result] = await maths([
+    {
+      id: item.id,
+      kind: 'expression',
+      expression: item.answer.expression,
+      answer: given,
+      form: item.answer.form,
+      subject: item.answer.subject,
+    },
+  ]);
+  return {
+    ok: Boolean(result?.ok),
+    notes: [`maths engine: ${result?.ok ? 'same expression' : 'not the same expression'}`],
+  };
+}
+
 const record = (provider, modelVersion, result, notes, now) => ({
   name: 'blind-answer',
   result,
@@ -267,11 +318,18 @@ export async function runBlindAnswer(
     schemaName: 'blind_answer',
   });
   const formula = item.back_formula ? await formulaVerdict(item, output.answer, maths) : null;
-  const matches = formula ? formula.ok : want.matches(output.answer);
+  let matches = formula ? formula.ok : want.matches(output.answer);
+  // A worked expression written differently (S4): the maths engine decides ("3.6v" for 18v/5).
+  const engine =
+    !matches && item.type === 'worked_maths' && typeof item.answer?.expression === 'string'
+      ? await expressionVerdict(item, output.answer, maths)
+      : null;
+  if (engine) matches = engine.ok;
   const sure = output.confidence === 'high';
   const notes = [
     `model answered "${output.answer}"; expected "${formula ? item.back_formula.formula : want.expected}"`,
     ...(formula ? formula.notes : []),
+    ...(engine ? engine.notes : []),
     ...(sure ? [] : [`confidence ${output.confidence}`]),
   ].join('; ');
   const result = matches && sure ? 'pass' : 'fail';

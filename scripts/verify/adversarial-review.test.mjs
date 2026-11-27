@@ -1,6 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { reviewPrompt, runAdversarialReview, PROBLEM_KINDS } from './adversarial-review.mjs';
+import {
+  reviewPrompt,
+  runAdversarialReview,
+  PROBLEM_KINDS,
+  REVIEW_SCHEMA,
+} from './adversarial-review.mjs';
 import { draftItem, quoted } from './test-content.mjs';
 
 const AT = () => new Date('2026-11-24T12:00:00Z');
@@ -233,4 +238,80 @@ test('the reviewer is told only what the maths engine really checked, never the 
   const c = reviewPrompt(choice).prompt;
   assert.doesNotMatch(c, /The maths engine has checked/);
   assert.match(c, /hint is a method nudge/i);
+});
+
+const withFacts = {
+  ...item,
+  facts: [
+    {
+      statement: 'Angles on a straight line add up to 180°.',
+      ask: 'What do angles on a line add up to?',
+    },
+    {
+      statement: 'Vertically opposite angles are equal.',
+      ask: 'How are vertically opposite angles related?',
+    },
+  ],
+};
+
+test('the reviewer sees declared facts and is told they are checked at step 4b (S4)', () => {
+  const { prompt } = reviewPrompt(withFacts);
+  assert.match(prompt, /Declared standard facts/);
+  assert.match(prompt, /1\. Angles on a straight line add up to 180°\./);
+  assert.match(prompt, /2\. Vertically opposite angles are equal\./);
+  assert.match(prompt, /not unsupported_claim/);
+  assert.match(prompt, /false or misapplied/);
+  assert.match(prompt, /neither cited nor declared/);
+  assert.match(prompt, /facts_relied_on/);
+});
+
+test('an item without facts or definitions gets no declared-facts section', () => {
+  assert.doesNotMatch(reviewPrompt(item).prompt, /Declared standard (facts|definitions)/);
+});
+
+test('a decision-0008 definition from the writing note is shown as declared (S4)', () => {
+  const defined = {
+    ...item,
+    needs_human_approval: true,
+    verification: {
+      ...item.verification,
+      checks: [
+        {
+          name: 'grounded-writing',
+          result: 'pass',
+          notes:
+            'Written from the spec. Decision 0008: the item rests on a standard definition (a bearing is measured clockwise from north) that the cited specification point names but does not define, so needs_human_approval is set.',
+        },
+      ],
+    },
+  };
+  const { prompt } = reviewPrompt(defined);
+  assert.match(prompt, /Declared standard definitions/);
+  assert.match(prompt, /a bearing is measured clockwise from north/);
+  assert.match(prompt, /approved individually by a person/);
+});
+
+test('the review schema asks which declared facts were relied on', () => {
+  assert.ok(REVIEW_SCHEMA.required.includes('facts_relied_on'));
+  assert.equal(REVIEW_SCHEMA.properties.facts_relied_on.type, 'array');
+});
+
+test('the facts relied on are recorded in the check notes for audit (S4)', async () => {
+  const r = await runAdversarialReview(
+    withFacts,
+    fake({ problems: [], confidence: 'high', facts_relied_on: [1] }),
+    { now: AT },
+  );
+  assert.equal(r.result, 'pass');
+  assert.match(
+    r.check.notes,
+    /no problems found; relied on declared fact 1 \(Angles on a straight line add up to 180°\.\)/,
+  );
+});
+
+test('a reviewer that relies on no declared fact records nothing extra', async () => {
+  const r = await runAdversarialReview(item, fake({ problems: [], confidence: 'high' }), {
+    now: AT,
+  });
+  assert.equal(r.check.notes, 'no problems found');
 });

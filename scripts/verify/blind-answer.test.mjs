@@ -460,3 +460,74 @@ test('the writer provider is read from the grounded-writing check, defaulting to
   };
   assert.equal(writerProviderOf(byGemini), 'gemini');
 });
+
+const card = (back) =>
+  draftItem('fixture-number-card', undefined, {
+    type: 'flashcard',
+    front: 'Fixture number front',
+    back,
+    prompt: undefined,
+    answer: undefined,
+    marks: undefined,
+  });
+const said = (answer) => fakeProvider({ answer, confidence: 'high', reasoning: '' });
+
+test('a number flashcard compares the final value of the answer as a number (S4)', async () => {
+  const pass = await runBlindAnswer(card('0.1'), said('3/30 = 0.1'), { now: AT });
+  assert.equal(pass.result, 'pass');
+  const fraction = await runBlindAnswer(card('1/4'), said('5/20 = 1/4'), { now: AT });
+  assert.equal(fraction.result, 'pass');
+  const wrong = await runBlindAnswer(card('0.1'), said('3/30 = 0.2'), { now: AT });
+  assert.equal(wrong.result, 'fail');
+});
+
+test('a number flashcard with a unit compares the number, so "20" matches "20 heads" (S4)', async () => {
+  assert.equal((await runBlindAnswer(card('20 heads'), said('20'), { now: AT })).result, 'pass');
+  assert.equal(
+    (await runBlindAnswer(card('£121'), said('121 pounds'), { now: AT })).result,
+    'pass',
+  );
+  assert.equal((await runBlindAnswer(card('20 heads'), said('21'), { now: AT })).result, 'fail');
+});
+
+test('a word flashcard is still compared word for word', async () => {
+  const r = await runBlindAnswer(card('chord'), said('secant'), { now: AT });
+  assert.equal(r.result, 'fail');
+});
+
+const workedNumber = draftItem('fixture-worked-number', undefined, {
+  type: 'worked_maths',
+  prompt: 'Fixture?',
+  answer: { expression: '75' },
+  verify: { method: 'expression', expression: '150/2' },
+});
+
+test('a worked answer that is a number compares the final value as a number (S4)', async () => {
+  assert.equal((await runBlindAnswer(workedNumber, said('£75'), { now: AT })).result, 'pass');
+  assert.equal(
+    (await runBlindAnswer(workedNumber, said('150/2 = 75'), { now: AT })).result,
+    'pass',
+  );
+  assert.equal((await runBlindAnswer(workedNumber, said('£76'), { now: AT })).result, 'fail');
+});
+
+test('a worked expression that differs in writing is checked by the maths engine (S4)', async () => {
+  const item = draftItem('fixture-worked-expr', undefined, {
+    type: 'worked_maths',
+    prompt: 'Fixture?',
+    answer: { expression: '18*v/5' },
+    verify: { method: 'expression', expression: 'v*3600/1000' },
+  });
+  const calls = [];
+  const maths = async (checks) => {
+    calls.push(...checks);
+    return checks.map((c) => ({ id: c.id, ok: c.answer === '3.6v' }));
+  };
+  const r = await runBlindAnswer(item, said('3.6v'), { now: AT, maths });
+  assert.equal(r.result, 'pass');
+  assert.equal(calls[0].kind, 'expression');
+  assert.equal(calls[0].expression, '18*v/5');
+  assert.match(r.check.notes, /maths engine: same expression/);
+  const no = await runBlindAnswer(item, said('3.5v'), { now: AT, maths });
+  assert.equal(no.result, 'fail');
+});
