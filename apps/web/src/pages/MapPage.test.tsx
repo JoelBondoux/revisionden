@@ -93,10 +93,12 @@ describe('Topic map screen', () => {
     expect(within(algebra).getByRole('button', { name: 'Expanding, locked' })).toBeInTheDocument();
   });
 
-  it('explains how to unlock a locked topic', async () => {
+  it('says a locked topic is coming soon, since locked means no questions yet (UX-3)', async () => {
     renderRoute('/map');
     await userEvent.click(await screen.findByRole('button', { name: 'Bounds, locked' }));
-    const message = await screen.findByText('Finish the topics before Bounds to unlock it.');
+    const message = await screen.findByText(
+      'Bounds is coming soon: its questions are still being checked.',
+    );
     expect(message.closest('[role="status"]')).not.toBeNull();
   });
 

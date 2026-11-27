@@ -3,7 +3,9 @@
  * GET /map?subjectId=… (default: the first enrolled subject with questions, else the first
  * enrolled subject; each subject says when it was last practised, UX-1) and GET /cards/due. A subject with no questions yet answers with
  * `status: "coming_soon"`, never an error; 404 only when the student has no subject at all.
- * Topics count only items that may be served (verified, plus drafts with the dev flag on).
+ * Topics count only items a lesson would serve (verified, plus drafts with the dev flag on; typed
+ * working only with the maths engine; never interactive pilot steps alone), so an open topic
+ * never opens an empty lesson (UX-3).
  */
 import { Hono } from 'hono';
 import { and, asc, eq, inArray, sql } from 'drizzle-orm';
@@ -13,16 +15,18 @@ import type { AppEnv } from '../context';
 import { ApiError } from '../errors';
 import { todaysCards } from '../learning/card-limit';
 import { flashcardStore } from '../learning/flashcard-store';
-import { servableItem } from '../learning/items';
+import { lessonReadyItem, servableItem } from '../learning/items';
 import { getProgress } from '../learning/progress';
 import type { LearnDeps } from './learn';
 
 const noSubject = () =>
   new ApiError(404, 'no_subject', 'Choose a subject first: the student has none yet');
 
-export function studentMapRoutes({ db, clock, config }: LearnDeps) {
+export function studentMapRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   const app = new Hono<AppEnv>();
   const servable = servableItem(config.serveDraftContent);
+  // UX-3: a topic is open on the map only when a lesson on it would find a question.
+  const ready = lessonReadyItem(config.serveDraftContent, mathsEngine !== undefined);
   const cards = flashcardStore(db, servable);
 
   app.get('/map', async (c) => {
@@ -40,7 +44,7 @@ export function studentMapRoutes({ db, clock, config }: LearnDeps) {
         : await db
             .select({ subjectId: topics.subjectId, n: sql<number>`count(${items.id})::int` })
             .from(topics)
-            .innerJoin(items, and(eq(items.topicId, topics.id), servable))
+            .innerJoin(items, and(eq(items.topicId, topics.id), ready))
             .where(
               inArray(
                 topics.subjectId,
@@ -94,7 +98,7 @@ export function studentMapRoutes({ db, clock, config }: LearnDeps) {
         servableItems: sql<number>`count(${items.id})::int`,
       })
       .from(topics)
-      .leftJoin(items, and(eq(items.topicId, topics.id), servable))
+      .leftJoin(items, and(eq(items.topicId, topics.id), ready))
       .where(eq(topics.subjectId, subjectId))
       .groupBy(topics.id);
     // An unknown subject (no topics and not one the student takes) is still "choose a subject".
