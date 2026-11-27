@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import type { MapSubject, TopicMap } from '@revisionden/core';
+import { ApiError } from '../../api/client';
 
 /*
  * UX-1 (owner approved the UX report, 2026-11-27): the subject a student is working on, shared by
@@ -24,9 +25,13 @@ function storage(): Storage | null {
   }
 }
 
+/** Choices made this page load, so switching works even when storage is refused. */
+const memory = new Map<string, string | null>();
+
 /** The subject this student chose on this device, or undefined for the API's default. */
 export function chosenSubject(studentId: string | null): string | undefined {
   if (!studentId) return undefined;
+  if (memory.has(studentId)) return memory.get(studentId) ?? undefined;
   try {
     return storage()?.getItem(KEY + studentId) ?? undefined;
   } catch {
@@ -37,11 +42,12 @@ export function chosenSubject(studentId: string | null): string | undefined {
 /** Remember a subject for this student (null forgets it, back to the default). */
 export function chooseSubject(studentId: string | null, subjectId: string | null): void {
   if (!studentId || chosenSubject(studentId) === (subjectId ?? undefined)) return;
+  memory.set(studentId, subjectId);
   try {
     if (subjectId) storage()?.setItem(KEY + studentId, subjectId);
     else storage()?.removeItem(KEY + studentId);
   } catch {
-    // Private windows can refuse storage: the choice then lasts until the page reloads.
+    // Private windows can refuse storage: the choice then lasts until the page reloads (memory).
   }
   notify();
 }
@@ -91,6 +97,7 @@ export function reportMap(studentId: string | null, map: TopicMap): void {
 /** Tests only: forget what the top bar knows and every remembered choice. */
 export function resetKnownSubjects(): void {
   known = null;
+  memory.clear();
   const store = storage();
   if (store) for (const key of Object.keys(store)) if (key.startsWith(KEY)) store.removeItem(key);
   notify();
@@ -111,4 +118,22 @@ export function pickerOrder(
     now: [...mine, ...rest.filter((s) => s.hasContent)],
     later: rest.filter((s) => !s.hasContent),
   };
+}
+
+/**
+ * The map for the chosen subject. A remembered subject the API no longer knows (dropped, with no
+ * topics: 404) is forgotten and the default is loaded instead, so no screen is left on an error.
+ */
+export async function loadSubjectMap(
+  getTopicMap: (subjectId?: string) => Promise<TopicMap>,
+  studentId: string | null,
+  chosen: string | undefined,
+): Promise<TopicMap> {
+  try {
+    return await getTopicMap(chosen);
+  } catch (err) {
+    if (!chosen || !(err instanceof ApiError) || err.status !== 404) throw err;
+    chooseSubject(studentId, null);
+    return getTopicMap(undefined);
+  }
 }

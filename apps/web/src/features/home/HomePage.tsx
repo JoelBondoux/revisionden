@@ -14,7 +14,7 @@ import { CountUp } from '../stats/countUp';
 import { useStatsApi } from '../stats/statsApi';
 import '../../map/map.css';
 import { LeagueChip } from '../league';
-import { reportMap, useChosenSubject } from '../subjects';
+import { loadSubjectMap, reportMap, useChosenSubject } from '../subjects';
 import './home.css';
 
 /**
@@ -110,7 +110,7 @@ export function HomePage() {
   const never = () => new Promise<never>(() => {});
   const subjectId = useChosenSubject(studentId);
   const map = useApiResource(
-    () => (studentId ? api.getTopicMap(subjectId) : never()),
+    () => (studentId ? loadSubjectMap((id) => api.getTopicMap(id), studentId, subjectId) : never()),
     [api, studentId, subjectId],
   );
   useEffect(() => {

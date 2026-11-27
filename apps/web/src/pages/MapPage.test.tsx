@@ -4,6 +4,7 @@ import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
 import { renderRoute } from '../test/render';
 import { topicMap } from '../mocks/data';
+import { chooseSubject, chosenSubject } from '../features/subjects';
 
 describe('Topic map screen', () => {
   it('sends you to choose a student when nobody is chosen yet', async () => {
@@ -216,5 +217,41 @@ describe('Topic map for subjects with no questions yet (RD-MBXKTC)', () => {
     await userEvent.click(await screen.findByRole('button', { name: 'Your subject Maths Change' }));
     await userEvent.click(screen.getByRole('button', { name: 'Back to the map' }));
     expect(await screen.findByRole('region', { name: 'Number' })).toBeInTheDocument();
+  });
+});
+
+describe('the remembered subject (UX-1, Codex on #423)', () => {
+  const subjects = [{ subjectId: 'gcse-maths', subject: 'Maths', hasContent: true }];
+
+  it('falls back to the default when the remembered subject was dropped and has no topics', async () => {
+    chooseSubject('student-1', 'gcse-art');
+    server.use(
+      http.get('*/v1/student/map', ({ request }) => {
+        const id = new URL(request.url).searchParams.get('subjectId');
+        if (id === 'gcse-art')
+          return HttpResponse.json(
+            { error: { code: 'no_subject', message: 'Choose a subject first' } },
+            { status: 404 },
+          );
+        return HttpResponse.json({ ...topicMap, subjectId: 'gcse-maths', subjects });
+      }),
+    );
+    renderRoute('/map');
+    expect(await screen.findByRole('region', { name: 'Number' })).toBeInTheDocument();
+    expect(chosenSubject('student-1')).toBeUndefined();
+  });
+
+  it('opens the subject picker from the top bar while already on the map', async () => {
+    server.use(
+      http.get('*/v1/student/map', () =>
+        HttpResponse.json({ ...topicMap, subjectId: 'gcse-maths', subjects }),
+      ),
+    );
+    renderRoute('/map');
+    await screen.findByRole('region', { name: 'Number' });
+    await userEvent.click(await screen.findByRole('button', { name: /, change subject$/ }));
+    const sheet = await screen.findByRole('dialog', { name: 'Your subjects' });
+    await userEvent.click(within(sheet).getByRole('button', { name: 'Add or change subjects' }));
+    expect(await screen.findByRole('region', { name: 'Pick a subject' })).toBeInTheDocument();
   });
 });

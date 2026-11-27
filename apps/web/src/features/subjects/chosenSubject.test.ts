@@ -105,3 +105,17 @@ describe('the order subjects are offered in (UX-1)', () => {
     expect(ids(pickerOrder(four, undefined).now)).toEqual(['biology', 'maths']);
   });
 });
+
+describe('when the device refuses storage (Codex on #423)', () => {
+  it('still switches subject for as long as the page is open', () => {
+    const setItem = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+    try {
+      chooseSubject('s1', 'biology');
+      expect(chosenSubject('s1')).toBe('biology');
+    } finally {
+      setItem.mockRestore();
+    }
+  });
+});

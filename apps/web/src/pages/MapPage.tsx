@@ -13,7 +13,13 @@ import { SubjectsNudge } from '../features/onboarding/checksUi';
 import { WigglyMap } from '../map/WigglyMap';
 import '../map/map.css';
 import { useStudent } from '../session/StudentContext';
-import { chooseSubject, pickerOrder, reportMap, useChosenSubject } from '../features/subjects';
+import {
+  chooseSubject,
+  loadSubjectMap,
+  pickerOrder,
+  reportMap,
+  useChosenSubject,
+} from '../features/subjects';
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -133,11 +139,17 @@ export function MapPage() {
   const subjectId = useChosenSubject(studentId);
   const setSubjectId = useCallback((id: string) => chooseSubject(studentId, id), [studentId]);
   const location = useLocation();
-  const [picking, setPicking] = useState(
-    () => (location.state as { pickSubject?: boolean } | null)?.pickSubject === true,
-  );
+  const askedToPick = (location.state as { pickSubject?: boolean } | null)?.pickSubject === true;
+  const [picking, setPicking] = useState(askedToPick);
+  // Also when already on the map: each navigation from the top bar has its own key.
+  useEffect(() => {
+    if (askedToPick) setPicking(true);
+  }, [askedToPick, location.key]);
   const map = useApiResource(
-    () => (studentId ? api.getTopicMap(subjectId) : new Promise<never>(() => {})),
+    () =>
+      studentId
+        ? loadSubjectMap((id) => api.getTopicMap(id), studentId, subjectId)
+        : new Promise<never>(() => {}),
     [api, studentId, subjectId],
   );
   const dismissToast = useCallback(() => setToast(null), []);
