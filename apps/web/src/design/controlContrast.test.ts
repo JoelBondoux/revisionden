@@ -120,6 +120,31 @@ describe('selected chips, tabs, avatar options and the period toggle', () => {
   it('give every select a visible edge, light and dark', () => {
     expect(squash(base)).toMatch(/select \{[^}]*border: 2px solid var\(--color-control-edge\);/);
   });
+
+  it('give every typing box (number, date, time, text and the rest) a visible edge', () => {
+    // A box with no class of its own (the parent daily limit and reminder times) kept the
+    // browser's thin grey edge: 2.41:1 in Pop Burst dark. :where() keeps a page's own rule on top.
+    const at = squash(base).indexOf(':where(');
+    expect(at, 'a :where() typing-box rule in base.css').toBeGreaterThanOrEqual(0);
+    const rest = squash(base).slice(at);
+    const selector = rest.slice(0, rest.indexOf('{'));
+    for (const type of [
+      'text',
+      'number',
+      'date',
+      'time',
+      'email',
+      'password',
+      'search',
+      'tel',
+      'url',
+    ])
+      expect(selector, type).toContain(`input[type='${type}']`);
+    expect(selector).toContain('textarea');
+    expect(rest.slice(0, rest.indexOf('}'))).toContain(
+      'border: 2px solid var(--color-control-edge);',
+    );
+  });
 });
 
 describe('words on the wrong colour', () => {
