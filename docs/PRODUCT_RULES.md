@@ -35,6 +35,14 @@
 - Details settled in code:
   - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, worked
     maths 20, extended answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
+  - Multiple choice options are shown in a fresh order each time a question is served (F22,
+    marking fairness: the right answer was option 1 in nearly every item). Lessons, the starting
+    test, the 5-a-day and recall checks all use it; "None of these", "All of the above", "Both of
+    them" and "Neither of these" stay last. Marking goes by the option itself (its original
+    position), so attempts, the right-answer highlight and review screens line up whatever the
+    shown order. `packages/core/src/option-order.ts` (`shuffledOptionOrder`, injected randomness);
+    `apps/web/src/features/learn/shuffle.tsx`. The operator's content review keeps the authored
+    order. Flashcard choices (F20) follow once #441 lands.
   - Combo bonus (`docs/GAME_FEEL.md`): +5 XP per right answer from the 3rd right answer in a row,
     added to that answer's XP (so levels and rewards count it, with the usual daily cap). Learn
     mode: the API counts the run from the student's own recent answers; a wrong or part-marked
