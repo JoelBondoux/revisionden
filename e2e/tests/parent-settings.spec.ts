@@ -8,7 +8,7 @@ import topicMap from './fixtures/topic-map-gcse-maths.json' with { type: 'json' 
  * parent's changes are what the child's next screen is built from.
  *
  * - Subjects: the parent moves Maths from Higher to Foundation and adds Physics; the child's map
- *   then says GCSE Foundation and offers Physics in Subject selection.
+ *   then says Maths · Foundation and offers Physics in Subject selection.
  * - Friends: the parent turns friends on; the child's league page stops saying "Ask a parent".
  * - Reminders: the parent changes the times and they are saved. The child sees reminders only as
  *   phone notifications, which this suite cannot show, so only the parent's side is checked.
@@ -209,9 +209,11 @@ test("a parent's subject changes reach the child's map", async ({ browser }) => 
   const parent = await parentPhone(browser, fam);
   const child = await childPhone(browser, fam);
 
-  // Before: the child's map says GCSE Higher and only Maths.
+  // Before: the child's map says Maths · Higher and only Maths.
   await child.page.goto('/map');
-  await expect(child.page.getByText('GCSE Higher')).toBeVisible();
+  await expect(
+    child.page.getByRole('button', { name: 'Maths · Higher (change subject)' }),
+  ).toBeVisible();
 
   // The parent moves Maths to Foundation and adds Physics (board left as Not sure).
   await parent.page.goto(`/parent/subjects/${CHILD.id}`);
@@ -241,10 +243,11 @@ test("a parent's subject changes reach the child's map", async ({ browser }) => 
     },
   ]);
 
-  // After: the child's map says GCSE Foundation, and Subject selection offers Physics.
+  // After: the child's map says Maths · Foundation, and Subject selection offers Physics.
   await child.page.reload();
-  await expect(child.page.getByText('GCSE Foundation')).toBeVisible();
-  await child.page.getByRole('button', { name: /^Maths · .* \(change subject\)$/ }).click();
+  const subject = child.page.getByRole('button', { name: 'Maths · Foundation (change subject)' });
+  await expect(subject).toBeVisible();
+  await subject.click();
   const pick = child.page.getByRole('region', { name: 'Pick a subject' });
   // UX-1: Physics has no questions yet, so it sits in the folded coming-soon line.
   await pick.getByText(/more subjects? coming soon$/).click();
