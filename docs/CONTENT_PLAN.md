@@ -185,6 +185,13 @@ GCSE Maths Higher, Pearson Edexcel 1MA1: `content/topic-trees/gcse-maths-edexcel
 and what is still unsupported is in [`sourcing/gcse-maths-1ma1-pilot.md`](sourcing/gcse-maths-1ma1-pilot.md).
 All pilot content is still `draft` until it passes the rest of the pipeline.
 
+## A-Level Computer Science (OCR H446, board provisional)
+
+`content/topic-trees/alevel-computer-science-ocr-h446.json`: one leaf per lettered point of
+Components 01 and 02 in specification version 3.0 (April 2026), 111 leaves, each with a verbatim
+quote that passes the quote check exactly. The board stays provisional until the owner confirms
+it. Record: [`sourcing/alevel-cs-ocr-h446.md`](sourcing/alevel-cs-ocr-h446.md). Still `draft`.
+
 ## Citation conventions (settled while sourcing the pilot)
 
 - **`url`** points at the document itself (the PDF), not the qualification page, so the

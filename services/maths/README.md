@@ -58,6 +58,26 @@ cross-checked by the content checks and an independent recheck before it is writ
 `pnpm content:templates` builds them; `python -m app.templates.build --check` fails if the
 committed items are stale. How to add one: `docs/TEMPLATES.md`.
 
+## Computer Science engine
+
+`app/cs/` (workstream S5, A-Level Computer Science, OCR H446, board provisional) computes CS
+answers by code, with no AI:
+
+- `bases.py`: binary and hexadecimal conversion, sign and magnitude, two's complement, column
+  addition (carries, carry out, overflow), two's complement subtraction, logical, arithmetic and
+  circular shifts, AND/OR/XOR masks, and answer matching (`same_bits` needs every bit written;
+  `same_hex` reads by value).
+- `floating.py`: normalised floating point with a two's complement mantissa and exponent, the
+  binary point after the mantissa's first bit; exact values (`Fraction`), so a value that cannot be
+  held exactly is refused rather than rounded.
+- `logic.py`: Boolean expressions in OCR's notation (appendix 5d) and every alternative it
+  accepts, truth tables, equivalence, shortest sum of products (SymPy's Quine-McCluskey, checked
+  against our own truth-table evaluator), `is_simplest` for marking, Karnaugh maps in Gray code
+  order, and half and full adders.
+
+Not yet: the pseudocode interpreter and algorithm tracers (next S5 step), and a content-check
+kind so `pnpm content:validate` re-runs CS answers.
+
 ## Run and test
 
 ```bash
