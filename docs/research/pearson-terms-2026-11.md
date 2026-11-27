@@ -15,15 +15,18 @@
   centre intranets that "cannot be accessed publicly". RevisionDen is not a centre, and this
   repository is public. No listed exception covers quoting specification text in a public app or
   repository.
-- **Nothing on the pages read mentions AI.** The copyright policy, the publication policy and the
-  three specifications have no clause on AI, machine learning or text and data mining.
-- **One page could not be read.** Pearson's general "Legal notice" is on `www.pearson.com`, which
-  this session's network refuses (section 3). Search extracts say other Pearson pages reserve
-  text and data mining and AI training rights. That is **not confirmed** and is not quoted here as
-  fact.
+- **Pearson's website terms reserve AI and text and data mining rights.** The `www.pearson.com`
+  terms say "All rights reserved, including those for text and data mining and training of
+  artificial intelligence and similar technologies", and allow use "for personal, non-commercial
+  and class room use only" (section 3). These are the `www.pearson.com` site terms; the
+  qualifications site links to them as its "Legal notice" and has no terms page of its own.
+- **The qualifications pages and specifications have no AI clause of their own.** The copyright
+  policy, the publication policy and the three specifications do not mention AI, machine learning
+  or text and data mining.
 - **What this decides.** On Pearson's own published terms, quoting 9MA0 / 9FM0 specification text
   in our citations needs either written permission from Pearson or a legal view that a statutory
-  exception applies. The same question already applies to the GCSE 1MA1 pilot (section 4). The
+  exception applies. The website terms make this stronger, not weaker: no Pearson text should be
+  quoted without one of the two. The same question already applies to the GCSE 1MA1 pilot (section 4). The
   owner should decide before an A-Level Maths content team starts.
 
 ## 1. Sources read
@@ -119,19 +122,50 @@ or associated materials". It is about live exam papers obtained in advance. Revi
 own questions, and past papers are linked, not copied (`docs/CONTENT_PLAN.md`), so it does not
 apply to what we do.
 
-## 3. Not read: Pearson's general legal notice
+## 3. Pearson's website terms (`www.pearson.com`)
 
-- The "Legal notice" link in the footer of `qualifications.pearson.com` goes to
-  `https://www.pearson.com/uk/legal-notice.html`.
-- This session's network refused it ("CONNECT tunnel failed, response 403"). A second fetch tool
-  could not resolve the host either. Its text was **not read**.
-- Web search extracts (not primary sources, not confirmed) say other Pearson sites and terms
-  reserve rights "for text and data mining and training of artificial intelligence and similar
-  technologies". They also say a Pearson Acceptable Use Policy bars using materials to train or
-  ground AI systems. These were not opened, and it is not known whether they cover
-  `qualifications.pearson.com` or the specifications.
-- **To settle it:** someone must read the legal notice and any terms it links to. Either the owner
-  reads it, or the owner adds `www.pearson.com` to the environment's allowed hosts so a session can.
+### 3.1 Where the qualifications site points
+
+- `qualifications.pearson.com` has no terms page of its own. Its footer (home page
+  `https://qualifications.pearson.com/en.html`, read 2026-11-27, SHA-256
+  `bd46d389dd2c0c75d0515a0cb035b23cd7d375e99a89476973ce84d9efafbfe2`) links "Legal notice" to
+  `https://www.pearson.com/uk/legal-notice.html` and "Privacy notice" to the `www.pearson.com`
+  privacy centre. Its own footer line is only "© Pearson Education Ltd 2026", with no AI clause.
+- This session could not open `www.pearson.com` (first a proxy 403, then the host did not
+  resolve). The lead session read the terms below on 2026-11-27 and passed on the exact text. They
+  are quoted as relayed; this session did not read or hash that page itself.
+
+### 3.2 Website Terms and Conditions (version dated 10 July 2025)
+
+Source: https://www.pearson.com/en-gb/legal-information/terms-of-use.html, read by the lead
+session on 2026-11-27. These are the `www.pearson.com` site terms.
+
+Footer:
+
+> "© 1996–2026 Pearson All rights reserved, including those for text and data mining and training
+> of artificial intelligence and similar technologies."
+
+"Our Rights in Content; Limited Licence":
+
+> "All materials on or available through this Site is the copyright of Pearson and its group
+> companies and its licensors, unless otherwise stated. All rights are reserved. Users are
+> permitted to view, print and download the material for personal, non-commercial and class room
+> use only but in so doing are not permitted to remove or amend any trademark, copyright or other
+> proprietary notice. 'Class room use' means non-commercial uses by a qualified teacher during a
+> class of students registered in a qualified educational institution."
+
+### 3.3 What this adds
+
+- **Text and data mining and AI training are reserved** on `www.pearson.com`. The terms grant no
+  licence for either.
+- **The licence is narrow.** Viewing, printing and downloading for "personal, non-commercial and
+  class room use only". Republishing in a public repository or app is not among them.
+- **Scope is not certain.** The terms say "this Site". The specifications are served from
+  `qualifications.pearson.com`, which links to these terms as its legal notice but does not say
+  they apply to it. Whether they cover the specifications is part of the legal question in
+  section 4.
+- **Not read:** any Pearson Acceptable Use Policy that search extracts mention. It was not opened
+  and is not relied on here.
 
 ## 4. What this means for RevisionDen
 
@@ -155,5 +189,5 @@ apply to what we do.
   3. Cite by location only: specification code, issue and page, with no quoted text. Our quote
      check would then need a different design, because today it requires a quote
      (`docs/VERIFICATION.md`).
-- **Until then:** these findings do not support starting A-Level Maths items that quote 9MA0 or
-  9FM0 text.
+- **Until then:** no new Pearson specification quotes are added, and existing items stay `draft`.
+  These findings do not support starting A-Level Maths items that quote 9MA0 or 9FM0 text.
