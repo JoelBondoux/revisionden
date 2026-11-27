@@ -1,12 +1,14 @@
 # Changelog
 
 All notable changes are recorded here. Versions use the format `xx.xx.xxx` (major.minor.patch).
-Every push to `main` bumps the version automatically; add entries under **Unreleased** in each PR.
+Every push to `main` bumps the version automatically; each PR adds a fragment in
+`changes/unreleased/` (see `changes/README.md`) rather than editing this file.
 
 ## [Unreleased]
 
 ### What's new
 
+- Typed answers are marked more fairly: units written out in words now count ("60 degrees", "250 millilitres", "20 per cent"), and hexadecimal answers accept 0x2F, 2f or 02F for 2F.
 - No more empty lessons: topics whose questions aren't ready yet show as "coming soon" on the map, and if a lesson ever has nothing to show, it offers a topic that's ready.
 - Bug reports: if the app showed you a problem code (like RD-7K2M9Q) in the last 15 minutes, a parent's report now includes it (you can remove it), and a student can tick "Include it" to add it.
 - The privacy notices now say that a bug report can carry the code of a problem the app showed you in the last 15 minutes (just the short code, such as RD-7K2M9Q). Parents can remove it; students choose to add it. Signing out forgets it.
@@ -312,6 +314,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- F24: `answer.kind: "hex"` for short answers (opt-in per item; content schema, `sameAnswer`, `markShortAnswer`, blind check): case, a `0x` prefix and leading zeros are ignored, so `0x2F`, `2f` and `02F` match `2F`; ordinary answers are unchanged. F25: more unit spellings in `UNIT_SPELLINGS` (° as degrees or deg, ml/mL/millilitres, mg, %, days, N/m², m/s², kg/m³, g/cm³, litres per minute and km per minute), found by listing every unit in `content/items`; a shared `unitSpellings` now serves short-answer `units` too, so "60 degrees" marks right where the unit is °. Tests in `answer-normalise.test.ts`, `answer-format.test.ts` and `blind-answer.test.mjs`.
 - S5: A-Level Computer Science strand 2, Boolean algebra (OCR H446 1.4.3 (a) to (e), draft): 63 template items from `services/maths/app/templates/alevel_cs_boolean.py` (truth tables, simplifying, Karnaugh maps with three and four letters, De Morgan's laws, naming the rule, defining a problem, full adders, D type flip-flops). Expressions are never marked as free text: a question asks for a bit column, a bit, a count or one of four options (`multiple_choice`, exactly one equivalent). `core.make_item` copies `options`; the preview shows them. The owner confirmed OCR H446, so the board is no longer marked provisional, and product facts record the A-Level target boards. Tests: `services/maths/tests/test_templates_cs_boolean.py`, `test_templates_cs.py`, `scripts/content/ocr-h446.test.mjs`.
 - S4 (Statistics): 67 draft GCSE Maths Higher items for 1MA1 Statistics, S1 to S6 (`content/items/gcse-maths-higher/statistics/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point; data is given in the question, so no diagrams. Quote check, maths engine and schema pass for all; blind answer and adversarial review by OpenAI; 22 need individual approval (decision 0008).
 - S4 (Ratio): 185 draft GCSE Maths Higher items for 1MA1 Ratio, proportion and rates of change, R1 to R16 (`content/items/gcse-maths-higher/ratio/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point. Quote check and schema pass for all; blind answer and adversarial review by OpenAI (Gemini is over its spend cap); 41 need individual approval (unit and scale definitions, decision 0008).
