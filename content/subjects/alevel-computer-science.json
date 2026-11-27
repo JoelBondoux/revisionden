@@ -1,0 +1,11 @@
+{
+  "id": "alevel-computer-science",
+  "name": "Computer Science",
+  "level": "A-Level",
+  "boards": [
+    {
+      "board": "ocr",
+      "spec_code": "H446"
+    }
+  ]
+}
