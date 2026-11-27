@@ -123,12 +123,18 @@ def _by_division(n: int, base: int) -> str:
 
 
 def _base(check: dict) -> str | None:
+    for key in ("from_base", "to_base"):
+        if check[key] not in _DIGITS:
+            return f"{key} {check[key]!r} is not 2, 10 or 16"
+    result = str(check["result"]).upper()
+    if not result or set(result) - set(_DIGITS[check["to_base"]]):
+        return f"{check['result']!r} is not a base {check['to_base']} number"
     n = _in_base(str(check["value"]), check["from_base"])
     expected = _by_division(n, check["to_base"])
     engine = {2: lambda v: bases.to_binary(v), 10: str, 16: bases.to_hex}[check["to_base"]](n)
     if expected != engine:  # the two methods must agree
         return f"the two conversions disagree ({expected} and {engine})"
-    if str(check["result"]).upper().lstrip("0") != expected.lstrip("0"):
+    if result.lstrip("0") != expected.lstrip("0"):
         return f"{check['value']} in base {check['to_base']} is {expected}, not {check['result']}"
     return None
 

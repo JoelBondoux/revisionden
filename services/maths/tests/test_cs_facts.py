@@ -133,3 +133,23 @@ def test_the_negation_rule_is_checked_too(monkeypatch):
         return real(pattern) if calls["n"] % 2 else real(pattern) + 1
     monkeypatch.setattr(cs_facts, "_place_value_reading", reading)
     assert "inverting" in cs_facts._twos_rule(3)
+
+
+# Codex review on #440: an empty result is not a number, and only bases 2, 10 and 16 are read
+# (a base of 1 would never finish dividing).
+@pytest.mark.parametrize("check", [
+    {"value": "0", "from_base": 10, "to_base": 2, "result": ""},
+    {"value": "5", "from_base": 10, "to_base": 1, "result": "11111"},
+    {"value": "5", "from_base": 10, "to_base": 8, "result": "5"},
+    {"value": "5", "from_base": 7, "to_base": 10, "result": "5"},
+    {"value": "5", "from_base": 10, "to_base": 2, "result": "1O1"},
+])
+def test_base_conversions_need_a_real_result_and_a_supported_base(check):
+    result = ok({"kind": "cs_base", **check})
+    assert result["ok"] is False and result["error"]
+
+
+def test_zero_converts_to_zero():
+    assert ok({"kind": "cs_base", "value": "0", "from_base": 10, "to_base": 2, "result": "0"})["ok"]
+    assert ok({"kind": "cs_base", "value": "00", "from_base": 16, "to_base": 10,
+               "result": "0"})["ok"]
