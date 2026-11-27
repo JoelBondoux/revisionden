@@ -114,6 +114,22 @@ test('a schema error is reported with its file and id', async () => {
   assert.match(errors[0].message, /source_ref/);
 });
 
+test('a number answer may give the reason it has no subject (S4, Codex on #452)', async () => {
+  const withReason = (no_subject) => ({
+    ...numericItem,
+    answer: { value: '90', no_subject },
+  });
+  const ok = await validateContent(
+    content({ items: [at('items/b.json', withReason('x names the line, not the answer.'))] }),
+    { checkMaths: fakeEngine() },
+  );
+  assert.deepEqual(ok, []);
+  const short = await validateContent(content({ items: [at('items/b.json', withReason('no'))] }), {
+    checkMaths: fakeEngine(),
+  });
+  assert.match(messages(short), /no_subject/);
+});
+
 test('a duplicate id fails', async () => {
   const errors = await validateContent(
     content({ items: [at('items/a.json', numericItem), at('items/b.json', numericItem)] }),
