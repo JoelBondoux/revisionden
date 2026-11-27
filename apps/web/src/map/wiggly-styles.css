@@ -650,6 +650,9 @@
   --pip-disc: #3a2140;
   --field-bg: linear-gradient(120deg, #4a2448, #34295a);
   --label-ink: #ffe9f5;
+  /* UX-2: a lighter lavender road, so the current flower's pale edge keeps 3:1 where the road
+     crosses the pink glow (2.97 once the path moved up the screen). */
+  --road: rgba(183, 156, 255, 0.42);
 }
 :root[data-effect-style='turbo-drive'] .wiggly-map {
   --ink: #f4f6fb;

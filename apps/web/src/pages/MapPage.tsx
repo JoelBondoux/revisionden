@@ -23,30 +23,41 @@ import {
 
 const today = () => new Date().toISOString().slice(0, 10);
 
-/** The big subject box at the top of the map: Pip dressed for it, and Change (J15c). */
-function PlayBox({
-  subjectId,
+/** "GCSE Higher" → "Higher"; a qualification with no level after it is shown whole (UX-2). */
+export function levelOf(qualification: string): string {
+  const level = qualification.replace(/^(GCSE|A-Level|AS-Level)\s+/i, '').trim();
+  return level || qualification;
+}
+
+/**
+ * The map's one compact line (UX-2, owner-approved UX report): the subject and level as a button
+ * that changes subject, then the streak. It replaced the title row, the big subject box and the
+ * qualification line, which took 40% of a 412 × 915 phone before the path began.
+ */
+function MapBar({
   subject,
   qualification,
+  streakDays,
   onChange,
 }: {
-  subjectId: string | undefined;
   subject: string;
   qualification: string;
+  streakDays: number;
   onChange: () => void;
 }) {
   return (
-    <div className="map-play-wrap">
-      <button type="button" className="map-play" onClick={onChange}>
-        <PipFigure outfit={outfitFor(subjectId ?? subject)} look={lookFor(today())} />
-        <span className="map-play__text">
-          <small>Your subject</small> <b>{subject}</b>
-        </span>{' '}
-        <span className="map-play__change">Change</span>
+    <div className="map-bar">
+      <button type="button" className="map-bar__subject" onClick={onChange}>
+        {subject} · {levelOf(qualification)}
+        <span className="visually-hidden"> (change subject)</span>
+        <span className="map-bar__caret" aria-hidden="true">
+          ▾
+        </span>
       </button>
-      <p className="map-play__qualification">
-        {qualification} {subject}
-      </p>
+      <Pill tone="streak">
+        <FlameIcon />
+        {streakDays} day streak
+      </Pill>
     </div>
   );
 }
@@ -166,15 +177,7 @@ export function MapPage() {
 
   return (
     <div className="stack map-page">
-      <div className="page-header">
-        <h1>Topic map</h1>
-        {map.status === 'ready' && (
-          <Pill tone="streak">
-            <FlameIcon />
-            {map.data.streakDays} day streak
-          </Pill>
-        )}
-      </div>
+      <h1 className="visually-hidden">Topic map</h1>
       <SubjectsNudge />
       {map.status !== 'ready' ? (
         <LoadingOrError resource={map} />
@@ -201,10 +204,10 @@ export function MapPage() {
               onBack={() => setPicking(false)}
             />
           ) : (
-            <PlayBox
-              subjectId={map.data.subjectId}
+            <MapBar
               subject={map.data.subject}
               qualification={map.data.qualification}
+              streakDays={map.data.streakDays}
               onChange={() => setPicking(true)}
             />
           )}

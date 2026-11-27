@@ -244,7 +244,7 @@ test("a parent's subject changes reach the child's map", async ({ browser }) => 
   // After: the child's map says GCSE Foundation, and Subject selection offers Physics.
   await child.page.reload();
   await expect(child.page.getByText('GCSE Foundation')).toBeVisible();
-  await child.page.getByRole('button', { name: /^Your subject Maths Change$/ }).click();
+  await child.page.getByRole('button', { name: /^Maths · .* \(change subject\)$/ }).click();
   const pick = child.page.getByRole('region', { name: 'Pick a subject' });
   // UX-1: Physics has no questions yet, so it sits in the folded coming-soon line.
   await pick.getByText(/more subjects? coming soon$/).click();

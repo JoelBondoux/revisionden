@@ -554,6 +554,12 @@ export function WigglyMap({
             {unit.title}
           </h2>
           <p>{unitIsLocked(unit) ? 'Coming soon' : `${unit.masteryPercent}% mastered`}</p>
+          {/* UX-2: the unit dots sit inside the pager's title, not on a row of their own. */}
+          <div className="wiggly-map__dots" aria-hidden="true">
+            {map.units.map((u, i) => (
+              <i key={u.id} className={i === index ? 'on' : undefined} />
+            ))}
+          </div>
         </div>
         <button
           type="button"
@@ -564,11 +570,6 @@ export function WigglyMap({
         >
           <span aria-hidden="true">›</span>
         </button>
-      </div>
-      <div className="wiggly-map__dots" aria-hidden="true">
-        {map.units.map((u, i) => (
-          <i key={u.id} className={i === index ? 'on' : undefined} />
-        ))}
       </div>
       <div
         ref={pager}

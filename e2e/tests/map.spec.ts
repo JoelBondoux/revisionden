@@ -96,6 +96,17 @@ test('at 390 × 844 it opens on the current unit with You are here in view', asy
   expect(await sidewaysScroll(page)).toBe(0);
 });
 
+// UX-2 (owner-approved UX report): the title, streak, subject box, qualification and unit pager
+// took about 40% of a 412 × 915 phone before the path began. The path now starts in the top third.
+test('at 412 × 915 the path starts in the top third of the screen', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 915 });
+  await openMap(page);
+  const top = await page
+    .getByRole('group', { name: 'Units' })
+    .evaluate((el) => el.getBoundingClientRect().top);
+  expect(top, 'top of the path, in px').toBeLessThanOrEqual(915 / 3);
+});
+
 for (const [label, width, scale] of [
   ['320px', 320, 1],
   ['320px with 200% text', 320, 2],
@@ -141,10 +152,10 @@ test('another unit opens near its next topic, then remembers where you were', as
   expect(await number.evaluate((el) => el.scrollTop)).toBe(40);
 });
 
-test('the big subject box opens Subject selection', async ({ page }) => {
+test('the subject button opens Subject selection', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openMap(page);
-  await page.getByRole('button', { name: /^Your subject Maths Change$/ }).click();
+  await page.getByRole('button', { name: 'Maths · Higher (change subject)' }).click();
   const pick = page.getByRole('region', { name: 'Pick a subject' });
   await expect(pick).toBeVisible();
   // Screenshots for docs/design/w20 (W20_SHOT=path); not part of the check.

@@ -195,7 +195,7 @@ const OVERLAYS: Overlay[] = [
     name: 'Subject selection',
     visit: '/map',
     open: async (page) => {
-      await page.getByRole('button', { name: /^Your subject .* Change$/ }).click();
+      await page.getByRole('button', { name: /\(change subject\)$/ }).click();
       await page.getByRole('region', { name: 'Pick a subject' }).waitFor();
     },
   },

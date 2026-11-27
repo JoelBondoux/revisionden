@@ -16,9 +16,14 @@ describe('Topic map screen', () => {
 
   // The old /learn address now opens Home (J15b): see features/home/HomePage.test.tsx.
 
-  it('shows the subject and streak', async () => {
+  // UX-2 (owner-approved UX report): one compact line on top of the path instead of a title row,
+  // a big subject box and a qualification line. The page still has its heading for screen readers.
+  it('shows the subject and level as one compact button, and the streak', async () => {
     renderRoute('/map');
-    expect(await screen.findByText('GCSE Higher Maths')).toBeInTheDocument();
+    const subject = await screen.findByRole('button', { name: 'Maths · Higher (change subject)' });
+    expect(subject).toHaveTextContent(/^Maths · Higher/);
+    expect(screen.getByRole('heading', { level: 1, name: 'Topic map' })).toBeInTheDocument();
+    expect(screen.queryByText('GCSE Higher Maths')).not.toBeInTheDocument();
     expect(screen.getByText('4 day streak')).toBeInTheDocument();
   });
 
@@ -192,13 +197,15 @@ describe('Topic map for subjects with no questions yet (RD-MBXKTC)', () => {
     expect(screen.queryByRole('button', { name: /meanwhile/ })).not.toBeInTheDocument();
   });
 
-  it('changes subject from the big subject box, on the Subject selection page', async () => {
+  it('changes subject from the subject button, on the Subject selection page', async () => {
     const asked = mapsBySubject({
       default: { ...topicMap, subjectId: 'gcse-maths', status: 'ready', subjects },
       'gcse-chemistry': { ...comingSoon, subjects },
     });
     renderRoute('/map');
-    await userEvent.click(await screen.findByRole('button', { name: 'Your subject Maths Change' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Maths · Higher (change subject)' }),
+    );
     const picker = await screen.findByRole('region', { name: 'Pick a subject' });
     expect(within(picker).getByRole('button', { name: 'Maths' })).toHaveAttribute(
       'aria-pressed',
@@ -214,7 +221,9 @@ describe('Topic map for subjects with no questions yet (RD-MBXKTC)', () => {
   it('goes back from Subject selection without changing anything', async () => {
     mapsBySubject({ default: { ...topicMap, subjectId: 'gcse-maths', status: 'ready', subjects } });
     renderRoute('/map');
-    await userEvent.click(await screen.findByRole('button', { name: 'Your subject Maths Change' }));
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Maths · Higher (change subject)' }),
+    );
     await userEvent.click(screen.getByRole('button', { name: 'Back to the map' }));
     expect(await screen.findByRole('region', { name: 'Number' })).toBeInTheDocument();
   });
