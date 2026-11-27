@@ -142,6 +142,8 @@ interface LessonPlayerProps {
   onFinish?: () => void;
   /** Extra controls under the intro, such as a Skip button. */
   aside?: ReactNode;
+  /** UX-3: a way on when there are no questions (a topic that's ready), shown before Back. */
+  emptyAction?: ReactNode;
   /** Recall check answers (Q4): sent as recall, so a wrong one never resets the combo. */
   recall?: boolean;
   /**
@@ -198,6 +200,7 @@ export function LessonPlayer({
   doneHref = '/learn',
   onFinish,
   aside,
+  emptyAction,
   recall = false,
   // J14: Pip in the lesson header reacts to every marked answer unless a page passes its own.
   onAnswerReaction = reactToAnswer,
@@ -259,7 +262,12 @@ export function LessonPlayer({
     return (
       <Card title={title}>
         <p>No questions are ready here yet. Every question is checked before it appears.</p>
-        <ButtonLink to={doneHref}>Back</ButtonLink>
+        <div className="stack">
+          {emptyAction}
+          <ButtonLink to={doneHref} variant={emptyAction ? 'secondary' : 'primary'}>
+            Back
+          </ButtonLink>
+        </div>
       </Card>
     );
   }
