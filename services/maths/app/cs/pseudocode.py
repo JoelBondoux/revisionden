@@ -432,6 +432,14 @@ class _Program:
 # ---------------------------------------------------------------- running
 
 
+@dataclass
+class _Ref:
+    """A byRef parameter: the caller's storage (a scope, the globals or an array) and its key."""
+
+    place: object
+    key: object
+
+
 class _Return(Exception):
     def __init__(self, value):
         self.value = value
@@ -466,20 +474,35 @@ class _Machine:
     def scope(self) -> dict:
         return self.frames[-1] if self.frames else self.main
 
-    def get(self, name: str):
+    def where(self, name: str) -> _Ref | None:
+        """The storage a name reads from, following a byRef parameter to its caller."""
         for place in (self.scope(), self.globals):
             if name in place:
-                return place[name]
-        raise self.error(f"{name} is not defined")
+                held = place[name]
+                return held if isinstance(held, _Ref) else _Ref(place, name)
+        return None
+
+    def get(self, name: str):
+        ref = self.where(name)
+        if ref is None:
+            raise self.error(f"{name} is not defined")
+        return ref.place[ref.key]
+
+    def record(self, label: str, value):
+        """A trace row holds a copy, so later changes to an array never rewrite earlier rows."""
+        self.trace.append({"line": self.line, label: copy.deepcopy(value)})
 
     def set(self, name: str, value, is_global: bool = False):
+        held = self.scope().get(name)
         if is_global:
             self.globals[name] = value
+        elif isinstance(held, _Ref):
+            held.place[held.key] = value
         elif name in self.globals and name not in self.scope():
             self.globals[name] = value
         else:
             self.scope()[name] = value
-        self.trace.append({"line": self.line, name: value})
+        self.record(name, value)
 
     # statements
     def tick(self, no: int):
@@ -501,9 +524,9 @@ class _Machine:
             if target[0] == "var":
                 self.set(target[1], value, is_global)
             else:
-                array, where = self.element(target)
+                array, where, indexes = self.element(target)
                 array[where] = value
-                self.trace.append({"line": no, self.describe(target): value})
+                self.record(self.describe(target, indexes), value)
         elif kind == "expr":
             self.eval(node[2], statement=True)
         elif kind == "for":
@@ -559,9 +582,10 @@ class _Machine:
             raise self.error("a condition must be true or false")
         return value
 
-    def describe(self, target) -> str:
-        indexes = ",".join(_show(self.eval(i)) for i in target[2])
-        return f"{target[1][1]}[{indexes}]"
+    def describe(self, target, indexes: list) -> str:
+        """The trace label for an array element, from indexes already worked out (never again,
+        so an index with a side effect runs once)."""
+        return f"{target[1][1]}[{','.join(_show(i) for i in indexes)}]"
 
     def element(self, target):
         array = self.eval(target[1])
@@ -574,7 +598,7 @@ class _Machine:
                                  f"{len(array) - 1})")
             if depth < len(indexes) - 1:
                 array = array[where]
-        return array, indexes[-1]
+        return array, indexes[-1], indexes
 
     # expressions
     def eval(self, node, statement: bool = False):
@@ -596,7 +620,7 @@ class _Machine:
         if kind == "bin":
             return self.binary(node[1], node[2], node[3])
         if kind == "index":
-            array, where = self.element(node)
+            array, where, _ = self.element(node)
             return array[where]
         if kind == "length":
             value = self.eval(node[1])
@@ -657,7 +681,7 @@ class _Machine:
             if name == "print":
                 text = " ".join(_show(v) for v in values)
                 self.output.append(text)
-                self.trace.append({"line": self.line, "output": text})
+                self.record("output", text)
                 return None
             if name == "input":
                 if not self.inputs:
@@ -676,8 +700,13 @@ class _Machine:
             raise self.error(f"{name} takes {len(params)} values, not {len(args)}")
         frame = {}
         for (param, mode), arg in zip(params, args):
-            value = self.eval(arg)
-            frame[param] = value if mode == "byRef" else copy.deepcopy(value)
+            if mode == "byRef" and arg[0] == "var" and self.where(arg[1]) is not None:
+                frame[param] = self.where(arg[1])
+            elif mode == "byRef" and arg[0] == "index":
+                array, where, _ = self.element(arg)
+                frame[param] = _Ref(array, where)
+            else:  # byVal, or byRef on an expression (nothing to share): a copy of the value
+                frame[param] = copy.deepcopy(self.eval(arg))
         self.frames.append(frame)
         caller_line = self.line
         result = None
@@ -688,9 +717,6 @@ class _Machine:
         finally:
             self.frames.pop()
             self.line = caller_line
-        for (param, mode), arg in zip(params, args):
-            if mode == "byRef" and arg[0] == "var":
-                self.set(arg[1], frame[param])
         if kind == "function" and result is None and not statement:
             raise self.error(f"function {name} did not return a value")
         return result

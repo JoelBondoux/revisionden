@@ -305,3 +305,71 @@ print(y[0])'''
 def test_two_dimensional_trace_names_the_element():
     rows = trace_table("array g[2,2]\ng[1,0]=5")
     assert rows[-1] == {"line": 2, "g[1,0]": 5}
+
+
+# Codex review on #428 (P2s): byRef binds to the caller's storage; trace rows are snapshots;
+# an array index is evaluated once.
+
+def test_two_byref_parameters_on_the_same_variable_share_it():
+    program = '''procedure p(a:byRef, b:byRef)
+    a=2
+    print(b)
+endprocedure
+x=1
+p(x,x)
+print(x)'''
+    assert out(program) == ["2", "2"]
+
+
+def test_byref_on_an_array_element_updates_the_element():
+    program = '''procedure bump(n:byRef)
+    n=n+1
+endprocedure
+array a[2]
+a[0]=5
+bump(a[0])
+print(a[0])'''
+    assert out(program) == ["6"]
+
+
+def test_byref_passes_through_nested_calls_and_globals():
+    program = '''global total = 1
+procedure inner(t:byRef)
+    t=t*10
+endprocedure
+procedure outer(t:byRef)
+    inner(t)
+endprocedure
+outer(total)
+print(total)'''
+    assert out(program) == ["10"]
+
+
+def test_byref_on_an_expression_is_just_its_value():
+    program = "procedure p(n:byRef)\n    n=n+1\n    print(n)\nendprocedure\np(3+4)"
+    assert out(program) == ["8"]
+
+
+def test_trace_rows_keep_the_value_at_that_step():
+    rows = trace_table("array a[1]\na[0]=1\na[0]=2")
+    assert rows[0] == {"line": 1, "a": [None]}
+    assert rows[1] == {"line": 2, "a[0]": 1}
+    assert rows[2] == {"line": 3, "a[0]": 2}
+    nested = trace_table("array a[1]\nb=a\na[0]=9")
+    assert nested[1] == {"line": 2, "b": [None]}
+
+
+def test_an_array_index_is_evaluated_once():
+    program = '''global count = 0
+function next()
+    count = count + 1
+    return count - 1
+endfunction
+array a[3]
+a[next()] = 7
+print(a[0])
+print(count)'''
+    result = run(program)
+    assert result.output == ["7", "1"]
+    assert {"line": 7, "a[0]": 7} in result.trace
+    assert run('array a[2]\na[int(input("?"))]=4\nprint(a[1])', inputs=["1"]).output == ["4"]
