@@ -653,6 +653,12 @@ Tags: #product #rules #limits #defaults
   app, then checks `/health` shows the new version. Production content is not synced by deploys.
   A staging deploy first runs the painted contrast sweep (`contrast-painted.yml`) on that commit;
   the app deploy only starts if it passes (G11). The public website deploy is not gated.
+- Changelog (G13): each pull request adds a fragment, `changes/unreleased/<branch>.md`, with
+  `### What's new` / `Added` / `Changed` / `Fixed` bullets, instead of editing `CHANGELOG.md`. The
+  release workflow on `main` folds them under `## [Unreleased]` (`pnpm changelog:assemble`) and
+  deletes them before dating the section; deploys fold them into the build's copy so the About
+  page shows unreleased What's new lines. The **Changelog fragment** check fails a PR into `dev`
+  without one, unless it is labelled `no-changelog` or only touches tests or CI.
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.
