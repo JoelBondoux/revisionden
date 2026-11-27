@@ -316,7 +316,9 @@ function UnitRoute({ map, unit, active, bridges, onLocked, onSay }: UnitRoutePro
           data-point={p.key}
           style={where(p)}
           aria-label={name}
-          onClick={() => onLocked(`Finish the topics before ${topic.title} to unlock it.`)}
+          onClick={() =>
+            onLocked(`${topic.title} is coming soon: its questions are still being checked.`)
+          }
         >
           {body}
         </button>
