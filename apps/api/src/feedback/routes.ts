@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { and, desc, eq, gt, inArray, isNotNull, isNull, notInArray, sql } from 'drizzle-orm';
+import { and, desc, eq, gt, gte, inArray, isNotNull, isNull, notInArray, sql } from 'drizzle-orm';
 import { bugButtonState, bugReward, type BugButtonState } from '@revisionden/core';
 import { z } from 'zod';
 import {
@@ -641,14 +641,28 @@ export async function undoTriage(
     })
     .where(and(eq(feedback.id, id), eq(feedback.reviewedBy, 'triage')))
     .returning();
-  if (updated?.studentId && updated.kind === 'bug' && row.outcome === 'not_a_bug') {
-    // A saved removal is checked again from the reports that are left (all within the 90-day
-    // window, well inside the 12-month clean-up), so it is set again only if it still holds.
-    await db
+  if (
+    updated?.studentId &&
+    updated.kind === 'bug' &&
+    row.outcome === 'not_a_bug' &&
+    row.notABugAt
+  ) {
+    // Only a Not a bug from before (or at) the removal can have caused it. Such a removal is at
+    // most 7 days old (the undo window), so its reports are all still here: it is checked again
+    // from them and set again only if it still holds. A later Not a bug never lifts an older
+    // removal, whose reports the 12-month clean-up may already have deleted.
+    const [lifted] = await db
       .update(students)
       .set({ bugButtonRemovedAt: null, updatedAt: now })
-      .where(eq(students.id, updated.studentId));
-    await studentBugButton(db, updated.studentId, now);
+      .where(
+        and(
+          eq(students.id, updated.studentId),
+          isNotNull(students.bugButtonRemovedAt),
+          gte(students.bugButtonRemovedAt, row.notABugAt),
+        ),
+      )
+      .returning({ id: students.id });
+    if (lifted) await studentBugButton(db, updated.studentId, now);
   }
   if (!updated)
     throw new ApiError(400, 'not_triage', "Only an outcome the lead's triage chose can be undone.");
