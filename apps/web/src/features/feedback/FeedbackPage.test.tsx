@@ -93,12 +93,23 @@ describe('feedback form', () => {
     forgetLastProblem();
   });
 
-  it("sends a student's problem code by default, without the device details (F18b)", async () => {
+  it('shows a student the problem code but leaves it out unless they tick it (F18b)', async () => {
     rememberLastProblem('RD-VDMW5E');
     const api = fakeApi();
     show(api, { studentId: '00000000-0000-4000-8000-0000000000b1' });
-    expect(screen.getByRole('checkbox', { name: 'Include device details' })).not.toBeChecked();
     expect(screen.getByText('Problem code: RD-VDMW5E')).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Include it' })).not.toBeChecked();
+    await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith('student', { kind: 'bug' });
+    forgetLastProblem();
+  });
+
+  it('sends only the code when a student ticks it, not the device details (F18b)', async () => {
+    rememberLastProblem('RD-VDMW5E');
+    const api = fakeApi();
+    show(api, { studentId: '00000000-0000-4000-8000-0000000000b1' });
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Include it' }));
     await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
     expect(api.send).toHaveBeenCalledWith('student', {
@@ -108,22 +119,25 @@ describe('feedback form', () => {
     forgetLastProblem();
   });
 
-  it('lets the sender remove the problem code before sending (F18b)', async () => {
+  it('lets a parent remove the problem code before sending (F18b)', async () => {
     rememberLastProblem('RD-VDMW5E');
     const api = fakeApi();
-    show(api, { studentId: '00000000-0000-4000-8000-0000000000b1' });
+    show(api);
     await userEvent.click(screen.getByRole('button', { name: 'Remove problem code' }));
     expect(screen.queryByText(/Problem code:/)).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
-    expect(api.send).toHaveBeenCalledWith('student', { kind: 'bug' });
+    const sent = vi.mocked(api.send).mock.calls[0]![1];
+    expect(sent.device).toBeDefined();
+    expect(sent.device).not.toHaveProperty('lastProblem');
     forgetLastProblem();
   });
 
-  it('keeps calling a passkey or phone problem the last problem (E8)', () => {
+  it('treats a sign-in problem code the same way, apart from device details (E8, notice 9.2a)', () => {
     rememberLastProblem('passkey:NotAllowedError:RD-7K2M9Q');
     show(fakeApi());
-    expect(screen.getByText('Last problem: passkey:NotAllowedError:RD-7K2M9Q')).toBeInTheDocument();
+    expect(screen.getByText('Problem code: passkey:NotAllowedError:RD-7K2M9Q')).toBeInTheDocument();
+    expect(screen.queryByText(/Last problem/)).not.toBeInTheDocument();
     forgetLastProblem();
   });
 

@@ -30,9 +30,13 @@ test('a reference code on screen goes into the next bug report', async ({ page }
   await expect(page.getByText(REF).first()).toBeVisible();
 
   await page.getByRole('button', { name: 'Report a bug' }).click();
-  // F18b: the code is attached by default, even with device details off (a pupil's default).
+  // F18b (owner): a pupil sees the code with an "Include it" tick, off until they tap it; ticking
+  // it sends the code alone, not the device details (off by default for a pupil).
   await expect(page.getByRole('checkbox', { name: 'Include device details' })).not.toBeChecked();
   await expect(page.getByText(`Problem code: ${REF}`)).toBeVisible();
+  const include = page.getByRole('checkbox', { name: 'Include it' });
+  await expect(include).not.toBeChecked();
+  await include.check();
   await page.getByRole('radio', { name: 'Bug' }).check();
   await page.getByLabel(/Tell us more/).fill('The map would not load');
   await page.getByRole('button', { name: 'Send', exact: true }).click();

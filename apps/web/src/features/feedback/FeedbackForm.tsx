@@ -25,8 +25,6 @@ import {
 import './feedback.css';
 
 const MAX_TEXT = 500;
-/** An error's reference code (F18b): sent on its own by default, not as a device detail. */
-const isProblemCode = (code: string | undefined): code is string => !!code && /^RD-/.test(code);
 
 function currentDeviceDetails(route: string): DeviceDetails {
   return {
@@ -70,11 +68,14 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const device = currentDeviceDetails(route);
-  // F18b (lead ruling): a reference code the screen showed is attached by default, even with
-  // device details off, and the sender can remove it. It is a random code, never personal data.
-  const problemCode = isProblemCode(device.lastProblem) ? device.lastProblem : undefined;
-  const [keepProblem, setKeepProblem] = useState(true);
+  // F18b (owner: "Parents auto, kids one tap"): a reference code the screen showed is attached
+  // for a parent, who can remove it; a student sees it with an "Include it" tick, off until they
+  // tap it (Children's Code). Ticked, only the code is sent, never the device details with it.
+  // Any problem code: an error's "RD-…" or a sign-in problem (notice 9.2a, apart from device details).
+  const problemCode = device.lastProblem;
+  const [keepProblem, setKeepProblem] = useState(sender === 'parent');
   const sentProblem = problemCode && keepProblem ? problemCode : undefined;
+  const problemId = useId();
   const id = useId();
 
   const submit = async (event: FormEvent) => {
@@ -84,9 +85,10 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
     const body: FeedbackRequest = { kind };
     if (text.trim()) body.text = text.trim();
     if (includeDevice) {
-      const { lastProblem, ...rest } = device;
-      const keptLast = problemCode ? sentProblem : lastProblem;
-      body.device = keptLast ? { ...rest, lastProblem: keptLast } : rest;
+      // The problem code is its own item (notice 9.2a): only sent when kept, never as a detail.
+      const rest: DeviceDetails = { ...device };
+      delete rest.lastProblem;
+      body.device = sentProblem ? { ...rest, lastProblem: sentProblem } : rest;
     } else if (sentProblem) {
       body.device = { lastProblem: sentProblem };
     }
@@ -182,7 +184,7 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
       </p>
 
       <Card>
-        {sentProblem && (
+        {problemCode && sender === 'parent' && sentProblem && (
           <div className="feedback__problem">
             <p>Problem code: {sentProblem}</p>
             <Button
@@ -192,6 +194,20 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
             >
               Remove
             </Button>
+          </div>
+        )}
+        {problemCode && sender === 'student' && (
+          <div className="feedback__problem">
+            <p id={problemId}>Problem code: {problemCode}</p>
+            <label className="feedback__toggle">
+              <input
+                type="checkbox"
+                checked={keepProblem}
+                aria-describedby={problemId}
+                onChange={(e) => setKeepProblem(e.target.checked)}
+              />
+              Include it
+            </label>
           </div>
         )}
         <label className="feedback__toggle">
@@ -209,7 +225,6 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
             <li>Browser: {device.browserFamily}</li>
             <li>Screen size: {device.screenSize}</li>
             <li>Connection: {device.online ? 'online' : 'offline'}</li>
-            {device.lastProblem && !problemCode && <li>Last problem: {device.lastProblem}</li>}
             {device.contentId && <li>Question or card: {device.contentId}</li>}
             <li>
               Look: {device.look ?? 'default'}, {device.theme}, pattern {device.pattern}
