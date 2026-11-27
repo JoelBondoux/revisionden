@@ -299,8 +299,10 @@ Tags: #product #rules #limits #defaults
   question or deck card on screen by its content id (never text, never a student's own card),
   and says how the screen looked (look, light or dark, pattern, pixel density, pinch zoom, text size
   against 16px). Never the reading tint, dyslexia-friendly font or colour-blind colours (L, notice 1.11).
-  The problem code a screen showed in the last 15 minutes (F18) is described in privacy notice
-  1.13 (9.2) and young people's 1.10; device details still start switched off for students.
+  Problem code (F18, owner choice 2026-11-27): the reference code of a problem the app showed in
+  the last 15 minutes is its own item on the bug form, apart from device details: on by default
+  for parents (removable), off by default for students (one tap "Include it"). Signing out forgets
+  it. Privacy notice 1.13 (9.2a), young people's 1.10.
 - Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
   `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
   answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.

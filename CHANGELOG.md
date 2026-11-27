@@ -7,7 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
-- The privacy notices now say that a bug report with device details on can carry the code of a problem the app showed you in the last 15 minutes (just the short code, such as RD-7K2M9Q), and that signing out forgets it.
+- The privacy notices now say that a bug report can carry the code of a problem the app showed you in the last 15 minutes (just the short code, such as RD-7K2M9Q). Parents can remove it; students choose to add it. Signing out forgets it.
 - If several bug reports from a student turn out not to be bugs, their bug button takes a rest for a week (and after repeated rests, switches off until a parent turns it back on from Parent home). Get help and "Ask a parent" always stay.
 - Starting test: if you need longer, a "More time" button appears in the last minute and adds 2 minutes. You can use it up to 10 times.
 - Fixed: "You earned a reward!" in the prize box is readable again in light mode, the RevisionDen title reads in dark mode, and in every style the keyboard focus ring, tick boxes, round choice buttons, the bug button, map arrows and the current flashcard tab are now easy to see.
