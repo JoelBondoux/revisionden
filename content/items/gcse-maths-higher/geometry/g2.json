@@ -480,7 +480,8 @@
     "expected_seconds": 35,
     "prompt": "The point Q is (5, 2). Work out the shortest distance from Q to the line x = 1.",
     "answer": {
-      "value": "4"
+      "value": "4",
+      "no_subject": "The answer is a distance; x = 1 names the line, not the answer."
     },
     "verify": {
       "expression": "5 - 1"
@@ -521,7 +522,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:44Z",
+          "at": "2026-11-27T13:29:27Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -530,7 +531,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -538,23 +539,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:43Z",
+          "at": "2026-11-27T13:29:50Z",
           "notes": "model answered \"4\"; expected \"4\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:44Z",
-          "notes": "no problems found"
+          "at": "2026-11-27T13:29:53Z",
+          "notes": "unsupported_claim (hint): The hint states that for a vertical line, the shortest route meeting it at right angles is in a particular direction ('Which direction is that for a vertical line?'). The only quoted source supports that the perpendicular distance is the shortest distance; it does not support the additional factual claim about the direction of a perpendicular to a vertical line.; unsupported_claim (explanation): The explanation states 'The line x = 1 is vertical, so the perpendicular from Q is horizontal.' The quoted source only supports that the perpendicular distance from a point to a line is the shortest distance; it does not support these additional factual claims about identifying x = 1 as vertical or the perpendicular being horizontal."
         }
       ]
     }
@@ -568,7 +569,8 @@
     "expected_seconds": 40,
     "prompt": "Work out the shortest distance from the point (6, 8) to the line y = -2.",
     "answer": {
-      "value": "10"
+      "value": "10",
+      "no_subject": "The answer is a distance; y = -2 names the line, not the answer."
     },
     "verify": {
       "expression": "8 - (-2)"
@@ -609,7 +611,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:44Z",
+          "at": "2026-11-27T13:29:28Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -618,7 +620,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -626,23 +628,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:47Z",
+          "at": "2026-11-27T13:29:54Z",
           "notes": "model answered \"10\"; expected \"10\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:50Z",
-          "notes": "unsupported_claim (hint): The hint says \"Compare the y-coordinates.\" This introduces a method claim not supported by the quoted source. The only quoted source supports that the perpendicular distance is the shortest distance; it does not support comparing y-coordinates as a valid method.; unsupported_claim (explanation): The explanation says \"The line y = -2 is horizontal\" and then uses vertical distance via y-coordinates. The quoted source only supports that the perpendicular distance from a point to a line is the shortest distance; it does not support the additional factual claim about the form y = constant being a horizontal line."
+          "at": "2026-11-27T13:29:55Z",
+          "notes": "no problems found"
         }
       ]
     }
