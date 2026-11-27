@@ -9,6 +9,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - Starting test: screen readers now say "One minute left" when the time is nearly up, and "Time is up" at the end, without reading out the clock every second.
 - Fixed: in light mode, lessons, practice, tests and the Lesson complete screen no longer show white words on a pale page in Pop Burst, Starlight, Comic Pop, Garden Grow, Pixel Arcade, Petal Glow, Turbo Drive and Rainbow Parade. Every style now writes in its own dark ink there, whatever your background pattern, contrast or reading colour settings.
+- Fixed: on Pick a subject, a subject marked "Coming soon" can now be chosen by saying what it shows, for anyone using voice control.
 - Fixed: "Best combo" at the end of a lesson is now easy to read in every style, light and dark.
 - On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
 - Fixed: in lessons, your XP count, "Comeback!" and the warm-up notes are now easy to read in every style, in light and dark.
@@ -175,6 +176,8 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 - F14 (found by W's starting-test e2e): the starting test's one-minute warning and time up reach screen readers, through a polite live region (`data-testid="timer-announcer"`) and a status on the results' time-up line; the clock stays `aria-live="off"`. Unit tests in `StartingTestPage.test.tsx`, e2e `starting-test-timer.spec.ts` with a fast-forwarded clock. The WCAG 2.2.1 question (turn off or extend the limit) is open for the owner; the limit is unchanged.
 - F11c: a regression test that "10 more" still starts a new flashcard session when it brings back the same due cards (`FlashcardsPage.limit.test.tsx`). No code change: the page reloads the overview on "10 more", which always mounts a fresh review session.
 - Docs: contrast policy (decision 0012): every look meets WCAG 2.2 AA on the painted page, enforced by a CI sweep; PR template checkbox.
+- Map, Subject selection: a "coming soon" subject's name is now its visible text ("Physics Coming soon") instead of an `aria-label` over `aria-hidden` text (axe label-content-name-mismatch, WCAG 2.5.3); looks and behaves the same, before and after in `docs/design/w20/` (W20; J's `MapPage.tsx`, approved crossing). `map.spec` now runs axe on Subject selection.
+- E2E `starting-test`: the clock is paused before the countdown and moved only by `runFor`, so a slow worker cannot show 1:00 for 1:01 (W19b, Codex on train #378).
 - Set complete: "Best combo" uses the arena's own text accent (`--arena-gold` was 1.37:1 on the light arena of Doodle Diary and Sticker Book); checked AA in all 10 looks, light and dark (W18; J's `learn.css`, approved crossing).
 - Flashcards: "10 more" now starts one new session, not two; the finished session no longer restarts when `extra` changes, which left a stray open session on the server (it never counted towards XP or the daily limit) (W18; F's `FlashcardsPage.tsx`, approved crossing).
 - Docs: `docs/GAME_FEEL.md` brought up to date with dev (ten styles in the checks and the dev tester; Doodle Diary and Sticker Book's Home notes no longer describe the old Today strip; Doodle Diary has its own sound pack; lesson "+XP" colour since J16b).
@@ -281,6 +284,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- E2E `parent-settings`: a parent's phone and a child's phone share one made-up family. Subject changes (Maths to Foundation, add Physics) reach the child's map and Subject selection, turning friends on opens the child's league, and reminder times are saved and kept; axe on every screen (W20, coverage gap 3; `docs/TESTING.md` section 6 updated).
 - E2E `starting-test`: the starting test from intro to "Your starting point" (answer, skip, finish; Test mode quiet, bug button back only on the results; attempts carry mode `test` and the test id), and the timer on Playwright's clock (warning look at 1:00, time up marks what was answered), axe on every screen (W19, coverage gap 2; `docs/TESTING.md` section 6 updated). Logged the 5-minute limit vs WCAG 2.2.1 as open in `project_memory/operations/contradictions.md`, routed to the owner.
 - E2E `daily-and-cards`: the 5-a-day from Home to Lesson complete and back to Home showing it done, and a whole flashcard session (with an Again) to "Done for today!", then "10 more" to "Deck done!", axe on every screen (W18, coverage gap 1; `docs/TESTING.md` section 6 updated).
 - W17: an end-to-end coverage map in `docs/TESTING.md` (section 6): which user journeys the Playwright suite walks end to end, and eight suggested gaps to fill next, in order. Docs only; none of the gap tests is started.

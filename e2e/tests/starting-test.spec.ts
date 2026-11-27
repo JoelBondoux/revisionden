@@ -183,6 +183,9 @@ test('the starting test warns at one minute left and, at time up, marks what was
   await page.clock.install({ time: new Date('2026-11-26T10:00:00Z') });
   const state = await stubStartingTest(page);
   await page.goto(`/learn/subject/${SUBJECT}/start`);
+  // W19b (Codex, train #378): hold the clock still before the countdown starts, so the clicks
+  // below take no test time on a slow machine; only runFor moves it.
+  await page.clock.pauseAt(new Date('2026-11-26T10:00:30Z'));
   await page.getByRole('button', { name: 'Start' }).click();
   await expect(page.getByText(ITEMS[0]!.prompt)).toBeVisible();
   await expect(timer(page)).toHaveText('5:00 left');
@@ -201,6 +204,8 @@ test('the starting test warns at one minute left and, at time up, marks what was
   await page.clock.runFor('00:01');
   await expect(timer(page)).toHaveText('1:00 left');
   await expect(timer(page)).toHaveClass(/timer--warning/);
+  // The clock runs again from here: axe waits for animations, which a paused clock holds still.
+  await page.clock.resume();
   await expectAccessible(page, 'the one-minute warning');
 
   // Time up: the test ends by itself and marks the one answer given.
