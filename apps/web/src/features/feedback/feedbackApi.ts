@@ -66,7 +66,8 @@ export type ConfirmResult = z.infer<typeof confirmSchema>;
 export interface FeedbackRequest {
   kind: FeedbackKind;
   text?: string;
-  device?: DeviceDetails;
+  /** Device details, or (F18b) just the problem code when they are off. */
+  device?: DeviceDetails | Pick<DeviceDetails, 'lastProblem'>;
 }
 
 export class FeedbackApiError extends Error {

@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { StudentProvider } from '../../session/StudentContext';
 import { FeedbackApiError, FeedbackApiProvider, type FeedbackApi } from './feedbackApi';
 import { FeedbackPage } from './FeedbackPage';
+import { forgetLastProblem, rememberLastProblem } from './details';
 
 function fakeApi(overrides: Partial<FeedbackApi> = {}): FeedbackApi {
   return {
@@ -75,6 +76,69 @@ describe('feedback form', () => {
       device: expect.objectContaining({ route: '/cards', online: true }),
     });
     expect(await screen.findByRole('heading', { name: 'Thank you!' })).toBeInTheDocument();
+  });
+
+  it('names the error code that was on screen, and sends it (F18)', async () => {
+    rememberLastProblem('RD-VDMW5E');
+    const api = fakeApi();
+    show(api);
+    expect(screen.getByText('Problem code: RD-VDMW5E')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('radio', { name: 'Something confusing' }));
+    await userEvent.type(screen.getByLabelText(/Tell us more/), 'It stopped loading');
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith(
+      'parent',
+      expect.objectContaining({ device: expect.objectContaining({ lastProblem: 'RD-VDMW5E' }) }),
+    );
+    forgetLastProblem();
+  });
+
+  it('shows a student the problem code but leaves it out unless they tick it (F18b)', async () => {
+    rememberLastProblem('RD-VDMW5E');
+    const api = fakeApi();
+    show(api, { studentId: '00000000-0000-4000-8000-0000000000b1' });
+    expect(screen.getByText('Problem code: RD-VDMW5E')).toBeInTheDocument();
+    expect(screen.getByRole('checkbox', { name: 'Include it' })).not.toBeChecked();
+    await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith('student', { kind: 'bug' });
+    forgetLastProblem();
+  });
+
+  it('sends only the code when a student ticks it, not the device details (F18b)', async () => {
+    rememberLastProblem('RD-VDMW5E');
+    const api = fakeApi();
+    show(api, { studentId: '00000000-0000-4000-8000-0000000000b1' });
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Include it' }));
+    await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith('student', {
+      kind: 'bug',
+      device: { lastProblem: 'RD-VDMW5E' },
+    });
+    forgetLastProblem();
+  });
+
+  it('lets a parent remove the problem code before sending (F18b)', async () => {
+    rememberLastProblem('RD-VDMW5E');
+    const api = fakeApi();
+    show(api);
+    await userEvent.click(screen.getByRole('button', { name: 'Remove problem code' }));
+    expect(screen.queryByText(/Problem code:/)).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    const sent = vi.mocked(api.send).mock.calls[0]![1];
+    expect(sent.device).toBeDefined();
+    expect(sent.device).not.toHaveProperty('lastProblem');
+    forgetLastProblem();
+  });
+
+  it('treats a sign-in problem code the same way, apart from device details (E8, notice 9.2a)', () => {
+    rememberLastProblem('passkey:NotAllowedError:RD-7K2M9Q');
+    show(fakeApi());
+    expect(screen.getByText('Problem code: passkey:NotAllowedError:RD-7K2M9Q')).toBeInTheDocument();
+    expect(screen.queryByText(/Last problem/)).not.toBeInTheDocument();
+    forgetLastProblem();
   });
 
   it('leaves the device details out when turned off and sends no empty text', async () => {
