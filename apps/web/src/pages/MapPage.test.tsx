@@ -20,12 +20,29 @@ describe('Topic map screen', () => {
   // UX-2 (owner-approved UX report): one compact line on top of the path instead of a title row,
   // a big subject box and a qualification line. The page still has its heading for screen readers.
   it('shows the subject and level as one compact button, and the streak', async () => {
-    renderRoute('/map');
-    const subject = await screen.findByRole('button', { name: 'Maths · Higher (change subject)' });
+    const { container } = renderRoute('/map');
+    const subject = await screen.findByRole('button', { name: 'Maths · Higher, change subject' });
     expect(subject).toHaveTextContent(/^Maths · Higher/);
     expect(screen.getByRole('heading', { level: 1, name: 'Topic map' })).toBeInTheDocument();
     expect(screen.queryByText('GCSE Higher Maths')).not.toBeInTheDocument();
-    expect(screen.getByText('4 day streak')).toBeInTheDocument();
+    // The streak takes the top bar's free spot (the map's subject button replaces the switcher).
+    await waitFor(() =>
+      expect(container.querySelector('.sound-header')).toHaveTextContent('4 day streak'),
+    );
+  });
+
+  // Lead on UX-2: changing subject was hard to find, so the map has exactly one subject control,
+  // the same chip as the top bar's switcher on Home and Cards, opening the same sheet.
+  it('has exactly one subject control, which opens Your subjects', async () => {
+    renderRoute('/map');
+    await screen.findByRole('region', { name: 'Number' });
+    const controls = await screen.findAllByRole('button', { name: /, change subject$/ });
+    expect(controls).toHaveLength(1);
+    expect(controls[0]).toHaveAccessibleName('Maths · Higher, change subject');
+    expect(controls[0]).toHaveClass('subject-switcher');
+    expect(controls[0]).toHaveAttribute('aria-haspopup', 'dialog');
+    await userEvent.click(controls[0]!);
+    expect(await screen.findByRole('dialog', { name: 'Your subjects' })).toBeInTheDocument();
   });
 
   // J15b: the map is topics only. The daily goal, next mission and 5-a-day moved to Home
@@ -198,15 +215,17 @@ describe('Topic map for subjects with no questions yet (RD-MBXKTC)', () => {
     expect(screen.queryByRole('button', { name: /meanwhile/ })).not.toBeInTheDocument();
   });
 
-  it('changes subject from the subject button, on the Subject selection page', async () => {
+  it('changes subject from the subject button, through Your subjects to Subject selection', async () => {
     const asked = mapsBySubject({
       default: { ...topicMap, subjectId: 'gcse-maths', status: 'ready', subjects },
       'gcse-chemistry': { ...comingSoon, subjects },
     });
     renderRoute('/map');
     await userEvent.click(
-      await screen.findByRole('button', { name: 'Maths · Higher (change subject)' }),
+      await screen.findByRole('button', { name: 'Maths · Higher, change subject' }),
     );
+    const sheet = await screen.findByRole('dialog', { name: 'Your subjects' });
+    await userEvent.click(within(sheet).getByRole('button', { name: 'Add or change subjects' }));
     const picker = await screen.findByRole('region', { name: 'Pick a subject' });
     expect(within(picker).getByRole('button', { name: 'Maths' })).toHaveAttribute(
       'aria-pressed',
@@ -223,8 +242,10 @@ describe('Topic map for subjects with no questions yet (RD-MBXKTC)', () => {
     mapsBySubject({ default: { ...topicMap, subjectId: 'gcse-maths', status: 'ready', subjects } });
     renderRoute('/map');
     await userEvent.click(
-      await screen.findByRole('button', { name: 'Maths · Higher (change subject)' }),
+      await screen.findByRole('button', { name: 'Maths · Higher, change subject' }),
     );
+    const sheet = await screen.findByRole('dialog', { name: 'Your subjects' });
+    await userEvent.click(within(sheet).getByRole('button', { name: 'Add or change subjects' }));
     await userEvent.click(screen.getByRole('button', { name: 'Back to the map' }));
     expect(await screen.findByRole('region', { name: 'Number' })).toBeInTheDocument();
   });

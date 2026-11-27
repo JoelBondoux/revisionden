@@ -55,11 +55,15 @@ test('switching subject from Home carries over to Learn and is remembered', asyn
   expect(asked).toContain('biology');
 
   await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Learn' }).click();
-  await expect(switcher(page)).toHaveText(/^Biology ▾/);
-  await expect(page.locator('.map-play')).toContainText('Biology');
+  // UX-2: on the map the subject chip is the map's own, with the level.
+  await expect(
+    page.getByRole('button', { name: 'Biology · Higher, change subject' }),
+  ).toBeVisible();
 
   await page.reload();
-  await expect(switcher(page)).toHaveText(/^Biology ▾/);
+  await expect(page.getByRole('button', { name: 'Biology · Higher, change subject' })).toHaveText(
+    /^Biology · Higher ▾/,
+  );
 });
 
 test('the switcher is on Cards too, and its last line opens the subject picker', async ({
@@ -91,7 +95,11 @@ test('the subject picker lists the current subject, then ones you can start, the
     route.fulfill({ json: { ...topicMap, subjectId: 'maths', subject: 'Maths', subjects: many } }),
   );
   await page.goto('/map');
-  await page.locator('.map-play').click();
+  await page.getByRole('button', { name: /, change subject$/ }).click();
+  await page
+    .getByRole('dialog', { name: 'Your subjects' })
+    .getByRole('button', { name: 'Add or change subjects' })
+    .click();
   const picker = page.getByRole('region', { name: 'Pick a subject' });
   await expect(picker.locator('.map-subjects-grid').getByRole('button')).toHaveText([
     /^Maths/,

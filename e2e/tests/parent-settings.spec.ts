@@ -212,7 +212,7 @@ test("a parent's subject changes reach the child's map", async ({ browser }) => 
   // Before: the child's map says Maths · Higher and only Maths.
   await child.page.goto('/map');
   await expect(
-    child.page.getByRole('button', { name: 'Maths · Higher (change subject)' }),
+    child.page.getByRole('button', { name: 'Maths · Higher, change subject' }),
   ).toBeVisible();
 
   // The parent moves Maths to Foundation and adds Physics (board left as Not sure).
@@ -245,9 +245,13 @@ test("a parent's subject changes reach the child's map", async ({ browser }) => 
 
   // After: the child's map says Maths · Foundation, and Subject selection offers Physics.
   await child.page.reload();
-  const subject = child.page.getByRole('button', { name: 'Maths · Foundation (change subject)' });
+  const subject = child.page.getByRole('button', { name: 'Maths · Foundation, change subject' });
   await expect(subject).toBeVisible();
   await subject.click();
+  await child.page
+    .getByRole('dialog', { name: 'Your subjects' })
+    .getByRole('button', { name: 'Add or change subjects' })
+    .click();
   const pick = child.page.getByRole('region', { name: 'Pick a subject' });
   // UX-1: Physics has no questions yet, so it sits in the folded coming-soon line.
   await pick.getByText(/more subjects? coming soon$/).click();

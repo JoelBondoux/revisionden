@@ -195,7 +195,12 @@ const OVERLAYS: Overlay[] = [
     name: 'Subject selection',
     visit: '/map',
     open: async (page) => {
-      await page.getByRole('button', { name: /\(change subject\)$/ }).click();
+      // UX-2: the map's subject chip opens Your subjects; its last line opens the picker.
+      await page.getByRole('button', { name: /, change subject$/ }).click();
+      await page
+        .getByRole('dialog', { name: 'Your subjects' })
+        .getByRole('button', { name: 'Add or change subjects' })
+        .click();
       await page.getByRole('region', { name: 'Pick a subject' }).waitFor();
     },
   },

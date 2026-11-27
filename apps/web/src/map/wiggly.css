@@ -576,42 +576,21 @@
 }
 
 /*
- * UX-2 (owner-approved UX report): the map's one compact line, subject and level as a button that
- * changes subject, then the streak. The path starts in the top third of a 412 × 915 phone.
+ * UX-2 (owner-approved UX report): the map's one compact line, the subject and level as the top
+ * bar's subject chip (the streak moved to the top bar). The path starts in the top third of a
+ * 412 × 915 phone.
  */
 .map-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-2);
 }
 
+/* The top bar's subject chip (UX-1, .subject-switcher), here on the map's own line. */
 .map-bar__subject {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: var(--tap-target, 44px);
   max-width: 100%;
-  padding: 0 var(--space-3);
-  border: 2px solid var(--color-control-edge);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-text);
-  font: inherit;
-  font-family: var(--font-heading, inherit);
-  font-size: 1.1rem;
-  font-weight: var(--font-weight-black, 900);
-  text-align: left;
+  margin: 0;
   overflow-wrap: anywhere;
-  cursor: pointer;
-}
-
-.map-bar__caret {
-  font-size: 0.9em;
-}
-
-.map-bar__subject:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
+  text-align: left;
 }

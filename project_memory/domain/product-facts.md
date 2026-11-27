@@ -262,9 +262,10 @@ Tags: #product #rules #limits #defaults
   Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
   `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
 - Map layout (J15c, the winding map from the owner-approved all-themes mockup, revision 5; header
-  slimmed in UX-2): one compact line, the subject and level as a button ("Maths · Higher ▾") that
-  opens Subject selection, then the streak, so the path starts in the top third of a 412 x 915
-  phone; then one unit at a time in a sideways pager (swipe, arrows, arrow keys, dots under the
+  slimmed in UX-2): one compact line, the subject and level on the top bar's subject chip
+  ("Maths · Higher ▾", name "Maths · Higher, change subject") opening Your subjects; on the map it
+  is the only subject control (the top bar shows the streak there instead), and the path starts in
+  the top third of a 412 x 915 phone; then one unit at a time in a sideways pager (swipe, arrows, arrow keys, dots under the
   unit heading). Each unit's route is generated from
   a seed (subject + unit) and climbs from the first topic at the bottom to the unit challenge at
   the top, opening on the current topic (the next mission's topic, with a "You are here" tag).

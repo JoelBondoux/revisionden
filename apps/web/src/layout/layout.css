@@ -185,6 +185,16 @@
   gap: var(--space-2);
 }
 
+/* UX-2: a screen's own top-bar item (the map's streak), lined up with Pip and the buttons. */
+.app-shell .sound-header .top-bar-slot {
+  display: contents;
+}
+
+.app-shell .sound-header .top-bar-slot > * {
+  margin-top: 14px;
+  white-space: nowrap;
+}
+
 .app-shell .sound-header .bug-button {
   position: static;
   width: var(--tap-target);

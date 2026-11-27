@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
@@ -14,6 +15,7 @@ import { WigglyMap } from '../map/WigglyMap';
 import '../map/map.css';
 import { useStudent } from '../session/StudentContext';
 import {
+  SubjectSheet,
   chooseSubject,
   loadSubjectMap,
   pickerOrder,
@@ -29,35 +31,50 @@ export function levelOf(qualification: string): string {
   return level || qualification;
 }
 
+/** Where the map puts its streak: the top bar's slot (AppLayout), once it is on the page. */
+const TOP_BAR_SLOT = 'top-bar-slot';
+
 /**
- * The map's one compact line (UX-2, owner-approved UX report): the subject and level as a button
- * that changes subject, then the streak. It replaced the title row, the big subject box and the
- * qualification line, which took 40% of a 412 × 915 phone before the path began.
+ * The map's one compact line (UX-2, owner-approved UX report): the subject and level as the same
+ * chip as the top bar's subject switcher (UX-1), opening the same Your subjects sheet. On the map
+ * it replaces the top bar's switcher, so there is exactly one subject control, and the streak moves
+ * to the top bar. It replaced the title row, the big subject box and the qualification line, which
+ * took 40% of a 412 × 915 phone before the path began.
  */
 function MapBar({
   subject,
   qualification,
   streakDays,
-  onChange,
 }: {
   subject: string;
   qualification: string;
   streakDays: number;
-  onChange: () => void;
 }) {
+  const label = `${subject} · ${levelOf(qualification)}`;
+  const [open, setOpen] = useState(false);
+  const close = useCallback(() => setOpen(false), []);
+  const [slot, setSlot] = useState<HTMLElement | null>(null);
+  useEffect(() => setSlot(document.getElementById(TOP_BAR_SLOT)), []);
+  const streak = (
+    <Pill tone="streak">
+      <FlameIcon />
+      {streakDays} day streak
+    </Pill>
+  );
   return (
     <div className="map-bar">
-      <button type="button" className="map-bar__subject" onClick={onChange}>
-        {subject} · {levelOf(qualification)}
-        <span className="visually-hidden"> (change subject)</span>
-        <span className="map-bar__caret" aria-hidden="true">
-          ▾
-        </span>
+      <button
+        type="button"
+        className="subject-switcher map-bar__subject"
+        aria-haspopup="dialog"
+        // The visible words first, then what it does, as on the top bar's switcher (WCAG 2.5.3).
+        aria-label={`${label}, change subject`}
+        onClick={() => setOpen(true)}
+      >
+        {label} <span aria-hidden="true">▾</span>
       </button>
-      <Pill tone="streak">
-        <FlameIcon />
-        {streakDays} day streak
-      </Pill>
+      <SubjectSheet open={open} onClose={close} />
+      {slot ? createPortal(streak, slot) : streak}
     </div>
   );
 }
@@ -208,7 +225,6 @@ export function MapPage() {
               subject={map.data.subject}
               qualification={map.data.qualification}
               streakDays={map.data.streakDays}
-              onChange={() => setPicking(true)}
             />
           )}
           {!picking && map.data.status === 'coming_soon' && (

@@ -16,8 +16,11 @@ import { VersionFooter } from './VersionFooter';
 import { MyAvatarProvider, useMyAvatar } from '../features/me';
 import { SubjectSwitcher } from '../features/subjects';
 
-/** UX-1: the screens whose top bar shows the current subject. */
-const showsSubject = (pathname: string) => /^\/(home|map|cards)\/?$/.test(pathname);
+/**
+ * UX-1: the screens whose top bar shows the current subject. The map shows its own (UX-2, with the
+ * level), so there is exactly one subject control there.
+ */
+const showsSubject = (pathname: string) => /^\/(home|cards)\/?$/.test(pathname);
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
 function useCardsDue(): number {
@@ -80,6 +83,8 @@ function StudentLayout() {
           {/* Pip, the Home button, top left on every student screen (J15b). */}
           <PipHomeButton subjectId={pipSubject} />
           {showsSubject(pathname) && <SubjectSwitcher />}
+          {/* UX-2: a screen's own top-bar item (the map's streak) is drawn here. */}
+          <div id="top-bar-slot" className="top-bar-slot" />
           <MuteButton />
           {/* In the top row, not floating, so it never covers the page (docs/PRODUCT_RULES.md). */}
           <BugButton />

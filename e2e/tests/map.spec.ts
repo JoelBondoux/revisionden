@@ -152,10 +152,27 @@ test('another unit opens near its next topic, then remembers where you were', as
   expect(await number.evaluate((el) => el.scrollTop)).toBe(40);
 });
 
-test('the subject button opens Subject selection', async ({ page }) => {
+// Lead on UX-2: the map has exactly one subject control, the top bar's chip style, with the level.
+test('the map has exactly one subject control, and the streak sits in the top bar', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 412, height: 915 });
+  await openMap(page);
+  await expect(page.getByRole('button', { name: /change subject/ })).toHaveCount(1);
+  await expect(page.getByRole('button', { name: 'Maths · Higher, change subject' })).toHaveClass(
+    /subject-switcher/,
+  );
+  await expect(page.locator('.sound-header')).toContainText('day streak');
+});
+
+test('the subject button opens Your subjects, then Subject selection', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openMap(page);
-  await page.getByRole('button', { name: 'Maths · Higher (change subject)' }).click();
+  await page.getByRole('button', { name: 'Maths · Higher, change subject' }).click();
+  await page
+    .getByRole('dialog', { name: 'Your subjects' })
+    .getByRole('button', { name: 'Add or change subjects' })
+    .click();
   const pick = page.getByRole('region', { name: 'Pick a subject' });
   await expect(pick).toBeVisible();
   // Screenshots for docs/design/w20 (W20_SHOT=path); not part of the check.
