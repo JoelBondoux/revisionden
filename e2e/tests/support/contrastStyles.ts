@@ -222,35 +222,69 @@ export function computedContrastFailures(
         .map((s) => rgba(cs.getPropertyValue(`border-${s}-color`)))
         .filter((c) => c[3] > 0);
       const o = opacityOf(el);
+      const label = mask(
+        el.getAttribute('aria-label') ??
+          (el as HTMLInputElement).labels?.[0]?.textContent ??
+          el.textContent ??
+          '',
+      );
+      const shownFill = fill[3] > 0 ? over([fill[0], fill[1], fill[2], fill[3] * o], back) : back;
+      // An icon-only control is seen by its icon (drawn in currentColor), so the icon must stand
+      // out 3:1 from the control's own fill, whatever its edge does: a dark icon on a dark fill
+      // fails even when the fill stands out from the page (Codex on train #401).
+      // Only an icon drawn in the control's colour is judged here (an SVG in currentColor, or a
+      // symbol glyph); a picture or emoji is left to tier 2.
+      const inked =
+        Array.from(el.querySelectorAll('svg, svg *')).some((g) => {
+          const gs = getComputedStyle(g);
+          return (
+            (gs.stroke !== 'none' && gs.stroke === cs.color) ||
+            (gs.fill !== 'none' && gs.fill === cs.color)
+          );
+        }) ||
+        Array.from(el.querySelectorAll('*'))
+          .concat(el)
+          .some((e) =>
+            Array.from(e.childNodes).some(
+              (c) =>
+                c.nodeType === Node.TEXT_NODE &&
+                !!c.textContent?.trim() &&
+                !/\p{Extended_Pictographic}/u.test(c.textContent) &&
+                getComputedStyle(e).color === cs.color,
+            ),
+          );
+      if (iconOnly && inked) {
+        const ink = rgba(cs.color);
+        const icon = ratio(over([ink[0], ink[1], ink[2], ink[3] * o], shownFill), shownFill);
+        if (icon + 1e-6 < 3)
+          out.push({
+            kind: 'ui',
+            where: `${describe(el)} (icon)`,
+            label,
+            ratio: Math.round(icon * 100) / 100,
+            needed: 3,
+          });
+      }
+      // A state or a field boundary: the fill or a border must stand out 3:1 from what is behind.
+      if (!field && !state) continue;
       const candidates = [
-        ...(fill[3] > 0 ? [over([fill[0], fill[1], fill[2], fill[3] * o], back)] : []),
+        ...(fill[3] > 0 ? [shownFill] : []),
         ...borders.map((c) => over([c[0], c[1], c[2], c[3] * o], back)),
       ];
-      // An icon-only control can also be seen by its icon (drawn in currentColor).
-      if (iconOnly) {
-        const ink = rgba(cs.color);
-        candidates.push(over([ink[0], ink[1], ink[2], ink[3] * o], fill[3] >= 0.999 ? fill : back));
-      }
       if (candidates.length === 0) {
         if (field)
           candidates.push(back); // a field with no visible boundary at all: 1:1
         else continue;
       }
       const best = Math.max(...candidates.map((c) => ratio(c, back)));
-      if (best + 1e-6 < 3) {
-        const label =
-          el.getAttribute('aria-label') ??
-          (el as HTMLInputElement).labels?.[0]?.textContent ??
-          el.textContent ??
-          '';
+      if (best + 1e-6 < 3)
         out.push({
           kind: 'ui',
-          where: `${describe(el)}${state ? ' (selected)' : field ? ' (field)' : ' (icon)'}`,
-          label: mask(label),
+          where: `${describe(el)}${state ? ' (selected)' : ' (field)'}`,
+          label,
           ratio: Math.round(best * 100) / 100,
           needed: 3,
         });
-      }
     }
     return { failures: out, ...stats };
   }, within);

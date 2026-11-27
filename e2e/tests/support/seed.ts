@@ -31,6 +31,144 @@ const auth = (signedIn: boolean): RequestHandler[] => [
   http.get('*/v1/policy-acceptances', () => HttpResponse.json({ acceptances: [] })),
 ];
 
+/*
+ * W21 PR 2: screens whose data the shared mocks do not answer, shaped as their own unit tests
+ * shape it (all made up). Staff screens answer as a signed-in reviewer and operator.
+ */
+const T = '2026-11-24T10:00:00.000Z';
+const BATCH = '11111111-1111-4111-8111-111111111111';
+const sampleItem = (itemId: string, decision: string | null) => ({
+  itemId,
+  itemVersion: 1,
+  needsHumanApproval: false,
+  snapshot: {
+    prompt: `Fixture question for ${itemId}?`,
+    answer: { accepted: ['fixture answer'] },
+    citations: [{ publisher: 'Fixture board', location: 'page 3', quote: 'fixture quoted words' }],
+  },
+  decision,
+  decidedByRole: decision ? 'subject-specialist' : null,
+  decisionNotes: null,
+  decidedAt: null,
+});
+const EXTRAS: RequestHandler[] = [
+  // Reminder times for a child.
+  http.get('*/v1/students/:id/reminder-settings', () =>
+    HttpResponse.json({
+      enabled: true,
+      streakReminders: true,
+      sessionReminders: true,
+      quietStart: '21:00',
+      quietEnd: '07:00',
+      weekdayQuietStart: '08:30',
+      weekdayQuietEnd: '15:30',
+      sessionReminderTime: '17:00',
+      streakReminderTime: '19:00',
+      timeZone: 'Europe/London',
+      maxPerDay: 2,
+    }),
+  ),
+  // Complaints: one open, one asked for by a child.
+  http.get('*/v1/complaints', () =>
+    HttpResponse.json({
+      complaints: [
+        {
+          id: 'complaint-e2e',
+          status: 'acknowledged',
+          summary: 'A made-up complaint about a marked answer',
+          aboutPersonalData: false,
+          receivedAt: T,
+          acknowledgeDueAt: '2026-11-26T10:00:00.000Z',
+          resolveDueAt: '2026-12-22T10:00:00.000Z',
+          acknowledgedAt: '2026-11-25T10:00:00.000Z',
+          resolvedAt: null,
+          escalationFrom: null,
+          outcome: null,
+          messages: [{ from: 'operator', body: 'Thanks, we are looking into it.', createdAt: T }],
+        },
+      ],
+    }),
+  ),
+  http.get('*/v1/complaint-requests', () =>
+    HttpResponse.json({
+      requests: [
+        {
+          id: 'request-e2e',
+          nickname: 'demo_fox',
+          topic: 'marking',
+          topicLabel: 'A mark or a question seemed wrong',
+          note: null,
+          createdAt: T,
+        },
+      ],
+    }),
+  ),
+  // Content review (staff): a reviewer with one report and one batch.
+  http.get('*/v1/review/me', () => HttpResponse.json({ role: 'subject-specialist' })),
+  http.get('*/v1/review/reports', () =>
+    HttpResponse.json({
+      reports: [
+        {
+          id: '22222222-2222-4222-8222-222222222222',
+          itemId: 'fixture-item',
+          itemVersion: 2,
+          reason: 'wrong_answer',
+          reportedBy: 'student',
+          status: 'open',
+          reportedAt: T,
+          decidedAt: null,
+          decidedByRole: null,
+          decisionNotes: null,
+        },
+      ],
+    }),
+  ),
+  http.get('*/v1/review/batches/from-drafts', () => HttpResponse.json({ ready: 0 })),
+  http.get('*/v1/review/batches', () =>
+    HttpResponse.json({
+      batches: [
+        {
+          id: BATCH,
+          title: 'Fixture batch',
+          status: 'in_review',
+          createdAt: T,
+          size: 300,
+          sampleSize: 30,
+          decided: 1,
+        },
+      ],
+    }),
+  ),
+  http.get(`*/v1/review/batches/${BATCH}`, () =>
+    HttpResponse.json({
+      id: BATCH,
+      title: 'Fixture batch',
+      status: 'in_review',
+      sampleSeed: 42,
+      createdAt: T,
+      decidedAt: null,
+      items: [sampleItem('fixture-item-1', 'approved'), sampleItem('fixture-item-2', null)],
+    }),
+  ),
+  // Feedback triage (operator).
+  http.get('*/v1/admin/feedback', () =>
+    HttpResponse.json({
+      feedback: [
+        {
+          id: '00000000-0000-4000-8000-000000000001',
+          kind: 'bug',
+          text: 'A made-up bug report',
+          status: 'new',
+          senderRole: 'student',
+          createdAt: T,
+          updatedAt: T,
+          device: null,
+        },
+      ],
+    }),
+  ),
+];
+
 const FEATURES: RequestHandler[] = [
   ...dailyHandlers,
   ...familyDataHandlers,
@@ -74,7 +212,7 @@ export async function seedApp(page: Page, who: 'pupil' | 'parent' | 'visitor') {
   const unknown: string[] = [];
   if (who === 'pupil')
     await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));
-  const handlers = [...auth(who === 'parent'), ...FEATURES];
+  const handlers = [...auth(who === 'parent'), ...EXTRAS, ...FEATURES];
   await page.route('**/v1/**', (route) => answer(route, handlers, unknown));
   await page.route('**/api/auth/**', (route) => answer(route, handlers, unknown));
   return { unknown };

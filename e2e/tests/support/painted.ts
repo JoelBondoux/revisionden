@@ -11,6 +11,14 @@ export async function settle(page: Page) {
     () =>
       new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))),
   );
+  // A look's font loads the first time the look is shown: wait for it, and for the reflow it
+  // brings, so text is not measured where it was before the font arrived (train #408).
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise<void>((done) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => done())),
+    );
+  });
   await page.evaluate(() =>
     Promise.all(
       document
@@ -84,8 +92,10 @@ export async function paintedTextFailures(
           right = Math.min(right, c.right);
           bottom = Math.min(bottom, c.bottom);
         }
-        [left, top] = [Math.max(left, 0), Math.max(top, 0)];
-        [right, bottom] = [Math.min(right, innerWidth), Math.min(bottom, innerHeight)];
+        // Only a line fully on screen is measured: one cut by the edge of the screen is measured
+        // at another scroll stop, where it shows in full (stops overlap by a fifth of a screen).
+        // A part-drawn line has too few letter pixels to judge (train #403).
+        if (top < 0 || left < 0 || bottom > innerHeight || right > innerWidth) continue;
         const r = { left, top, right, bottom, width: right - left, height: bottom - top };
         if (r.width < 4 || r.height < 4) continue;
         // Text under something else (the bottom nav, a sheet) is not on show.
@@ -276,6 +286,10 @@ export async function paintedUiFailures(page: Page, { within }: { within?: strin
           // Map nodes are measured against the road and the page in map.spec.
           if (el.closest('.path-node')) return false;
           const r = el.getBoundingClientRect();
+          // Something on top (the bottom nav, a header) hides it at this stop: it is measured at
+          // a stop where it is uncovered (J, W21b), as covered text is.
+          const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+          if (!hit || !(el === hit || el.contains(hit) || hit.contains(el))) return false;
           return (
             drawn &&
             r.width > 8 &&
@@ -293,6 +307,13 @@ export async function paintedUiFailures(page: Page, { within }: { within?: strin
             .trim();
           return {
             icon: !el.matches('input, select, textarea') && !hasWords(el),
+            // A state or a field boundary is judged by its edge; an icon-only control by its icon.
+            edge:
+              el.matches('input, select, textarea') ||
+              ['aria-pressed', 'aria-selected', 'aria-checked'].some(
+                (k) => el.getAttribute(k) === 'true',
+              ) ||
+              (el instanceof HTMLInputElement && el.checked),
             x: r.left,
             y: r.top,
             w: r.width,
@@ -363,18 +384,25 @@ export async function paintedUiFailures(page: Page, { within }: { within?: strin
           sides[3]![0].push(at(p.x + p.w - 1.5, y));
           sides[3]![1].push(at(p.x + p.w + 3, y));
         }
-        let best = Math.max(...sides.map(([i, o]) => contrast(median(i), median(o))));
-        if (p.icon && best < 3) {
-          // The icon itself: the most distinct tenth of the pixels inside, against outside.
-          const around = median(sides.flatMap(([, o]) => o));
-          const inner: number[] = [];
-          for (let y = p.y + 2; y < p.y + p.h - 2; y += 1)
-            for (let x = p.x + 2; x < p.x + p.w - 2; x += 1)
-              inner.push(contrast(lum(atIn(P, x, y)), around));
-          inner.sort((a, b) => a - b);
-          best = Math.max(best, inner[Math.floor(inner.length * 0.9)] ?? 1);
+        if (p.edge) {
+          const best = Math.max(...sides.map(([i, o]) => contrast(median(i), median(o))));
+          if (best < 3) out.push(`ui|${p.where}|${p.label} ${best.toFixed(2)}`);
         }
-        if (best < 3) out.push(`ui|${p.where}|${p.label} ${best.toFixed(2)}`);
+        if (p.icon) {
+          // The icon against the control's own fill, whatever its edge does (Codex on train
+          // #401). Both are read in the middle of the control, where its icon sits (clear of
+          // rounded corners): the fill with icons hidden, the icon as the most distinct
+          // twentieth of the pixels as really drawn.
+          const middle: [number, number][] = [];
+          for (let y = p.y + p.h * 0.2; y < p.y + p.h * 0.8; y += 1)
+            for (let x = p.x + p.w * 0.2; x < p.x + p.w * 0.8; x += 1) middle.push([x, y]);
+          const behind = median(middle.map(([x, y]) => at(x, y)));
+          const inner = middle
+            .map(([x, y]) => contrast(lum(atIn(P, x, y)), behind))
+            .sort((a, b) => a - b);
+          const icon = inner[Math.floor(inner.length * 0.95)] ?? 1;
+          if (icon < 3) out.push(`ui|${p.where} (icon)|${p.label} ${icon.toFixed(2)}`);
+        }
       }
       return [...new Set(out)];
     },
@@ -420,8 +448,28 @@ export async function focusRingFailures(page: Page, count = 3) {
       const el = document.querySelector<HTMLElement>(`[data-w21-focus="${i}"]`)!;
       (document.activeElement as HTMLElement | null)?.blur();
       el.focus({ focusVisible: true } as FocusOptions);
-      const r = el.getBoundingClientRect();
-      const name = (el.getAttribute('aria-label') ?? el.textContent ?? el.tagName)
+      // A control drawn by something else (a styled radio's real input, at opacity 0 or no size)
+      // shows its ring on what is drawn: its label, or the nearest visible ancestor.
+      const unseen = (e: Element) => {
+        const r = e.getBoundingClientRect();
+        if (r.width < 2 || r.height < 2) return true;
+        for (let a: Element | null = e; a; a = a.parentElement)
+          if (Number(getComputedStyle(a).opacity) === 0) return true;
+        return false;
+      };
+      let shown: Element = el;
+      if (unseen(el)) {
+        const label = (el as HTMLInputElement).labels?.[0] ?? el.closest('label');
+        shown = label && !unseen(label) ? label : el;
+        for (
+          let a = el.parentElement;
+          shown === el && a && a !== document.body;
+          a = a.parentElement
+        )
+          if (!unseen(a)) shown = a;
+      }
+      const r = shown.getBoundingClientRect();
+      const name = (el.getAttribute('aria-label') ?? shown.textContent ?? el.tagName)
         .replace(/\s+/g, ' ')
         .trim();
       return {

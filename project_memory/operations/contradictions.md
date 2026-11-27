@@ -18,7 +18,7 @@
       modes. Each one is listed in `e2e/tests/contrast-known.json` (tier 1 from computed styles, tier
       2 as painted), grouped in the W21 pull requests. On 2026-11-27 tier 1 was empty (J17z) and
       tier 2 held 943 rows once the sweep scrolled the whole page and counted text too faint to
-      sample (336 of them) as failing; the list is sent to J for J17x part 2. That list was made locally; the first CI run of tier 2 (train #403) found rows only CI sees, so tier 2 reports without failing on pull requests until the list is made from a CI run (W21c, W21b). The design (looks and tokens) disagrees with
+      sample (336 of them) as failing; the list is sent to J for J17x part 2. That list was made locally; the first CI run of tier 2 (train #403) found rows only CI sees, so tier 2 reported without failing on pull requests (W21c) until W21b made the list from CI runs; after two CI runs in a row matched it, pull requests block again. W21b adds parent and staff screens and the colour-blind and reading-tint variants: tier 1 then holds 18 rows (date, time and number boxes on parent screens in Pop Burst dark, standard and colour-blind, 2.41:1), and tier 2 holds 2,168 rows over the four variants (mostly text too faint to sample, then focus rings, text and edges), made locally and then corrected to what CI finds (first CI run: 88 rows CI does not see removed, 20 it does added; 14 of those came and went between runs, a look's font arriving mid-measurement, so the sweep now waits for fonts). The design (looks and tokens) disagrees with
       `docs/PRODUCT_RULES.md`'s AA rule. Not settled here: J fixes them (W21 is test-only); each fix
       removes its lines from the JSON, and this box is ticked when the list is empty.
 

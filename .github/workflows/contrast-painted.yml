@@ -4,27 +4,34 @@ name: Contrast sweep (tier 2, painted)
 # gradients and shadows included): text in every box, UI parts' edges and focus rings, in all 10
 # looks, light and dark. Nightly, on demand, on pull requests that change the looks or the design,
 # and as a gate before staging: deploy workflows can call it (workflow_call) and need its job.
-# W21c (lead ruling, 2026-11-27): for now a pull request's own run only reports (its job summary
-# lists new and fixed rows, and the report is kept); it does not fail the pull request, because
-# the known list was made on a machine that draws text a little differently from CI. Nightly and
-# the staging gate still fail on new rows. Temporary, until the list is made from a CI run
-# (decision 0012). Tier 1 (e2e.yml) stays blocking.
+# Every run fails on new or fixed rows, pull requests included. (W21c made pull requests
+# report-only while the known list came from a developer's machine; W21b made the list from CI
+# runs, two clean in a row, and turned blocking back on: decision 0012.) A failing run's job
+# summary lists the new and fixed rows, and its report is kept.
+# W21b (lead ruling): nightly also sweeps the colour-blind palette and each reading tint, on 12
+# shards to finish in about 20 minutes, as does a pull request labelled contrast-variants (to
+# make or check those rows from CI); style pull requests and the staging gate keep the standard
+# palette, light and dark, on 4.
 on:
   schedule:
     - cron: '17 2 * * *'
   workflow_dispatch:
   workflow_call:
-    inputs:
-      blocking:
-        description: Fail on new or fixed rows (the staging gate does)
-        type: boolean
-        default: true
   pull_request:
     branches: [dev, staging, main]
+    # labeled: adding contrast-variants runs the full variant sweep on that pull request.
+    types: [opened, synchronize, reopened, labeled]
     paths:
       - 'apps/web/src/features/juice/styles/**'
       - 'apps/web/src/design/**'
       - 'apps/web/src/features/learn/learn.css'
+      # The sweep itself (W21b).
+      - 'e2e/tests/contrast-sweep.spec.ts'
+      - 'e2e/tests/contrast-known.json'
+      - 'e2e/tests/support/painted.ts'
+      - 'e2e/tests/support/contrastFilter.ts'
+      - 'e2e/tests/support/contrastRecord.ts'
+      - '.github/workflows/contrast-painted.yml'
 
 permissions:
   contents: read
@@ -35,13 +42,13 @@ concurrency:
 
 jobs:
   tier2:
-    name: Contrast tier 2 (shard ${{ matrix.shard }}/4)
+    name: Contrast tier 2 (shard ${{ matrix.shard }}/${{ (github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && 12 || 4 }})
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: ${{ fromJSON((github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]' || '[1, 2, 3, 4]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -50,6 +57,10 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # ubuntu-26.04 runner images list packages.microsoft.com, whose apt release file is no longer
+      # signed, so apt-get update inside --with-deps can fail on it (G12). Nothing here needs it.
+      - name: Drop the unsigned Microsoft apt source
+        run: grep -rl packages.microsoft.com /etc/apt/sources.list.d | xargs -r sudo rm -f
       - name: Install Chromium for Playwright
         run: pnpm --filter @revisionden/e2e exec playwright install --with-deps chromium
       - name: Build the web app
@@ -58,16 +69,18 @@ jobs:
         run: pnpm --filter @revisionden/web build
       - name: Run the painted sweep
         id: sweep
-        continue-on-error: ${{ github.event_name == 'pull_request' && !inputs.blocking }}
         shell: bash
         env:
           CONTRAST_SWEEP: '1'
+          # Also write what each test found, for the step below to print (W21b).
+          CONTRAST_RECORD: '1'
+          CONTRAST_VARIANTS: ${{ (github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && '1' || '' }}
         run: >-
           pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts
-          --project=phone --project=desktop --grep @contrast-painted --shard=${{ matrix.shard }}/4 --trace off
+          --project=phone --project=desktop --grep @contrast-painted --shard=${{ matrix.shard }}/${{ (github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && 12 || 4 }} --trace off
           2>&1 | tee sweep.log
       - name: List new and fixed rows
-        if: steps.sweep.outcome == 'failure'
+        if: ${{ !cancelled() && steps.sweep.outcome == 'failure' }}
         shell: bash
         run: |
           {
@@ -81,8 +94,22 @@ jobs:
                  /^ *\+ +"/ { sub(/^ *\+ +/, ""); print kind " " $0 }' sweep.log | sort -u
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+      # Where CI differs from the known list, test by test (rows it found that are not listed,
+      # listed rows it no longer finds), so the list follows what CI draws rather than a
+      # developer's machine: save the logs, then e2e/scripts/contrast-from-log.mjs (W21b).
+      - name: Print where CI differs from the known list
+        if: always()
+        shell: bash
+        run: |
+          for f in e2e/test-results/contrast/diff-tier2-*.json; do
+            [ -e "$f" ] || continue
+            echo "CONTRAST-RESULT $(basename "$f")"
+            cat "$f"
+            echo
+            echo "CONTRAST-END"
+          done
       - name: Keep the report when something fails
-        if: steps.sweep.outcome == 'failure'
+        if: ${{ !cancelled() && steps.sweep.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
           name: contrast-tier2-report-${{ matrix.shard }}

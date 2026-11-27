@@ -167,7 +167,8 @@ describe('a friend request waiting for this child to check (FL4-fix)', () => {
     const api = waitingForMe();
     show(api);
     await userEvent.click(await screen.findByRole('button', { name: 'Friends' }));
-    await userEvent.click(screen.getByRole('button', { name: 'Yes, Nova_7 is my friend' }));
+    // The name starts with the words on the button, so voice control can say them (WCAG 2.5.3).
+    await userEvent.click(screen.getByRole('button', { name: 'Yes, my friend: Nova_7' }));
     expect(api.confirm).toHaveBeenCalledWith('r-9');
   });
 
