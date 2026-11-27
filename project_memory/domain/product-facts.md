@@ -302,6 +302,10 @@ Tags: #product #rules #limits #defaults
   question or deck card on screen by its content id (never text, never a student's own card),
   and says how the screen looked (look, light or dark, pattern, pixel density, pinch zoom, text size
   against 16px). Never the reading tint, dyslexia-friendly font or colour-blind colours (L, notice 1.11).
+- Bug reports (F18, owner 2026-11-27, "Parents auto, kids one tap"): a problem code shown in the
+  last 15 minutes (`LAST_PROBLEM_KEEP_MS`, newest wins, cleared by parent sign-out; `<ErrorRef>`
+  RD codes and passkey or phone codes) is its own item on the bug form: on for parents (Remove),
+  off for students ("Include it" tick sends only `{ lastProblem }`). No automatic error report.
 - Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
   `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
   answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.
