@@ -1,4 +1,6 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { createRequire } from 'node:module';
 import { expect, test, type Page } from '@playwright/test';
 import { computedContrastFailures } from './support/contrastStyles';
@@ -8,6 +10,7 @@ import {
   paintedUiFailures,
   settle,
 } from './support/painted';
+import { recordDifferences } from './support/contrastRecord';
 
 /*
  * W21: the painted helpers on small made-up pages, so their rules are pinned down apart from the
@@ -209,4 +212,21 @@ test.describe('a look whose font is still loading', { tag: '@contrast' }, () => 
     await settle(page);
     expect(await page.evaluate(() => document.fonts.check("20px 'Slow'"))).toBe(true);
   });
+});
+
+test('a clean retry clears the differences an earlier attempt recorded (Codex on #408)', () => {
+  // CI retries a failed test once, under the same file name: a retry that matches the list must
+  // not leave the first attempt's differences for the log, or contrast-from-log.mjs would apply
+  // a passing glitch.
+  const file = join(mkdtempSync(join(tmpdir(), 'contrast-')), 'nested', 'diff-tier2-x.json');
+  recordDifferences(file, { 'a|light|/x|text|faint': '2.0 @ 0' }, ['b|light|/x|edge|gone']);
+  expect(JSON.parse(readFileSync(file, 'utf8'))).toEqual({
+    new: { 'a|light|/x|text|faint': '2.0 @ 0' },
+    fixed: ['b|light|/x|edge|gone'],
+  });
+  recordDifferences(file, {}, []);
+  expect(existsSync(file)).toBe(false);
+  // Nothing to clear is fine too.
+  recordDifferences(file, {}, []);
+  expect(existsSync(file)).toBe(false);
 });

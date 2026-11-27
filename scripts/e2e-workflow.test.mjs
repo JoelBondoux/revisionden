@@ -113,6 +113,7 @@ test('the painted sweep prints what CI found, so the known list is made from CI 
     'e2e/tests/contrast-sweep.spec.ts',
     'e2e/tests/contrast-known.json',
     'e2e/tests/support/painted.ts',
+    'e2e/tests/support/contrastRecord.ts',
     '.github/workflows/contrast-painted.yml',
   ])
     assert.ok(painted.includes(`- '${path}'`), `runs on changes to ${path}`);

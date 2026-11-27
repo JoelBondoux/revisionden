@@ -211,7 +211,9 @@ sweep does not cover. Data comes from the web app's own mock handlers
   then `node e2e/scripts/contrast-known.mjs`. **Tier 2's list follows CI, not a developer's machine**,
   which draws text a little differently. Every CI run prints, for each test that differs from
   the list (`CONTRAST_RECORD=1`), the rows it found that are not listed and the listed rows it no
-  longer finds, between `CONTRAST-RESULT` and `CONTRAST-END` in its job log. Refresh the list
+  longer finds, between `CONTRAST-RESULT` and `CONTRAST-END` in its job log. A test that matches
+  the list removes its file, so a clean retry never leaves a failed attempt's differences behind
+  (`e2e/tests/support/contrastRecord.ts`). Refresh the list
   locally first (so the differences are few), push, save each shard's log, then
   `node e2e/scripts/contrast-from-log.mjs shard1.log …` applies them. Tier 1 reads styles, not
   pixels, so it can be refreshed locally.

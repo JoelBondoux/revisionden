@@ -9,6 +9,7 @@ import {
   paintedUiFailures,
   settle,
 } from './support/painted';
+import { recordDifferences } from './support/contrastRecord';
 import { seedApp } from './support/seed';
 
 /*
@@ -574,13 +575,13 @@ async function paintedSweep(
   // CI (CONTRAST_RECORD=1) writes only where it differs from the list, for its log: the rows it
   // finds that are not listed, and the listed rows it no longer finds. Small enough to read back
   // (e2e/scripts/contrast-from-log.mjs), so the list follows what CI draws.
-  if (RECORD && (fresh.length || fixed.length)) {
-    mkdirSync('test-results/contrast', { recursive: true });
-    writeFileSync(
+  // A clean retry removes the failed attempt's file (recordDifferences).
+  if (RECORD)
+    recordDifferences(
       resultFile('diff-tier2', mode, variant, name),
-      JSON.stringify({ new: Object.fromEntries(fresh.map((k) => [k, seen[k]!])), fixed }, null, 2),
+      Object.fromEntries(fresh.map((k) => [k, seen[k]!])),
+      fixed,
     );
-  }
   expect(
     fresh.map((k) => `${k} (${found[k]})`),
     'new painted contrast failures',

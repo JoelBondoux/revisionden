@@ -30,6 +30,7 @@ on:
       - 'e2e/tests/contrast-known.json'
       - 'e2e/tests/support/painted.ts'
       - 'e2e/tests/support/contrastFilter.ts'
+      - 'e2e/tests/support/contrastRecord.ts'
       - '.github/workflows/contrast-painted.yml'
 
 permissions:
