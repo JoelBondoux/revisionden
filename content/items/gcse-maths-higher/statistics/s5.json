@@ -478,17 +478,17 @@
     "expected_seconds": 35,
     "prompt": "A random sample of 100 teenagers has a median daily screen time of 4 hours. Which is the most sensible statement about all teenagers?",
     "options": [
-      "The mean must be 4 hours",
-      "Roughly half of all teenagers probably spend 4 hours or more a day on screens",
-      "Every teenager spends 4 hours a day on screens",
+      "The mean daily screen time of all teenagers must be 4 hours",
+      "The median daily screen time of all teenagers is probably about 4 hours",
+      "Every teenager spends exactly 4 hours a day on screens",
       "No teenager spends more than 4 hours a day on screens"
     ],
     "answer": {
       "option": 1
     },
     "marks": 1,
-    "explanation": "The median is the middle value, so about half of the sample had 4 hours or more. A random sample suggests the same is roughly true for all teenagers, not that everyone is the same.",
-    "hint": "What does the median tell you about the data above and below it?",
+    "explanation": "A random sample’s median estimates the median of the whole population, so the median for all teenagers is probably about 4 hours. It does not mean everyone is the same, it does not fix the mean, and it does not limit the largest value.",
+    "hint": "What does a sample statistic estimate about the population?",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S5",
     "checked_by": ["author"],
     "citations": [
@@ -535,7 +535,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T12:09:56Z",
+          "at": "2026-11-27T12:21:53Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -551,16 +551,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T12:10:09Z",
+          "at": "2026-11-27T12:21:55Z",
           "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T12:10:15Z",
-          "notes": "ambiguity (question): The phrase 'about all teenagers' is very broad and could be read as a claim about individual teenagers rather than about the population distribution. This makes the intended inference from the sample less precise than it could be.; factual_error (answer): The marked answer says 'Roughly half of all teenagers probably spend 4 hours or more a day on screens'. From a sample median of 4 hours, the supported statement is about the sample median and a possible inference about the population median, not necessarily that half of the entire population spend 4 hours or more. If the population size is even, or if many values equal 4, the statement 'half ... 4 hours or more' is not guaranteed in the population from the given information.; second_correct_option (option 1): Because 'probably' makes the claim weaker, a student could reasonably treat this as a sensible informal inference from a random sample with median 4 hours. But it is not securely implied by the data, so the item relies on an imprecise interpretation of median and inference.; unsupported_claim (explanation): The explanation states 'A random sample suggests the same is roughly true for all teenagers'. The cited specification supports making inferences from samples while knowing limitations, but it does not specifically support this exact claim about 'half ... 4 hours or more'; this is a substantive statistical claim not directly backed by the quoted source.; confidence medium"
+          "at": "2026-11-27T12:21:56Z",
+          "notes": "no problems found"
         }
       ]
     }
