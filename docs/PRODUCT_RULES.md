@@ -319,10 +319,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   unicode minus as `-`, `×`, `·`, `*` (and `x` between two numbers) as one multiply, `÷` as `/`,
   superscripts as `^`, `≤`/`≥` as `<=`/`>=`, `√` as `sqrt`, and "and" or `;` in a list like `,`.
   A multiply sign is kept between two numbers and before a sign (`3n × -2` is not `3n - 2`).
-  When the item sets `answer.any_order`, products and sums may be in any order (signs stay with
-  their terms, and up to 4 letters on their own such as `pq` count as a product), a list of
-  values in any order, and an equation either way round; coordinates and
-  inequalities are never reordered. `answer.units` lists units the answer may end with or leave
+  When the item sets `answer.any_order`, a list's items may be in any order but each item must be
+  exactly as written (F23: in `HH, HT, TH, TT`, `HT` is not `TH`); a single answer may write
+  products and sums in any order (signs stay with their terms, and up to 4 letters on their own
+  such as `pq` count as a product) and an equation either way round; coordinates and
+  inequalities are never reordered. Outer set braces around a whole list are optional
+  (`{4, 5, 6}` is `4, 5, 6`; F23). `answer.units` lists units the answer may end with or leave
   off. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
 - **Numeric answers** accept a UK thousands separator (`withoutThousands` in
   `packages/core/src/answer-format.ts`): a space (also a thin or non-breaking space) or a comma
