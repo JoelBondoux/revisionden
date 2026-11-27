@@ -15,6 +15,8 @@ Each check has an ``id`` and a ``kind``:
 - ``identity``: an ``equation`` that must hold for every value of its letters (fact checks).
 - Fact proofs (``app/facts.py``): ``transformation``, ``implication``, ``sign_change``,
   ``parallel``, ``trig_value`` and ``graph_measure``.
+- CS fact proofs (``app/cs/facts.py``): ``cs_arithmetic``, ``cs_base``, ``cs_signed`` and
+  ``cs_logic_equivalence``.
 
 Run it with ``python -m app.content_check`` from ``services/maths``.
 """
@@ -27,6 +29,7 @@ from typing import Callable, TextIO
 from sympy import N, Rational, simplify
 
 from app import facts
+from app.cs import facts as cs_facts
 from app.equivalence import are_equivalent, parse, parse_equation, solutions_match
 from app.forms import in_form
 from app.formula import formulas_match
@@ -112,6 +115,7 @@ KINDS: dict[str, Callable[[dict], str | None]] = {
     "formula": _formula,
     "identity": _identity,
     **facts.KINDS,
+    **cs_facts.KINDS,
 }
 
 
