@@ -91,6 +91,8 @@ interface State {
   streak: number;
   mine: Flashcard[];
   ownCount: number;
+  /** F20: a card made from a multiple choice question comes first in the deck. */
+  choiceCard: boolean;
 }
 
 const fresh = (): State => ({
@@ -103,6 +105,7 @@ const fresh = (): State => ({
   nextRewards: [],
   help: {},
   shaky: false,
+  choiceCard: false,
 });
 let state = fresh();
 
@@ -133,6 +136,11 @@ export function mockHelp(itemId: string, help: MockHelp) {
 /** A wrong answer to `itemId` offers `similar`. */
 export function mockSimilar(itemId: string, similar: LearnItem) {
   mockHelp(itemId, { similar });
+}
+
+/** F20: the deck starts with a card made from a multiple choice question (made-up options). */
+export function mockChoiceCard() {
+  state.choiceCard = true;
 }
 
 /** The next right answer is marked shaky (too slow). */
@@ -195,7 +203,15 @@ function marks(itemId: string, answer: unknown): boolean {
     : answer === key.answer;
 }
 
+const choiceCard = (): Flashcard => ({
+  ...card(3, 'Demo choice question', 'Demo option B', 'wrong_answer'),
+  options: ['Demo option A', 'Demo option B', 'Demo option C'],
+  answerOption: 1,
+  explain: ['Demo choice step', 'Answer: Demo option B'],
+});
+
 const deckCards = () => [
+  ...(state.choiceCard ? [choiceCard()] : []),
   {
     ...card(1, 'Demo front 1', 'Demo back 1', 'deck'),
     // Made-up steps (not educational) for the Explain walk-through (F7).

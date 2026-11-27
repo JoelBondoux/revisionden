@@ -242,6 +242,12 @@ export const FlashcardSchema = z.object({
   /** Deck and wrong-answer cards: the content item's id and learning point, for Learn more (Q6b). */
   contentId: text.optional(),
   learningPoint: text.optional(),
+  /**
+   * F20: a card made from a multiple choice question carries its options (its prompt makes no
+   * sense without them) and which one is right, so the pupil answers by tapping one.
+   */
+  options: z.array(text).min(2).optional(),
+  answerOption: z.number().int().min(0).optional(),
 });
 export type Flashcard = z.infer<typeof FlashcardSchema>;
 
