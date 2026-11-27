@@ -434,10 +434,12 @@ class _Program:
 
 @dataclass
 class _Ref:
-    """A byRef parameter: the caller's storage (a scope, the globals or an array) and its key."""
+    """Storage: a scope, the globals or an array, its key, and its trace label (``x``,
+    ``a[1][0]``). A byRef parameter holds the caller's, so its writes name the caller's cell."""
 
     place: object
     key: object
+    label: str
 
 
 class _Return(Exception):
@@ -479,7 +481,7 @@ class _Machine:
         for place in (self.scope(), self.globals):
             if name in place:
                 held = place[name]
-                return held if isinstance(held, _Ref) else _Ref(place, name)
+                return held if isinstance(held, _Ref) else _Ref(place, name, name)
         return None
 
     def get(self, name: str):
@@ -488,9 +490,16 @@ class _Machine:
             raise self.error(f"{name} is not defined")
         return ref.place[ref.key]
 
-    def record(self, label: str, value):
-        """A trace row holds a copy, so later changes to an array never rewrite earlier rows."""
-        self.trace.append({"line": self.line, label: copy.deepcopy(value)})
+    def record(self, name: str, value, cell: str | None = None):
+        """One assignment row: ``name`` as the program wrote it, a copy of ``value`` (so later
+        changes to an array never rewrite earlier rows) and ``cell``, the storage actually
+        written (the caller's, for a byRef parameter). Fixed keys, so a variable called
+        ``line`` or ``output`` cannot clash with them."""
+        self.trace.append({"line": self.line, "name": name, "value": copy.deepcopy(value),
+                           "cell": cell or name})
+
+    def record_output(self, text: str):
+        self.trace.append({"line": self.line, "output": text})
 
     def set(self, name: str, value, is_global: bool = False):
         held = self.scope().get(name)
@@ -498,6 +507,8 @@ class _Machine:
             self.globals[name] = value
         elif isinstance(held, _Ref):
             held.place[held.key] = value
+            self.record(name, value, held.label)
+            return
         elif name in self.globals and name not in self.scope():
             self.globals[name] = value
         else:
@@ -524,9 +535,9 @@ class _Machine:
             if target[0] == "var":
                 self.set(target[1], value, is_global)
             else:
-                array, where, indexes = self.element(target)
+                array, where, label, cell = self.element(target)
                 array[where] = value
-                self.record(self.describe(target, indexes), value)
+                self.record(label, value, cell)
         elif kind == "expr":
             self.eval(node[2], statement=True)
         elif kind == "for":
@@ -582,13 +593,21 @@ class _Machine:
             raise self.error("a condition must be true or false")
         return value
 
-    def describe(self, target, indexes: list) -> str:
-        """The trace label for an array element, from indexes already worked out (never again,
-        so an index with a side effect runs once)."""
-        return f"{target[1][1]}[{','.join(_show(i) for i in indexes)}]"
-
     def element(self, target):
-        array = self.eval(target[1])
+        """(array, index, label, cell) for an indexed target, walking the whole chain once:
+        ``a[0][1]`` and ``a[0,1]`` keep their brackets in the label, and every index is
+        evaluated exactly once (an index with a side effect runs once)."""
+        inner = target[1]
+        if inner[0] == "var":
+            ref = self.where(inner[1])
+            if ref is None:
+                raise self.error(f"{inner[1]} is not defined")
+            array, label, cell = ref.place[ref.key], inner[1], ref.label
+        elif inner[0] == "index":
+            container, key, label, cell = self.element(inner)
+            array = container[key]
+        else:
+            array, label, cell = self.eval(inner), "(value)", "(value)"
         indexes = [self.eval(i) for i in target[2]]
         for depth, where in enumerate(indexes):
             if not isinstance(array, list):
@@ -598,7 +617,8 @@ class _Machine:
                                  f"{len(array) - 1})")
             if depth < len(indexes) - 1:
                 array = array[where]
-        return array, indexes[-1], indexes
+        brackets = f"[{','.join(_show(i) for i in indexes)}]"
+        return array, indexes[-1], label + brackets, cell + brackets
 
     # expressions
     def eval(self, node, statement: bool = False):
@@ -620,7 +640,7 @@ class _Machine:
         if kind == "bin":
             return self.binary(node[1], node[2], node[3])
         if kind == "index":
-            array, where, _ = self.element(node)
+            array, where, _, _ = self.element(node)
             return array[where]
         if kind == "length":
             value = self.eval(node[1])
@@ -681,7 +701,7 @@ class _Machine:
             if name == "print":
                 text = " ".join(_show(v) for v in values)
                 self.output.append(text)
-                self.record("output", text)
+                self.record_output(text)
                 return None
             if name == "input":
                 if not self.inputs:
@@ -703,8 +723,8 @@ class _Machine:
             if mode == "byRef" and arg[0] == "var" and self.where(arg[1]) is not None:
                 frame[param] = self.where(arg[1])
             elif mode == "byRef" and arg[0] == "index":
-                array, where, _ = self.element(arg)
-                frame[param] = _Ref(array, where)
+                array, where, _, cell = self.element(arg)
+                frame[param] = _Ref(array, where, cell)
             else:  # byVal, or byRef on an expression (nothing to share): a copy of the value
                 frame[param] = copy.deepcopy(self.eval(arg))
         self.frames.append(frame)
@@ -736,5 +756,6 @@ def run(source: str, inputs: list[str] | None = None, max_steps: int = MAX_STEPS
 
 
 def trace_table(source: str, inputs: list[str] | None = None) -> list[dict]:
-    """The trace as rows: each row is the line and the one variable (or output) it changed."""
+    """The trace as rows: ``{line, name, value, cell}`` for each assignment (``cell`` is the
+    storage written, the caller's for a byRef parameter) and ``{line, output}`` for each print."""
     return run(source, inputs).trace

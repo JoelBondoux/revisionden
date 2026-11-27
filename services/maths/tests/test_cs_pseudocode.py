@@ -3,9 +3,17 @@
 Each program's output is worked by hand. Examples marked "spec" follow the shape of the
 appendix 5d examples.
 """
+import random
+import re
+
 import pytest
 
 from app.cs.pseudocode import PseudocodeError, run, trace_table
+
+
+def row(line, name, value, cell=None):
+    """An assignment row: what the program named, the value, and the storage actually written."""
+    return {"line": line, "name": name, "value": value, "cell": cell or name}
 
 
 def out(source, inputs=()):
@@ -216,8 +224,8 @@ def test_a_trace_records_every_assignment_and_output_with_its_line():
     program = "x=0\nfor i=1 to 3\n    x=x+i\nnext i\nprint(x)"
     rows = trace_table(program)
     assert rows == [
-        {"line": 1, "x": 0}, {"line": 2, "i": 1}, {"line": 3, "x": 1}, {"line": 2, "i": 2},
-        {"line": 3, "x": 3}, {"line": 2, "i": 3}, {"line": 3, "x": 6}, {"line": 5, "output": "6"},
+        row(1, "x", 0), row(2, "i", 1), row(3, "x", 1), row(2, "i", 2),
+        row(3, "x", 3), row(2, "i", 3), row(3, "x", 6), {"line": 5, "output": "6"},
     ]
 
 
@@ -304,7 +312,7 @@ print(y[0])'''
 
 def test_two_dimensional_trace_names_the_element():
     rows = trace_table("array g[2,2]\ng[1,0]=5")
-    assert rows[-1] == {"line": 2, "g[1,0]": 5}
+    assert rows[-1] == row(2, "g[1,0]", 5)
 
 
 # Codex review on #428 (P2s): byRef binds to the caller's storage; trace rows are snapshots;
@@ -352,11 +360,11 @@ def test_byref_on_an_expression_is_just_its_value():
 
 def test_trace_rows_keep_the_value_at_that_step():
     rows = trace_table("array a[1]\na[0]=1\na[0]=2")
-    assert rows[0] == {"line": 1, "a": [None]}
-    assert rows[1] == {"line": 2, "a[0]": 1}
-    assert rows[2] == {"line": 3, "a[0]": 2}
+    assert rows[0] == row(1, "a", [None])
+    assert rows[1] == row(2, "a[0]", 1)
+    assert rows[2] == row(3, "a[0]", 2)
     nested = trace_table("array a[1]\nb=a\na[0]=9")
-    assert nested[1] == {"line": 2, "b": [None]}
+    assert nested[1] == row(2, "b", [None])
 
 
 def test_an_array_index_is_evaluated_once():
@@ -371,5 +379,67 @@ print(a[0])
 print(count)'''
     result = run(program)
     assert result.output == ["7", "1"]
-    assert {"line": 7, "a[0]": 7} in result.trace
+    assert row(7, "a[0]", 7) in result.trace
     assert run('array a[2]\na[int(input("?"))]=4\nprint(a[1])', inputs=["1"]).output == ["4"]
+
+
+
+# Codex review on #428, round 2: trace metadata never clashes with a variable's name, and a
+# chained index (a[0][1]) is labelled with the whole target.
+
+def test_a_variable_called_line_or_output_keeps_its_own_row():
+    rows = trace_table("line=7\noutput=2\nprint(line)")
+    assert rows == [row(1, "line", 7), row(2, "output", 2), {"line": 3, "output": "7"}]
+
+
+def test_chained_indexes_are_labelled_with_the_whole_target():
+    rows = trace_table("array a[2,2]\na[0][1]=7\na[1][1]=8\na[1,0]=9")
+    assert rows[1:] == [row(2, "a[0][1]", 7), row(3, "a[1][1]", 8), row(4, "a[1,0]", 9)]
+    assert run("array a[2,2]\na[0][1]=7\nprint(a[0][1])\nprint(a[0,1])").output == ["7", "7"]
+
+
+def test_a_byref_write_names_the_parameter_and_the_cell_it_changed():
+    program = """procedure setTo(t:byRef, v)
+    t=v
+endprocedure
+array a[2,2]
+setTo(a[1][0], 5)
+x=0
+setTo(x, 3)"""
+    rows = [r for r in trace_table(program) if "name" in r and r["name"] == "t"]
+    assert rows == [row(2, "t", 5, "a[1][0]"), row(2, "t", 3, "x")]
+
+
+def _canonical(label):
+    name, rest = re.fullmatch(r"([A-Za-z_]\w*)((?:\[[^\]]*\])*)", label).groups()
+    indexes = tuple(int(i) for group in re.findall(r"\[([^\]]*)\]", rest) for i in group.split(","))
+    return name, indexes
+
+
+@pytest.mark.parametrize("seed", range(150))
+def test_random_programs_trace_labels_map_back_to_the_cells_written(seed):
+    """Property test (lead, 2026-11-27): replaying every trace row's cell and value rebuilds the
+    final arrays and variables exactly, for random nested-array writes and byRef calls."""
+    rng = random.Random(seed)
+    lines = ["procedure setTo(t:byRef, v)", "    t=v", "endprocedure",
+             "procedure passOn(t:byRef, v)", "    setTo(t, v)", "endprocedure",
+             "array a[3,3]", "array b[3]", "x=0"]
+    for _ in range(rng.randint(5, 25)):
+        i, j, v = rng.randrange(3), rng.randrange(3), rng.randint(-50, 50)
+        target = rng.choice([f"a[{i},{j}]", f"a[{i}][{j}]", f"b[{i}]", "x"])
+        how = rng.choice(["assign", "setTo", "passOn"])
+        lines.append(f"{target}={v}" if how == "assign" else f"{how}({target}, {v})")
+    result = run("\n".join(lines))
+    model = {"a": [[None] * 3 for _ in range(3)], "b": [None] * 3, "x": 0}
+    for r in result.trace:
+        if "cell" not in r or r["cell"] in ("t", "v"):
+            continue
+        name, indexes = _canonical(r["cell"])
+        if not indexes:
+            model[name] = r["value"]
+            continue
+        place = model[name]
+        for k in indexes[:-1]:
+            place = place[k]
+        place[indexes[-1]] = r["value"]
+    assert model == {k: result.variables[k] for k in model}

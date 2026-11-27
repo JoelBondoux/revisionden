@@ -80,7 +80,8 @@ answers by code, with no AI:
   `while`, `do`/`until`, `if`/`elseif`/`else`, `switch`/`case`, arithmetic (`MOD`, `DIV`, `^`),
   comparison and logical operators, `.length`, `.substring`, functions and procedures with
   `byVal`/`byRef`, recursion and arrays of any dimension. `run` gives the output, the final
-  variables and a trace (one row per assignment or output, with its line) for trace tables. No
+  variables and a trace for trace tables: `{line, name, value, cell}` per assignment (`cell` is
+  the storage written, the caller's for a byRef parameter) and `{line, output}` per print. No
   Python `eval`; a step limit stops runaway loops. Not yet: files and classes.
 
 - `tracers.py`: every intermediate state of bubble, insertion, merge and quick sort, linear and
