@@ -172,3 +172,38 @@ Green before PR: pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm test:
 When a topic set is done, message the lead (session <LEAD>) with: items per topic, any failures
 and why, near matches, and anything the owner must decide.
 ```
+
+## Step 2 progress: S4 (Ratio, Geometry, Probability, Statistics)
+
+**Ratio, R1 to R16 (2026-11-27).** 185 draft items in `content/items/gcse-maths-higher/ratio/`
+(r1.json to r16.json): 88 numeric, 13 worked maths, 22 multiple choice, 14 short answer and 48
+flashcards, with at least 3 items per learning point. Citations quote the R points on page 16
+(PDF page 28) of the specification; the R13 sentence "X is inversely proportional to Y is
+equivalent to X is proportional to 1/Y" is quoted only up to "proportional to", because the PDF
+text breaks the fraction.
+
+| Step                 | Result                                                                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------------------------- |
+| 2 Quote check        | 185 pass, all exact                                                                                           |
+| 3 Blind answer       | OpenAI `gpt-5.4-2026-03-05` (Gemini returned 429: monthly spend cap): 185 pass                                |
+| 4 Adversarial review | OpenAI: 174 pass. 11 fail on "unsupported claim": unit, scale, tangent and proportion definitions (see below) |
+| 4b Fact check        | Not run: 15 items list `facts`; the stater must differ from the writer and from OpenAI, so it needs Gemini    |
+| 5 Maths engine       | All 101 numeric and worked items pass                                                                         |
+| 6 Schema and links   | Pass                                                                                                          |
+
+The 11 review failures (r1-0101, r1-0109, r1-0111, r2-0109, r2-0110, r11-0111 to r11-0113,
+r12-0110, r13-0110, r14-0110) rest on a standard unit or definition that no allowed source states
+(1 litre = 1000 ml, what a scale 1 : n means, speed, density and pressure as compound measures).
+41 items set `needs_human_approval` under decision 0008 for the same reason. Writing notes: decimals
+raised to powers are written as fractions in `verify` (`(103/100)^2`), because the engine reads
+`1.03^2` inexactly; worked items whose answer is a sum of money ask for a letter (`£x`), because the
+blind comparison of worked expressions is exact text.
+
+## Step 2 progress: S4 Probability (P1 to P9, 2026-11-27)
+
+95 draft items in `content/items/gcse-maths-higher/probability/` (p1.json to p9.json): 49 numeric,
+2 worked maths, 15 multiple choice, 2 short answer and 27 flashcards. Citations quote the P points on
+page 19 (PDF page 31). Where a term needs a definition (relative frequency), the question states it,
+so the item does not rest on an unsourced definition.
+Flashcard blind answers are compared word for word, so a correct answer with working shown fails;
+p9-0107's blind answer (9/58) is an arithmetic slip by the model (18/117 = 2/13).
