@@ -280,19 +280,6 @@ test(
   },
 );
 
-test(
-  'the footer shows the same made-up commit on every build (after train #403)',
-  { tag: '@contrast' },
-  async ({ page }, info) => {
-    test.skip(info.project.name !== 'desktop', 'one check is enough');
-    await open(page, 'pupil', 'light', '/about', VARIANTS[0]!);
-    await expect(page.locator('.version-footer-item').nth(1)).toHaveText(
-      // Whatever the build's environment (Staging in CI, Development locally): Codex on #406.
-      /^\([A-Za-z]+, abcdef0\)$/,
-    );
-  },
-);
-
 /** Every colour choice the app offers a family: the palettes, and the reading tints. */
 function variantsInApp(): string[] {
   const choices = (p: string, name: string) => {
@@ -390,13 +377,6 @@ async function open(
     tint: variant.reading?.tint ?? null,
   });
   await expect(page.getByRole('alert').filter({ hasText: 'Something went wrong' })).toHaveCount(0);
-  // The footer names this build's commit, which changes with every build; a made-up one keeps
-  // its rows' keys the same (after train #403). Same words, same style.
-  await page.evaluate(() => {
-    for (const item of Array.from(document.querySelectorAll('.version-footer-item')))
-      if (item.textContent?.startsWith('('))
-        item.textContent = item.textContent.replace(/, [0-9a-f]{7,}\)$/, ', abcdef0)');
-  });
   await page.addStyleTag({
     content: '*, *::before, *::after { transition: none !important; animation: none !important; }',
   });

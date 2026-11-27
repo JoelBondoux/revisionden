@@ -11,7 +11,7 @@ describe('routes', () => {
     ['/plan', 'Plan'],
     ['/settings', 'Me'],
     ['/settings/look-and-sound', 'Look and sound'],
-    ['/settings/more', 'More'],
+    ['/settings/more', 'Subjects, family and feedback'],
     ['/cards', 'Cards'],
     ['/papers', 'Papers'],
     ['/onboarding', "Who's studying?"],

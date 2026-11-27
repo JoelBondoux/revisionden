@@ -92,44 +92,6 @@
   font-weight: var(--font-weight-extrabold);
 }
 
-/* Version footer (G5). In the app shell it sits above the fixed bottom navigation on phones and
-   beside the side navigation on wider screens. */
-.version-footer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: baseline;
-  gap: var(--space-1) var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  text-align: center;
-  font-size: 0.8125rem;
-  color: var(--color-text-secondary);
-}
-
-.version-footer a {
-  color: inherit;
-}
-
-/* The flex gap separates the pieces, so no "·" is needed (G8). Pieces may wrap inside
-   themselves, so a narrow screen or large text never makes the footer overflow (G9). */
-.version-footer-item {
-  max-width: 100%;
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.app-shell > .version-footer {
-  margin-top: -72px;
-  padding-bottom: calc(96px + env(safe-area-inset-bottom));
-}
-
-@media (min-width: 768px) {
-  .app-shell > .version-footer {
-    margin: 0 0 0 200px;
-    padding-bottom: var(--space-4);
-  }
-}
-
 .update-banner {
   position: sticky;
   top: 0;
@@ -173,8 +135,7 @@
 
 /* Room for the bug button (L7) below the content on focused and public pages, where it floats in
    the corner: it is 48px tall and sits 16px from the bottom. */
-.focus-main.has-bug-button,
-.focus-main.has-bug-button + .version-footer {
+.focus-main.has-bug-button {
   padding-bottom: calc(var(--tap-target) + var(--space-8) + env(safe-area-inset-bottom));
 }
 

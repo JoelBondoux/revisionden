@@ -160,10 +160,10 @@ describe('ways to reach Get help', () => {
     expect(links[0]).toHaveAttribute('href', '/help');
   });
 
-  it('the student footer has no Get help link any more (it lives on Settings)', () => {
+  it('the student screens have no footer, so no Get help link there (it lives on Settings)', async () => {
     renderRoute('/map');
-    const footer = screen.getByRole('contentinfo');
-    expect(within(footer).queryByRole('link', { name: 'Get help' })).toBeNull();
+    await screen.findByRole('navigation', { name: 'Main' });
+    expect(screen.queryByRole('contentinfo')).toBeNull();
   });
 
   it('the signed-out header links to it', () => {

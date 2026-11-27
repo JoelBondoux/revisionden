@@ -12,7 +12,6 @@ import { useLessonShowsPip } from '../features/juice/pip/lessonPip';
 import { OfflineBanner } from '../pwa/OfflineBanner';
 import { useStudent } from '../session/StudentContext';
 import { PublicHeader } from './PublicHeader';
-import { VersionFooter } from './VersionFooter';
 import { MyAvatarProvider, useMyAvatar } from '../features/me';
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
@@ -80,8 +79,8 @@ function StudentLayout() {
         </header>
         <Outlet />
       </main>
-      {/* No Get help link here: it lives on Settings, reached from Me (owner, 2026-11-26). */}
-      <VersionFooter />
+      {/* No Get help link here: it lives on Settings, reached from Me (owner, 2026-11-26). The
+          version line is on About only (UX-1). */}
       <RewardNotices />
     </div>
   );
@@ -100,7 +99,6 @@ function PublicLayout() {
       <main id="main" className={mainClass} tabIndex={-1}>
         <Outlet />
       </main>
-      <VersionFooter />
       <BugButton />
     </>
   );
@@ -151,7 +149,6 @@ function FocusPages() {
           <Outlet />
         )}
       </main>
-      <VersionFooter />
       {!topRow && <BugButton />}
     </>
   );

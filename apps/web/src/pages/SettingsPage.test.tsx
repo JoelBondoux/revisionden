@@ -14,7 +14,7 @@ describe('Me (the /settings page, W9)', () => {
     expect(screen.getByRole('button', { name: 'Edit my avatar' })).toBeInTheDocument();
   });
 
-  it('lists Get help first, then My progress and My rewards, then Look and sound and More', async () => {
+  it('lists Get help first, then My progress and My rewards, then Look and sound and Subjects, family and feedback', async () => {
     renderRoute('/settings');
     await screen.findByRole('heading', { level: 1, name: 'Me' });
     // Friends league (FL) shows once the API confirms friends exist (dev only for now).
@@ -43,7 +43,7 @@ describe('Me (the /settings page, W9)', () => {
       'My rewards',
       'Friends league',
       'Look and sound',
-      'More',
+      'Subjects, family and feedback',
     ]);
     for (const name of names) {
       expect(within(main).getByRole('link', { name: name! })).toHaveClass('button-tile');
@@ -88,7 +88,7 @@ describe('More (W9)', () => {
 
   it('holds everything else: profile, parents, feedback, policies and about', async () => {
     renderRoute('/settings/more');
-    await screen.findByRole('heading', { level: 1, name: 'More' });
+    await screen.findByRole('heading', { level: 1, name: 'Subjects, family and feedback' });
     const hrefs = linkNames();
     for (const href of [
       '/family',

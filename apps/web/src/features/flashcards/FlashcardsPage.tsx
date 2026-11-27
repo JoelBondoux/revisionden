@@ -18,7 +18,7 @@ import { StepThrough } from '../../components/StepThrough';
 import { ArenaProgress } from '../juice';
 import { subjectLabel, useLearnApi, type FlashcardRating } from '../learn/learnApi';
 import { NewRewards } from '../learn/NewRewards';
-import { DraftBanner } from '../learn/parts';
+import { DraftTag } from '../learn/parts';
 import { useSound } from '../sound';
 import { ReadAloudButton } from '../read-aloud';
 import { LearnMore, learnLinksByTopic, learnMoreLinks } from '../learn-links';
@@ -533,7 +533,7 @@ function FlashcardsScreen({
   ];
   return (
     <div className="flashcards">
-      {overview.draftContent && <DraftBanner />}
+      {overview.draftContent && <DraftTag />}
       <h1>Cards</h1>
       <div role="tablist" aria-label="Flashcards" className="tabs">
         {tabs.map((t) => (

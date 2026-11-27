@@ -5,6 +5,7 @@ import { useApi } from '../../api/ApiContext';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { CardsIcon, FlameIcon, StarIcon } from '../../components/icons';
+import { TextLink } from '../../components/links';
 import { InstallRow } from '../../map/InstallRow';
 import { useStudent } from '../../session/StudentContext';
 import { useDailyApi } from '../daily/dailyApi';
@@ -19,7 +20,8 @@ import './home.css';
 /**
  * Home (J15b, owner 2026-11-26): where Pip takes you. One screen of where you stand and today's
  * goals, low on words: level and XP, streak, the goal rings, one big next-mission button, weak
- * spots to fix, the friends league (soon) and this week's days towards the reward.
+ * spots to fix, the friends league rank where there is one, and this week's days towards the
+ * reward.
  */
 
 const whole = (n: number) => String(Math.round(n));
@@ -202,8 +204,11 @@ function HomeBody({
               >
                 <StarIcon />
               </Ring>
+              {/* UX-1: the goals say in words what they count, not a bare 30/50. */}
               <span className="home-goals__label">
-                {smashed ? 'Goal smashed!' : `${map.xpToday}/${map.dailyGoalXp}`}
+                {smashed
+                  ? 'Daily goal smashed!'
+                  : `Daily goal: ${map.xpToday} of ${map.dailyGoalXp} XP`}
               </span>
             </li>
             {fiveADay && (
@@ -219,31 +224,32 @@ function HomeBody({
                 >
                   <b>5</b>
                 </Ring>
-                {fiveADay.answered < fiveADay.total ? (
-                  <Link
-                    to="/learn/daily"
-                    className="home-goals__start"
-                    aria-label={`${fiveADay.answered > 0 ? 'Continue' : 'Start'} your 5-a-day`}
-                  >
-                    {fiveADay.answered > 0 ? 'Continue' : 'Start'}
-                  </Link>
-                ) : (
-                  <span className="home-goals__label">Done</span>
-                )}
+                <span className="home-goals__text">
+                  <span className="home-goals__label">
+                    {fiveADay.answered} of {fiveADay.total} questions today
+                  </span>
+                  {fiveADay.answered < fiveADay.total && (
+                    <Link
+                      to="/learn/daily"
+                      className="home-goals__start"
+                      aria-label={`${fiveADay.answered > 0 ? 'Continue' : 'Start'} your 5-a-day`}
+                    >
+                      {fiveADay.answered > 0 ? 'Continue' : 'Start'}
+                    </Link>
+                  )}
+                </span>
               </li>
             )}
             {cardsDue !== null && (
               <li>
-                <Link
-                  to="/cards"
-                  className="home-goals__cards"
-                  aria-label={`Cards: ${cardsDue} due`}
-                >
-                  <span className="home-goals__cards-icon" aria-hidden="true">
+                <span className="home-goals__cards" aria-hidden="true">
+                  <span className="home-goals__cards-icon">
                     <CardsIcon />
                   </span>
-                </Link>
-                <span className="home-goals__label">{cardsDue} due</span>
+                </span>
+                <TextLink to="/cards" className="home-goals__label home-goals__link">
+                  {cardsDue} {cardsDue === 1 ? 'card' : 'cards'} to review
+                </TextLink>
               </li>
             )}
           </ul>
@@ -280,14 +286,9 @@ function HomeBody({
 
       <div className="home-row-title">
         <h2 id="home-fix">Fix these</h2>
-        {/* The rank chip where friends are available (dev only for now, FL); otherwise "Soon". */}
-        <LeagueChip
-          fallback={
-            <span className="home-league">
-              <span>Friends league</span> <small>Soon</small>
-            </span>
-          }
-        />
+        {/* The rank chip where friends are available (dev only for now, FL); nothing otherwise
+            (UX-1: no "Friends league · Soon" pill). */}
+        <LeagueChip />
       </div>
       {weak.length > 0 ? (
         <ul className="home-fix" aria-labelledby="home-fix">
