@@ -433,10 +433,13 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
 `apps/web/src/map/` (`WigglyMap.tsx`, `route.ts`, `bridges.ts`, `nodeArt.tsx`, `wiggly.css`,
 `wiggly-styles.css`), reference `docs/mockups/all-themes-pip.html`.
 
-- **The big subject box** at the top (Pip dressed for the subject, "Your subject", Change) opens
-  **Subject selection**: every subject with Pip dressed for it, Back to the map.
+- **One compact line** on top (UX-2, owner-approved UX report): the subject and level as a button
+  ("Maths · Higher ▾", read as "Maths · Higher (change subject)") that opens **Subject
+  selection** (every subject with Pip dressed for it, Back to the map), then the streak. The page
+  heading "Topic map" is for screen readers only. On a 412 × 915 phone the path starts in the top
+  third (`e2e/tests/map.spec.ts`).
 - **One unit at a time**: a sideways pager (swipe, the arrow buttons, or the arrow keys on the
-  focused pager) with dots; the heading says the unit and its mastery.
+  focused pager); the heading says the unit and its mastery, with the unit dots under it.
 - **Each unit's route comes from a seed** (subject + unit, `layoutRoute`): S-bends, switchbacks, a
   long sweep or a curl (one segment bulges sideways; no true loop, so the road never crosses
   itself). It **climbs from the first topic at the bottom to the unit challenge at the top**, and

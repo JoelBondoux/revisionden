@@ -9,6 +9,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - Home now has its own button in the bottom bar: Home, Learn (the map), Cards and Me. Plan and Papers are out of the bar until they're ready.
 - Your subject now shows at the top of Home, Learn and Cards (for example "Maths ▾"). Tap it to switch subject, and the app remembers your choice. Pick a subject now lists the one you're on first, then the ones you can start, with the coming-soon subjects tucked into one line.
+- The topic map's top is slimmer: your subject and level now sit on one small button (tap it to change subject) next to your streak, so more of your path shows straight away.
 - A-Level Computer Science is on its way: the topic map for OCR's specification (H446) is in place, with every topic checked word for word against OCR's own document. Questions come next.
 - Fixed: in Pop Burst dark mode, the boxes you type in on the parent screens (daily time limits, reminder times, a friend's private label and the family join code) now have an edge you can see. In Starlight dark mode, smaller grey words such as the timer note on Starting test are brighter.
 - If several bug reports from a student turn out not to be bugs, their bug button takes a rest for a week (and after repeated rests, switches off until a parent turns it back on from Parent home). Get help and "Ask a parent" always stay.
@@ -563,6 +564,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- UX-2 (owner-approved UX report): the map's title row, big subject box and qualification line (about 40% of a 412 x 915 phone before the path) are one compact line: a "Maths · Higher ▾" subject button (name "Maths · Higher (change subject)", `levelOf` in `pages/MapPage.tsx`) and the streak; the "Topic map" heading is visually hidden; the unit dots sit under the unit heading. The path now starts at 205px (was 342). Petal Glow dark's road is a lighter lavender (0.42, was 0.55) so the current flower's edge keeps 3:1 where the road crosses the pink glow. New e2e: the path starts in the top third at 412 x 915.
 - docs(legal): privacy notice 1.11 (9.2) and young people's notice 1.8 list the bug-report content id, last-problem code and display details, and rule out reading comfort and colour choices (L12); the young people's notice's Changes list is whole again (1.5 and 1.7 had been left in the wrong place).
 - CI (G10): the full Playwright end-to-end and accessibility suite now runs on pull requests into `dev` as well as `staging` and `main`. The web app is built once and shared with four parallel shards, and one "End-to-end result" check sums them up for branch protection.
 - Maths templates (T1): the expanding-brackets template (A4, v2) now says "Use the Power key (^) for powers.", matching F9's Power key in answer boxes (#254). Its 5 items were regenerated with the same numbers and re-verified.

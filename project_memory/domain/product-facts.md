@@ -261,9 +261,11 @@ Tags: #product #rules #limits #defaults
   focus stays in it. The student's avatar on the Me item sits in its own ring, head leaning out. The map's
   Today strip moved to Home: the map is now topics only. Code: `apps/web/src/features/home/`,
   `apps/web/src/features/juice/pip/`; e2e `e2e/tests/home.spec.ts`.
-- Map layout (J15c, the winding map from the owner-approved all-themes mockup, revision 5): a big
-  subject box (Pip dressed for the subject, Change) that opens Subject selection; then one unit at
-  a time in a sideways pager (swipe, arrows, arrow keys, dots). Each unit's route is generated from
+- Map layout (J15c, the winding map from the owner-approved all-themes mockup, revision 5; header
+  slimmed in UX-2): one compact line, the subject and level as a button ("Maths · Higher ▾") that
+  opens Subject selection, then the streak, so the path starts in the top third of a 412 x 915
+  phone; then one unit at a time in a sideways pager (swipe, arrows, arrow keys, dots under the
+  unit heading). Each unit's route is generated from
   a seed (subject + unit) and climbs from the first topic at the bottom to the unit challenge at
   the top, opening on the current topic (the next mission's topic, with a "You are here" tag).
   On a short phone where the unit's scroller runs on under the bottom nav (320 x 640), the
