@@ -295,6 +295,10 @@ Tags: #product #rules #limits #defaults
   batch (F11b, `flashcard_sessions.extra_cards`, migration 0032).
   Each "10 more" tap starts exactly one new session (W18); an open session that is never
   finished takes no reward slot and does not change the extra count (slots are taken on finish).
+- Bug reports (F16): with device details on, a report from a lesson or the Cards tab names the
+  question or deck card on screen by its content id (never text, never a student's own card),
+  and says how the screen looked (look, light or dark, pattern, pixel density, pinch zoom, text size
+  against 16px). Never the reading tint, dyslexia-friendly font or colour-blind colours (L, notice 1.11).
 - Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
   `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
   answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.
@@ -786,7 +790,10 @@ Tags: #product #rules #limits #defaults
   details refused; device details optional; parents see their family's feedback; never sent to
   GitHub automatically; 5 in any 24 hours per sender; device details off by default for students, on for parents; deleted 12 months after closing (cron).
   The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
-  needed.
+  needed. Device details never include reading comfort or colour choices (reading tint,
+  dyslexia-friendly font, colour-blind friendly colours), as they could hint at a health condition
+  (L12 ruling, solicitor to confirm); allowed display details are the look name, light/dark, zoom, pixel density,
+  high contrast and pattern on/off, plus the content id on screen (privacy notice 1.11, 9.2).
   Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
 - Parents confirm the terms and privacy notice in onboarding (version stored in
   `policy_acceptances`) on a "Before you start" page that shows each policy's plain-English
@@ -865,6 +872,17 @@ Tags: #product #rules #limits #defaults
   stay light. Combo bonus: +5 XP per right answer from the 3rd in a row (Learn mode; Test mode at the
   reveal). Never lives, timers, pay-to-continue, mystery rewards or streak guilt; after the daily cap
   the call to action becomes "See you tomorrow". Detail: `docs/GAME_FEEL.md`. Workstream J.
+- Settled in J17z (W21 contrast sweep, decision 0012): controls share three colours, defined in
+  `apps/web/src/design/themes.css`: `--color-control-edge` (the look's secondary text colour) for the edge of
+  chips, tabs, inputs and selects; `--color-selected` (the main colour in light, the light edge colour in dark)
+  as the fill of a selected chip, tab or period toggle, with `--color-on-selected` words. Flip card topics use
+  `--color-primary-edge`; the feedback thanks line uses `--color-text`; Garden Grow and Sticker Book keep their
+  pale "Up next" card in dark ink in both modes.
+- Settled in J17y (student report "touch areas don't match the buttons", Galaxy Fold 7 open, 750×832): a pressed
+  button only sinks, at most 3px (`translateY`, or `translate` up to 3px each way for hard-shadow looks), with
+  no squash or shrink (`apps/web/src/design/press.test.ts`). The report was filed at 05:01 on 26 Nov, 23
+  minutes before I12 moved the bug button out of the way into the student app's top row; it could not be
+  reproduced afterwards.
 - Settled in J1 (`apps/web/src/features/juice/logic.ts`): stars for a set are 3 for all right, 2 for at
   least 60% right (3–4 of 5), otherwise 1. A burst is about 20 particles, capped at 24; confetti is
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3

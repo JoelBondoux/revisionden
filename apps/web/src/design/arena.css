@@ -59,7 +59,7 @@
 }
 
 .arena .btn:active:not(:disabled) {
-  transform: translateY(5px) scale(0.97, 0.94);
+  transform: translateY(3px);
 }
 
 .arena .btn--secondary {
@@ -126,7 +126,7 @@
 }
 
 .answer-option:active {
-  transform: translateY(6px) scale(0.97, 0.94);
+  transform: translateY(3px);
   box-shadow: none;
 }
 

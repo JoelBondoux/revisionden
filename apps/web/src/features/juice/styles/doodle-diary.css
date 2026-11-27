@@ -266,7 +266,7 @@
 }
 
 :root[data-effect-style='doodle-diary'] .button-tile:active {
-  transform: translate(2px, 3px) rotate(-1deg);
+  transform: translate(2px, 3px);
   box-shadow: 1px 1px 0 var(--color-text);
 }
 

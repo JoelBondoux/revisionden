@@ -78,7 +78,7 @@
   box-sizing: border-box;
   min-height: var(--tap-target);
   padding: 0 var(--space-4);
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-control-edge);
   border-radius: var(--radius-sm);
   font: inherit;
   font-weight: var(--font-weight-bold);

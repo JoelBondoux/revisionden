@@ -145,7 +145,7 @@
 }
 
 :root[data-effect-style='starlight'] .button-tile:active {
-  transform: scale(0.95);
+  transform: translateY(2px);
   box-shadow: 0 0 32px rgb(75 227 255 / 55%);
 }
 

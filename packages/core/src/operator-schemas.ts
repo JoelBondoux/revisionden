@@ -102,6 +102,15 @@ const ticketDevice = z
     screenSize: z.string().optional(),
     online: z.boolean().optional(),
     lastProblem: z.string().optional(),
+    /** F16: the content id of the question or deck card on screen. */
+    contentId: z.string().optional(),
+    /** F16: how the screen looked (settings and sizes only). */
+    look: z.string().optional(),
+    theme: z.string().optional(),
+    pattern: z.string().optional(),
+    pixelRatio: z.number().optional(),
+    zoom: z.number().optional(),
+    textScale: z.number().optional(),
   })
   .strict();
 

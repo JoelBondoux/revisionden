@@ -128,3 +128,20 @@
     display: none;
   }
 }
+
+/*
+ * J17z (W21 contrast sweep, decision 0012): shared colours for controls, in every look. A control's
+ * edge (chips, tabs, inputs, selects) uses the secondary text colour, so it reaches 3:1 on the page
+ * and on cards; a selected chip, tab or toggle is filled with the main colour in light and the light
+ * edge colour in dark (the dark main colours are too dim on a dark page), with words that read on it.
+ */
+:root {
+  --color-control-edge: var(--color-text-secondary);
+  --color-selected: var(--color-primary);
+  --color-on-selected: var(--color-text-on-primary);
+}
+
+:root[data-theme='dark'] {
+  --color-selected: var(--color-primary-edge);
+  --color-on-selected: var(--color-background);
+}

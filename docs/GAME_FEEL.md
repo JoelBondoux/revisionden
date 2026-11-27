@@ -34,8 +34,12 @@
 - **Combo:** from 2 right in a row a "COMBO ×n" badge pops in; the chime rises a step per combo
   (up to 6). A wrong answer quietly resets it.
 - **Progress bar:** glowing fill with a springy overshoot.
-- **Buttons:** chunky with a bottom edge, press-down "jelly" on tap; the main call to action
-  pulses gently and has a moving shine.
+- **Buttons:** chunky with a bottom edge, press-down on tap; the main call to action
+  pulses gently and has a moving shine. A pressed button only sinks (at most 3px down, or down
+  and across for a hard-shadow look) and never squashes or shrinks, so it stays under the finger
+  (J17y, a student's Galaxy Fold report; `design/press.test.ts` checks every `:active` rule).
+  `e2e/tests/touch-targets.spec.ts` taps the centre and lower edge of each answer at 750 × 832
+  and checks the bug button covers no answer, Check or Continue (750 × 832 and 412 × 915).
 - **Set complete:** stars pop in one by one with rising notes (3 stars at 5/5, 2 at 3–4, 1
   otherwise), confetti, XP tally, best combo (in the arena's text accent, `--arena-glow`, so it
   reads AA in every look; W18), daily-goal bar fills, then **Next mission**
@@ -88,7 +92,7 @@ No plain underlined text links. Use the shared components in `apps/web/src/compo
   bar under it and an underline on hover; it stays inline for readability.
 
 All render real links (router `Link` or `<a>`), keep a 3px focus ring and a 44px target, lift on
-hover and squash on press (transform only; off with reduced motion). Outside links that open a new
+hover and sink a little on press (transform only, at most 3px, J17y; off with reduced motion). Outside links that open a new
 tab say so to screen readers.
 
 ## Themes, colours and background (J8, owner request 2026-11-25)
@@ -391,6 +395,12 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
   - **on an arena surface** (a card that paints `--arena-bg`, such as the Lesson complete stat
     cards, W18): `--arena-glow`;
   - never `--arena-gold` as text on the page (it is 1.4:1 on a light page).
+  - **controls (J17z, W21 sweep, decision 0012):** a chip, tab, input or select draws its edge in
+    `--color-control-edge` (the look's secondary text colour, 3:1 on the page and on cards); a
+    selected chip, tab or period toggle is filled with `--color-selected` (the main colour in light,
+    the light edge colour in dark) with `--color-on-selected` words, and a selected avatar option
+    gets a thick `--color-selected` ring. All three are defined once in `design/themes.css` and
+    tested in every look (`design/controlContrast.test.ts`).
     `e2e/tests/lesson.spec.ts` holds each of these still and measures it on what is painted behind
     it (`paintedTextFailures`), in every look, light and dark.
 - **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with

@@ -808,13 +808,24 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   "please leave out personal details" message.
 - Optional "include device details": off by default for students, on by default for parents
   (Children's Code high-privacy default; lead decision 2026-11-24), either can change it: app version, screen,
-  route, browser family, screen size and online/offline. Never IP address, location or contacts.
+  route, browser family, screen size and online/offline. From a lesson or the Cards tab it also
+  names the question or deck card on screen by its content id (F16: an id only, never its text,
+  never a student's own card), so the content team can find it. It also says how the screen
+  looked (F16): look, light or dark, pattern, pixel density, pinch zoom and text size against
+  16px (never the reading tint, dyslexia-friendly font or colour-blind colours: L ruling, notice
+  1.11), so a layout or touch bug can be reproduced. Never IP
+  address, location or contacts.
 - Students can send feedback; the form tells them their parent can see it. Parents see their
   family's feedback and its status in the parent portal.
 - Stored in a `feedback` table (family id, sender role, kind, text, device details, status). The
   operator sees and triages it at `/admin/feedback` (operator role from configuration, not from
   an email in code). Status: new, looking into it, fixed, will not fix; the sender sees status
   changes.
+- Device details never include reading comfort or colour choices (reading tint, dyslexia-friendly
+  font, colour-blind friendly colours): they could hint at a health condition or a learning
+  difference (L12 ruling, 2026-11-26; solicitor to confirm). Display details that are allowed:
+  the active look name, light or dark mode, page and pinch zoom, pixel density, high contrast on or off and background
+  pattern on or off (privacy notice 9.2, version 1.11).
 - Never sent automatically to GitHub (the repository is public). The operator may copy a report
   into an issue by hand, without any text that could identify the family.
 - Rate limit 5 in any 24 hours per sender (each student, each parent sign-in). Deleted 12 months

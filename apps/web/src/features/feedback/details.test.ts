@@ -2,7 +2,9 @@ import {
   browserFamily,
   collectDeviceDetails,
   findPersonalDetails,
+  readDisplayDetails,
   rememberLastProblem,
+  rememberOnScreen,
 } from './details';
 
 describe('findPersonalDetails', () => {
@@ -89,5 +91,81 @@ describe('last problem (E8)', () => {
         online: true,
       }).lastProblem,
     ).toBeUndefined();
+  });
+});
+
+describe('the question or card on screen (F16)', () => {
+  afterEach(() => rememberOnScreen(undefined));
+  const base = {
+    appVersion: '1',
+    route: '/learn',
+    userAgent: 'curl/8.0',
+    width: 400,
+    height: 800,
+    online: true,
+  };
+
+  it('adds the content id of the question or card on screen, and nothing else about it', () => {
+    rememberOnScreen('gcse-maths-h-n4-0001');
+    expect(collectDeviceDetails(base)).toMatchObject({ contentId: 'gcse-maths-h-n4-0001' });
+  });
+
+  it('drops anything that is not a plain id, and forgets it when the screen goes', () => {
+    rememberOnScreen('What is 2 + 2?');
+    expect(collectDeviceDetails(base)).not.toHaveProperty('contentId');
+    rememberOnScreen('gcse-maths-h-n4-0001');
+    rememberOnScreen(undefined);
+    expect(collectDeviceDetails(base)).not.toHaveProperty('contentId');
+  });
+});
+
+describe('how the screen looks, for reproducing a bug (F16, L ruling in #392)', () => {
+  const root = () => {
+    const el = document.createElement('html');
+    Object.assign(el.dataset, {
+      effectStyle: 'doodle-diary',
+      theme: 'dark',
+      palette: 'colourblind',
+      pattern: 'off',
+      readingFont: 'dyslexic',
+      readingSize: 'large',
+      readingSpacing: 'wide',
+      readingTint: 'cream',
+    });
+    return el;
+  };
+  const env = { pixelRatio: 2.625, zoom: 1.25, rootFontPx: 20 };
+
+  it('sends the look, light or dark, the pattern, pixel density, pinch zoom and text size', () => {
+    expect(readDisplayDetails(root(), env)).toEqual({
+      look: 'doodle-diary',
+      theme: 'dark',
+      pattern: 'off',
+      pixelRatio: 2.63,
+      zoom: 1.25,
+      textScale: 1.25,
+    });
+  });
+
+  it('never sends a setting that could hint at a health condition', () => {
+    const details = readDisplayDetails(root(), env);
+    for (const key of [
+      'palette',
+      'readingFont',
+      'readingTint',
+      'readingSize',
+      'readingSpacing',
+      'reducedMotion',
+    ]) {
+      expect(details).not.toHaveProperty(key);
+    }
+  });
+
+  it('leaves out anything that is not a plain setting name', () => {
+    const el = document.createElement('html');
+    el.dataset.effectStyle = 'Hello there <b>';
+    const details = readDisplayDetails(el, { pixelRatio: 1, zoom: 1, rootFontPx: 16 });
+    expect(details).not.toHaveProperty('look');
+    expect(details).toMatchObject({ theme: 'light', pattern: 'on', textScale: 1, zoom: 1 });
   });
 });

@@ -134,7 +134,7 @@
 }
 
 :root[data-effect-style='pixel-arcade'] .button-tile:active {
-  transform: translate(4px, 4px);
+  transform: translate(3px, 3px);
   box-shadow:
     0 0 0 3px var(--px-pink),
     2px 2px 0 3px #000;

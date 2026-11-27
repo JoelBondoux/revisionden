@@ -37,6 +37,8 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const CLOSED_STATUSES = new Set(['fixed', 'will_not_fix']);
 
 // TODO(workstream C): move these request schemas into packages/core.
+/** A display setting name such as "doodle-diary" or "dark" (F16). */
+const setting = z.string().regex(/^[a-z0-9-]{1,40}$/);
 const deviceSchema = z
   .object({
     appVersion: z.string().max(20),
@@ -46,6 +48,17 @@ const deviceSchema = z
     online: z.boolean(),
     /** E8: the last problem the screen showed, a short code only (no free text). */
     lastProblem: z.string().regex(/^[A-Za-z0-9_:-]{1,80}$/),
+    /** F16: the content id of the question or deck card on screen; an id only, never text. */
+    contentId: z.string().regex(/^[A-Za-z0-9_-]{1,80}$/),
+    // F16: how the screen looked (settings and sizes only, never free text). Never the reading
+    // tint, the dyslexia-friendly font or the colour-blind colours, which could hint at a health
+    // condition (L ruling in #392): the strict schema refuses them.
+    look: setting,
+    theme: setting,
+    pattern: setting,
+    pixelRatio: z.number().min(0.1).max(10),
+    zoom: z.number().min(0.1).max(10),
+    textScale: z.number().min(0.1).max(10),
   })
   .partial()
   .strict();

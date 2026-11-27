@@ -94,8 +94,12 @@ their family.
 
 Feedback stores the family, who sent it (role, and the student or parent sign-in), the kind,
 optional text (refused if it holds an email, UK mobile number or a family nickname) and optional
-device details (app version, screen, browser family, screen size, online). Never IP, location or
-contacts. The interactive lesson pilot's one-tap "Did this help?" (W8) stores only Yes or No
+device details (app version, screen, browser family, screen size, online; and, from F16: the
+content id of the question or deck card on screen in a lesson or the Cards tab, an id only, never its
+text and never a student's own card; how the screen looked: the look (effect style), light or dark, the background pattern, the
+screen's pixel density, pinch zoom and the text size against 16px). Settings and sizes only. Never the
+reading tint, the dyslexia-friendly font or the colour-blind colours (or other reading or motion
+settings), which could hint at a health condition (L ruling, notice 1.11). Never IP, location or contacts. The interactive lesson pilot's one-tap "Did this help?" (W8) stores only Yes or No
 and the lesson item, never text. Deleted 12 months after closing. Policy confirmations store only the policy, version and
 date per parent sign-in.
 
