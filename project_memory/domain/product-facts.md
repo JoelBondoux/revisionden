@@ -888,6 +888,9 @@ Tags: #product #rules #limits #defaults
   `--color-control-edge` border, `--color-selected` fill when checked; system controls in forced colours); icon-only
   buttons have a control-edge border; the flashcard tabs' current tab is filled like a selected chip; the prize box keeps
   light text inside a lesson. Comic Pop's light edge colour is #0a3d7a and Garden Grow's light secondary text #3d5a46.
+- Settled in J17x part 3 (W21b CI contrast list): every typing box without its own class (text, number, date, time and
+  the other text-like types, untyped inputs, textareas) has a 2px `--color-control-edge` border (`design/base.css`,
+  zero specificity). Starlight's dark secondary text is #e4e0ff.
 - Settled in J17y (student report "touch areas don't match the buttons", Galaxy Fold 7 open, 750×832): a pressed
   button only sinks, at most 3px (`translateY`, or `translate` up to 3px each way for hard-shadow looks), with
   no squash or shrink (`apps/web/src/design/press.test.ts`). The report was filed at 05:01 on 26 Nov, 23
