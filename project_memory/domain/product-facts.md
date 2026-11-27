@@ -474,7 +474,8 @@ Tags: #product #rules #limits #defaults
   decimals are compared without floating-point rounding (T1, 2026-11-26).
 - Answer format (S3-A rulings, rules in `packages/core/src/answer-format.ts`): an answer may declare
   `answer.subject` (`t`, `f^-1(x)`), so "t = RHS" counts as RHS in marking, the engine and the
-  blind check. Rounded numeric answers set `decimal_places` or `significant_figures` (not
+  blind check. A number answer whose question names a letter that is not the answer may instead
+  give `answer.no_subject` (a reason); S4 items must give one or the other. Rounded numeric answers set `decimal_places` or `significant_figures` (not
   `tolerance`): only the value rounded half up and written to that accuracy is right (28.274 and
   28.270 are wrong for 2 dp). Validation requires the field whenever the question asks for
   the answer itself to be rounded ("give your answer correct to…", "round … to…"), not for
