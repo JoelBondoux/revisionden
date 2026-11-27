@@ -120,6 +120,9 @@ export function SubjectPage() {
             <ButtonLink to="/learn/command-words" variant="secondary" block>
               Command words
             </ButtonLink>
+            <ButtonLink to={`/learn/subject/${subjectId}/past-papers`} variant="secondary" block>
+              Past papers
+            </ButtonLink>
           </div>
           <ul className="topic-list">
             {topics.data.topics.map((topic) => (

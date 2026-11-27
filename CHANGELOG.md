@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Each subject now has a Past papers page with links to the exam boards' own past papers and mark schemes. Your board comes first, and the other boards are there too if you're not sure which one you're on.
 - No more empty lessons: topics whose questions aren't ready yet show as "coming soon" on the map, and if a lesson ever has nothing to show, it offers a topic that's ready.
 - A-Level Computer Science is on its way: the topic map for OCR's specification (H446) is in place, with every topic checked word for word against OCR's own document. Questions come next.
 - Fixed: in Pop Burst dark mode, the boxes you type in on the parent screens (daily time limits, reminder times, a friend's private label and the family join code) now have an edge you can see. In Starlight dark mode, smaller grey words such as the timer note on Starting test are brighter.
@@ -308,6 +309,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- Past papers (Q7): `packages/core/src/past-papers.ts` (`PAST_PAPER_PAGES`, one checked public finder per board, fetched 200 on 2026-11-27; `pastPaperLinks`, own board first), `features/past-papers/PastPapersPage` at `/learn/subject/:subjectId/past-papers`, and a Past papers button on the subject's Learn page. Links only, new tab, no PDFs or teacher-only deep links.
 - S4 (Statistics): 67 draft GCSE Maths Higher items for 1MA1 Statistics, S1 to S6 (`content/items/gcse-maths-higher/statistics/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point; data is given in the question, so no diagrams. Quote check, maths engine and schema pass for all; blind answer and adversarial review by OpenAI; 22 need individual approval (decision 0008).
 - S4 (Ratio): 185 draft GCSE Maths Higher items for 1MA1 Ratio, proportion and rates of change, R1 to R16 (`content/items/gcse-maths-higher/ratio/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point. Quote check and schema pass for all; blind answer and adversarial review by OpenAI (Gemini is over its spend cap); 41 need individual approval (unit and scale definitions, decision 0008).
 - S4 (Probability): 95 draft GCSE Maths Higher items for 1MA1 Probability, P1 to P9 (`content/items/gcse-maths-higher/probability/`), 9 to 12 a topic, each with a hint, an explanation and a cited specification point; terms such as relative frequency are defined in the question. Quote check, maths engine and schema pass for all; blind answer and adversarial review by OpenAI; 8 need individual approval (decision 0008) and 27 list standard facts for the fact-check stage.
