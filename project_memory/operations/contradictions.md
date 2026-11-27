@@ -5,6 +5,14 @@
 
 ## Open
 
+- [ ] **Lead's triage (L14) sends feedback text to an AI session, but privacy notice 9.3 says
+      feedback is never sent automatically to any other service.** `docs/legal/privacy-notice.md`
+      9.3 (and the processors list) against `apps/api/src/feedback/triage.ts`. Not settled: the
+      routes are off in production in code (`apps/api/src/env.ts`), and turning them on there needs
+      a privacy-notice change (version bump and parent re-prompt) and the AI provider named as a
+      processor for feedback, both signed off by the owner (and solicitor). Dev and staging hold
+      only made-up or adult-tester reports.
+
 - [ ] **Contrast sweep known failures (decision 0012).** The contrast sweep
       (`e2e/tests/contrast-sweep.spec.ts`) finds text and UI parts below WCAG AA in some looks and
       modes. Each one is listed in `e2e/tests/contrast-known.json` (tier 1 from computed styles, tier

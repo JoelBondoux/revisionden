@@ -993,10 +993,11 @@ Tags: #product #rules #limits #defaults
 
 ## Bug Hunter and secret achievements (planned)
 
-- Bug icon on every screen opens the bug report sheet (student app: in the top row beside Get help and sound; parent screens, `/parent…` and `/family…`: a top row of its own; other focused and public screens: a corner button, with room below the page). A student's bug confirmed by the operator:
+- Bug icon on every screen opens the bug report sheet (student app: in the top row beside Get help and sound; parent screens, `/parent…` and `/family…`: a top row of its own; other focused and public screens: a corner button, with room below the page). A student's bug confirmed by the lead's triage, or by the operator:
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
+- Lead's triage (L14; owner ruling 2026-11-27): a scoped triage token (Worker secret `TRIAGE_TOKEN_HASH`, its SHA-256 only) lets the lead confirm, mark duplicate or Not a bug at `/v1/triage` with a reason (≤300), audited as `triage-bot`; same rules as the operator. The operator can undo a triage outcome within 7 days (`TRIAGE_UNDO_DAYS`). Off in production until the owner approves.
 - Bug button rest (L13): the operator can mark a student's bug report Not a bug (no reward,
   closed). 3 within 14 days rest the bug button for 7 days; the 3rd rest within 90 days removes
   it until a parent (Parent home) or the operator switches it back on. Server-enforced; numbers in

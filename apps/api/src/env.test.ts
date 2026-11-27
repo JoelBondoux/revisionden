@@ -164,6 +164,19 @@ describe('environment validation', () => {
     ).toEqual({ secret });
   });
 
+  it('keeps the triage token off until its hash is set, and always off in production', () => {
+    const hash = 'a'.repeat(64);
+    expect(parseEnv(complete).triage).toBeUndefined();
+    expect(parseEnv({ ...complete, TRIAGE_TOKEN_HASH: hash }).triage).toEqual({ tokenHash: hash });
+    expect(
+      parseEnv({ ...complete, ENVIRONMENT: 'staging', TRIAGE_TOKEN_HASH: hash }).triage,
+    ).toEqual({ tokenHash: hash });
+    expect(
+      parseEnv({ ...complete, ENVIRONMENT: 'production', TRIAGE_TOKEN_HASH: hash }).triage,
+    ).toBeUndefined();
+    expect(() => parseEnv({ ...complete, TRIAGE_TOKEN_HASH: 'not-a-hash' })).toThrow();
+  });
+
   it('leaves the 1.0 cut-off (Founding Tester) unset until it is configured', () => {
     expect(parseEnv(complete).betaEndsAt).toBeUndefined();
     expect(

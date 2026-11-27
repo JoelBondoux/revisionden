@@ -304,6 +304,98 @@ describe('operator Not a bug and the bug button (L13)', () => {
   });
 });
 
+describe('operator undo of a triage outcome (L14)', () => {
+  const DAY = 24 * 60 * 60 * 1000;
+  const fromStudent = (f: Awaited<ReturnType<typeof makeFamily>>) => ({
+    senderRole: 'student' as const,
+    senderAuthUserId: null,
+    studentId: f.studentId,
+  });
+
+  it('reverses a triage Not a bug, so it no longer rests the bug button', async () => {
+    const f = await makeFamily();
+    const rows = [];
+    for (let i = 0; i < 3; i++) {
+      const row = await ticket(f, {
+        ...fromStudent(f),
+        outcome: 'not_a_bug',
+        notABugAt: t.clock.now(),
+        reviewedBy: 'triage',
+        status: 'will_not_fix',
+        closedAt: t.clock.now(),
+      });
+      rows.push(row);
+    }
+    const before = await t.app.request('/v1/student/bug-button', { headers: f.studentHeaders });
+    expect(await before.json()).toMatchObject({ state: 'paused' });
+
+    expect((await post(`/tickets/${rows[0]!.id}/undo-triage`)).data).toEqual({ ok: true });
+    const [saved] = await t.db.select().from(feedback).where(eq(feedback.id, rows[0]!.id));
+    expect(saved).toMatchObject({
+      outcome: null,
+      notABugAt: null,
+      reviewedBy: null,
+      status: 'looking_into_it',
+      closedAt: null,
+    });
+    const after = await t.app.request('/v1/student/bug-button', { headers: f.studentHeaders });
+    expect(await after.json()).toEqual({ state: 'on' });
+    expect(await audits()).toContainEqual(
+      expect.objectContaining({ action: 'ticket.undo_triage', targetId: f.familyId }),
+    );
+  });
+
+  it('reverses a triage confirm and takes back its reward', async () => {
+    const f = await makeFamily();
+    const row = await ticket(f, {
+      ...fromStudent(f),
+      outcome: 'confirmed',
+      rewardXp: 50,
+      trackStep: true,
+      confirmedAt: t.clock.now(),
+      reviewedBy: 'triage',
+    });
+    expect((await post(`/tickets/${row.id}/undo-triage`)).data).toEqual({ ok: true });
+    const [saved] = await t.db.select().from(feedback).where(eq(feedback.id, row.id));
+    expect(saved).toMatchObject({
+      outcome: null,
+      rewardXp: 0,
+      trackStep: false,
+      confirmedAt: null,
+    });
+  });
+
+  it('refuses after 7 days, and for an outcome the operator chose', async () => {
+    const f = await makeFamily();
+    const late = await ticket(f, {
+      ...fromStudent(f),
+      outcome: 'confirmed',
+      rewardXp: 50,
+      confirmedAt: t.clock.now(),
+      reviewedBy: 'triage',
+    });
+    const mine = await ticket(f, {
+      outcome: 'confirmed',
+      confirmedAt: t.clock.now(),
+      reviewedBy: 'operator',
+    });
+    const open = await ticket(f);
+    t.clock.advance(7 * DAY + 1);
+    expect(await post(`/tickets/${late.id}/undo-triage`)).toMatchObject({
+      status: 409,
+      code: 'undo_too_late',
+    });
+    expect(await post(`/tickets/${mine.id}/undo-triage`)).toMatchObject({
+      status: 400,
+      code: 'not_triage',
+    });
+    expect(await post(`/tickets/${open.id}/undo-triage`)).toMatchObject({
+      status: 400,
+      code: 'not_triage',
+    });
+  });
+});
+
 describe('operator tester flag (L13)', () => {
   it("sets and clears a student's tester flag, audited", async () => {
     const f = await makeFamily();
