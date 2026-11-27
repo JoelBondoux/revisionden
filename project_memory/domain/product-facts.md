@@ -784,7 +784,7 @@ Tags: #product #rules #limits #defaults
   The form also offers "Prefer email? help@revisionden.com" and asks for only the personal details
   needed. Device details never include reading comfort or colour choices (reading tint,
   dyslexia-friendly font, colour-blind friendly colours), as they could hint at a health condition
-  (L12 ruling, solicitor to confirm); allowed display details are light/dark, zoom, pixel density,
+  (L12 ruling, solicitor to confirm); allowed display details are the look name, light/dark, zoom, pixel density,
   high contrast and pattern on/off, plus the content id on screen (privacy notice 1.11, 9.2).
   Operator triage at `/admin/feedback` for sign-in emails in `OPERATOR_EMAILS`. Workstream L.
 - Parents confirm the terms and privacy notice in onboarding (version stored in

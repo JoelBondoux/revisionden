@@ -73,7 +73,7 @@ checks it and only tells us "yes, it's them".
 - **Feedback:** anything you choose to send us. If you include device details (they start
   off for you, and you see them before you send), we also get things like the app version, the
   screen you were on, the question or card you were looking at (just its code, never the words)
-  and how the app looked (light or dark, zoom, high contrast). Never your reading tint, font or
+  and how the app looked (your look, light or dark, zoom, high contrast). Never your reading tint, font or
   colour choices.
 - **"Ask a parent" notes:** if you ask a parent to raise something for you, the topic you
   picked and your short note, if you wrote one. Only your parents see it. It's deleted when a parent

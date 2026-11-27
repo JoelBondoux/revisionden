@@ -300,9 +300,9 @@ the app version, the screen you were on, the browser family, the screen size, wh
 online, a short code for the last problem that screen showed (if there was one) and, from a lesson
 or the Cards tab, the question or card you were looking at (its id only, never its text, and never
 a card a student made). They also say how the app looked on your device, to help us fix display
-and touch faults on particular devices: light or dark mode, page zoom and pinch zoom, how sharp the
-screen is (its pixel density), and whether high contrast and the background pattern were on. They
-never include your reading comfort or colour choices (such as a reading tint, the
+and touch faults on particular devices: the look you chose (such as "Comic Pop"), light or dark
+mode, page zoom and pinch zoom, how sharp the screen is (its pixel density), and whether high
+contrast and the background pattern were on. They never include your reading comfort or colour choices (such as a reading tint, the
 dyslexia-friendly font or colour-blind friendly colours), because those could hint at a health
 condition or a learning difference. For students device details start switched off; for parents
 they start switched on and can be turned off. We never collect your IP address, location or
@@ -382,7 +382,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
-- 1.11: Bug reports with device details on can name the question or card you were looking at (its id only), give a short code for the last problem the screen showed, and say how the app looked (light or dark mode, zoom, screen sharpness, high contrast and background pattern). They never include reading comfort or colour choices.
+- 1.11: Bug reports with device details on can name the question or card you were looking at (its id only), give a short code for the last problem the screen showed, and say how the app looked (its look, light or dark mode, zoom, screen sharpness, high contrast and background pattern). They never include reading comfort or colour choices.
 - 1.10: A parent can link a student's device with a one-time link they send, as well as the QR code.
 - 1.9: A passkey synced to the student's other devices works there too, as a separate device the parent can see and unlink. Each device keeps a random device code (we store only its hash), and both parents are told when a passkey is used on a new device.
 - 1.8: Labels our support team can put on your account (for example "Beta tester"), never personal information; kept while the account exists or until removed. You can leave the beta programme from the parent home.

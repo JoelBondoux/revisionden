@@ -10,6 +10,7 @@
       Settled by L12: `docs/legal/privacy-notice.md` 1.11 (9.2) and
       `docs/legal/privacy-for-young-people.md` 1.8 now list the question or card on screen (id
       only), the last-problem code (E8, which 9.2 had also left out) and the display details F
+      (including the active look name, a display choice like light or dark)
       plans next. Merge L12 together with, or after, both F PRs, so the notice never lists data the
       app does not send.
 
