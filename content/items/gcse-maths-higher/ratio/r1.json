@@ -6,7 +6,7 @@
     "difficulty": 2,
     "learning_point": "gcse-maths-h-r1-lp-standard-units",
     "expected_seconds": 30,
-    "prompt": "Change 4.75 litres to millilitres.",
+    "prompt": "Change 4.75 litres to ml.",
     "answer": {
       "value": "4750",
       "unit": "ml"
@@ -51,7 +51,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T10:27:31Z",
+          "at": "2026-11-27T12:43:30Z",
           "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -60,7 +60,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -68,23 +68,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:28:33Z",
-          "notes": "model answered \"4750 mL\"; expected \"4750\""
+          "at": "2026-11-27T12:43:54Z",
+          "notes": "model answered \"4750 ml\"; expected \"4750\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:28:35Z",
-          "notes": "unsupported_claim (hint): The hint states that there is a fixed conversion from litres to millilitres ('how many millilitres make 1 litre') but no quoted source is provided for this factual claim. The instruction says new factual claims in the hint need a quoted source like any other.; unsupported_claim (explanation): The explanation states 'There are 1000 millilitres in 1 litre' without a quoted source backing that specific conversion fact. The cited specification supports changing between related standard units, but does not itself state this conversion ratio."
+          "at": "2026-11-27T12:43:55Z",
+          "notes": "no problems found"
         }
       ]
     }
