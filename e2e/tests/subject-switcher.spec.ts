@@ -104,3 +104,48 @@ test('the subject picker lists the current subject, then ones you can start, the
   await expect(picker.getByRole('button', { name: 'Art Coming soon' })).toBeVisible();
   await expect(picker.getByRole('button', { name: 'Chemistry Coming soon' })).toBeVisible();
 });
+
+// Codex on #423: a long subject name in the top bar, at 320px with text at 200%, must not push
+// the page sideways; the row wraps instead.
+test.describe('at 320px with text at 200%', () => {
+  test.use({ viewport: { width: 320, height: 640 } });
+
+  for (const path of ['/home', '/map', '/cards']) {
+    test(`a long subject name never scrolls ${path} sideways`, async ({ page }) => {
+      await seedApp(page, 'pupil');
+      await page.route('**/v1/student/map**', (route) =>
+        route.fulfill({
+          json: {
+            ...topicMap,
+            subjectId: 'computer-science',
+            subject: 'Computer Science',
+            subjects: [
+              { subjectId: 'computer-science', subject: 'Computer Science', hasContent: true },
+            ],
+          },
+        }),
+      );
+      await page.goto(path);
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      const button = page.getByRole('button', { name: /^Computer Science ?, change subject$/ });
+      await expect(button).toBeVisible();
+      await page.evaluate(() => document.fonts.ready);
+      await expect
+        .poll(() =>
+          page.evaluate(
+            () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          ),
+        )
+        .toBeLessThanOrEqual(0);
+      // Every item in the top row (Pip, the subject, mute, report a problem) stays on screen: a
+      // row that overflows to the left (it is right-aligned) never shows as sideways scrolling.
+      const offScreen = await page.evaluate(() =>
+        Array.from(document.querySelectorAll('.sound-header > *'))
+          .map((el) => ({ name: el.className, box: el.getBoundingClientRect() }))
+          .filter(({ box }) => box.left < -0.5 || box.right > window.innerWidth + 0.5)
+          .map(({ name }) => name),
+      );
+      expect(offScreen).toEqual([]);
+    });
+  }
+});
