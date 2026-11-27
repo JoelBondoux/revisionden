@@ -878,6 +878,11 @@ Tags: #product #rules #limits #defaults
   as the fill of a selected chip, tab or period toggle, with `--color-on-selected` words. Flip card topics use
   `--color-primary-edge`; the feedback thanks line uses `--color-text`; Garden Grow and Sticker Book keep their
   pale "Up next" card in dark ink in both modes.
+- Settled in J17y (student report "touch areas don't match the buttons", Galaxy Fold 7 open, 750×832): a pressed
+  button only sinks, at most 3px (`translateY`, or `translate` up to 3px each way for hard-shadow looks), with
+  no squash or shrink (`apps/web/src/design/press.test.ts`). The report was filed at 05:01 on 26 Nov, 23
+  minutes before I12 moved the bug button out of the way into the student app's top row; it could not be
+  reproduced afterwards.
 - Settled in J1 (`apps/web/src/features/juice/logic.ts`): stars for a set are 3 for all right, 2 for at
   least 60% right (3–4 of 5), otherwise 1. A burst is about 20 particles, capped at 24; confetti is
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3

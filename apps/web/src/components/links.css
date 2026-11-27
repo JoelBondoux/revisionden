@@ -12,7 +12,7 @@
 }
 
 .btn-link:active {
-  transform: translateY(5px) scale(0.97, 0.94);
+  transform: translateY(3px);
   box-shadow: none;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .link-tile:active {
-  transform: translateY(5px) scale(0.99, 0.97);
+  transform: translateY(3px);
   box-shadow: none;
 }
 
@@ -144,7 +144,7 @@
 }
 
 .link-chip:active {
-  transform: scale(0.95);
+  transform: translateY(2px);
 }
 
 .link-chip:focus-visible {
@@ -258,7 +258,7 @@
 }
 
 .button-tile:active {
-  transform: translateY(4px) scale(0.96, 0.92);
+  transform: translateY(3px);
   box-shadow: none;
 }
 

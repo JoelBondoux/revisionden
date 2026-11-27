@@ -218,7 +218,7 @@
 }
 
 :root[data-effect-style='sticker-book'] .button-tile:active {
-  transform: scale(0.94);
+  transform: translateY(2px);
   box-shadow:
     0 0 0 3px #fff,
     0 0 0 5px var(--sb-edge);

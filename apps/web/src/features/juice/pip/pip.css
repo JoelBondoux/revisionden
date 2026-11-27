@@ -256,7 +256,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .pip-home:active .pip-figure {
-    transform: scale(0.94);
+    transform: translateY(2px);
     transition: transform 120ms ease-out;
   }
 }

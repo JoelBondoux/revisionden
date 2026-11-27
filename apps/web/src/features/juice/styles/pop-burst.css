@@ -154,7 +154,7 @@
 }
 
 :root[data-effect-style='pop-burst'] .button-tile:active {
-  transform: translateY(5px) scale(1.04, 0.9);
+  transform: translateY(3px);
   box-shadow: 0 1px 0 #3a1a7a;
 }
 

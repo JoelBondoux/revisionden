@@ -132,7 +132,7 @@
 }
 
 :root[data-effect-style='comic-pop'] .button-tile:active {
-  transform: translate(4px, 4px);
+  transform: translate(3px, 3px);
   box-shadow: 1px 1px 0 var(--color-text);
 }
 
