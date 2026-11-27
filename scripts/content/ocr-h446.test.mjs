@@ -94,3 +94,18 @@ test('every H446 leaf cites the specification with a quote at a checkable locati
 test('the H446 tree stays draft', () => {
   assert.equal(tree.data.verification.status, 'draft');
 });
+
+test('every A-Level Computer Science item links to an H446 leaf and stays draft', () => {
+  const ids = new Set(leaves(tree.data.topics).map(({ node }) => node.id));
+  const items = content.items.filter(({ data }) => data.topic.startsWith('alevel-cs-'));
+  assert.ok(items.length >= 110, `only ${items.length} items`);
+  for (const { data } of items) {
+    assert.ok(ids.has(data.topic), `${data.id} -> ${data.topic}`);
+    assert.equal(data.verification.status, 'draft', data.id);
+    assert.ok(data.hint && data.explanation, `${data.id} needs a hint and an explanation`);
+    assert.ok(
+      data.citations.every((c) => c.quote && c.url === SPEC_URL),
+      data.id,
+    );
+  }
+});

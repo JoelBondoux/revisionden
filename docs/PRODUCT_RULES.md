@@ -319,10 +319,12 @@ Product owner decision, 2026-11-25: **parent view only**.
   unicode minus as `-`, `×`, `·`, `*` (and `x` between two numbers) as one multiply, `÷` as `/`,
   superscripts as `^`, `≤`/`≥` as `<=`/`>=`, `√` as `sqrt`, and "and" or `;` in a list like `,`.
   A multiply sign is kept between two numbers and before a sign (`3n × -2` is not `3n - 2`).
-  When the item sets `answer.any_order`, products and sums may be in any order (signs stay with
-  their terms, and up to 4 letters on their own such as `pq` count as a product), a list of
-  values in any order, and an equation either way round; coordinates and
-  inequalities are never reordered. `answer.units` lists units the answer may end with or leave
+  When the item sets `answer.any_order`, a list's items may be in any order but each item must be
+  exactly as written (F23: in `HH, HT, TH, TT`, `HT` is not `TH`); a single answer may write
+  products and sums in any order (signs stay with their terms, and up to 4 letters on their own
+  such as `pq` count as a product) and an equation either way round; coordinates and
+  inequalities are never reordered. Outer set braces around a whole list are optional
+  (`{4, 5, 6}` is `4, 5, 6`; F23). `answer.units` lists units the answer may end with or leave
   off, in any of their spellings as numeric answers accept them (F25: `60 degrees` for `°`).
   `answer.kind: "hex"` (F24, opt-in per item) compares a hexadecimal value: case, a `0x` prefix
   and leading zeros are ignored (`0x2F`, `2f` and `02F` all match `2F`); ordinary answers are
@@ -847,7 +849,13 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   never a student's own card), so the content team can find it. It also says how the screen
   looked (F16): look, light or dark, pattern, pixel density, pinch zoom and text size against
   16px (never the reading tint, dyslexia-friendly font or colour-blind colours: L ruling, notice
-  1.11), so a layout or touch bug can be reproduced. Never IP
+  1.11), so a layout or touch bug can be reproduced. If a screen showed a problem code in the last 15 minutes (F18: an error's "RD-…" from any
+  `<ErrorRef>`, or a passkey or phone sign-in code), the form shows it as its own item, "Problem
+  code: …", apart from device details (owner, 2026-11-27: "Parents auto, kids one tap"; notice
+  9.2a): a parent's report includes it unless they tap Remove; a student sees an "Include it" tick,
+  off until they tap it, and ticking it sends only `{ lastProblem }`, never the device details with
+  it. A newer code replaces it, and signing out forgets it. Sending the bug report does not send the
+  error report: that still needs the "Send error report" tap (owner, 2026-11-27). Never IP
   address, location or contacts.
 - Students can send feedback; the form tells them their parent can see it. Parents see their
   family's feedback and its status in the parent portal.

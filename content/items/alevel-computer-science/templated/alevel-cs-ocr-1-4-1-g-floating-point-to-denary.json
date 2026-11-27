@@ -1,0 +1,494 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-g-t-floating-point-to-denary-01",
+    "topic": "alevel-cs-ocr-1-4-1-g",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
+    "expected_seconds": 180,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 01001000 with exponent 0001 represent?",
+    "answer": { "value": "1.125" },
+    "verify": { "expression": "72/128 * 2^(1)" },
+    "marks": 2,
+    "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
+    "explanation": "The exponent 0001 is 1. The mantissa 01001000 is 0.5625 (its first bit is 0, so it is positive). 0.5625 × 2^1 = 1.125.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(g)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (g) (page 9; PDF page 15)",
+        "quote": "Representation and normalisation of floating point numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-g-floating-point-to-denary (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:38Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:34:03Z",
+          "notes": "model answered \"4.5\"; expected \"1.125\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:34:05Z",
+          "notes": "unsupported_claim (explanation): The explanation states specific decoding rules for this floating-point format: that exponent 0001 equals 1 in two's complement, that mantissa 01001000 equals 0.5625 with the binary point after the first bit, and that the value is found by mantissa × 2^exponent. The only cited source supports the broad topic 'Representation and normalisation of floating point numbers in binary' and does not itself provide these specific rules for this item's custom format, so these factual claims are not backed by the quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-g-t-floating-point-to-denary-02",
+    "topic": "alevel-cs-ocr-1-4-1-g",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
+    "expected_seconds": 180,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 01011000 with exponent 0100 represent?",
+    "answer": { "value": "11" },
+    "verify": { "expression": "88/128 * 2^(4)" },
+    "marks": 2,
+    "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
+    "explanation": "The exponent 0100 is 4. The mantissa 01011000 is 0.6875 (its first bit is 0, so it is positive). 0.6875 × 2^4 = 11.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(g)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (g) (page 9; PDF page 15)",
+        "quote": "Representation and normalisation of floating point numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-g-floating-point-to-denary (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:38Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-g-t-floating-point-to-denary-03",
+    "topic": "alevel-cs-ocr-1-4-1-g",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
+    "expected_seconds": 180,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 10001010 with exponent 0101 represent?",
+    "answer": { "value": "-29.5" },
+    "verify": { "expression": "-118/128 * 2^(5)" },
+    "marks": 2,
+    "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
+    "explanation": "The exponent 0101 is 5. The mantissa 10001010 is -0.921875 (its first bit is 1, worth -1). -0.921875 × 2^5 = -29.5.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(g)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (g) (page 9; PDF page 15)",
+        "quote": "Representation and normalisation of floating point numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-g-floating-point-to-denary (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:39Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-g-t-floating-point-to-denary-04",
+    "topic": "alevel-cs-ocr-1-4-1-g",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
+    "expected_seconds": 180,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 01010000 with exponent 0110 represent?",
+    "answer": { "value": "40" },
+    "verify": { "expression": "80/128 * 2^(6)" },
+    "marks": 2,
+    "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
+    "explanation": "The exponent 0110 is 6. The mantissa 01010000 is 0.625 (its first bit is 0, so it is positive). 0.625 × 2^6 = 40.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(g)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (g) (page 9; PDF page 15)",
+        "quote": "Representation and normalisation of floating point numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 4 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-g-floating-point-to-denary (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:40Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-g-t-floating-point-to-denary-05",
+    "topic": "alevel-cs-ocr-1-4-1-g",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
+    "expected_seconds": 180,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 10101010 with exponent 0110 represent?",
+    "answer": { "value": "-43" },
+    "verify": { "expression": "-86/128 * 2^(6)" },
+    "marks": 2,
+    "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
+    "explanation": "The exponent 0110 is 6. The mantissa 10101010 is -0.671875 (its first bit is 1, worth -1). -0.671875 × 2^6 = -43.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(g)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (g) (page 9; PDF page 15)",
+        "quote": "Representation and normalisation of floating point numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-g-floating-point-to-denary (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:41Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-g-t-floating-point-to-denary-06",
+    "topic": "alevel-cs-ocr-1-4-1-g",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
+    "expected_seconds": 180,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 10110010 with exponent 0101 represent?",
+    "answer": { "value": "-19.5" },
+    "verify": { "expression": "-78/128 * 2^(5)" },
+    "marks": 2,
+    "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
+    "explanation": "The exponent 0101 is 5. The mantissa 10110010 is -0.609375 (its first bit is 1, worth -1). -0.609375 × 2^5 = -19.5.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(g)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (g) (page 9; PDF page 15)",
+        "quote": "Representation and normalisation of floating point numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 6 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-g-floating-point-to-denary (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:42Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-g-t-floating-point-to-denary-07",
+    "topic": "alevel-cs-ocr-1-4-1-g",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
+    "expected_seconds": 180,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 01101100 with exponent 0110 represent?",
+    "answer": { "value": "54" },
+    "verify": { "expression": "108/128 * 2^(6)" },
+    "marks": 2,
+    "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
+    "explanation": "The exponent 0110 is 6. The mantissa 01101100 is 0.84375 (its first bit is 0, so it is positive). 0.84375 × 2^6 = 54.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(g)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (g) (page 9; PDF page 15)",
+        "quote": "Representation and normalisation of floating point numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 7 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-g-floating-point-to-denary (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:43Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]
