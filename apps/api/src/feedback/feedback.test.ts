@@ -81,6 +81,17 @@ describe('sending feedback', () => {
     expect(text.status).toBe(400);
   });
 
+  it('accepts a problem code on its own, with no other device details (F18b)', async () => {
+    const parent = await t.signInParent();
+    const ok = await sendAsParent(parent.headers, {
+      kind: 'bug',
+      device: { lastProblem: 'RD-7K2M9Q' },
+    });
+    expect(ok.status).toBe(201);
+    const rows = await t.db.select().from(feedback);
+    expect(rows.at(-1)?.device).toEqual({ lastProblem: 'RD-7K2M9Q' });
+  });
+
   it('keeps the content id of the question or card on screen, and refuses text there (F16)', async () => {
     const parent = await t.signInParent();
     const ok = await sendAsParent(parent.headers, {

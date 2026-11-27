@@ -76,7 +76,9 @@ export function currentDisplayDetails(): DisplayDetails {
 }
 
 const PROBLEM_CODE = /^[A-Za-z0-9_:-]{1,80}$/;
-let lastProblem: string | undefined;
+/** F18: a remembered problem code is kept this long, so a report sent soon after still has it. */
+export const LAST_PROBLEM_KEEP_MS = 15 * 60 * 1000;
+let lastProblem: { code: string; at: number } | undefined;
 const CONTENT_ID = /^[A-Za-z0-9_-]{1,80}$/;
 let onScreen: string | undefined;
 
@@ -93,9 +95,23 @@ export function useOnScreenContent(contentId: string | undefined): void {
   }, [contentId]);
 }
 
-/** Remembers the last problem a screen showed, for the next bug report. Only short codes. */
-export function rememberLastProblem(code: string | undefined): void {
-  lastProblem = code && PROBLEM_CODE.test(code) ? code : undefined;
+/**
+ * Remembers the last problem a screen showed, for the next bug report. Only short codes: an
+ * error's reference code (F18: any `<ErrorRef>` on screen, "RD-…") or a sign-in problem (E8:
+ * "passkey:NotAllowedError:RD-…"). A newer code replaces it; it is kept for 15 minutes.
+ */
+export function rememberLastProblem(code: string | undefined, now = Date.now()): void {
+  lastProblem = code && PROBLEM_CODE.test(code) ? { code, at: now } : undefined;
+}
+
+/** Forgets the last problem code (F18: on sign-out, so the next person never sends it). */
+export function forgetLastProblem(): void {
+  lastProblem = undefined;
+}
+
+function currentProblem(now: number): string | undefined {
+  if (!lastProblem || now - lastProblem.at > LAST_PROBLEM_KEEP_MS) return undefined;
+  return lastProblem.code;
 }
 
 // The same patterns as the API's privacy filter (apps/api/src/ai/privacy.ts). The API also
@@ -119,21 +135,25 @@ export function browserFamily(userAgent: string): string {
   return 'Other';
 }
 
-export function collectDeviceDetails(input: {
-  appVersion: string;
-  route: string;
-  userAgent: string;
-  width: number;
-  height: number;
-  online: boolean;
-}): DeviceDetails {
+export function collectDeviceDetails(
+  input: {
+    appVersion: string;
+    route: string;
+    userAgent: string;
+    width: number;
+    height: number;
+    online: boolean;
+  },
+  now = Date.now(),
+): DeviceDetails {
+  const problem = currentProblem(now);
   return {
     appVersion: input.appVersion,
     route: input.route,
     browserFamily: browserFamily(input.userAgent),
     screenSize: `${Math.round(input.width)}x${Math.round(input.height)}`,
     online: input.online,
-    ...(lastProblem ? { lastProblem } : {}),
+    ...(problem ? { lastProblem: problem } : {}),
     ...(onScreen ? { contentId: onScreen } : {}),
   };
 }
