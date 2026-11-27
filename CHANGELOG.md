@@ -9,6 +9,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 - No more empty lessons: topics whose questions aren't ready yet show as "coming soon" on the map, and if a lesson ever has nothing to show, it offers a topic that's ready.
 - Bug reports: if the app showed you a problem code (like RD-7K2M9Q) in the last 15 minutes, a parent's report now includes it (you can remove it), and a student can tick "Include it" to add it.
+- The privacy notices now say that a bug report can carry the code of a problem the app showed you in the last 15 minutes (just the short code, such as RD-7K2M9Q). Parents can remove it; students choose to add it. Signing out forgets it.
 - A-Level Computer Science is on its way: the topic map for OCR's specification (H446) is in place, with every topic checked word for word against OCR's own document. Questions come next.
 - Fixed: in Pop Burst dark mode, the boxes you type in on the parent screens (daily time limits, reminder times, a friend's private label and the family join code) now have an edge you can see. In Starlight dark mode, smaller grey words such as the timer note on Starting test are brighter.
 - If several bug reports from a student turn out not to be bugs, their bug button takes a rest for a week (and after repeated rests, switches off until a parent turns it back on from Parent home). Get help and "Ask a parent" always stay.
