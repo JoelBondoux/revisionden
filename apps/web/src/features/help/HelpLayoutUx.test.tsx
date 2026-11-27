@@ -100,9 +100,8 @@ describe('finding Get help from the student screens (owner, 2026-11-26: Settings
       await screen.findByRole('navigation', { name: 'Main' });
       const header = container.querySelector<HTMLElement>('.sound-header')!;
       expect(within(header).queryByRole('link', { name: 'Get help' })).toBeNull();
-      expect(
-        within(screen.getByRole('contentinfo')).queryByRole('link', { name: 'Get help' }),
-      ).toBeNull();
+      // No footer at all any more: the version line lives on About (UX-1).
+      expect(screen.queryByRole('contentinfo')).toBeNull();
       unmount();
     }
   });

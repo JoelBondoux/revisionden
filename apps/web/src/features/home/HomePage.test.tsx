@@ -40,7 +40,7 @@ describe('Home', () => {
     expect((await screen.findByText(/day streak/)).closest('p')).toHaveTextContent('4 day streak');
   });
 
-  it("shows today's goals as rings: XP, the 5-a-day and cards due", async () => {
+  it("shows today's goals as rings, each saying in words what it counts (UX-1)", async () => {
     renderRoute('/home');
     const goals = await screen.findByRole('list', { name: "Today's goals" });
     expect(within(goals).getByRole('progressbar', { name: 'Daily goal' })).toHaveAttribute(
@@ -48,7 +48,11 @@ describe('Home', () => {
       '30 of 50 XP',
     );
     expect(await within(goals).findByRole('progressbar', { name: '5-a-day' })).toBeInTheDocument();
-    expect(await within(goals).findByText(/due$/)).toBeInTheDocument();
+    expect(within(goals).getByText('Daily goal: 30 of 50 XP')).toBeInTheDocument();
+    expect(await within(goals).findByText(/^\d+ of \d+ questions today$/)).toBeInTheDocument();
+    expect(
+      await within(goals).findByRole('link', { name: /^\d+ cards? to review$/ }),
+    ).toHaveAttribute('href', '/cards');
   });
 
   it('starts the 5-a-day from its ring', async () => {
@@ -98,16 +102,16 @@ describe('Home', () => {
     );
   });
 
-  it('shows the friends league as coming soon where friends are not available yet', async () => {
+  it('shows no friends league pill where friends are not available yet (UX-1)', async () => {
     server.use(
       http.get('*/v1/student/league', () =>
         HttpResponse.json({ error: { code: 'friends_not_available' } }, { status: 404 }),
       ),
     );
     renderRoute('/home');
-    const league = await screen.findByText('Friends league');
-    expect(league.closest('a')).toBeNull();
-    expect(league.closest('.home-league')).toHaveTextContent('Soon');
+    await screen.findByRole('list', { name: 'Fix these' });
+    expect(screen.queryByText(/Friends league/)).not.toBeInTheDocument();
+    expect(screen.queryByText('Soon')).not.toBeInTheDocument();
   });
 
   it("shows this week's days studied towards the reward", async () => {
@@ -131,6 +135,6 @@ describe('Home', () => {
       }),
     );
     renderRoute('/home');
-    expect(await screen.findByText('Goal smashed!')).toBeInTheDocument();
+    expect(await screen.findByText('Daily goal smashed!')).toBeInTheDocument();
   });
 });

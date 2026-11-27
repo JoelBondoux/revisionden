@@ -8,10 +8,15 @@ import { AreaModelStep } from '../interactive';
 import './learn.css';
 
 /** Shown whenever unverified (draft) content is on screen. Only possible in development. */
-export function DraftBanner() {
+/**
+ * Owner (UX-1): screens look as they will at launch, so draft content is marked by one slim line
+ * at the very bottom of the screen (lessons, the starting test, Cards), never a banner at the top.
+ * Put it last, after Check or Continue, so it never covers them.
+ */
+export function DraftNote() {
   return (
-    <p role="note" className="draft-banner">
-      <strong>DRAFT CONTENT</strong> Not yet checked. For development only.
+    <p role="note" className="draft-note">
+      Draft content: not checked yet. For testing only.
     </p>
   );
 }

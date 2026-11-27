@@ -50,7 +50,11 @@ export function SettingsPage() {
         {/* A parent on this page (no student on the device) gets their way home straight away. */}
         {!student && <ParentHomeTile />}
         <ButtonTile to="/settings/look-and-sound" icon={<StarIcon />} label="Look and sound" />
-        <ButtonTile to="/settings/more" icon={<SettingsIcon />} label="More" />
+        <ButtonTile
+          to="/settings/more"
+          icon={<SettingsIcon />}
+          label="Subjects, family and feedback"
+        />
       </ButtonTiles>
     </div>
   );
@@ -83,12 +87,13 @@ export function LookAndSoundPage() {
   );
 }
 
-/** More (/settings/more, W9): everything else that used to be on Settings. */
+/** Subjects, family and feedback (/settings/more, W9; renamed from More in UX-1): the rest of the old Settings. */
 export function MoreSettingsPage() {
   const bugButton = useBugButton();
   return (
     <div className="stack">
-      <h1>More</h1>
+      {/* UX-1: the tile and page say what is here, not a vague "More". */}
+      <h1>Subjects, family and feedback</h1>
       <MySubjectsCard />
       <DeviceReminders />
       <Card title="This device">

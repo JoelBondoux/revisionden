@@ -187,7 +187,10 @@ Tags: #product #rules #limits #defaults
   two (crown and Alien skin). `packages/core/src/rewards.ts`, `avatar.ts`.
 - 14 rewards, each unlocking one avatar item: `packages/core/src/rewards.ts`.
 - Only `verified` items reach students. Drafts are served only with `SERVE_DRAFT_CONTENT=true` in
-  development (never staging or production), with a "DRAFT CONTENT" banner; the dev Worker has it on
+  development (never staging or production), marked by one slim line at the very bottom of
+  lessons, the starting test and Cards ("Draft content: not checked yet. For testing only.",
+  `DraftNote`; owner, UX-1, 2026-11-27, so screens look as they will at launch; it was a "DRAFT
+  CONTENT" banner at the top); the dev Worker has it on
   so the family can try the pilot on dev.revisionden.com; quarantined and
   retired items never. Implemented in `packages/core/src/learning.ts` and `apps/api`.
 - Starting test per subject: about 5 minutes (300 s, up to 10 questions, one per topic first),
@@ -226,7 +229,8 @@ Tags: #product #rules #limits #defaults
   with a "Throw away your changes?" check; the nav avatar updates at once; the API only checks
   items are unlocked, no parent approval or rate limit), then Get help, My progress, My rewards,
   as button tiles with 2–3 word labels (J15a), and two sub-pages: Look and sound (`/settings/look-and-sound`: reading comfort, appearance,
-  effect style, read aloud, sound) and More (`/settings/more`: subjects, reminders, device,
+  effect style, read aloud, sound) and **Subjects, family and feedback** (renamed from "More" in
+  UX-1, 2026-11-27; `/settings/more`: subjects, reminders, device,
   parents, feedback, policies, about, what your parent can see). A parent on `/settings` gets a
   Parent home tile instead of the avatar header. Items share the bar and
   labels wrap, so they fit 320px with text at 200%. Welcome and lessons hide the nav to keep focus. Only a linked student
@@ -247,8 +251,13 @@ Tags: #product #rules #limits #defaults
 - Home and Pip (J15b, owner direction 2026-11-26): `/home` is the student's first screen after
   signing in or unlocking (`/learn` and `DEFAULT_STUDENT_PAGE` go there). One screen: level ring,
   streak, goal rings (daily XP, 5-a-day, cards due), one big next-mission button (else "Pick a
-  topic"), weak spots, a friends-league chip marked Soon, and this week's days studied with the
-  reward gift. Pip is a round "Home" button at the top left of every student screen and lesson; in
+  topic"), weak spots, the friends-league rank chip where friends are on, and this week's days
+  studied with the reward gift. UX-1 (owner-approved UX report and lead's ruling, 2026-11-27):
+  each goal says in words what it counts ("Daily goal: 30 of 50 XP" or "Daily goal smashed!",
+  "0 of 2 questions today", "3 cards to review"); "Fix these" shows the two weakest topics as
+  wrapping chips clamped to two lines (full name as their name and title), then "See all N" to the
+  map, because three did not keep Home on one 390 × 844 screen with long real topic names; the
+  "Friends league · Soon" pill is gone. Pip is a round "Home" button at the top left of every student screen and lesson; in
   a lesson or test he asks "Leave this lesson?" first. He acts about every 8 s, naps 21:00 to 07:00,
   stops after 60 s without input, keeps still in lessons and with reduced motion. In a lesson he reacts once to each marked answer (J14): a nod, a cheer from 3 right in a row or for today's goal, a gentle nod after help, an encouraging head tilt for a wrong answer; none with reduced motion (`features/juice/pip/reactions.ts`). Since J14b the lesson shows him in its own header row (with ×, progress and XP), his line is a speech bubble beside the student's framed avatar (which nods, hops or goes "hmm" with him), and the older second Pip is gone. Only a mounted `LessonPip` (the lesson header) tells the layout to leave out its own Pip row (J14c), so a lesson's loading, error, empty and finished screens keep the layout's Pip and Home button. The lesson screens are one list, `LESSON_PATHS` (`apps/web/src/layout/lessonRoutes.ts`), shared by the routes and the layout: topic lessons, the 5-a-day, practice, the starting test and command words (which counts as a lesson page, so it shows the avatar). In the lesson, words on the look's page ("+XP", the header XP count, the warm-up and come-back note, "Comeback!") use `--color-primary-edge` (a deeper main colour in light mode, the light accent in dark; "+XP" with no shadow), and words on an arena surface (a card painting `--arena-bg`) use `--arena-glow`, so they read in every look, light and dark (J16b, J16c; `e2e/tests/lesson.spec.ts`). He wears one item for the current subject
   and holds its prop in front of his ring (Pip v3, J15b-2: bigger head leaning out of the ring,
@@ -986,7 +995,8 @@ Tags: #product #rules #limits #defaults
   `max-width: 100%`) and wraps its text anywhere (`overflow-wrap: anywhere`), so tile lists fit a
   320px screen with text at 200%. The e2e test "the policies list fits a 320px screen with text at
   200%" (`e2e/tests/pages.spec.ts`, /legal) checks there is no sideways scroll and no tile wider than
-  320px. The version footer's reflow is G's (#224).
+  320px. The version footer is gone (UX-1, 2026-11-27): no page shows a version line any more;
+  About's "This version" card has the version, environment, build date and commit.
 - Button tiles and page transitions (J15a, owner request 2026-11-26): parent home and Policies
   show their links as `ButtonTile`s in a grid (two to a row on phones): a big icon and a 2–3 word
   label, no helper sentence (Policies add who each is for as a badge). Parent home labels: Stats

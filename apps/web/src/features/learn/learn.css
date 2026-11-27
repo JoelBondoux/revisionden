@@ -1,18 +1,13 @@
 /* Learning loop (workstream F). Uses the design tokens; no new colours. */
-.draft-banner {
-  margin: 0 0 var(--space-4);
-  padding: var(--space-2) var(--space-4);
-  border: 2px dashed var(--color-warning-text);
-  border-radius: var(--radius-sm);
-  background: var(--color-warning-soft);
-  color: var(--color-warning-text);
-  font-weight: var(--font-weight-bold);
-}
-
-.draft-banner strong {
-  margin-right: var(--space-2);
-  font-weight: var(--font-weight-black);
-  letter-spacing: 0.04em;
+/* Owner (UX-1): draft content is marked by one slim, quiet line at the very bottom of the screen,
+   so screens look as they will at launch. */
+.draft-note {
+  margin: var(--space-6) 0 0;
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-align: center;
 }
 
 .daily-goal {

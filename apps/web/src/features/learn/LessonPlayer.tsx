@@ -37,7 +37,7 @@ import { HelpPanel } from './HelpPanel';
 import { NewRewards } from './NewRewards';
 import {
   DailyGoal,
-  DraftBanner,
+  DraftNote,
   ItemInput,
   toAnswer,
   type Answer,
@@ -411,7 +411,6 @@ export function LessonPlayer({
           <RollingNumber value={totals.xp} label="XP this lesson" suffix=" XP" />
         </span>
       </div>
-      {draftContent && <DraftBanner />}
       {/* J14b: one Pip (in the header above); his line sits beside the student's avatar. */}
       <div className="lesson__pip">
         <p className="lesson__pip-line">{pipLine({ index, total: queue.length, combo })}</p>
@@ -488,6 +487,7 @@ export function LessonPlayer({
           )
         )}
       </div>
+      {draftContent && <DraftNote />}
     </form>
   );
 }

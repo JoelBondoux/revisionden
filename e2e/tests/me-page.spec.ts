@@ -127,7 +127,7 @@ test('Get help is still the first link on Me', async ({ page }) => {
 test.describe('single screen (390 × 844, default text)', () => {
   test.use({ viewport: { width: 390, height: 844 } });
 
-  test('the avatar, Edit, Get help, progress, rewards, Look and sound and More all show without scrolling', async ({
+  test('the avatar, Edit, Get help, progress, rewards, Look and sound and Subjects, family and feedback all show without scrolling', async ({
     page,
   }) => {
     await asStudent(page);
@@ -136,7 +136,13 @@ test.describe('single screen (390 × 844, default text)', () => {
     for (const name of ['Edit my avatar']) {
       await expect(page.getByRole('button', { name })).toBeInViewport({ ratio: 1 });
     }
-    for (const name of ['Get help', 'My progress', 'My rewards', 'Look and sound', 'More']) {
+    for (const name of [
+      'Get help',
+      'My progress',
+      'My rewards',
+      'Look and sound',
+      'Subjects, family and feedback',
+    ]) {
       await expect(page.getByRole('link', { name, exact: true })).toBeInViewport({ ratio: 1 });
     }
   });

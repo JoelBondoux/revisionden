@@ -5,6 +5,7 @@ import { useApi } from '../../api/ApiContext';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { CardsIcon, FlameIcon, StarIcon } from '../../components/icons';
+import { TextLink } from '../../components/links';
 import { InstallRow } from '../../map/InstallRow';
 import { useStudent } from '../../session/StudentContext';
 import { useDailyApi } from '../daily/dailyApi';
@@ -19,7 +20,8 @@ import './home.css';
 /**
  * Home (J15b, owner 2026-11-26): where Pip takes you. One screen of where you stand and today's
  * goals, low on words: level and XP, streak, the goal rings, one big next-mission button, weak
- * spots to fix, the friends league (soon) and this week's days towards the reward.
+ * spots to fix, the friends league rank where there is one, and this week's days towards the
+ * reward.
  */
 
 const whole = (n: number) => String(Math.round(n));
@@ -95,11 +97,15 @@ const WEEKDAYS: Record<string, string> = {
 };
 
 function weakSpots(map: TopicMap) {
-  return map.units
-    .flatMap((u) => u.topics)
-    .filter((t) => t.status === 'weak')
-    .slice(0, 6);
+  return map.units.flatMap((u) => u.topics).filter((t) => t.status === 'weak');
 }
+
+/**
+ * UX-1 (lead's ruling): Home shows the weakest few as wrapping chips of at most two lines, then
+ * "See all N" on the map, so Home still fits one phone screen. Three did not fit at 390 × 844
+ * with long real topic names (home.spec), so two.
+ */
+const FIX_SHOWN = 2;
 
 export function HomePage() {
   const api = useApi();
@@ -196,14 +202,17 @@ function HomeBody({
                     ? `Goal smashed: ${map.xpToday} XP, goal ${map.dailyGoalXp} XP`
                     : `${map.xpToday} of ${map.dailyGoalXp} XP`
                 }
-                size={52}
-                stroke={7}
+                size={40}
+                stroke={6}
                 tone="var(--color-gold)"
               >
                 <StarIcon />
               </Ring>
+              {/* UX-1: the goals say in words what they count, not a bare 30/50. */}
               <span className="home-goals__label">
-                {smashed ? 'Goal smashed!' : `${map.xpToday}/${map.dailyGoalXp}`}
+                {smashed
+                  ? 'Daily goal smashed!'
+                  : `Daily goal: ${map.xpToday} of ${map.dailyGoalXp} XP`}
               </span>
             </li>
             {fiveADay && (
@@ -213,37 +222,38 @@ function HomeBody({
                   value={fiveADay.answered}
                   max={fiveADay.total}
                   valueText={`${fiveADay.answered} of ${fiveADay.total} done`}
-                  size={52}
-                  stroke={7}
+                  size={40}
+                  stroke={6}
                   tone="#3cb4ff"
                 >
                   <b>5</b>
                 </Ring>
-                {fiveADay.answered < fiveADay.total ? (
-                  <Link
-                    to="/learn/daily"
-                    className="home-goals__start"
-                    aria-label={`${fiveADay.answered > 0 ? 'Continue' : 'Start'} your 5-a-day`}
-                  >
-                    {fiveADay.answered > 0 ? 'Continue' : 'Start'}
-                  </Link>
-                ) : (
-                  <span className="home-goals__label">Done</span>
-                )}
+                <span className="home-goals__text">
+                  <span className="home-goals__label">
+                    {fiveADay.answered} of {fiveADay.total} questions today
+                  </span>
+                  {fiveADay.answered < fiveADay.total && (
+                    <Link
+                      to="/learn/daily"
+                      className="home-goals__start"
+                      aria-label={`${fiveADay.answered > 0 ? 'Continue' : 'Start'} your 5-a-day`}
+                    >
+                      {fiveADay.answered > 0 ? 'Continue' : 'Start'}
+                    </Link>
+                  )}
+                </span>
               </li>
             )}
             {cardsDue !== null && (
               <li>
-                <Link
-                  to="/cards"
-                  className="home-goals__cards"
-                  aria-label={`Cards: ${cardsDue} due`}
-                >
-                  <span className="home-goals__cards-icon" aria-hidden="true">
+                <span className="home-goals__cards" aria-hidden="true">
+                  <span className="home-goals__cards-icon">
                     <CardsIcon />
                   </span>
-                </Link>
-                <span className="home-goals__label">{cardsDue} due</span>
+                </span>
+                <TextLink to="/cards" className="home-goals__label home-goals__link">
+                  {cardsDue} {cardsDue === 1 ? 'card' : 'cards'} to review
+                </TextLink>
               </li>
             )}
           </ul>
@@ -280,25 +290,30 @@ function HomeBody({
 
       <div className="home-row-title">
         <h2 id="home-fix">Fix these</h2>
-        {/* The rank chip where friends are available (dev only for now, FL); otherwise "Soon". */}
-        <LeagueChip
-          fallback={
-            <span className="home-league">
-              <span>Friends league</span> <small>Soon</small>
-            </span>
-          }
-        />
+        {/* The rank chip where friends are available (dev only for now, FL); nothing otherwise
+            (UX-1: no "Friends league · Soon" pill). */}
+        <LeagueChip />
       </div>
       {weak.length > 0 ? (
-        <ul className="home-fix" aria-labelledby="home-fix">
-          {weak.map((t) => (
-            <li key={t.id}>
-              <Link to={`/learn/topic/${t.lessonId}`} className="home-fix__chip">
-                {t.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="home-fix" aria-labelledby="home-fix">
+            {weak.slice(0, FIX_SHOWN).map((t) => (
+              <li key={t.id}>
+                {/* Clamped to two lines on screen; the whole name stays its name and title. */}
+                <Link to={`/learn/topic/${t.lessonId}`} className="home-fix__chip" title={t.title}>
+                  <span className="home-fix__name">{t.title}</span>
+                </Link>
+              </li>
+            ))}
+            {weak.length > FIX_SHOWN && (
+              <li>
+                <TextLink to="/map" className="home-fix__all">
+                  See all {weak.length}
+                </TextLink>
+              </li>
+            )}
+          </ul>
+        </>
       ) : (
         <p className="home-fix__none">Nothing to fix. Nice!</p>
       )}

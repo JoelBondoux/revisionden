@@ -9,6 +9,7 @@
 
 .home-hero {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-4);
 }
@@ -18,9 +19,10 @@
   flex: none;
 }
 
+/* UX-1: with large text on a narrow screen the goals drop below the level ring, not off it. */
 .home-hero__side {
   display: grid;
-  flex: 1;
+  flex: 1 1 10rem;
   gap: var(--space-2);
   min-width: 0;
 }
@@ -104,21 +106,34 @@
 }
 
 .home-goals {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
+  display: grid;
+  gap: var(--space-1);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* UX-1: each goal is a row, its ring then its words, so the words can say what it counts. */
 .home-goals li {
   display: grid;
-  justify-items: center;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.home-goals__text {
+  display: grid;
+  justify-items: start;
   gap: 2px;
 }
 
+.home-goals__link {
+  color: var(--color-text);
+  text-decoration: underline;
+}
+
 .home-goals__label {
+  overflow-wrap: anywhere;
   color: var(--color-text-secondary);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-extrabold);
@@ -126,8 +141,8 @@
 
 .home-goals__cards {
   display: grid;
-  width: 52px;
-  height: 52px;
+  width: 40px;
+  height: 40px;
   place-items: center;
   /* Icon-only: an edge that reaches 3:1 on every page (J17x part 2, WCAG 1.4.11). */
   border: 2px solid var(--color-control-edge);
@@ -137,8 +152,8 @@
 }
 
 .home-goals__cards-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 /* The one big call to action, on a slanted colour field. */
@@ -233,26 +248,14 @@ h2.home-row-title {
   margin: 0;
 }
 
-.home-league {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: 36px;
-  padding: 2px var(--space-3);
-  border: 2px dashed var(--color-text-secondary);
-  border-radius: var(--radius-pill);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-}
-
 .home-fix {
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
   gap: var(--space-2);
   margin: 0;
   padding: 2px 2px var(--space-2);
   list-style: none;
-  overflow-x: auto;
 }
 
 .home-fix__chip {
@@ -268,14 +271,31 @@ h2.home-row-title {
   font-weight: var(--font-weight-black);
   text-decoration: none;
   width: max-content;
-  max-width: 15rem;
+  max-width: min(15rem, 100%);
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
 
 .home-fix li {
   display: flex;
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.home-fix__name {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.home-fix__all {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  font-weight: var(--font-weight-extrabold);
 }
 
 .home-fix__none {

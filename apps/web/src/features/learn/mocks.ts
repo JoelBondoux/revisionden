@@ -1,6 +1,6 @@
 /**
  * Mock learning API (MSW) for development and tests. The items are made-up placeholders, not
- * educational content, and are marked as drafts so the "DRAFT CONTENT" banner shows.
+ * educational content, and are marked as drafts so the "Draft content" line shows at the bottom.
  */
 import { http, HttpResponse, type RequestHandler } from 'msw';
 import {

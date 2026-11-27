@@ -214,7 +214,8 @@ sweep does not cover. Data comes from the web app's own mock handlers
   apt source (G12).
 - **Steady screens:** anything that changes with every build is held to made-up values, so a
   row's place and key never move with the changelog: `/about` keeps three made-up What's new lines
-  and three licences, and the version footer shows a made-up commit (W21c).
+  and three licences (W21c). (The version footer, which also needed a made-up commit, is gone:
+  UX-1 moved the version line to About only.)
 - **Known failures:** `e2e/tests/contrast-known.json`. A test fails on anything new and on a
   listed failure that is now fixed, so a fix removes its lines in the same change. To refresh the
   list after a fix: run the sweep with `CONTRAST_UPDATE=1` (add `CONTRAST_SWEEP=1` for tier 2),

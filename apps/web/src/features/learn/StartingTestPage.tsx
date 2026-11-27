@@ -15,7 +15,7 @@ import { ArenaProgress } from '../juice';
 import { useSound } from '../sound';
 import { useLearnApi } from './learnApi';
 import { NewRewards } from './NewRewards';
-import { DraftBanner, ItemInput, toAnswer, type Draft } from './parts';
+import { DraftNote, ItemInput, toAnswer, type Draft } from './parts';
 import { MORE_TIME_SECONDS, canAddTime, secondsLeft as timeLeft } from './startingTestTime';
 
 const clockText = (seconds: number) =>
@@ -180,7 +180,6 @@ function Runner({
           </Button>
         )}
       </div>
-      {test.draftContent && <DraftBanner />}
       <h1>Starting test</h1>
       <ItemInput key={item.id} item={item} draft={draft} disabled={busy} onChange={setDraft} />
       <div className="lesson__footer">
@@ -199,6 +198,7 @@ function Runner({
           </Button>
         </div>
       </div>
+      {test.draftContent && <DraftNote />}
     </div>
   );
 }
