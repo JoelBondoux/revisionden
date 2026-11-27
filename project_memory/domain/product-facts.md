@@ -506,8 +506,12 @@ Tags: #product #rules #limits #defaults
 - Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
-  commuted products and sums, reordered lists and swapped equation sides (never coordinates or
-  inequalities); `answer.units` lists optional units. A multiply sign before a sign is kept
+  reordered lists (each item as written: `HT` is not `TH` in a list, F23) and, for a single
+  answer, commuted products and sums and swapped equation sides (never coordinates or
+  inequalities); outer set braces `{…}` are optional (F23); `answer.units` lists optional units,
+  accepted in any spelling numeric answers accept (F25: `unitSpellings`, now with °/degrees,
+  ml/mL/millilitres, mg, %, days, N/m², m/s², kg/m³, g/cm³, l/min, km/min). `answer.kind: "hex"`
+  (F24, opt-in) ignores case, `0x` and leading zeros. A multiply sign before a sign is kept
   (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
   and `a = x` either way round). Repeated alternatives on a final line count once, and a line
   with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is
@@ -530,7 +534,12 @@ Tags: #product #rules #limits #defaults
   it in its own text. Boolean answers are read in OCR's notation and every alternative appendix
   5d accepts; a "simplify" answer must be equivalent and have no more letters than the shortest
   sum of products. Binding, tightest first: NOT, AND, XOR, OR, ≡ (our choice; questions bracket
-  anything else). Not yet wired into `pnpm content:validate`.
+  anything else). Pseudocode interpreter (`app/cs/pseudocode.py`): OCR exam reference
+  pseudocode without files or classes; output, final variables and a trace for trace tables
+  (rows `{line, name, value, cell}` and `{line, output}`; a byRef write names the caller's cell).
+  Where appendix 5d is silent it chooses: `/` gives a whole number when exact, `DIV`/`MOD` round
+  down, booleans print `true`/`false`, `NOT a==b` is `NOT (a==b)`, `-2^2` is -4; items must not
+  depend on these. Not yet wired into `pnpm content:validate`.
 
 ## Reminders
 

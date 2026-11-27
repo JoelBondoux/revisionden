@@ -270,6 +270,12 @@ test('short answers use the answer normaliser: maths notation, any_order and uni
   });
   assert.equal((await blind(withUnit, '12 cm')).result, 'pass');
   assert.equal((await blind(withUnit, '12 m')).result, 'fail');
+  assert.equal((await blind(withUnit, '12 centimetres')).result, 'pass'); // F25
+  const hex = draftItem('fixture-hex', undefined, {
+    answer: { accepted: ['2F'], kind: 'hex' },
+  });
+  assert.equal((await blind(hex, '0x02f')).result, 'pass'); // F24
+  assert.equal((await blind(hex, '2E')).result, 'fail');
 });
 
 test('flashcards compare the model answer to the back of the card', async () => {

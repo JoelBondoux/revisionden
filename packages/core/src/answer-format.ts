@@ -43,7 +43,27 @@ const UNIT_SPELLINGS: Record<string, { before?: string[]; after?: string[] }> = 
   hours: { after: ['hours', 'hour', 'hrs', 'hr', 'h'] },
   'km/h': { after: ['km/h', 'kph', 'km per hour'] },
   'm/s': { after: ['m/s', 'metres per second'] },
+  // F25: more units content uses, as pupils spell them. Symbols are case-sensitive (mL listed).
+  ...same(['°', 'degrees'], ['°', 'degrees', 'degree', 'deg']),
+  ...same(['ml'], ['ml', 'mL', 'millilitres', 'millilitre', 'milliliters', 'milliliter']),
+  ...same(['mg'], ['mg', 'milligrams', 'milligram']),
+  ...same(['%'], ['%', 'percent', 'per cent']),
+  ...same(['days'], ['days', 'day']),
+  ...same(['n/m²', 'n/m^2'], ['N/m²', 'newtons per square metre', 'newtons per square meter']),
+  ...same(['m/s^2', 'm/s²'], ['m/s²', 'metres per second squared', 'meters per second squared']),
+  ...same(['kg/m³', 'kg/m^3'], ['kg/m³', 'kilograms per cubic metre', 'kilograms per cubic meter']),
+  ...same(
+    ['g/cm³', 'g/cm^3'],
+    ['g/cm³', 'grams per cubic centimetre', 'grams per cubic centimeter'],
+  ),
+  ...same(['litres per minute'], ['litres per minute', 'litre per minute', 'l/min', 'L/min']),
+  ...same(['km per minute'], ['km per minute', 'km/min']),
 };
+
+/** The same spellings under each way the unit may be written in content (lower case keys). */
+function same(keys: string[], after: string[]): Record<string, { after: string[] }> {
+  return Object.fromEntries(keys.map((key) => [key, { after }]));
+}
 
 /** Area and volume in words: m^2 is also "square metres", "sq m" and "metres squared". */
 function areaAndVolume(unit: string): string[] {
@@ -68,6 +88,23 @@ const POWERS: [string, string][] = [
 const escape = (text: string) => text.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 
 /**
+ * Every way a unit may be written after the number (F25: shared by numeric and short answers):
+ * the unit as written, its known spellings, area and volume words, and ^2/^3 as ²/³ and back.
+ * Longest first, so "cm" is tried before "m".
+ */
+export function unitSpellings(unit: string): string[] {
+  const written = unit.trim();
+  const known = UNIT_SPELLINGS[written.toLowerCase()] ?? {};
+  const spellings = new Set([written, ...(known.after ?? []), ...areaAndVolume(written)]);
+  for (const [caret, superscript] of POWERS) {
+    for (const spelling of [...spellings]) {
+      spellings.add(spelling.replace(caret, superscript)).add(spelling.replace(superscript, caret));
+    }
+  }
+  return [...spellings].sort((a, b) => b.length - a.length);
+}
+
+/**
  * `text` without the item's own unit ("15 m" -> "15", "£9600" -> "9600", "28.3 cm²" -> "28.3"),
  * or `text` unchanged. A different unit is left in place, so the answer stays wrong.
  */
@@ -78,15 +115,8 @@ export function withoutUnit(text: string, unit: string | undefined): string {
   for (const before of known.before ?? []) {
     if (trimmed.startsWith(before)) return trimmed.slice(before.length).trim();
   }
-  const written = unit.trim();
-  const spellings = new Set([written, ...(known.after ?? []), ...areaAndVolume(written)]);
-  for (const [caret, superscript] of POWERS) {
-    for (const spelling of [...spellings]) {
-      spellings.add(spelling.replace(caret, superscript)).add(spelling.replace(superscript, caret));
-    }
-  }
   // Longest first, so "cm" is tried before "m"; words ignore case, symbols do not.
-  for (const spelling of [...spellings].sort((a, b) => b.length - a.length)) {
+  for (const spelling of unitSpellings(unit)) {
     const flags = /^[a-z ]{3,}$/i.test(spelling) ? 'i' : '';
     const m = new RegExp(`^(.*[\\d)])\\s*${escape(spelling)}$`, flags).exec(trimmed);
     if (m) return m[1]!.trim();

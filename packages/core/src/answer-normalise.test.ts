@@ -92,6 +92,24 @@ describe('answers whose order does not matter', () => {
     expect(sameAnswer('x = 3, y = 2', 'x = 2, y = 3', any)).toBe(false);
   });
 
+  it('reorders the items of a list, never the letters inside an item (F23)', () => {
+    const outcomes = 'HH, HT, TH, TT';
+    expect(sameAnswer(outcomes, 'TH, HH, TT, HT', any)).toBe(true);
+    expect(sameAnswer(outcomes, 'HH, HT, HT, TT', any)).toBe(false);
+    expect(sameAnswer('HT', 'TH', any)).toBe(true); // one item on its own is still a product
+    expect(sameAnswer('HT, TT', 'TH, TT', any)).toBe(false);
+  });
+
+  it('accepts a list with or without outer set braces (F23)', () => {
+    expect(sameAnswer('4, 5, 6', '{4, 5, 6}', any)).toBe(true);
+    expect(sameAnswer('{4, 5, 6}', '6, 4, 5', any)).toBe(true);
+    // Codex on the Probability train: the braces come off before the items are reordered.
+    expect(sameAnswer('4, 5, 6', '{6, 5, 4}', any)).toBe(true);
+    expect(sameAnswer('4, 5, 6', '{5, 4, 6}', any)).toBe(true);
+    expect(sameAnswer('4, 5, 6', '{4, 5, 6}')).toBe(true);
+    expect(sameAnswer('4, 5, 6', '{4, 5, 7}', any)).toBe(false);
+  });
+
   it('never reorders a coordinate', () => {
     expect(sameAnswer('(3, 1)', '(1, 3)', any)).toBe(false);
   });
@@ -146,5 +164,44 @@ describe('marking a short answer', () => {
 
   it('still rejects a wrong answer', () => {
     expect(markShortAnswer({ accepted: ['3n + 2'], any_order: true }, '3n + 3')).toEqual(no);
+  });
+});
+
+describe('hexadecimal answers (F24, opt-in per item)', () => {
+  const hex = { kind: 'hex' as const };
+
+  it('accepts the same value with a 0x prefix, either case or leading zeros', () => {
+    for (const given of ['2F', '2f', '0x2F', '0X2f', '02F', '0x002f', ' 2F ']) {
+      expect(sameAnswer('2F', given, hex), given).toBe(true);
+    }
+  });
+
+  it('still rejects a different value or something that is not hex', () => {
+    expect(sameAnswer('2F', '2E', hex)).toBe(false);
+    expect(sameAnswer('2F', 'F2', hex)).toBe(false);
+    expect(sameAnswer('2F', '2G', hex)).toBe(false);
+    expect(sameAnswer('2F', '47', hex)).toBe(false); // 47 is 2F in denary, but not as hex
+    expect(sameAnswer('2F', '', hex)).toBe(false);
+  });
+
+  it('leaves ordinary answers alone when the item does not ask for it', () => {
+    expect(sameAnswer('2F', '0x2F')).toBe(false);
+    expect(sameAnswer('02F', '2F')).toBe(false);
+  });
+
+  it('is read from the item by short answer marking', () => {
+    expect(markShortAnswer({ accepted: ['2F'], kind: 'hex' }, '0x2f')).toEqual(ok);
+    expect(markShortAnswer({ accepted: ['2F'] }, '0x2f')).toEqual(no);
+  });
+});
+
+describe('spelt-out units on short answers (F25)', () => {
+  it('accepts a unit written out in words, as numeric answers do', () => {
+    const key = (units: string[]) => ({ accepted: ['60'], units });
+    expect(markShortAnswer(key(['°']), '60 degrees')).toEqual(ok);
+    expect(markShortAnswer(key(['°']), '60°')).toEqual(ok);
+    expect(markShortAnswer({ accepted: ['250'], units: ['ml'] }, '250 millilitres')).toEqual(ok);
+    expect(markShortAnswer({ accepted: ['40'], units: ['N/m²'] }, '40 N/m^2')).toEqual(ok);
+    expect(markShortAnswer(key(['°']), '60 radians')).toEqual(no);
   });
 });
