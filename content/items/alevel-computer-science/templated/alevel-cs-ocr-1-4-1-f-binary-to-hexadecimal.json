@@ -7,9 +7,7 @@
     "learning_point": "alevel-cs-ocr-1-4-1-f-lp-binary-to-hexadecimal",
     "expected_seconds": 60,
     "prompt": "Write the 8-bit binary number 11010100 in hexadecimal.",
-    "answer": {
-      "accepted": ["D4"]
-    },
+    "answer": { "accepted": ["D4", "0D4", "0xD4"] },
     "marks": 1,
     "hint": "Split the bits into two groups of 4 and write each group as one hexadecimal digit.",
     "explanation": "1101 = 13 = D and 0100 = 4, so the answer is D4.",
@@ -29,21 +27,17 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal",
-      "version": 1,
-      "seed": 1
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal", "version": 1, "seed": 1 },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
           "tool_version": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal v1",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Generated from template alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
@@ -51,7 +45,7 @@
           "result": "pass",
           "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
@@ -59,7 +53,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:51:43Z",
+          "at": "2026-11-27T12:33:25Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         },
         {
@@ -67,15 +61,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:53:37Z",
-          "notes": "model answered \"D4\"; expected \"D4\""
+          "at": "2026-11-27T12:33:55Z",
+          "notes": "model answered \"D4\"; expected \"D4 | 0D4 | 0xD4\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:53:38Z",
+          "at": "2026-11-27T12:33:56Z",
           "notes": "no problems found"
         }
       ]
@@ -89,9 +83,7 @@
     "learning_point": "alevel-cs-ocr-1-4-1-f-lp-binary-to-hexadecimal",
     "expected_seconds": 60,
     "prompt": "Write the 8-bit binary number 01001110 in hexadecimal.",
-    "answer": {
-      "accepted": ["4E"]
-    },
+    "answer": { "accepted": ["4E", "04E", "0x4E"] },
     "marks": 1,
     "hint": "Split the bits into two groups of 4 and write each group as one hexadecimal digit.",
     "explanation": "0100 = 4 and 1110 = 14 = E, so the answer is 4E.",
@@ -111,21 +103,17 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal",
-      "version": 1,
-      "seed": 2
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal", "version": 1, "seed": 2 },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
           "tool_version": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal v1",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Generated from template alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
@@ -133,7 +121,7 @@
           "result": "pass",
           "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
@@ -141,7 +129,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:51:44Z",
+          "at": "2026-11-27T12:33:26Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
@@ -155,9 +143,7 @@
     "learning_point": "alevel-cs-ocr-1-4-1-f-lp-binary-to-hexadecimal",
     "expected_seconds": 60,
     "prompt": "Write the 8-bit binary number 00100010 in hexadecimal.",
-    "answer": {
-      "accepted": ["22"]
-    },
+    "answer": { "accepted": ["22", "022", "0x22"] },
     "marks": 1,
     "hint": "Split the bits into two groups of 4 and write each group as one hexadecimal digit.",
     "explanation": "0010 = 2 and 0010 = 2, so the answer is 22.",
@@ -177,21 +163,17 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal",
-      "version": 1,
-      "seed": 3
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal", "version": 1, "seed": 3 },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
           "tool_version": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal v1",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Generated from template alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
@@ -199,7 +181,7 @@
           "result": "pass",
           "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
@@ -207,7 +189,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:51:45Z",
+          "at": "2026-11-27T12:33:27Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
@@ -221,9 +203,7 @@
     "learning_point": "alevel-cs-ocr-1-4-1-f-lp-binary-to-hexadecimal",
     "expected_seconds": 60,
     "prompt": "Write the 8-bit binary number 01110011 in hexadecimal.",
-    "answer": {
-      "accepted": ["73"]
-    },
+    "answer": { "accepted": ["73", "073", "0x73"] },
     "marks": 1,
     "hint": "Split the bits into two groups of 4 and write each group as one hexadecimal digit.",
     "explanation": "0111 = 7 and 0011 = 3, so the answer is 73.",
@@ -243,21 +223,17 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal",
-      "version": 1,
-      "seed": 4
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal", "version": 1, "seed": 4 },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
           "tool_version": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal v1",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Generated from template alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
@@ -265,7 +241,7 @@
           "result": "pass",
           "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
@@ -273,7 +249,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:51:45Z",
+          "at": "2026-11-27T12:33:28Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
@@ -287,9 +263,7 @@
     "learning_point": "alevel-cs-ocr-1-4-1-f-lp-binary-to-hexadecimal",
     "expected_seconds": 60,
     "prompt": "Write the 8-bit binary number 11000010 in hexadecimal.",
-    "answer": {
-      "accepted": ["C2"]
-    },
+    "answer": { "accepted": ["C2", "0C2", "0xC2"] },
     "marks": 1,
     "hint": "Split the bits into two groups of 4 and write each group as one hexadecimal digit.",
     "explanation": "1100 = 12 = C and 0010 = 2, so the answer is C2.",
@@ -309,21 +283,17 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal",
-      "version": 1,
-      "seed": 5
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal", "version": 1, "seed": 5 },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
           "tool_version": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal v1",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Generated from template alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
@@ -331,7 +301,7 @@
           "result": "pass",
           "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
@@ -339,7 +309,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:51:46Z",
+          "at": "2026-11-27T12:33:29Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
@@ -353,9 +323,7 @@
     "learning_point": "alevel-cs-ocr-1-4-1-f-lp-binary-to-hexadecimal",
     "expected_seconds": 60,
     "prompt": "Write the 8-bit binary number 00110000 in hexadecimal.",
-    "answer": {
-      "accepted": ["30"]
-    },
+    "answer": { "accepted": ["30", "030", "0x30"] },
     "marks": 1,
     "hint": "Split the bits into two groups of 4 and write each group as one hexadecimal digit.",
     "explanation": "0011 = 3 and 0000 = 0, so the answer is 30.",
@@ -375,21 +343,17 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal",
-      "version": 1,
-      "seed": 6
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal", "version": 1, "seed": 6 },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
           "tool_version": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal v1",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Generated from template alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
@@ -397,7 +361,7 @@
           "result": "pass",
           "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
@@ -405,7 +369,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:51:47Z",
+          "at": "2026-11-27T12:33:30Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
@@ -419,9 +383,7 @@
     "learning_point": "alevel-cs-ocr-1-4-1-f-lp-binary-to-hexadecimal",
     "expected_seconds": 60,
     "prompt": "Write the 8-bit binary number 10000011 in hexadecimal.",
-    "answer": {
-      "accepted": ["83"]
-    },
+    "answer": { "accepted": ["83", "083", "0x83"] },
     "marks": 1,
     "hint": "Split the bits into two groups of 4 and write each group as one hexadecimal digit.",
     "explanation": "1000 = 8 and 0011 = 3, so the answer is 83.",
@@ -441,21 +403,17 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal",
-      "version": 1,
-      "seed": 7
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal", "version": 1, "seed": 7 },
     "verification": {
       "status": "draft",
-      "version": 2,
+      "version": 3,
       "checks": [
         {
           "name": "grounded-writing",
           "result": "pass",
           "tool": "revisionden-maths-templates",
           "tool_version": "alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal v1",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Generated from template alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
         },
         {
@@ -463,7 +421,7 @@
           "result": "pass",
           "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
-          "at": "2026-11-27T12:00:00Z",
+          "at": "2026-11-27T12:45:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
@@ -471,7 +429,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:51:48Z",
+          "at": "2026-11-27T12:33:31Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]

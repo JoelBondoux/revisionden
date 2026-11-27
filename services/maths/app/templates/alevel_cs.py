@@ -49,6 +49,18 @@ def _short(prompt: str, accepted: list[str], hint: str, explanation: str) -> dic
             "explanation": explanation}
 
 
+def _numeric(prompt: str, value: str, expression: str, hint: str, explanation: str) -> dict:
+    """A denary answer, marked by value (1.1250 is 1.125). The maths engine re-evaluates
+    ``expression`` (a place-value sum) and compares it with the answer: a third check."""
+    return {"prompt": prompt, "answer": {"value": value}, "verify": {"expression": expression},
+            "hint": hint, "explanation": explanation}
+
+
+def _hex_forms(text: str) -> list[str]:
+    """How a student may write a hexadecimal answer (case and spaces are ignored in marking)."""
+    return [text, f"0{text}", f"0x{text}"]
+
+
 def _plural(n: int, word: str) -> str:
     return f"{n} {word}" if n == 1 else f"{n} {word}s"
 
@@ -73,6 +85,11 @@ def _match(pattern: str, prompt: str):
 
 
 def _answer_errors(item: dict, expected: str) -> list[str]:
+    if "value" in item["answer"]:
+        given = item["answer"]["value"]
+        if Fraction(given) != Fraction(expected):
+            return [f"answer {given!r}, recomputed {expected!r}"]
+        return []
     accepted = item["answer"]["accepted"]
     if accepted[0] != expected:
         return [f"answer {accepted[0]!r}, recomputed {expected!r}"]
@@ -142,9 +159,9 @@ def _write_bin_den(p):
     n = p["n"]
     bits = bases.to_binary(n, 8)
     used = [str(v) for v, b in zip(_PLACES, bits) if b == "1"]
-    return _short(
+    return _numeric(
         f"What is the 8-bit unsigned binary number {bits} in denary?",
-        [str(n)],
+        str(n), " + ".join(used),
         "Write 128, 64, 32, 16, 8, 4, 2, 1 above the bits and add the place values that have a 1.",
         f"The 1s are under {_list(used)}. {' + '.join(used)} = {n}.")
 
@@ -180,9 +197,10 @@ def _write_twos_den(p):
     n = p["n"]
     bits = bases.to_twos_complement(n, 8)
     rest = n + 128
-    return _short(
+    places = [str(v) for v, b in zip(_PLACES[1:], bits[1:]) if b == "1"]
+    return _numeric(
         f"The 8-bit two's complement binary number {bits} represents which denary number?",
-        [str(n)],
+        str(n), " + ".join(["-128", *places]),
         "In 8-bit two's complement the first bit is worth -128; the others keep their usual "
         "place values.",
         f"The first bit is 1, worth -128. The other bits {bits[1:]} are worth {rest}. "
@@ -266,7 +284,7 @@ def _write_den_hex(p):
         steps += f"; {q} ÷ 16 = {q // 16} remainder {q % 16}"
     return _short(
         f"Write the denary number {n} in hexadecimal.",
-        [text],
+        _hex_forms(text),
         "Divide by 16 and keep the remainders; 10 to 15 are written A to F.",
         f"{steps}. Reading the digits from the last division: {text}.")
 
@@ -307,7 +325,7 @@ def _write_bin_hex(p):
 
     return _short(
         f"Write the 8-bit binary number {bits} in hexadecimal.",
-        [text],
+        _hex_forms(text),
         "Split the bits into two groups of 4 and write each group as one hexadecimal digit.",
         f"{digit(bits[:4])} and {digit(bits[4:])}, so the answer is {text}.")
 
@@ -323,9 +341,10 @@ def _write_hex_den(p):
     text = bases.to_hex(n)
     terms = [f"{d} × {16 ** (len(text) - 1 - i)}" for i, d in enumerate(text)]
     values = [str(int(d, 16) * 16 ** (len(text) - 1 - i)) for i, d in enumerate(text)]
-    return _short(
+    return _numeric(
         f"What is the hexadecimal number {text} in denary?",
-        [str(n)],
+        str(n), " + ".join(terms).replace("×", "*").replace("A", "10").replace("B", "11")
+        .replace("C", "12").replace("D", "13").replace("E", "14").replace("F", "15"),
         "The place values in hexadecimal are 256, 16 and 1; A to F are 10 to 15.",
         f"{' + '.join(terms)} = {' + '.join(values)} = {n}.")
 
@@ -354,10 +373,10 @@ def _write_fp_den(p):
     mantissa, exponent = _fp(p["m"], p["e"])
     mval = Fraction(p["m"], 128)
     value = _value_of(p)
-    return _short(
+    return _numeric(
         f"{FP_FORMAT} What denary number does the mantissa {mantissa} with exponent {exponent} "
         "represent?",
-        [_decimal(value)],
+        _decimal(value), f"{p['m']}/128 * 2^({p['e']})",
         "Work out the exponent first. Then move the binary point in the mantissa that many places "
         "(right if positive, left if negative).",
         f"The exponent {exponent} is {p['e']}. The mantissa {mantissa} is {_decimal(mval)} "
@@ -575,12 +594,12 @@ def _with_facts(write, facts):
 
 
 def _t(slug, letter, write, recheck, params, rules=(), difficulty=1, seconds=60, marks=1,
-       facts=()):
+       facts=(), kind="short_answer"):
     topic = _topic(letter)
     write = _with_facts(write, facts)
     return Template(
         id=f"{topic}-{slug}", version=1, topic=topic, learning_point=f"{topic}-lp-{slug}",
-        type="short_answer", difficulty=difficulty, expected_seconds=seconds, marks=marks,
+        type=kind, difficulty=difficulty, expected_seconds=seconds, marks=marks,
         source_ref=f"OCR H446 specification 1.4.1({letter})", citations=(_leaf_citation(topic),),
         params=tuple(params), rules=tuple(rules), write=write, recheck=recheck,
         engine_tool="revisionden-cs-engine", engine_note=ENGINE_NOTE)
@@ -593,11 +612,13 @@ _NICE = Rule("the value has at most 4 decimal places", lambda p: _places(_value_
 
 TEMPLATES = [
     _t("denary-to-binary", "b", _write_den_bin, _check_den_bin, [IntParam("n", 20, 255)]),
-    _t("binary-to-denary", "b", _write_bin_den, _check_bin_den, [IntParam("n", 20, 255)]),
+    _t("binary-to-denary", "b", _write_bin_den, _check_bin_den, [IntParam("n", 20, 255)],
+       kind="numeric"),
     _t("denary-to-twos-complement", "c", _write_den_twos, _check_den_twos,
        [IntParam("n", -128, -1)], difficulty=2, seconds=90, facts=(TWOS_PLACES, TWOS_NEGATE)),
     _t("twos-complement-to-denary", "c", _write_twos_den, _check_twos_den,
-       [IntParam("n", -128, -1)], difficulty=2, seconds=90, facts=(TWOS_PLACES,)),
+       [IntParam("n", -128, -1)], difficulty=2, seconds=90, facts=(TWOS_PLACES,),
+       kind="numeric"),
     _t("denary-to-sign-magnitude", "c", _write_sign_mag, _check_sign_mag,
        [IntParam("n", -127, -1)], difficulty=2, seconds=60, facts=(SIGN_MAGNITUDE,)),
     _t("binary-addition", "d", _write_add, _check_add,
@@ -617,10 +638,10 @@ TEMPLATES = [
     _t("hexadecimal-to-denary", "f", _write_hex_den, _check_hex_den, [IntParam("n", 16, 4095)],
        [Rule("the number uses a letter, so it cannot be mistaken for denary",
              lambda p: any(c in "ABCDEF" for c in format(p["n"], "X")))],
-       difficulty=2, seconds=90),
+       difficulty=2, seconds=90, kind="numeric"),
     _t("floating-point-to-denary", "g", _write_fp_den, _check_fp_den,
        [_MANTISSA, IntParam("e", -3, 6)], [_NORMALISED, _NICE], difficulty=3, seconds=180,
-       marks=2, facts=(MANTISSA_PLACES,)),
+       marks=2, facts=(MANTISSA_PLACES,), kind="numeric"),
     _t("denary-to-floating-point", "g", _write_den_fp, _check_den_fp,
        [_MANTISSA, IntParam("e", -3, 6)], [_NORMALISED, _NICE], difficulty=4, seconds=240,
        marks=2, facts=(MANTISSA_PLACES, NORMALISED)),

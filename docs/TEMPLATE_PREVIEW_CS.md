@@ -366,7 +366,7 @@ Made by `pnpm content:templates` from the files in `content/items/alevel-compute
 - **Answer:** B0
 - **Explanation:** 176 ÷ 16 = 11 remainder 0. Reading the digits from the last division: B0.
 - **Hint:** Divide by 16 and keep the remainders; 10 to 15 are written A to F.
-- Seed 1, difficulty 2, `alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review fail.
+- Seed 1, difficulty 2, `alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-01`. Checks: grounded-writing pass, maths-engine pass, quote-check pass, blind-answer pass, adversarial-review pass.
 
 ### 2. Write the denary number 977 in hexadecimal.
 

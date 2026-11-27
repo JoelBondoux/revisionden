@@ -505,7 +505,9 @@ Tags: #product #rules #limits #defaults
 - A-Level Computer Science items (S5, strand 1, 2026-11-27): 119 draft template items for data
   representation (1.4.1 (b) to (i)), 7 per template, in
   `content/items/alevel-computer-science/templated/`; built by `build.py --course alevel-cs`.
-  Binary answers keep every bit (the app ignores spaces and case in answers with digits).
+  Binary answers keep every bit (the app ignores spaces and case in answers with digits);
+  denary answers are `numeric` items, marked by value (1.1250 is 1.125), with a place-value sum
+  the maths engine re-evaluates; hexadecimal answers also accept a `0x` prefix or a leading 0.
   Items whose hint or explanation states a rule the specification does not (two's complement
   place values, normalisation, shift and mask rules) list `facts` and need individual human
   approval (decision 0009); 70 of the 119.

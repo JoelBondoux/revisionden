@@ -139,6 +139,9 @@ OCR H446, board provisional. `app/templates/alevel_cs.py`, built with
 - Hints and explanations that state a rule the specification does not state (two's complement
   place values, normalisation, shift and mask rules) list it in `facts` with a neutral `ask`, and
   the item sets `needs_human_approval: true` (decision 0009), until the fact-check stage can run.
+- Denary answers are `numeric` items (marked by value, so 1.1250 is 1.125 and 034 is 34), with a
+  place-value sum in `verify.expression` that the maths engine re-evaluates. Hexadecimal answers
+  also accept `0x` and a leading 0. Binary answers stay `short_answer` and must show every bit.
 - `build.py` now takes `--course` (`COURSES`); GCSE Maths Higher stays the default, unchanged.
 
 | Template                                            | Topic   | Items | Facts (0009) |

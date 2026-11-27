@@ -6,6 +6,7 @@ import json
 import re
 from collections import Counter
 from dataclasses import replace
+from fractions import Fraction
 from pathlib import Path
 
 import pytest
@@ -48,7 +49,7 @@ def test_each_template_cites_its_topic_leaf_word_for_word(template):
 @pytest.mark.parametrize("template", TEMPLATES, ids=lambda t: t.id)
 def test_items_have_the_content_item_shape(template):
     for item in generate(template, 7, NOW):
-        assert item["type"] in {"short_answer", "multiple_choice"}
+        assert item["type"] in {"short_answer", "multiple_choice", "numeric"}
         assert item["id"].startswith(template.topic + "-t-")
         assert item["hint"] and item["explanation"]
         assert 1 <= item["difficulty"] <= 5
@@ -92,6 +93,9 @@ def _broken(template, change):
 
 def _wrong_answer(q):
     q = dict(q)
+    if "value" in q["answer"]:
+        q["answer"] = {**q["answer"], "value": str(Fraction(q["answer"]["value"]) + 1)}
+        return q
     first = q["answer"]["accepted"][0]
     flipped = ("1" if first[-1] == "0" else "0") if first[-1] in "01" else (
         "0" if first[-1] != "0" else "1")
@@ -180,3 +184,25 @@ def test_committed_cs_items_record_how_each_answer_was_confirmed():
         for item in json.loads(path.read_text()):
             [engine] = [c for c in item["verification"]["checks"] if c["name"] == "maths-engine"]
             assert "CS engine" in engine["notes"], item["id"]
+
+
+
+# Codex review on #437: short answers are compared as text, so a denary answer must be marked by
+# value (numeric: 1.1250 is 1.125, 034 is 34) and hexadecimal must accept 0x and a leading 0.
+DENARY_RESULTS = {"binary-to-denary", "twos-complement-to-denary", "hexadecimal-to-denary",
+                  "floating-point-to-denary"}
+HEX_RESULTS = {"denary-to-hexadecimal", "binary-to-hexadecimal"}
+
+
+@pytest.mark.parametrize("template", TEMPLATES, ids=lambda t: t.id)
+def test_denary_answers_are_marked_by_value_and_hex_in_its_usual_forms(template):
+    slug = template.id[len(template.topic) + 1:]
+    for item in generate(template, 7, NOW):
+        if slug in DENARY_RESULTS:
+            assert item["type"] == "numeric", item["id"]
+            assert item["verify"]["expression"] and "value" in item["answer"]
+        elif slug in HEX_RESULTS:
+            hexa = item["answer"]["accepted"][0]
+            assert {f"0x{hexa}", f"0{hexa}"} <= set(item["answer"]["accepted"]), item["id"]
+        else:
+            assert item["type"] == "short_answer", item["id"]
