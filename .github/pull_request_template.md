@@ -7,7 +7,7 @@
 
 ## Docs
 
-- [ ] Docs updated (`docs/`, `CHANGELOG.md` under Unreleased, `docs/WORKSTREAMS.md` status)
+- [ ] Docs updated (`docs/`, a fragment in `changes/unreleased/`, `docs/WORKSTREAMS.md` status)
 
 ## Accessibility
 
