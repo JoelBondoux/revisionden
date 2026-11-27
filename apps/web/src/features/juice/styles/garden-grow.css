@@ -121,7 +121,7 @@
 }
 
 :root[data-effect-style='garden-grow'] .button-tile:active {
-  transform: translateY(4px) scaleY(0.94);
+  transform: translateY(3px);
   box-shadow: 0 1px 0 var(--gg-soil);
 }
 

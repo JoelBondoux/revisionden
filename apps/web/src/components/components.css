@@ -27,7 +27,7 @@
 }
 
 .btn:active:not(:disabled) {
-  transform: translateY(5px);
+  transform: translateY(3px);
   box-shadow: none;
 }
 

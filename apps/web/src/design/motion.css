@@ -80,7 +80,7 @@
 .rewards .btn:active:not(:disabled),
 .stats .btn:active:not(:disabled),
 .period-toggle__button:active {
-  transform: translateY(5px) scale(0.97, 0.94);
+  transform: translateY(3px);
 }
 
 /* The main call to action: pulses gently with a moving shine (about 0.6 times a second). */
@@ -144,7 +144,7 @@
 
 .home-cta:active,
 .map-go:active {
-  transform: translateY(4px) scale(0.98, 0.95);
+  transform: translateY(3px);
 }
 
 @media (prefers-reduced-motion: reduce) {
