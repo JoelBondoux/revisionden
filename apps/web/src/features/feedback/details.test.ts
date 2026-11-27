@@ -2,6 +2,8 @@ import {
   browserFamily,
   collectDeviceDetails,
   findPersonalDetails,
+  forgetLastProblem,
+  LAST_PROBLEM_KEEP_MS,
   readDisplayDetails,
   rememberLastProblem,
   rememberOnScreen,
@@ -91,6 +93,38 @@ describe('last problem (E8)', () => {
         online: true,
       }).lastProblem,
     ).toBeUndefined();
+  });
+});
+
+describe('an error code on screen (F18)', () => {
+  afterEach(() => forgetLastProblem());
+  const base = {
+    appVersion: '1',
+    route: '/learn/daily',
+    userAgent: '',
+    width: 1,
+    height: 1,
+    online: true,
+  };
+  const at = Date.UTC(2026, 10, 27, 10, 0, 0);
+
+  it('keeps the last code for 15 minutes, then forgets it', () => {
+    expect(LAST_PROBLEM_KEEP_MS).toBe(15 * 60 * 1000);
+    rememberLastProblem('RD-7K2M9Q', at);
+    expect(collectDeviceDetails(base, at + LAST_PROBLEM_KEEP_MS).lastProblem).toBe('RD-7K2M9Q');
+    expect(collectDeviceDetails(base, at + LAST_PROBLEM_KEEP_MS + 1).lastProblem).toBeUndefined();
+  });
+
+  it('lets a newer code replace the last one', () => {
+    rememberLastProblem('RD-7K2M9Q', at);
+    rememberLastProblem('RD-ABC234', at + 1000);
+    expect(collectDeviceDetails(base, at + 2000).lastProblem).toBe('RD-ABC234');
+  });
+
+  it('forgets the code when asked (sign-out)', () => {
+    rememberLastProblem('RD-7K2M9Q', at);
+    forgetLastProblem();
+    expect(collectDeviceDetails(base, at).lastProblem).toBeUndefined();
   });
 });
 

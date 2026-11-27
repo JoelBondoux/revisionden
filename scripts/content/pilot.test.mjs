@@ -54,8 +54,10 @@ test('every specification content reference appears exactly once', () => {
 
 test('every pilot item links to a pilot topic and records how it was checked', () => {
   const ids = new Set(leaves(pilot.data.topics).map(({ node }) => node.id));
-  assert.ok(content.items.length >= 6);
-  for (const { data } of content.items) {
+  // Other subjects' items (A-Level Computer Science, S5) belong to their own trees.
+  const maths = content.items.filter(({ data }) => data.topic.startsWith('gcse-maths-'));
+  assert.ok(maths.length >= 6);
+  for (const { data } of maths) {
     assert.ok(ids.has(data.topic), `${data.id} -> ${data.topic}`);
     assert.ok(data.source_ref && data.checked_by.length);
   }
