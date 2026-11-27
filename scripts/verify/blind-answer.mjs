@@ -11,6 +11,7 @@ import {
   inForm,
   standardForm,
   withMinus,
+  unitSpellings,
   withoutSubject,
 } from '../../packages/core/src/answer-format.ts';
 
@@ -147,7 +148,11 @@ function expectation(item) {
     case 'short_answer': {
       // The same answer normaliser as marking (packages/core, #133): maths notation such as
       // x² for x^2, any_order and units. End punctuation is still ignored, as before.
-      const options = { anyOrder: item.answer.any_order === true, units: item.answer.units };
+      const options = {
+        anyOrder: item.answer.any_order === true,
+        units: item.answer.units?.flatMap(unitSpellings), // F25, as marking does
+        ...(item.answer.kind === 'hex' ? { kind: 'hex' } : {}),
+      };
       return {
         expected: item.answer.accepted.join(' | '),
         matches: (a) =>

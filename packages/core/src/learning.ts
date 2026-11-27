@@ -24,6 +24,7 @@ import {
   withMinus,
   withoutThousands,
   withoutUnit,
+  unitSpellings,
   type AnswerForm,
   type Rounding,
 } from './answer-format';
@@ -72,12 +73,19 @@ export interface ShortAnswerKey {
   any_order?: boolean;
   /** Units the answer may end with, or leave off. */
   units?: readonly string[];
+  /** F24: a hexadecimal answer: case, a 0x prefix and leading zeros are ignored. */
+  kind?: 'hex';
 }
 
 /** Marks a typed short answer with the fairer rules in `answer-normalise.ts`. */
 export function markShortAnswer(key: ShortAnswerKey, answer: unknown): MarkResult {
   if (typeof answer !== 'string') return wrong;
-  const options = { anyOrder: key.any_order === true, units: key.units };
+  const options = {
+    anyOrder: key.any_order === true,
+    // F25: each unit's spellings, as numeric answers accept them ("60 degrees" for °).
+    units: key.units?.flatMap(unitSpellings),
+    ...(key.kind === 'hex' ? { kind: 'hex' as const } : {}),
+  };
   return mark(key.accepted.some((a) => sameAnswer(a, answer, options)));
 }
 
