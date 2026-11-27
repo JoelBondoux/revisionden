@@ -8,19 +8,15 @@ import { AreaModelStep } from '../interactive';
 import './learn.css';
 
 /** Shown whenever unverified (draft) content is on screen. Only possible in development. */
-/** UX-1: on Cards, draft questions get a small tag rather than the big banner. */
-export function DraftTag() {
+/**
+ * Owner (UX-1): screens look as they will at launch, so draft content is marked by one slim line
+ * at the very bottom of the screen (lessons, the starting test, Cards), never a banner at the top.
+ * Put it last, after Check or Continue, so it never covers them.
+ */
+export function DraftNote() {
   return (
-    <p role="note" className="draft-tag">
-      Draft: not checked yet
-    </p>
-  );
-}
-
-export function DraftBanner() {
-  return (
-    <p role="note" className="draft-banner">
-      <strong>DRAFT CONTENT</strong> Not yet checked. For development only.
+    <p role="note" className="draft-note">
+      Draft content: not checked yet. For testing only.
     </p>
   );
 }

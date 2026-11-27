@@ -199,16 +199,3 @@
   outline: 3px solid var(--color-focus);
   outline-offset: 4px;
 }
-
-/* UX-1: a small tag for draft questions, the same warning colours as the lesson banner. */
-.draft-tag {
-  display: inline-block;
-  margin: 0 0 var(--space-2);
-  padding: 2px var(--space-2);
-  border: 1px dashed var(--color-warning-text);
-  border-radius: var(--radius-pill);
-  background: var(--color-warning-soft);
-  color: var(--color-warning-text);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-}

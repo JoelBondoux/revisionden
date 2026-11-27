@@ -87,15 +87,44 @@ test("Home's goals say what they count, and there is no friends league pill", as
   await expect(page.getByText('Friends league')).toHaveCount(0);
 });
 
-test('Cards marks draft questions with a small tag, not a big banner', async ({ page }) => {
-  await seedApp(page, 'pupil');
-  await page.goto('/cards');
-  const note = page.getByRole('note');
-  await expect(note).toHaveText('Draft: not checked yet');
-  await expect(page.locator('.draft-banner')).toHaveCount(0);
-  const height = await note.evaluate((el) => el.getBoundingClientRect().height);
-  expect(height).toBeLessThan(40);
-});
+// Owner (via the lead): screens look as they will at launch, so the draft notice is a slim line
+// at the very bottom of lessons, the starting test and Cards, never the big banner at the top,
+// and never over Check or Continue.
+const DRAFT = 'Draft content: not checked yet. For testing only.';
+for (const [path, button, begin] of [
+  ['/learn/topic/demo', 'Check', null],
+  ['/learn/subject/gcse-maths/start', null, 'Start'],
+  ['/cards', null, null],
+] as const) {
+  test(`${path} shows the draft notice as a slim line at the bottom`, async ({ page }) => {
+    await seedApp(page, 'pupil');
+    await page.goto(path);
+    if (begin) await page.getByRole('button', { name: begin }).click();
+    const note = page.getByRole('note').filter({ hasText: /^Draft content/ });
+    await expect(note).toHaveText(DRAFT);
+    await expect(page.getByText('DRAFT CONTENT', { exact: true })).toHaveCount(0);
+    const height = await note.evaluate((el) => el.getBoundingClientRect().height);
+    expect(height).toBeLessThan(48);
+    // The last thing in the screen's content.
+    const last = await page.evaluate(() => {
+      const main = document.querySelector('main')!;
+      const all = Array.from(main.querySelectorAll('*')).filter(
+        (el) => el.getBoundingClientRect().height > 0,
+      );
+      const bottom = Math.max(...all.map((el) => el.getBoundingClientRect().bottom));
+      const note = Array.from(main.querySelectorAll('[role="note"]')).find((el) =>
+        el.textContent?.startsWith('Draft content'),
+      )!;
+      return Math.round(note.getBoundingClientRect().bottom) >= Math.round(bottom) - 1;
+    });
+    expect(last).toBe(true);
+    if (button) {
+      const check = (await page.getByRole('button', { name: button }).boundingBox())!;
+      const box = (await note.boundingBox())!;
+      expect(box.y).toBeGreaterThanOrEqual(check.y + check.height);
+    }
+  });
+}
 
 test('the version line is on About only, not on every page', async ({ page }) => {
   await seedApp(page, 'pupil');

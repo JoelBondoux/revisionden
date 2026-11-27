@@ -50,8 +50,10 @@ describe('Flashcards screen', () => {
     expect(due).toHaveAttribute('aria-selected', 'true');
     expect(screen.getByRole('tab', { name: 'All decks' })).toBeInTheDocument();
     expect(screen.getByRole('tab', { name: 'My cards' })).toBeInTheDocument();
-    // UX-1: a small tag, not the big DRAFT CONTENT banner lessons show.
-    expect(screen.getByRole('note')).toHaveTextContent('Draft: not checked yet');
+    // UX-1: one slim line at the bottom, not a banner at the top.
+    expect(screen.getByRole('note')).toHaveTextContent(
+      'Draft content: not checked yet. For testing only.',
+    );
   });
 
   it('shows the deck header and progress, then flips the card to the answer', async () => {

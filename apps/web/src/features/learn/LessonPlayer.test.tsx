@@ -16,13 +16,16 @@ const click = (name: string | RegExp) => userEvent.click(screen.getByRole('butto
 const feedback = () => screen.findByRole('status', { name: 'Answer feedback' });
 
 describe('Lesson player', () => {
-  it('shows a DRAFT CONTENT banner when the lesson has drafts', async () => {
+  it('marks drafts with one slim line at the bottom, not a banner (owner, UX-1)', async () => {
     only(0);
     renderRoute('/learn/topic/demo-topic-a');
-    expect(await screen.findByRole('note')).toHaveTextContent('DRAFT CONTENT');
+    const note = await screen.findByRole('note');
+    expect(note).toHaveTextContent('Draft content: not checked yet. For testing only.');
+    // Last in the lesson, after Check, so it never covers it.
+    expect(note.parentElement?.lastElementChild).toBe(note);
   });
 
-  it('shows no banner when everything is verified', async () => {
+  it('shows no draft line when everything is verified', async () => {
     server.use(
       http.get('*/v1/student/learn/lesson', () =>
         HttpResponse.json({ items: [{ ...demoItems[0], draft: false }], draftContent: false }),
@@ -30,7 +33,7 @@ describe('Lesson player', () => {
     );
     renderRoute('/learn/topic/demo-topic-a');
     await screen.findByRole('group', { name: 'Demo question 1' });
-    expect(screen.queryByText(/DRAFT CONTENT/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Draft content/)).not.toBeInTheDocument();
   });
 
   it('gives instant feedback and XP on a right multiple choice answer', async () => {

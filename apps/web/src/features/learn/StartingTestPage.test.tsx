@@ -44,7 +44,9 @@ describe('Starting test', () => {
     renderRoute('/learn/subject/gcse-maths/start');
     await click('Start');
     expect(await screen.findByText(/5:00|4:59/)).toBeInTheDocument();
-    expect(screen.getByRole('note')).toHaveTextContent('DRAFT CONTENT');
+    expect(screen.getByRole('note')).toHaveTextContent(
+      'Draft content: not checked yet. For testing only.',
+    );
     await userEvent.click(screen.getByRole('radio', { name: 'Option B' }));
     await click('Next');
     expect(await screen.findByLabelText('Your answer')).toBeInTheDocument();
