@@ -38,7 +38,7 @@
       Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.12 and 1.9
       when it lands.
 
-- [ ] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test
+- [x] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test
       (`apps/web/src/features/learn/StartingTestPage.tsx`, `timeLimitSeconds` from
       `apps/api/src/routes/learn.ts`; e2e `e2e/tests/starting-test.spec.ts`) has a 5-minute
       limit that a pupil cannot turn off, adjust or extend, and its one-minute warning is a colour
@@ -47,6 +47,9 @@
       is essential. No ruling on whether it is essential was found in `docs/PRODUCT_RULES.md`,
       `docs/GAME_FEEL.md` or `project_memory/`. Not settled here: a product decision, routed to owner
       by lead (W19, 2026-11-26). The silent warning is a bug either way and is routed to F.
+      **Settled (F17, 2026-11-27):** the owner chose "extend": a "More time" button in the last
+      minute adds 2 minutes, up to 10 times (the WCAG minimum), each announced to screen readers.
+      The silent warning was fixed in F14.
 
 - [ ] **Friends league is built, but the policies still say friends are not available.** The
       friends screens (`apps/web/src/features/league/`, FL PR 2) and API (`apps/api/src/routes/friends.ts`)
