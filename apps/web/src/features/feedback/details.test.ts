@@ -119,50 +119,53 @@ describe('the question or card on screen (F16)', () => {
   });
 });
 
-describe('how the screen looks, for reproducing a bug (F16)', () => {
-  it('reads the look, light or dark, colours, reading settings, zoom and text size', () => {
-    const root = document.createElement('html');
-    Object.assign(root.dataset, {
+describe('how the screen looks, for reproducing a bug (F16, L ruling in #392)', () => {
+  const root = () => {
+    const el = document.createElement('html');
+    Object.assign(el.dataset, {
       effectStyle: 'doodle-diary',
       theme: 'dark',
       palette: 'colourblind',
       pattern: 'off',
+      readingFont: 'dyslexic',
       readingSize: 'large',
+      readingSpacing: 'wide',
       readingTint: 'cream',
     });
-    expect(
-      readDisplayDetails(root, {
-        pixelRatio: 2.625,
-        zoom: 1.25,
-        rootFontPx: 20,
-        reducedMotion: true,
-      }),
-    ).toEqual({
+    return el;
+  };
+  const env = { pixelRatio: 2.625, zoom: 1.25, rootFontPx: 20 };
+
+  it('sends the look, light or dark, the pattern, pixel density, pinch zoom and text size', () => {
+    expect(readDisplayDetails(root(), env)).toEqual({
       look: 'doodle-diary',
       theme: 'dark',
-      palette: 'colourblind',
       pattern: 'off',
-      readingFont: 'standard',
-      readingSize: 'large',
-      readingSpacing: 'normal',
-      readingTint: 'cream',
       pixelRatio: 2.63,
       zoom: 1.25,
       textScale: 1.25,
-      reducedMotion: true,
     });
   });
 
+  it('never sends a setting that could hint at a health condition', () => {
+    const details = readDisplayDetails(root(), env);
+    for (const key of [
+      'palette',
+      'readingFont',
+      'readingTint',
+      'readingSize',
+      'readingSpacing',
+      'reducedMotion',
+    ]) {
+      expect(details).not.toHaveProperty(key);
+    }
+  });
+
   it('leaves out anything that is not a plain setting name', () => {
-    const root = document.createElement('html');
-    root.dataset.effectStyle = 'Hello there <b>';
-    const details = readDisplayDetails(root, {
-      pixelRatio: 1,
-      zoom: 1,
-      rootFontPx: 16,
-      reducedMotion: false,
-    });
+    const el = document.createElement('html');
+    el.dataset.effectStyle = 'Hello there <b>';
+    const details = readDisplayDetails(el, { pixelRatio: 1, zoom: 1, rootFontPx: 16 });
     expect(details).not.toHaveProperty('look');
-    expect(details).toMatchObject({ theme: 'light', textScale: 1, zoom: 1 });
+    expect(details).toMatchObject({ theme: 'light', pattern: 'on', textScale: 1, zoom: 1 });
   });
 });

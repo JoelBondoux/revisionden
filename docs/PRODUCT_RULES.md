@@ -811,8 +811,9 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   route, browser family, screen size and online/offline. From a lesson or the Cards tab it also
   names the question or deck card on screen by its content id (F16: an id only, never its text,
   never a student's own card), so the content team can find it. It also says how the screen
-  looked (F16): look, light or dark, colours, pattern, reading settings, pixel ratio, pinch zoom,
-  text size against 16px and reduced motion, so a layout or touch bug can be reproduced. Never IP
+  looked (F16): look, light or dark, pattern, pixel density, pinch zoom and text size against
+  16px (never the reading tint, dyslexia-friendly font or colour-blind colours: L ruling, notice
+  1.11), so a layout or touch bug can be reproduced. Never IP
   address, location or contacts.
 - Students can send feedback; the form tells them their parent can see it. Parents see their
   family's feedback and its status in the parent portal.

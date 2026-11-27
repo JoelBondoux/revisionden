@@ -187,16 +187,10 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
             {device.lastProblem && <li>Last problem: {device.lastProblem}</li>}
             {device.contentId && <li>Question or card: {device.contentId}</li>}
             <li>
-              Look: {device.look ?? 'default'}, {device.theme}, {device.palette} colours, pattern{' '}
-              {device.pattern}
-            </li>
-            <li>
-              Reading: {device.readingFont} font, {device.readingSize} text, {device.readingSpacing}{' '}
-              spacing, {device.readingTint} tint
+              Look: {device.look ?? 'default'}, {device.theme}, pattern {device.pattern}
             </li>
             <li>
               Pixel ratio {device.pixelRatio}, zoom {device.zoom}, text size ×{device.textScale}
-              {device.reducedMotion ? ', reduced motion' : ''}
             </li>
           </ul>
         )}

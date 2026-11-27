@@ -100,23 +100,25 @@ describe('sending feedback', () => {
     const display = {
       look: 'doodle-diary',
       theme: 'dark',
-      palette: 'colourblind',
       pattern: 'off',
-      readingFont: 'dyslexic',
-      readingSize: 'large',
-      readingSpacing: 'wide',
-      readingTint: 'cream',
       pixelRatio: 2.63,
       zoom: 1.25,
       textScale: 1.25,
-      reducedMotion: true,
     };
     const ok = await sendAsParent(parent.headers, {
       kind: 'bug',
       device: { ...DEVICE, ...display },
     });
     expect(ok.status).toBe(201);
-    for (const bad of [{ look: 'Sam likes this' }, { zoom: 900 }, { theme: 'x'.repeat(41) }]) {
+    for (const bad of [
+      { look: 'Sam likes this' },
+      { zoom: 900 },
+      { theme: 'x'.repeat(41) },
+      // Could hint at a health condition (L ruling in #392): never accepted.
+      { palette: 'colourblind' },
+      { readingFont: 'dyslexic' },
+      { readingTint: 'cream' },
+    ]) {
       const res = await sendAsParent(parent.headers, {
         kind: 'bug',
         device: { ...DEVICE, ...bad },

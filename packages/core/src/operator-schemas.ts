@@ -107,16 +107,10 @@ const ticketDevice = z
     /** F16: how the screen looked (settings and sizes only). */
     look: z.string().optional(),
     theme: z.string().optional(),
-    palette: z.string().optional(),
     pattern: z.string().optional(),
-    readingFont: z.string().optional(),
-    readingSize: z.string().optional(),
-    readingSpacing: z.string().optional(),
-    readingTint: z.string().optional(),
     pixelRatio: z.number().optional(),
     zoom: z.number().optional(),
     textScale: z.number().optional(),
-    reducedMotion: z.boolean().optional(),
   })
   .strict();
 

@@ -297,8 +297,8 @@ Tags: #product #rules #limits #defaults
   finished takes no reward slot and does not change the extra count (slots are taken on finish).
 - Bug reports (F16): with device details on, a report from a lesson or the Cards tab names the
   question or deck card on screen by its content id (never text, never a student's own card),
-  and says how the screen looked (look, light or dark, colours, pattern, reading settings, pixel
-  ratio, pinch zoom, text size against 16px, reduced motion).
+  and says how the screen looked (look, light or dark, pattern, pixel density, pinch zoom, text size
+  against 16px). Never the reading tint, dyslexia-friendly font or colour-blind colours (L, notice 1.11).
 - Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
   `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
   answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.

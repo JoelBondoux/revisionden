@@ -50,19 +50,15 @@ const deviceSchema = z
     lastProblem: z.string().regex(/^[A-Za-z0-9_:-]{1,80}$/),
     /** F16: the content id of the question or deck card on screen; an id only, never text. */
     contentId: z.string().regex(/^[A-Za-z0-9_-]{1,80}$/),
-    // F16: how the screen looked (settings and sizes only, never free text).
+    // F16: how the screen looked (settings and sizes only, never free text). Never the reading
+    // tint, the dyslexia-friendly font or the colour-blind colours, which could hint at a health
+    // condition (L ruling in #392): the strict schema refuses them.
     look: setting,
     theme: setting,
-    palette: setting,
     pattern: setting,
-    readingFont: setting,
-    readingSize: setting,
-    readingSpacing: setting,
-    readingTint: setting,
     pixelRatio: z.number().min(0.1).max(10),
     zoom: z.number().min(0.1).max(10),
     textScale: z.number().min(0.1).max(10),
-    reducedMotion: z.boolean(),
   })
   .partial()
   .strict();
