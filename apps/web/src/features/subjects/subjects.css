@@ -38,8 +38,15 @@
   cursor: pointer;
 }
 
+/* The chosen subject is filled in, like a chosen chip (J17x: plain enough in every look). */
 .subject-switcher__subject[aria-pressed='true'] {
-  border-color: var(--color-primary);
+  border-color: var(--color-selected);
+  background: var(--color-selected);
+  color: var(--color-on-selected);
+}
+
+.subject-switcher__subject[aria-pressed='true'] small {
+  color: inherit;
 }
 
 .subject-switcher__subject small {

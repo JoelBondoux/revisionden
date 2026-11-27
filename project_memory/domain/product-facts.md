@@ -217,8 +217,11 @@ Tags: #product #rules #limits #defaults
   2026-11-26, 89 of 287 marked items had none of these: 75 of 78 flashcards, 13 short answers and
   1 numeric (`gcse-maths-h-n7-0001`).
 - Flashcard accessibility (F8b): the flip card has no aria-label; its accessible name is the visible face and the turn hint is in `aria-describedby`. Rating buttons are named by their visible text (for example "Good · 1 day"). `e2e/tests/cards.spec.ts` runs axe on both sides of a card at all three sizes (WCAG 2.5.3, Label in Name).
-- Installable PWA. Main nav: five items, Map, Cards, Plan, Papers, then **Me** last (bottom bar
-  on phones, side rail from 768px wide). Me shows the student's own avatar (a neutral person icon
+- Installable PWA. Main nav (UX-1, owner-approved UX report, 2026-11-27): **Home · Learn · Cards
+  · Me** (Learn opens the map, `/map`), bottom bar on phones, side rail from 768px wide. Plan and
+  Papers are out of the nav while they are coming soon (they return with the build flag
+  `VITE_COMING_SOON_TABS=1`; `/plan` and `/papers` still open by address). Before UX-1 it was Map,
+  Cards, Plan, Papers, Me, with Home only reachable by tapping Pip. Me shows the student's own avatar (a neutral person icon
   until it loads) and opens `/settings`, "settings and personalisation"; Get help and My progress
   (`/progress`) live there, and Me is marked current on `/settings` and `/progress` (and anything
   under them). Progress is no longer a nav tab (owner, 2026-11-26, W7). The Me page (W9) fits one
@@ -286,6 +289,14 @@ Tags: #product #rules #limits #defaults
   with questions and answers `status: "coming_soon"` (plus `subjectId` and `subjects` with
   `hasContent` for the switcher) for one with none; 404 `no_subject` only with no subject at all
   or an unknown id. The web shows "Questions for <subject> are on their way." and a switcher.
+- Current subject (UX-1, 2026-11-27): a button beside Pip in the top bar on Home, Learn and Cards
+  ("Maths ▾", named "Maths, change subject") opens the "Your subjects" sheet: tap one to switch,
+  then **Add or change subjects**, which opens the map's subject picker. The choice is kept on the
+  device per student (`localStorage` `revisionden.subject.<studentId>`) and shared by Home and the
+  map; a subject the student no longer takes falls back to the API default. Cards' deck is not
+  split by subject, so switching there changes only what Home and Learn show. Picker and sheet
+  order: the current subject, then the others with questions (in the order the family added them),
+  then the coming-soon ones folded into one "N more subjects coming soon" line.
 - Daily flashcard limit (F11, owner 2026-11-26): 20 review cards a day (`DAILY_CARD_LIMIT`),
   "10 more" on request (`EXTRA_CARDS`). Badge and "Due today" show today's remaining (0–20).
   Order: relearning, most overdue for its interval, then weak spots, then recent wrong answers.

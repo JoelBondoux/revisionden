@@ -150,6 +150,8 @@ test('the big subject box opens Subject selection', async ({ page }) => {
   // Screenshots for docs/design/w20 (W20_SHOT=path); not part of the check.
   if (process.env.W20_SHOT) await pick.screenshot({ path: process.env.W20_SHOT });
   // W20: each subject is named by the words it shows (WCAG 2.5.3), a "coming soon" one too.
+  // UX-1: coming-soon subjects fold into one line under the ones you can start.
+  await pick.getByText(/more subjects? coming soon$/).click();
   await expect(pick.getByRole('button', { name: 'Physics Coming soon' })).toBeVisible();
   const results = await axeWhenSettled(page);
   expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
