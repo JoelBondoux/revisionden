@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.12
+Version: 1.13
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -297,7 +297,8 @@ contains an email address, a UK mobile phone number or a nickname from your fami
 
 9.2 You can choose to include device details, and you see the list before you send. They are:
 the app version, the screen you were on, the browser family, the screen size, whether you were
-online, a short code for the last problem that screen showed (if there was one) and, from a lesson
+online, the short reference code of a problem the app showed in the last 15 minutes (if there
+was one, such as RD-7K2M9Q; signing out forgets it) and, from a lesson
 or the Cards tab, the question or card you were looking at (its id only, never its text, and never
 a card a student made). They also say how the app looked on your device, to help us fix display
 and touch faults on particular devices: the look you chose (such as "Comic Pop"), light or dark
@@ -390,6 +391,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.13: With device details on, a bug report now carries the reference code of a problem the app showed in the last 15 minutes, not only one from the screen you were on. Signing out forgets it.
 - 1.12: New 9.5: if several of a student's bug reports turn out not to be bugs, the bug button takes a rest for a week, or is switched off until a parent switches it back on. Get help and "Ask a parent" are never affected.
 - 1.11: Bug reports with device details on can name the question or card you were looking at (its id only), give a short code for the last problem the screen showed, and say how the app looked (its look, light or dark mode, zoom, screen sharpness, high contrast and background pattern). They never include reading comfort or colour choices.
 - 1.10: A parent can link a student's device with a one-time link they send, as well as the QR code.
