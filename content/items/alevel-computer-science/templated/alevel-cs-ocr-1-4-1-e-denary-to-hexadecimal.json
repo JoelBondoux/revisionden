@@ -1,0 +1,438 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-01",
+    "topic": "alevel-cs-ocr-1-4-1-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-e-lp-denary-to-hexadecimal",
+    "expected_seconds": 90,
+    "prompt": "Write the denary number 176 in hexadecimal.",
+    "answer": { "accepted": ["B0", "0B0", "0xB0"] },
+    "marks": 1,
+    "hint": "Divide by 16 and keep the remainders; 10 to 15 are written A to F.",
+    "explanation": "176 ÷ 16 = 11 remainder 0. Reading the digits from the last division: B0.",
+    "source_ref": "OCR H446 specification 1.4.1(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (e) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in hexadecimal.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:19Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:33:52Z",
+          "notes": "model answered \"B0\"; expected \"B0 | 0B0 | 0xB0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:33:54Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-02",
+    "topic": "alevel-cs-ocr-1-4-1-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-e-lp-denary-to-hexadecimal",
+    "expected_seconds": 90,
+    "prompt": "Write the denary number 977 in hexadecimal.",
+    "answer": { "accepted": ["3D1", "03D1", "0x3D1"] },
+    "marks": 1,
+    "hint": "Divide by 16 and keep the remainders; 10 to 15 are written A to F.",
+    "explanation": "977 ÷ 16 = 61 remainder 1; 61 ÷ 16 = 3 remainder 13. Reading the digits from the last division: 3D1.",
+    "source_ref": "OCR H446 specification 1.4.1(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (e) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in hexadecimal.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:20Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-03",
+    "topic": "alevel-cs-ocr-1-4-1-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-e-lp-denary-to-hexadecimal",
+    "expected_seconds": 90,
+    "prompt": "Write the denary number 1969 in hexadecimal.",
+    "answer": { "accepted": ["7B1", "07B1", "0x7B1"] },
+    "marks": 1,
+    "hint": "Divide by 16 and keep the remainders; 10 to 15 are written A to F.",
+    "explanation": "1969 ÷ 16 = 123 remainder 1; 123 ÷ 16 = 7 remainder 11. Reading the digits from the last division: 7B1.",
+    "source_ref": "OCR H446 specification 1.4.1(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (e) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in hexadecimal.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:21Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-04",
+    "topic": "alevel-cs-ocr-1-4-1-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-e-lp-denary-to-hexadecimal",
+    "expected_seconds": 90,
+    "prompt": "Write the denary number 1754 in hexadecimal.",
+    "answer": { "accepted": ["6DA", "06DA", "0x6DA"] },
+    "marks": 1,
+    "hint": "Divide by 16 and keep the remainders; 10 to 15 are written A to F.",
+    "explanation": "1754 ÷ 16 = 109 remainder 10; 109 ÷ 16 = 6 remainder 13. Reading the digits from the last division: 6DA.",
+    "source_ref": "OCR H446 specification 1.4.1(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (e) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in hexadecimal.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal", "version": 1, "seed": 4 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:22Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-05",
+    "topic": "alevel-cs-ocr-1-4-1-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-e-lp-denary-to-hexadecimal",
+    "expected_seconds": 90,
+    "prompt": "Write the denary number 162 in hexadecimal.",
+    "answer": { "accepted": ["A2", "0A2", "0xA2"] },
+    "marks": 1,
+    "hint": "Divide by 16 and keep the remainders; 10 to 15 are written A to F.",
+    "explanation": "162 ÷ 16 = 10 remainder 2. Reading the digits from the last division: A2.",
+    "source_ref": "OCR H446 specification 1.4.1(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (e) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in hexadecimal.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:23Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-06",
+    "topic": "alevel-cs-ocr-1-4-1-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-e-lp-denary-to-hexadecimal",
+    "expected_seconds": 90,
+    "prompt": "Write the denary number 540 in hexadecimal.",
+    "answer": { "accepted": ["21C", "021C", "0x21C"] },
+    "marks": 1,
+    "hint": "Divide by 16 and keep the remainders; 10 to 15 are written A to F.",
+    "explanation": "540 ÷ 16 = 33 remainder 12; 33 ÷ 16 = 2 remainder 1. Reading the digits from the last division: 21C.",
+    "source_ref": "OCR H446 specification 1.4.1(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (e) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in hexadecimal.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal", "version": 1, "seed": 6 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:23Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-e-t-denary-to-hexadecimal-07",
+    "topic": "alevel-cs-ocr-1-4-1-e",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-e-lp-denary-to-hexadecimal",
+    "expected_seconds": 90,
+    "prompt": "Write the denary number 3221 in hexadecimal.",
+    "answer": { "accepted": ["C95", "0C95", "0xC95"] },
+    "marks": 1,
+    "hint": "Divide by 16 and keep the remainders; 10 to 15 are written A to F.",
+    "explanation": "3221 ÷ 16 = 201 remainder 5; 201 ÷ 16 = 12 remainder 9. Reading the digits from the last division: C95.",
+    "source_ref": "OCR H446 specification 1.4.1(e)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (e) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in hexadecimal.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal", "version": 1, "seed": 7 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:24Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]
