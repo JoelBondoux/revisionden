@@ -1012,6 +1012,9 @@ Tags: #product #rules #limits #defaults
   1.5× slow and 0.5× rushed with marks lost. Board-style papers from our own verified items first;
   official past papers only as links to the board's site (never copied). Detail:
   `docs/EXAM_PRACTICE.md`. Workstream X (queued).
+- Links to other websites (L16, 2026-11-27): cookies and storage policy 1.8 says that if you follow
+  a link to another website, such as an exam board's, that website's own cookies and privacy rules
+  apply. Not a material change: no new data, purpose or processor, so no re-prompt.
 
 ## Bug Hunter and secret achievements (planned)
 

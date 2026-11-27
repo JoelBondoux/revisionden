@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Our cookies and storage page now says that if you follow a link to another website, such as an exam board's, that website's own cookies and privacy rules apply.
 - A-Level Computer Science is on its way: the topic map for OCR's specification (H446) is in place, with every topic checked word for word against OCR's own document. Questions come next.
 - Fixed: in Pop Burst dark mode, the boxes you type in on the parent screens (daily time limits, reminder times, a friend's private label and the family join code) now have an edge you can see. In Starlight dark mode, smaller grey words such as the timer note on Starting test are brighter.
 - If several bug reports from a student turn out not to be bugs, their bug button takes a rest for a week (and after repeated rests, switches off until a parent turns it back on from Parent home). Get help and "Ask a parent" always stay.
@@ -304,6 +305,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- L16: cookies and storage policy 1.8 adds a line, in the summary and in section 4, that a website you follow a link to (such as an exam board's) has its own cookies and privacy rules. Goes with Q's past-paper links (#443).
 - S5: Computer Science engine in `services/maths/app/cs/`: number bases, signed binary, binary addition and subtraction, shifts and masks (`bases.py`), normalised floating point (`floating.py`) and Boolean logic in OCR notation with truth tables, simplification and Karnaugh maps (`logic.py`). Tests: `services/maths/tests/test_cs_*.py`.
 - G11: every staging deploy now runs the painted contrast sweep first (`deploy-staging.yml` job `contrast` calls `.github/workflows/contrast-painted.yml`), and the app deploy needs it, so staging no longer relies on a pull request run that only fires on style paths. Test: `scripts/deploy-staging-workflow.test.mjs`.
 - Lead's triage token (L14, owner ruling 2026-11-27): a scoped machine credential (SHA-256 in the Worker secret `TRIAGE_TOKEN_HASH`, never in the repo) opens only `GET /v1/triage/tickets?since=&before=&limit=` (report fields, role and tester flag; no names or emails; pages of up to 200 with `nextBefore`, `status=unreviewed`; each read audited as `tickets.list` with the count and query, never text) and `GET /v1/triage/tickets/:id` (audited `ticket.read`) and `POST /v1/triage/tickets/:id/confirm-bug | duplicate | not-a-bug`, which reuse the operator code; every call audited as `triage-bot` with a required reason (≤300, new `operator_audit_log.reason`); `feedback.reviewed_by` (operator or triage); AppDeck `tickets/:id/undo-triage` reverses a triage outcome within 7 days (`ticket.undo_triage`; an undone Not a bug lifts a saved removal only if it came at or before it); migration 0035. Off in production (404) until the owner approves it.
