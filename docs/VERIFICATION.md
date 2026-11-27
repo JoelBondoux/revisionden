@@ -291,7 +291,10 @@ ones:
 
 - _Subject._ A numeric or expression answer may declare `answer.subject` (`t`, `f^-1(x)`). An answer
   written `<subject> = RHS` (spaces ignored) is then read as RHS; another letter, or no declared
-  subject, is not. In a student's working the final line may state the subject; with a letter
+  subject, is not. When a number answer's question names a letter that is not the answer (the
+  letter names a curve, a line or a class interval), the item says so with `answer.no_subject`, a
+  short reason; the S4 guard (`scripts/content/s4-marking.test.mjs`) requires one or the other
+  for every S4 number answer whose question has a lone or subscripted letter (Codex on #452). In a student's working the final line may state the subject; with a letter
   subject, a rearranging step may multiply or divide by anything without that letter (so
   `a t = v - u` to `t = (v - u)/a` follows), and a function-notation line such as
   `f^-1(x) = (x + 3)/2` follows from `y = (x + 3)/2`.

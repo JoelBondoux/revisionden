@@ -67,6 +67,43 @@ export function typedWithUnit(value, unit) {
   return unit === '£' ? [`£${value}`] : [`${value} ${unit}`, `${value}${unit}`];
 }
 
+/**
+ * The single-letter unknowns a question names (Codex on #452: "predict y"), found by the shape of
+ * the text, not by a list of verbs: a lone lowercase letter, optionally subscripted (y, x_3, u₅),
+ * or a capital letter that a formula defines ("V = 4/3 πr³"). Not counted: a unit after a number
+ * or inside a compound unit (5 m, km/h), "x-axis", P(…) in probability, the articles "a", "A"
+ * and "I", and capital labels for points, events and sets.
+ */
+export function promptVariables(prompt) {
+  const found = new Set();
+  const token =
+    /(?<![A-Za-z0-9_'’°£./])([A-Za-z])((?:_\(?[A-Za-z0-9+]+\)?)|[₀-₉]+)?(?![A-Za-z0-9'’/])/g;
+  for (const m of prompt.matchAll(token)) {
+    const [whole, letter] = m;
+    const before = prompt.slice(0, m.index);
+    const after = prompt.slice(m.index + whole.length);
+    if (/\d\s*$/.test(before) || /^-[A-Za-z]/.test(after)) continue;
+    if (/[A-Z]/.test(letter)) {
+      // A capital is a variable only where a formula defines it: "V = 4/3 πr³", not "Angle A = 76°".
+      if (letter === 'P' && after.startsWith('(')) continue;
+      if (!/^\s*=\s*[^.,;]*(?:π|(?<![A-Za-z])[a-z](?![A-Za-z]))/.test(after)) continue;
+    } else if (
+      letter === 'a' &&
+      !/[=+\-×÷^(<≤]\s*$/.test(before) &&
+      !/^\s*[=+\-×÷^)<>≤≥²³]/.test(after)
+    ) {
+      continue;
+    }
+    found.add(whole);
+  }
+  return [...found];
+}
+
+/** The answer is a number (numeric items, or short answers whose accepted forms are numbers). */
+const numberAnswer = (i) =>
+  i.type === 'numeric' ||
+  (i.type === 'short_answer' && i.answer.accepted.every((a) => /^\s*[-£]?\d[\d.,/ ]*$/.test(a)));
+
 /** Tokens of an any_order answer that hold two or more letters in a row ("HT"). */
 export function multiLetterTokens(answer) {
   return String(answer)
@@ -108,6 +145,15 @@ test('askedUnit reads the unit the answer is asked in, and ignores units in the 
   );
 });
 
+test('promptVariables finds lone and subscripted letters, and formula capitals, but not units or labels', () => {
+  assert.deepEqual(promptVariables('Use it to predict y when x = 4.'), ['y', 'x']);
+  assert.deepEqual(promptVariables('Work out x_3.'), ['x_3']);
+  assert.deepEqual(promptVariables('The volume is V = 4/3 πr³.'), ['V', 'r']);
+  assert.deepEqual(promptVariables('Change a speed of 72 km/h to m/s. It is 5 m long.'), []);
+  assert.deepEqual(promptVariables('Angle A = 76°. Work out angle C on the x-axis.'), []);
+  assert.deepEqual(promptVariables('P(A) = 0.3. A = {2, 4}. A bag holds a red counter.'), []);
+});
+
 test('multiLetterTokens flags outcome lists but not numbers or equations', () => {
   assert.deepEqual(multiLetterTokens('HH, HT, TH, TT'), ['HH', 'HT', 'TH', 'TT']);
   assert.deepEqual(multiLetterTokens('4, 5, 6'), []);
@@ -121,6 +167,22 @@ test('S4 numeric items that ask for a letter declare answer.subject', () => {
         i.type === 'numeric' && askedLetter(i.prompt) && i.answer.subject !== askedLetter(i.prompt),
     )
     .map((i) => i.id);
+  assert.deepEqual(missing, []);
+});
+
+test('S4 number answers to a question that names a letter declare subject or no_subject (Codex on #452)', () => {
+  // A number answer may be typed "y = 42". With a letter in the question, the item must say which
+  // letter the answer is (answer.subject; for short answers, an accepted "y = ..." form), or say
+  // why none applies (answer.no_subject, a reason).
+  const missing = strandItems()
+    .filter((i) => numberAnswer(i) && promptVariables(i.prompt).length > 0)
+    .filter((i) => !i.answer.no_subject)
+    .filter((i) =>
+      i.type === 'numeric'
+        ? !i.answer.subject
+        : !i.answer.accepted.some((a) => /^\s*[A-Za-z](?:_\S+)?\s*=/.test(a)),
+    )
+    .map((i) => `${i.id} (${promptVariables(i.prompt).join(', ')})`);
   assert.deepEqual(missing, []);
 });
 
