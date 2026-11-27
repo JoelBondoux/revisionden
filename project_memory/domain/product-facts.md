@@ -1001,7 +1001,10 @@ Tags: #product #rules #limits #defaults
 - Bug button rest (L13): the operator can mark a student's bug report Not a bug (no reward,
   closed). 3 within 14 days rest the bug button for 7 days; the 3rd rest within 90 days removes
   it until a parent (Parent home) or the operator switches it back on. Server-enforced; numbers in
-  `packages/core/src/bug-button.ts`. Never hides Get help or Ask a parent.
+  `packages/core/src/bug-button.ts`. Never hides Get help or Ask a parent. A removal is saved on
+  the student (`students.bug_button_removed_at`), so the 12-month feedback clean-up never brings the
+  button back; only a switch-on clears it. The student's app asks again on focus, on each page
+  change and when a rest ends, so a switch-on shows without a reload.
 - Tester accounts (L13, owner 2026-11-27): the operator console can flag a student as a tester
   (the adults testing on dev share one pupil test account). Their confirmed bugs earn no XP or Bug
   Hunter step, and their Not-a-bug outcomes never rest the button. Reports show a "Tester" tag.

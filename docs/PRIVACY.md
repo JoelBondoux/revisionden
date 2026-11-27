@@ -100,7 +100,7 @@ text and never a student's own card; how the screen looked: the look (effect sty
 screen's pixel density, pinch zoom and the text size against 16px). Settings and sizes only. Never the
 reading tint, the dyslexia-friendly font or the colour-blind colours (or other reading or motion
 settings), which could hint at a health condition (L ruling, notice 1.11). Never IP, location or contacts. The interactive lesson pilot's one-tap "Did this help?" (W8) stores only Yes or No
-and the lesson item, never text. Deleted 12 months after closing. Policy confirmations store only the policy, version and
+and the lesson item, never text. Deleted 12 months after closing. The bug button rest (L13) keeps only two dates on the student: when it was last switched back on and, if it was removed, when; both go with the student. Policy confirmations store only the policy, version and
 date per parent sign-in.
 
 ## Error reports

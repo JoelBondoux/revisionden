@@ -1,6 +1,6 @@
 {
-  "id": "37e587ed-b6b6-4b05-a549-a831e96be438",
-  "prevId": "fd0685c8-17b9-4baf-88e9-dfb298d7977f",
+  "id": "92d7cd91-7007-4261-908e-7671b3f64e8d",
+  "prevId": "4aedc8ed-9317-49f3-a6a6-91c6f3040bc4",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -6191,6 +6191,12 @@
         },
         "bug_button_reset_at": {
           "name": "bug_button_reset_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bug_button_removed_at": {
+          "name": "bug_button_removed_at",
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false

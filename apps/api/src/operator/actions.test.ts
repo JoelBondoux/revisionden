@@ -6,13 +6,21 @@ import {
   OperatorTicketListSchema,
 } from '@revisionden/core';
 import { feedback, operatorAuditLog, parents, students } from '@revisionden/db';
-import { createTestContext, type TestContext } from '../test/helpers';
+import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
+import { sha256Hex } from '../feedback/triage';
 import { signedOperatorRequest, TEST_OPERATOR_SECRET } from '../test/operator';
 
 let t: TestContext;
+const TRIAGE_TOKEN = 'test-triage-token-for-operator-tests-0123456789';
+const bot = { authorization: `Bearer ${TRIAGE_TOKEN}` };
 
 beforeEach(async () => {
-  t = await createTestContext({ config: { operatorBridge: { secret: TEST_OPERATOR_SECRET } } });
+  t = await createTestContext({
+    config: {
+      operatorBridge: { secret: TEST_OPERATOR_SECRET },
+      triage: { tokenHash: await sha256Hex(TRIAGE_TOKEN) },
+    },
+  });
 });
 afterEach(async () => {
   await t.close();
@@ -343,6 +351,35 @@ describe('operator undo of a triage outcome (L14)', () => {
     expect(await audits()).toContainEqual(
       expect.objectContaining({ action: 'ticket.undo_triage', targetId: f.familyId }),
     );
+  });
+
+  it('lifts a removal that a reversed triage Not a bug caused', async () => {
+    const f = await makeFamily();
+    const strike = async () => {
+      const row = await ticket(f, { ...fromStudent(f) });
+      const res = await t.app.request(
+        `/v1/triage/tickets/${row.id}/not-a-bug`,
+        jsonRequest('POST', { reason: 'Works as designed' }, bot),
+      );
+      expect(res.status).toBe(200);
+      t.clock.advance(DAY);
+      return row.id;
+    };
+    const ids: string[] = [];
+    for (let rest = 0; rest < 3; rest++) {
+      for (let i = 0; i < 3; i++) ids.push(await strike());
+      if (rest < 2) t.clock.advance(7 * DAY);
+    }
+    const state = async () =>
+      (
+        await t.app.request('/v1/student/bug-button', {
+          headers: await t.signInStudent(f.studentId),
+        })
+      ).json();
+    expect(await state()).toEqual({ state: 'removed' });
+
+    expect((await post(`/tickets/${ids[8]!}/undo-triage`)).data).toEqual({ ok: true });
+    expect(await state()).not.toEqual({ state: 'removed' });
   });
 
   it('reverses a triage confirm and takes back its reward', async () => {

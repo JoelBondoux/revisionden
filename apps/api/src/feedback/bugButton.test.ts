@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { eq } from 'drizzle-orm';
 import { authUsers, feedback, students } from '@revisionden/db';
 import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
+import { deleteExpiredFeedback } from './retention';
 
 const DAY = 24 * 60 * 60 * 1000;
 let t: TestContext;
@@ -145,6 +146,26 @@ describe('the bug button rest (L13)', () => {
     );
     expect(on.status).toBe(200);
     expect(await on.json()).toEqual({ state: 'on' });
+    expect(await buttonState(headers)).toEqual({ state: 'on' });
+  });
+
+  it('stays removed after the 12-month clean-up deletes the reports, until a parent switches it on', async () => {
+    const { studentId, parent } = await t.familyStudent('test_kid');
+    const op = await operator();
+    await strikes(studentId, op, 3);
+    t.clock.advance(7 * DAY);
+    await strikes(studentId, op, 3);
+    t.clock.advance(7 * DAY);
+    await strikes(studentId, op, 3);
+    t.clock.advance(400 * DAY);
+    expect(await deleteExpiredFeedback(t.db, t.clock.now())).toBe(9);
+    const headers = await kid(studentId);
+    expect(await buttonState(headers)).toEqual({ state: 'removed' });
+
+    await t.app.request(
+      `/v1/students/${studentId}/bug-button/on`,
+      jsonRequest('POST', {}, parent.headers),
+    );
     expect(await buttonState(headers)).toEqual({ state: 'on' });
   });
 

@@ -4,9 +4,11 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
+import { useInRouterContext, useLocation } from 'react-router-dom';
 import { useStudent } from '../../session/StudentContext';
 import { useFeedbackApi, type BugButtonInfo } from './feedbackApi';
 
@@ -63,7 +65,8 @@ export function BugButtonProvider({
 }) {
   const [shown, setShownState] = useState(() => readShown(storage));
   const [hiders, setHiders] = useState(0);
-  const rest = useServerRest();
+  const [rest, refresh] = useServerRest();
+  const inRouter = useInRouterContext();
 
   const setShown = useCallback(
     (next: boolean) => {
@@ -87,17 +90,30 @@ export function BugButtonProvider({
     () => ({ shown, setShown, hiddenByScreen: hiders > 0, hide, rest }),
     [shown, setShown, hiders, hide, rest],
   );
-  return <BugButtonContext.Provider value={value}>{children}</BugButtonContext.Provider>;
+  return (
+    <BugButtonContext.Provider value={value}>
+      {inRouter && <RouteRefresh refresh={refresh} />}
+      {children}
+    </BugButtonContext.Provider>
+  );
 }
+
+/** The longest a timer can wait (about 24.8 days); a later rest end is checked again then. */
+const MAX_TIMER_MS = 2_147_483_647;
 
 /**
  * L13: asks the server, on a student's device only, whether the bug button is resting or removed.
- * If the server can't be reached the button stays: the server still refuses a bug report then.
+ * It asks again when the app comes back into view (a parent may have switched it back on), on
+ * every page change (see RouteRefresh) and when a rest ends. If the server can't be reached the
+ * button stays: the server still refuses a bug report then.
  */
-function useServerRest(): BugButtonInfo {
+function useServerRest(): [BugButtonInfo, () => void] {
   const { studentId } = useStudent();
   const api = useFeedbackApi();
   const [rest, setRest] = useState<BugButtonInfo>({ state: 'on' });
+  const [asks, setAsks] = useState(0);
+  const refresh = useCallback(() => setAsks((n) => n + 1), []);
+
   useEffect(() => {
     if (!studentId) {
       setRest({ state: 'on' });
@@ -111,8 +127,44 @@ function useServerRest(): BugButtonInfo {
     return () => {
       live = false;
     };
-  }, [api, studentId]);
-  return rest;
+  }, [api, studentId, asks]);
+
+  useEffect(() => {
+    if (!studentId) return;
+    const onVisible = () => {
+      if (document.visibilityState !== 'hidden') refresh();
+    };
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      window.removeEventListener('focus', refresh);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [studentId, refresh]);
+
+  const until = rest.state === 'paused' ? rest.until : undefined;
+  useEffect(() => {
+    if (!until) return;
+    const wait = Math.min(Math.max(new Date(until).getTime() - Date.now(), 0), MAX_TIMER_MS);
+    const timer = setTimeout(refresh, wait);
+    return () => clearTimeout(timer);
+  }, [until, refresh]);
+
+  return [rest, refresh];
+}
+
+/** Asks for the rest state again on each page change (only inside a router, as in AppLayout). */
+function RouteRefresh({ refresh }: { refresh: () => void }) {
+  const { pathname } = useLocation();
+  const first = useRef(true);
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    refresh();
+  }, [pathname, refresh]);
+  return null;
 }
 
 export function useBugButton(): BugButtonValue {
