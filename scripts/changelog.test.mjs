@@ -1,7 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { parseFragment, assembleChangelog, needsFragment, fragmentPathsIn } from './changelog.mjs';
+import {
+  parseFragment,
+  assembleChangelog,
+  needsFragment,
+  fragmentPathsIn,
+  parseNameStatus,
+} from './changelog.mjs';
 
 const BASE = `# Changelog
 
@@ -132,25 +138,58 @@ test('only Markdown fragments in changes/unreleased count', () => {
   );
 });
 
+const added = (...paths) => paths.map((path) => ({ status: 'A', path }));
+const modified = (...paths) => paths.map((path) => ({ status: 'M', path }));
+
 test('a pull request needs a fragment unless it is labelled no-changelog or only touches tests or CI', () => {
-  const code = ['apps/web/src/App.tsx'];
+  const code = modified('apps/web/src/App.tsx');
   assert.equal(needsFragment(code, []).ok, false);
   assert.match(needsFragment(code, []).reason, /changes\/unreleased/);
-  assert.equal(needsFragment([...code, 'changes/unreleased/F20-thing.md'], []).ok, true);
+  assert.equal(needsFragment([...code, ...added('changes/unreleased/F20-thing.md')], []).ok, true);
   assert.equal(needsFragment(code, ['no-changelog']).ok, true);
   assert.equal(
     needsFragment(
-      [
+      modified(
         '.github/workflows/ci.yml',
         'scripts/changelog.test.mjs',
         'apps/web/src/App.test.tsx',
         'e2e/tests/pages.spec.ts',
-      ],
+      ),
       [],
     ).ok,
     true,
   );
   assert.equal(needsFragment([], []).ok, true);
+});
+
+test('only an added fragment counts: editing or deleting another change\u2019s fragment does not (G13b)', () => {
+  const code = modified('apps/web/src/App.tsx');
+  for (const status of ['M', 'D']) {
+    const result = needsFragment(
+      [...code, { status, path: 'changes/unreleased/F20-thing.md' }],
+      [],
+    );
+    assert.equal(result.ok, false, `status ${status}`);
+  }
+  // A renamed fragment is a new file name, so it counts as added.
+  assert.equal(
+    needsFragment([...code, { status: 'R', path: 'changes/unreleased/F20-new-name.md' }], []).ok,
+    true,
+  );
+});
+
+test('git diff --name-status output is read into a status and the new path', () => {
+  assert.deepEqual(
+    parseNameStatus(
+      'A\tchanges/unreleased/a.md\nM\tapps/web/src/App.tsx\nD\tchanges/unreleased/b.md\nR087\told.md\tchanges/unreleased/c.md\n',
+    ),
+    [
+      { status: 'A', path: 'changes/unreleased/a.md' },
+      { status: 'M', path: 'apps/web/src/App.tsx' },
+      { status: 'D', path: 'changes/unreleased/b.md' },
+      { status: 'R', path: 'changes/unreleased/c.md' },
+    ],
+  );
 });
 
 test('the assemble command folds fragments into CHANGELOG.md and deletes them, or keeps them with --keep', async () => {

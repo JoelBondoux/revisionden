@@ -97,18 +97,35 @@ const TEST_OR_CI = [
   /(^|\/)tests?\//,
 ];
 
-/** Whether a pull request's changed files need a changelog fragment, and why not if not. */
-export function needsFragment(changedFiles, labels) {
-  if (labels.includes(NO_CHANGELOG_LABEL))
+/** Reads `git diff --name-status` output into `{ status, path }` (a rename gives its new path). */
+export function parseNameStatus(text) {
+  return text
+    .split('\n')
+    .filter(Boolean)
+    .map((line) => {
+      const [code, ...paths] = line.split('\t');
+      return { status: code[0], path: paths[paths.length - 1] };
+    });
+}
+
+/**
+ * Whether a pull request's changes (`{ status, path }`, from `parseNameStatus`) need a changelog
+ * fragment, and why not if not. Only an added (or renamed-in) fragment counts: editing or deleting
+ * another change's fragment does not.
+ */
+export function needsFragment(changes, labels) {
+  if (labels.includes(NO_CHANGELOG_LABEL)) {
     return { ok: true, reason: `labelled ${NO_CHANGELOG_LABEL}` };
-  if (fragmentPathsIn(changedFiles).length) return { ok: true, reason: 'adds a fragment' };
-  if (changedFiles.every((f) => TEST_OR_CI.some((re) => re.test(f)))) {
+  }
+  const added = changes.filter((c) => c.status === 'A' || c.status === 'R').map((c) => c.path);
+  if (fragmentPathsIn(added).length) return { ok: true, reason: 'adds a fragment' };
+  if (changes.every((c) => TEST_OR_CI.some((re) => re.test(c.path)))) {
     return { ok: true, reason: 'only tests or CI' };
   }
   return {
     ok: false,
     reason:
-      `add a changelog fragment, ${FRAGMENT_DIR}/<your-branch>.md (see changes/README.md), ` +
+      `add a new changelog fragment, ${FRAGMENT_DIR}/<your-branch>.md (see changes/README.md), ` +
       `or label the pull request ${NO_CHANGELOG_LABEL}`,
   };
 }
@@ -144,18 +161,16 @@ function main(argv) {
   if (command === 'check-pr') {
     const base = value('--base') ?? 'origin/dev';
     const labels = JSON.parse(value('--labels') ?? '[]');
-    const changed = execFileSync('git', ['diff', '--name-only', `${base}...HEAD`], {
-      encoding: 'utf8',
-    })
-      .split('\n')
-      .filter(Boolean);
+    const changed = parseNameStatus(
+      execFileSync('git', ['diff', '--name-status', '-M', `${base}...HEAD`], { encoding: 'utf8' }),
+    );
     readFragments(root); // every fragment must parse
     const result = needsFragment(changed, labels);
     if (!result.ok) {
       console.error(`::error::Changelog: ${result.reason}`);
       return 1;
     }
-    if (changed.includes('CHANGELOG.md')) {
+    if (changed.some((c) => c.path === 'CHANGELOG.md')) {
       console.log(
         `::warning::This pull request edits CHANGELOG.md directly; move its lines into ${FRAGMENT_DIR}/ so it stops conflicting.`,
       );
