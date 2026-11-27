@@ -391,6 +391,12 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
   - **on an arena surface** (a card that paints `--arena-bg`, such as the Lesson complete stat
     cards, W18): `--arena-glow`;
   - never `--arena-gold` as text on the page (it is 1.4:1 on a light page).
+  - **controls (J17z, W21 sweep, decision 0012):** a chip, tab, input or select draws its edge in
+    `--color-control-edge` (the look's secondary text colour, 3:1 on the page and on cards); a
+    selected chip, tab or period toggle is filled with `--color-selected` (the main colour in light,
+    the light edge colour in dark) with `--color-on-selected` words, and a selected avatar option
+    gets a thick `--color-selected` ring. All three are defined once in `design/themes.css` and
+    tested in every look (`design/controlContrast.test.ts`).
     `e2e/tests/lesson.spec.ts` holds each of these still and measures it on what is painted behind
     it (`paintedTextFailures`), in every look, light and dark.
 - **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with
