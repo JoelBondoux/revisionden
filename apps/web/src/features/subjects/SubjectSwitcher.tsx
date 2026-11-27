@@ -22,7 +22,7 @@ import './subjects.css';
 export function SubjectSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const navigate = useNavigate();
   const { studentId } = useStudent();
-  const known = useKnownSubjects();
+  const known = useKnownSubjects(studentId);
   if (!known) return null;
   const current = known.current;
   const { now, later } = pickerOrder(known.subjects, current.subjectId);
@@ -73,7 +73,7 @@ export function SubjectSwitcher() {
   const api = useApi();
   const { studentId } = useStudent();
   const chosen = useChosenSubject(studentId);
-  const known = useKnownSubjects();
+  const known = useKnownSubjects(studentId);
   const [open, setOpen] = useState(false);
   const close = useCallback(() => setOpen(false), []);
 
