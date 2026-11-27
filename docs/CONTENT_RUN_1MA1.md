@@ -198,3 +198,12 @@ r12-0110, r13-0110, r14-0110) rest on a standard unit or definition that no allo
 raised to powers are written as fractions in `verify` (`(103/100)^2`), because the engine reads
 `1.03^2` inexactly; worked items whose answer is a sum of money ask for a letter (`£x`), because the
 blind comparison of worked expressions is exact text.
+
+## Step 2 progress: S4 Probability (P1 to P9, 2026-11-27)
+
+95 draft items in `content/items/gcse-maths-higher/probability/` (p1.json to p9.json): 49 numeric,
+2 worked maths, 15 multiple choice, 2 short answer and 27 flashcards. Citations quote the P points on
+page 19 (PDF page 31). Where a term needs a definition (relative frequency), the question states it,
+so the item does not rest on an unsourced definition.
+Flashcard blind answers are compared word for word, so a correct answer with working shown fails;
+p9-0107's blind answer (9/58) is an arithmetic slip by the model (18/117 = 2/13).
