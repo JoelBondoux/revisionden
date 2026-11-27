@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useApi } from '../api/ApiContext';
 import { LoadingOrError } from '../api/LoadingOrError';
 import type { MapSubject } from '@revisionden/core';
@@ -13,6 +13,7 @@ import { SubjectsNudge } from '../features/onboarding/checksUi';
 import { WigglyMap } from '../map/WigglyMap';
 import '../map/map.css';
 import { useStudent } from '../session/StudentContext';
+import { chooseSubject, reportMap, useChosenSubject } from '../features/subjects';
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -118,8 +119,14 @@ export function MapPage() {
   const api = useApi();
   const { studentId } = useStudent();
   const [toast, setToast] = useState<string | null>(null);
-  const [subjectId, setSubjectId] = useState<string | undefined>(undefined);
-  const [picking, setPicking] = useState(false);
+  // UX-1: the subject is the one chosen on this device, shared with Home and Cards; the top
+  // bar's "Add or change subjects" opens the picker straight away.
+  const subjectId = useChosenSubject(studentId);
+  const setSubjectId = useCallback((id: string) => chooseSubject(studentId, id), [studentId]);
+  const location = useLocation();
+  const [picking, setPicking] = useState(
+    () => (location.state as { pickSubject?: boolean } | null)?.pickSubject === true,
+  );
   const map = useApiResource(
     () => (studentId ? api.getTopicMap(subjectId) : new Promise<never>(() => {})),
     [api, studentId, subjectId],
@@ -130,6 +137,9 @@ export function MapPage() {
   useEffect(() => {
     if (shownSubject) setPipSubject(shownSubject);
   }, [shownSubject]);
+  useEffect(() => {
+    if (map.status === 'ready') reportMap(studentId, map.data);
+  }, [map, studentId]);
 
   if (!studentId) return <Navigate to="/family" replace />;
 

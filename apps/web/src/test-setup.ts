@@ -4,6 +4,7 @@ import { server } from './mocks/server';
 import { findFakeMockRoutes } from './test/apiRoutes';
 import { resetLearnMocks } from './features/learn/mocks';
 import { resetRewardsMocks } from './features/rewards/mocks';
+import { resetKnownSubjects } from './features/subjects/chosenSubject';
 
 /*
  * Screens load their data through the mock API, which can take more than a second on a busy CI
@@ -22,5 +23,7 @@ afterEach(() => {
     throw new Error(`Mock handlers for routes the API does not have: ${fake.join(', ')}`);
   resetLearnMocks();
   resetRewardsMocks();
+  // UX-1: one test's chosen subject must not carry into the next.
+  resetKnownSubjects();
 });
 afterAll(() => server.close());
