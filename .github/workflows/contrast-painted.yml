@@ -1,0 +1,69 @@
+name: Contrast sweep (tier 2, painted)
+
+# W21 (lead ruling, 2026-11-26): the painted sweep, measuring what is really drawn (page art,
+# gradients and shadows included): text in every box, UI parts' edges and focus rings, in all 10
+# looks, light and dark. Nightly, on demand, on pull requests that change the looks or the design,
+# and as a gate before staging: deploy workflows can call it (workflow_call) and need its job.
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+  workflow_call:
+  pull_request:
+    branches: [dev, staging, main]
+    paths:
+      - 'apps/web/src/features/juice/styles/**'
+      - 'apps/web/src/design/**'
+      - 'apps/web/src/features/learn/learn.css'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: contrast-painted-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tier2:
+    name: Contrast tier 2 (shard ${{ matrix.shard }}/4)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install Chromium for Playwright
+        run: pnpm --filter @revisionden/e2e exec playwright install --with-deps chromium
+      - name: Build the web app
+        env:
+          VITE_ENVIRONMENT: staging
+        run: pnpm --filter @revisionden/web build
+      - name: Run the painted sweep
+        env:
+          CONTRAST_SWEEP: '1'
+        run: >-
+          pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts
+          --project=phone --project=desktop --grep @contrast-painted --shard=${{ matrix.shard }}/4 --trace off
+      - name: Keep the report when something fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contrast-tier2-report-${{ matrix.shard }}
+          path: e2e/playwright-report
+          retention-days: 7
+
+  # One job for deploy workflows to need (staging gate), whatever the shard count.
+  gate:
+    name: Contrast tier 2 passed
+    needs: tier2
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Painted contrast sweep passed."
