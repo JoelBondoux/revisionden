@@ -1,10 +1,15 @@
 name: End-to-end and accessibility
 
-# Playwright at phone, tablet and desktop sizes with axe checks (G4), on pull requests into
-# staging and main. Runs against the built web app served locally, so it needs no secrets.
+# Playwright at phone, tablet and desktop sizes with axe checks (G4), on pull requests into dev,
+# staging and main (G10). Runs against the built web app served locally, so it needs no secrets.
+# The web app is built once (job "build", artifact "web-dist") and every shard downloads it; other
+# checks that need the built app (such as the contrast sweep) can add a job here with
+# `needs: build` and download the same artifact instead of building again.
+# "End-to-end result" is the one check to require in branch protection: it is green only when
+# every shard passed.
 on:
   pull_request:
-    branches: [staging, main]
+    branches: [dev, staging, main]
   workflow_dispatch:
 
 permissions:
@@ -15,9 +20,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  e2e:
-    name: Playwright + axe (phone, tablet, desktop)
+  build:
+    name: Build the web app once
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build the web app
+        env:
+          VITE_ENVIRONMENT: staging
+        run: pnpm --filter @revisionden/web build
+      - name: Share the build with the other jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-dist
+          path: apps/web/dist
+          retention-days: 1
+          if-no-files-found: error
+
+  e2e:
+    name: Playwright + axe (shard ${{ matrix.shard }} of 4)
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -28,16 +62,28 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Install Chromium for Playwright
         run: pnpm --filter @revisionden/e2e exec playwright install --with-deps chromium
-      - name: Build the web app
-        env:
-          VITE_ENVIRONMENT: staging
-        run: pnpm --filter @revisionden/web build
-      - name: Run the end-to-end suite
-        run: pnpm --filter @revisionden/e2e e2e
+      - name: Use the shared build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: apps/web/dist
+      - name: Run this shard of the end-to-end suite (all projects)
+        run: pnpm --filter @revisionden/e2e e2e --shard=${{ matrix.shard }}/4
       - name: Keep the report when something fails
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.shard }}
           path: e2e/playwright-report
           retention-days: 7
+
+  e2e-result:
+    name: End-to-end result
+    needs: [build, e2e]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every shard passed
+        run: |
+          echo "build: ${{ needs.build.result }}, e2e: ${{ needs.e2e.result }}"
+          [ "${{ needs.build.result }}" = "success" ] && [ "${{ needs.e2e.result }}" = "success" ]

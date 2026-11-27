@@ -53,6 +53,8 @@ teenagers. It replaces a paid revision subscription and runs almost entirely on 
   (`decisions/0010-question-generation-rules.md`).
 - Database migrations land on `dev` in number order, each with a journal `when` later than the last
   (the migrator skips older ones) (`decisions/0011-migration-order.md`).
+- Every look, light and dark, meets WCAG 2.2 AA contrast (text 4.5:1, large text and UI parts 3:1),
+  measured on the painted page and enforced by the CI contrast sweep (`decisions/0012-contrast-policy.md`).
 - Canonical backlog: `docs/BACKLOG.md` (`roadmap/improvement-plan.md` points to it).
 
 ## Maintained Pages

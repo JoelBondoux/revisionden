@@ -24,6 +24,7 @@ export const LOOK_TOKENS = [
   '--color-text-on-primary',
   '--color-track',
   '--color-locked-soft',
+  /** A pale fill only, in every look: text on it uses `--color-primary-edge`, never white (J17x). */
   '--color-mastery-fill',
   '--color-challenge',
   '--color-challenge-edge',
@@ -42,6 +43,23 @@ export const LOOK_TOKENS = [
 ] as const;
 
 export type LookToken = (typeof LOOK_TOKENS)[number];
+
+/**
+ * J17x (owner report: white text on light pages): arena screens (lessons, practice, tests, set
+ * complete) sit on the look's own page in light and dark (J15s), so the arena's page tokens come
+ * from the look. `design/arena.css` sets them on `.arena` itself: a value set on the element always
+ * beats one inherited from the root, so no setting (pattern, high contrast, reading tints) or style
+ * sheet can bring back the old dark arena's white text on a light page. The answer buttons keep
+ * their own fills and `--arena-on-option` text.
+ */
+export const ARENA_FROM_PAGE = {
+  '--arena-bg': '--color-background',
+  '--arena-raised': '--color-surface',
+  '--arena-track': '--color-track',
+  '--arena-text': '--color-text',
+  '--arena-text-secondary': '--color-text-secondary',
+  '--arena-glow': '--color-primary-edge',
+} as const satisfies Record<string, LookToken>;
 export type Look = Record<LookToken, string>;
 
 const HAND = "'Patrick Hand', 'Comic Neue', cursive";

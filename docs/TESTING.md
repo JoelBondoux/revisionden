@@ -17,18 +17,18 @@ that reproduces the bug.
 
 ## 2. Test layers
 
-| Layer                 | Tool                                                              | Where            | Runs                          |
-| --------------------- | ----------------------------------------------------------------- | ---------------- | ----------------------------- |
-| Unit (pure logic)     | Vitest                                                            | `packages/core`  | Every push, every PR          |
-| Unit (scripts)        | `node --test`                                                     | `scripts/`       | Every push, every PR          |
-| Component             | Vitest + Testing Library                                          | `apps/web`       | Every push, every PR          |
-| API integration       | Vitest + Hono `app.request`, Postgres via PGlite or a Neon branch | `apps/api`       | Every push, every PR          |
-| Contract              | Shared Zod schemas used by both web and API                       | `packages/core`  | Every PR                      |
-| Maths engine          | pytest                                                            | `services/maths` | Every push, every PR          |
-| Content validation    | JSON Schema + answer checks (maths answers checked by the engine) | `content/`       | Every PR touching content     |
-| End-to-end            | Playwright (phone, tablet, desktop viewports)                     | `e2e/`           | PRs into `staging` and `main` |
-| Accessibility         | axe-core inside Playwright; WCAG 2.2 AA                           | `e2e/`           | PRs into `staging` and `main` |
-| AI marking evaluation | Golden set of answers with known marks; tolerance ±1 level        | `evals/`         | Weekly and on prompt changes  |
+| Layer                 | Tool                                                              | Where            | Runs                                 |
+| --------------------- | ----------------------------------------------------------------- | ---------------- | ------------------------------------ |
+| Unit (pure logic)     | Vitest                                                            | `packages/core`  | Every push, every PR                 |
+| Unit (scripts)        | `node --test`                                                     | `scripts/`       | Every push, every PR                 |
+| Component             | Vitest + Testing Library                                          | `apps/web`       | Every push, every PR                 |
+| API integration       | Vitest + Hono `app.request`, Postgres via PGlite or a Neon branch | `apps/api`       | Every push, every PR                 |
+| Contract              | Shared Zod schemas used by both web and API                       | `packages/core`  | Every PR                             |
+| Maths engine          | pytest                                                            | `services/maths` | Every push, every PR                 |
+| Content validation    | JSON Schema + answer checks (maths answers checked by the engine) | `content/`       | Every PR touching content            |
+| End-to-end            | Playwright (phone, tablet, desktop viewports)                     | `e2e/`           | PRs into `dev`, `staging` and `main` |
+| Accessibility         | axe-core inside Playwright; WCAG 2.2 AA                           | `e2e/`           | PRs into `dev`, `staging` and `main` |
+| AI marking evaluation | Golden set of answers with known marks; tolerance ±1 level        | `evals/`         | Weekly and on prompt changes         |
 
 ## 3. Coverage gates
 
@@ -88,7 +88,12 @@ student using the app on that device.
 End-to-end tests (`e2e/tests`) run at phone (390×844), tablet (820×1180) and desktop (1280×800)
 in Chromium, fail on any axe WCAG 2.2 A/AA violation or sideways scrolling, and always run with
 `--trace off` (turn traces on only to debug one test). Without `E2E_BASE_URL` they serve the built
-app with `vite preview`. CI: `.github/workflows/e2e.yml`.
+app with `vite preview`. CI: `.github/workflows/e2e.yml` runs the whole suite (every project) on
+pull requests into `dev`, `staging` and `main` (G10). It builds the web app once (job `build`,
+artifact `web-dist`), runs four shards in parallel against that build (about 6 minutes in all), and
+reports one check, **End-to-end result**, that is green only when every shard passed: that is the
+check to require in branch protection. Another check that needs the built app can add a job to
+`e2e.yml` with `needs: build` and download `web-dist` rather than building again.
 Every axe check goes through `axeWhenSettled(page)` (`e2e/tests/support/axe.ts`): it waits for
 finite animations to finish first, because axe measures colours as drawn and a button still fading
 in reads as low contrast. The rules stay WCAG 2.2 A/AA (or what the check passes in `configure`).
@@ -132,6 +137,7 @@ to. Updated by W, 2026-11-26 (W17).
 | 5-a-day: Home → every item → Lesson complete → Home shows it done                | `daily-and-cards`                                             | phone                          |
 | Flashcards: a whole session, Again, Done for today, 10 more, Deck done           | `daily-and-cards`, `cards`                                    | phone; all (`cards`)           |
 | Starting test: answer, skip, finish, result; 1-minute warning, time up           | `starting-test`                                               | phone                          |
+| Parent settings → child: subjects (map), friends (league), reminders saved       | `parent-settings`, `map`                                      | phone                          |
 | Friends league: add a friend with a code                                         | `league`                                                      | phone                          |
 | Get help (student and parent): Quick exit, filters                               | `help`                                                        | all                            |
 | Looks: every style, light and dark, contrast                                     | `looks`, `tiles`                                              | phone (`looks`); all (`tiles`) |
@@ -139,18 +145,16 @@ to. Updated by W, 2026-11-26 (W17).
 
 ### Gaps to fill next (suggested, in order)
 
-1. **Parent settings that change what a pupil sees**: Subjects (board and tier), Reminders and
-   Friends on `/parent/subjects|reminders|friends/:studentId`, then the pupil's side reflecting
-   the change. Today only the bug-button layout is checked there.
-2. **Second parent**: invite → `/join` → both parents listed, and the removal notice.
-3. **Plan, Papers and Progress as journeys**: `/plan` and `/papers` are only checked for the
+1. **Second parent**: invite → `/join` → both parents listed, and the removal notice.
+2. **Plan, Papers and Progress as journeys**: `/plan` and `/papers` are only checked for the
    bottom nav at 320px/200% (`help`), and `/progress` for layout (`pages`).
-4. **Feedback and complaints**: send feedback from a pupil and read it in `/feedback/family`;
+3. **Feedback and complaints**: send feedback from a pupil and read it in `/feedback/family`;
    the complaints page.
-5. **Sign out and session expiry**: parent sign-out, and a pupil's 12-hour session ending
+4. **Sign out and session expiry**: parent sign-out, and a pupil's 12-hour session ending
    mid-lesson (back to unlock with `returnTo`).
-6. **The parent journey at 320px with 200% text**, as the pupil journey already is (W15).
+5. **The parent journey at 320px with 200% text**, as the pupil journey already is (W15).
 
-These are suggestions only: none is started until the lead or owner says so. Gaps 1 and 2 of the
-W17 list are done: the 5-a-day and a whole flashcard session (W18), and the starting test
-(W19).
+These are suggestions only: none is started until the lead or owner says so. Gaps 1 to 3 of the
+W17 list are done: the 5-a-day and a whole flashcard session (W18), the starting test (W19),
+and parent settings reaching the child (W20; reminders reach a child only as notifications, so
+only the parent's side is checked).

@@ -94,14 +94,15 @@ describe('Starting test', () => {
     );
     renderRoute('/learn/subject/gcse-maths/start');
     await click('Start');
+    const announcer = await screen.findByTestId('timer-announcer');
     expect(
       await screen.findByRole('heading', { name: 'Your starting point' }, { timeout: 4000 }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Time is up/)).toBeInTheDocument();
-    // Screen readers hear it too (F14): the line is a polite status, not just text.
-    expect(screen.getAllByRole('status').some((s) => /Time is up/.test(s.textContent ?? ''))).toBe(
-      true,
-    );
+    expect(screen.getByText(/Time is up, so we marked/)).toBeInTheDocument();
+    // F14b: the same live region stays on screen from the test to the results, so screen readers
+    // hear "Time is up." even when the results come back at once.
+    expect(screen.getByTestId('timer-announcer')).toBe(announcer);
+    expect(announcer).toHaveTextContent('Time is up.');
   });
 
   it('tells screen readers once when one minute is left, without reading every second (F14)', async () => {
