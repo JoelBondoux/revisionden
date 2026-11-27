@@ -578,11 +578,7 @@ async function paintedSweep(
     mkdirSync('test-results/contrast', { recursive: true });
     writeFileSync(
       resultFile('diff-tier2', mode, variant, name),
-      JSON.stringify(
-        { new: Object.fromEntries(fresh.map((k) => [k, seen[k]!])), fixed },
-        null,
-        2,
-      ),
+      JSON.stringify({ new: Object.fromEntries(fresh.map((k) => [k, seen[k]!])), fixed }, null, 2),
     );
   }
   expect(
