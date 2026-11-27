@@ -190,8 +190,10 @@ function locationProblems({ text, at, page, length }, loc, { paged, window, labe
     const problem = codeProblem(code, before, quoted);
     if (problem) problems.push(problem);
   }
+  // A Part heading can be far above the quote, so look at all the text before it, not only the
+  // specification-code window (Codex on #435).
   for (const part of loc.parts ?? []) {
-    const nearest = [...before.matchAll(PART)].map((m) => m[1].toUpperCase()).at(-1);
+    const nearest = [...text.slice(0, at).matchAll(PART)].map((m) => m[1].toUpperCase()).at(-1);
     if (nearest !== part) {
       problems.push(
         nearest

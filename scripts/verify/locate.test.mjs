@@ -278,3 +278,15 @@ test('a legislation quote fails under the wrong Part', () => {
   assert.equal(r.locationConfirmed, false);
   assert.match(r.reason, /Part V, not Part III/);
 });
+
+test('a Part heading far before the quote still counts (Codex on #435)', () => {
+  const long = [
+    `Part III Measurement of Volume ${'Some intervening text. '.repeat(120)}Millilitre = 1/1000 litre.`,
+  ];
+  const r = locateQuote(
+    { quote: 'Millilitre = 1/1000 litre.', location: 'Schedule 1, Part III' },
+    long,
+    { paged: false },
+  );
+  assert.equal(r.locationConfirmed, true);
+});

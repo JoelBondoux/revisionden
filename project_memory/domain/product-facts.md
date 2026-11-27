@@ -627,8 +627,14 @@ Tags: #product #rules #limits #defaults
   cite the scheme is shown as "check with your teacher", never guessed. When they agree, the
   lower of the two marks is given. Implemented in `packages/core/src/double-marking.ts`.
 - Quote check: sources are fetched only from official hosts (Pearson, AQA, OCR, Eduqas, WJEC,
-  gov.uk) and cached outside git with their SHA-256. "page N" may be the PDF page or the printed
-  page; a specification code must be the nearest code before the quote. Unconfirmable = fail.
+  gov.uk, and www.legislation.gov.uk for unit definitions only) and cached outside git with their
+  SHA-256. "page N" may be the PDF page or the printed page; a specification code must be the
+  nearest code before the quote; a legislation location names its Part ("Schedule 1, Part III"),
+  which must be the nearest Part heading anywhere before the quote. Unconfirmable = fail.
+- UK legislation (citation `source_type` `legislation`, lead's ruling 2026-11-27) may back unit
+  definitions only, for example the Weights and Measures Act 1985, Schedule 1 ("Millilitre =
+  1/1000 litre."). It defines length, area, volume, capacity and mass, not time, so items resting
+  on hours and minutes keep decision-0008 approval.
   Only an exact match (after normalising) passes; a near match (letters only, or words with
   small insertions or reordering, with a confidence) is flagged for a reviewer to confirm.
   Pilot (2026-11-24): 110 of 110 citations found, 108 exact and 2 near.
