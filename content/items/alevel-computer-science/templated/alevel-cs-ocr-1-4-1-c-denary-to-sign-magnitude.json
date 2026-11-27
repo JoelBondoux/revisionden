@@ -1,0 +1,529 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-c-t-denary-to-sign-magnitude-01",
+    "topic": "alevel-cs-ocr-1-4-1-c",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
+    "expected_seconds": 60,
+    "prompt": "Write the denary number -40 in 8-bit sign and magnitude binary.",
+    "answer": {
+      "accepted": ["10101000", "1010 1000"]
+    },
+    "marks": 1,
+    "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
+    "explanation": "The number is negative, so the sign bit is 1. 40 in 7 bits is 0101000. Together: 10101000.",
+    "facts": [
+      {
+        "statement": "In sign and magnitude binary the leftmost bit is the sign (1 for negative, 0 for positive) and the remaining bits give the size of the number.",
+        "ask": "How does sign and magnitude binary show whether a number is negative, and its size?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (c) (page 9; PDF page 15)",
+        "quote": "Use of sign and magnitude and two’s complement to represent negative numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:12Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:57:20Z",
+          "notes": "model answered \"10101000\"; expected \"10101000 | 1010 1000\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:57:21Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-c-t-denary-to-sign-magnitude-02",
+    "topic": "alevel-cs-ocr-1-4-1-c",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
+    "expected_seconds": 60,
+    "prompt": "Write the denary number -67 in 8-bit sign and magnitude binary.",
+    "answer": {
+      "accepted": ["11000011", "1100 0011"]
+    },
+    "marks": 1,
+    "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
+    "explanation": "The number is negative, so the sign bit is 1. 67 in 7 bits is 1000011. Together: 11000011.",
+    "facts": [
+      {
+        "statement": "In sign and magnitude binary the leftmost bit is the sign (1 for negative, 0 for positive) and the remaining bits give the size of the number.",
+        "ask": "How does sign and magnitude binary show whether a number is negative, and its size?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (c) (page 9; PDF page 15)",
+        "quote": "Use of sign and magnitude and two’s complement to represent negative numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:13Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-c-t-denary-to-sign-magnitude-03",
+    "topic": "alevel-cs-ocr-1-4-1-c",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
+    "expected_seconds": 60,
+    "prompt": "Write the denary number -47 in 8-bit sign and magnitude binary.",
+    "answer": {
+      "accepted": ["10101111", "1010 1111"]
+    },
+    "marks": 1,
+    "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
+    "explanation": "The number is negative, so the sign bit is 1. 47 in 7 bits is 0101111. Together: 10101111.",
+    "facts": [
+      {
+        "statement": "In sign and magnitude binary the leftmost bit is the sign (1 for negative, 0 for positive) and the remaining bits give the size of the number.",
+        "ask": "How does sign and magnitude binary show whether a number is negative, and its size?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (c) (page 9; PDF page 15)",
+        "quote": "Use of sign and magnitude and two’s complement to represent negative numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:14Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-c-t-denary-to-sign-magnitude-04",
+    "topic": "alevel-cs-ocr-1-4-1-c",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
+    "expected_seconds": 60,
+    "prompt": "Write the denary number -84 in 8-bit sign and magnitude binary.",
+    "answer": {
+      "accepted": ["11010100", "1101 0100"]
+    },
+    "marks": 1,
+    "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
+    "explanation": "The number is negative, so the sign bit is 1. 84 in 7 bits is 1010100. Together: 11010100.",
+    "facts": [
+      {
+        "statement": "In sign and magnitude binary the leftmost bit is the sign (1 for negative, 0 for positive) and the remaining bits give the size of the number.",
+        "ask": "How does sign and magnitude binary show whether a number is negative, and its size?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (c) (page 9; PDF page 15)",
+        "quote": "Use of sign and magnitude and two’s complement to represent negative numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:15Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-c-t-denary-to-sign-magnitude-05",
+    "topic": "alevel-cs-ocr-1-4-1-c",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
+    "expected_seconds": 60,
+    "prompt": "Write the denary number -33 in 8-bit sign and magnitude binary.",
+    "answer": {
+      "accepted": ["10100001", "1010 0001"]
+    },
+    "marks": 1,
+    "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
+    "explanation": "The number is negative, so the sign bit is 1. 33 in 7 bits is 0100001. Together: 10100001.",
+    "facts": [
+      {
+        "statement": "In sign and magnitude binary the leftmost bit is the sign (1 for negative, 0 for positive) and the remaining bits give the size of the number.",
+        "ask": "How does sign and magnitude binary show whether a number is negative, and its size?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (c) (page 9; PDF page 15)",
+        "quote": "Use of sign and magnitude and two’s complement to represent negative numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:15Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-c-t-denary-to-sign-magnitude-06",
+    "topic": "alevel-cs-ocr-1-4-1-c",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
+    "expected_seconds": 60,
+    "prompt": "Write the denary number -74 in 8-bit sign and magnitude binary.",
+    "answer": {
+      "accepted": ["11001010", "1100 1010"]
+    },
+    "marks": 1,
+    "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
+    "explanation": "The number is negative, so the sign bit is 1. 74 in 7 bits is 1001010. Together: 11001010.",
+    "facts": [
+      {
+        "statement": "In sign and magnitude binary the leftmost bit is the sign (1 for negative, 0 for positive) and the remaining bits give the size of the number.",
+        "ask": "How does sign and magnitude binary show whether a number is negative, and its size?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (c) (page 9; PDF page 15)",
+        "quote": "Use of sign and magnitude and two’s complement to represent negative numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 6
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:16Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-c-t-denary-to-sign-magnitude-07",
+    "topic": "alevel-cs-ocr-1-4-1-c",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
+    "expected_seconds": 60,
+    "prompt": "Write the denary number -46 in 8-bit sign and magnitude binary.",
+    "answer": {
+      "accepted": ["10101110", "1010 1110"]
+    },
+    "marks": 1,
+    "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
+    "explanation": "The number is negative, so the sign bit is 1. 46 in 7 bits is 0101110. Together: 10101110.",
+    "facts": [
+      {
+        "statement": "In sign and magnitude binary the leftmost bit is the sign (1 for negative, 0 for positive) and the remaining bits give the size of the number.",
+        "ask": "How does sign and magnitude binary show whether a number is negative, and its size?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(c)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (c) (page 9; PDF page 15)",
+        "quote": "Use of sign and magnitude and two’s complement to represent negative numbers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 7
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:17Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

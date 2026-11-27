@@ -77,6 +77,9 @@ class Template:
     write: Callable[[dict], dict]
     recheck: Callable[[dict, dict], list[str]]
     tags: tuple[str, ...] = field(default=())
+    # How the answer was confirmed, for the maths-engine check (None: the maths wording).
+    engine_tool: str | None = None
+    engine_note: str | None = None
 
     @property
     def slug(self) -> str:
@@ -166,6 +169,11 @@ def make_item(template: Template, seed: int, now: str) -> dict:
     for key in ("mark_scheme", "hint", "explanation"):
         if key in q:
             item[key] = q[key]
+    if q.get("facts"):
+        # Decision 0009: facts no cited source states wait for the fact-check stage, and the item
+        # for individual human approval until then.
+        item["facts"] = [dict(f) for f in q["facts"]]
+        item["needs_human_approval"] = True
     if template.tags:
         item["tags"] = list(template.tags)
     item["source_ref"] = template.source_ref
@@ -192,12 +200,13 @@ def make_item(template: Template, seed: int, now: str) -> dict:
             {
                 "name": "maths-engine",
                 "result": "pass",
-                "tool": "revisionden-maths-engine",
+                "tool": template.engine_tool or "revisionden-maths-engine",
                 "tool_version": f"sympy {sympy.__version__}",
                 "at": now,
-                "notes": ("Template cross-check: the content checks re-verified the answer and "
-                          "every step, and the question text was read back and the answer "
-                          "recomputed by a second method."),
+                "notes": template.engine_note or (
+                    "Template cross-check: the content checks re-verified the answer and "
+                    "every step, and the question text was read back and the answer "
+                    "recomputed by a second method."),
             },
         ],
     }
