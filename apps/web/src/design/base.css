@@ -119,6 +119,29 @@ textarea {
 }
 
 /*
+ * J17x part 3 (W21 sweep, WCAG 1.4.11): a typing box with no class of its own (the parent daily
+ * limit and reminder times) kept the browser's thin grey edge, 2.41:1 in Pop Burst dark. Every
+ * such box gets the control edge; :where() keeps this at zero specificity so a page's own rule wins.
+ */
+:where(
+  input[type='text'],
+  input[type='number'],
+  input[type='date'],
+  input[type='time'],
+  input[type='email'],
+  input[type='password'],
+  input[type='search'],
+  input[type='tel'],
+  input[type='url'],
+  input:not([type]),
+  textarea
+) {
+  border: 2px solid var(--color-control-edge);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+/*
  * J17x part 2 (W21 painted sweep, WCAG 1.4.11): checkboxes and radio buttons are drawn by the app,
  * not the browser, so their edge reaches 3:1 on every look's page and card (the browser's thin grey
  * ring measured 1.2 to 3:1). Checked: the selected colour with an on-selected tick or dot. A radio or

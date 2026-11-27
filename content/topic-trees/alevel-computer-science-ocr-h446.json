@@ -1,0 +1,2331 @@
+{
+  "id": "alevel-computer-science-ocr-h446",
+  "subject": "alevel-computer-science",
+  "board": "ocr",
+  "specification": {
+    "code": "H446",
+    "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+    "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+    "version": "3.0 (April 2026)"
+  },
+  "notes": "Board provisional: OCR H446 is the likely board until the owner confirms it. Structure and references (1.1.1(a) to 2.3.1(f)) follow section 2c of the specification (Components 01 and 02); the programming project (Component 03 or 04) is non-exam assessment and is not in this tree. One leaf per lettered point; 1.5.2 has no lettered points, so it is one leaf. Topic titles are short summaries written for RevisionDen, not specification text.",
+  "verification": {
+    "status": "draft",
+    "version": 1,
+    "checks": [
+      {
+        "name": "quote-check",
+        "result": "pass",
+        "tool": "revisionden-quote-check",
+        "tool_version": "1.0.0",
+        "at": "2026-11-27T10:13:49Z",
+        "notes": "citation 1: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 2: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 3: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 4: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 5: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 6: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 7: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 8: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 9: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 10: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 11: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 12: found on page 12 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 13: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 14: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 15: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 16: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 17: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 18: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 19: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 20: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 21: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 22: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 23: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 24: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 25: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 26: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 27: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 28: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 29: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 30: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 31: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 32: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 33: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 34: found on page 13 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 35: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 36: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 37: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 38: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 39: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 40: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 41: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 42: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 43: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 44: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 45: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 46: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 47: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 48: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 49: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 50: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 51: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 52: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 53: found on page 14 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 54: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 55: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 56: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 57: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 58: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 59: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 60: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 61: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 62: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 63: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 64: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 65: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 66: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 67: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 68: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 69: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 70: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 71: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 72: found on page 16 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 73: found on page 16 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 74: found on page 16 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 75: found on page 16 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 76: found on page 16 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 77: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 78: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 79: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 80: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 81: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 82: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 83: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 84: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 85: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 86: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 87: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 88: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 89: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 90: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 91: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 92: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 93: found on page 17 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 94: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 95: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 96: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 97: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 98: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 99: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 100: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 101: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 102: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 103: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 104: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 105: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 106: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 107: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 108: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 109: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 110: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44); citation 111: found on page 18 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+      },
+      {
+        "name": "schema",
+        "result": "pass",
+        "tool": "revisionden-content-validate",
+        "tool_version": "00.01.002",
+        "notes": "pnpm content:validate: schema, ids and links valid",
+        "at": "2026-11-27T10:15:30Z"
+      }
+    ]
+  },
+  "topics": [
+    {
+      "id": "alevel-cs-ocr-1-1",
+      "title": "Processors, input, output and storage",
+      "children": [
+        {
+          "id": "alevel-cs-ocr-1-1-1",
+          "title": "Structure and function of the processor",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-1-1-a",
+              "title": "ALU, control unit, registers and buses",
+              "spec_ref": ["1.1.1(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.1 Structure and function of the processor, point (a) (page 6; PDF page 12)",
+                  "quote": "The Arithmetic and Logic Unit; ALU, Control Unit and Registers (Program Counter; PC, Accumulator; ACC, Memory Address Register; MAR, Memory Data Register; MDR, Current Instruction Register; CIR).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-1-b",
+              "title": "The fetch-decode-execute cycle",
+              "spec_ref": ["1.1.1(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.1 Structure and function of the processor, point (b) (page 6; PDF page 12)",
+                  "quote": "The Fetch-Decode-Execute Cycle; including its effects on registers.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-1-c",
+              "title": "Factors affecting CPU performance",
+              "spec_ref": ["1.1.1(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.1 Structure and function of the processor, point (c) (page 6; PDF page 12)",
+                  "quote": "The factors affecting the performance of the CPU: clock speed, number of cores, cache.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-1-d",
+              "title": "Pipelining",
+              "spec_ref": ["1.1.1(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.1 Structure and function of the processor, point (d) (page 6; PDF page 12)",
+                  "quote": "The use of pipelining in a processor to improve efficiency.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-1-e",
+              "title": "Von Neumann, Harvard and contemporary architectures",
+              "spec_ref": ["1.1.1(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.1 Structure and function of the processor, point (e) (page 6; PDF page 12)",
+                  "quote": "Von Neumann, Harvard and contemporary processor architecture.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-1-2",
+          "title": "Types of processor",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-1-2-a",
+              "title": "CISC and RISC processors",
+              "spec_ref": ["1.1.2(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.2 Types of processor, point (a) (page 6; PDF page 12)",
+                  "quote": "The differences between and uses of CISC and RISC processors.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-2-b",
+              "title": "GPUs and their uses",
+              "spec_ref": ["1.1.2(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.2 Types of processor, point (b) (page 6; PDF page 12)",
+                  "quote": "GPUs and their uses (including those not related to graphics).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-2-c",
+              "title": "Multicore and parallel systems",
+              "spec_ref": ["1.1.2(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.2 Types of processor, point (c) (page 6; PDF page 12)",
+                  "quote": "Multicore and Parallel systems.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-1-3",
+          "title": "Input, output and storage",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-1-3-a",
+              "title": "Choosing input, output and storage devices",
+              "spec_ref": ["1.1.3(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.3 Input, output and storage, point (a) (page 6; PDF page 12)",
+                  "quote": "How different input, output and storage devices can be applied to the solution of different problems.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-3-b",
+              "title": "Magnetic, flash and optical storage",
+              "spec_ref": ["1.1.3(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.3 Input, output and storage, point (b) (page 6; PDF page 12)",
+                  "quote": "The uses of magnetic, flash and optical storage devices.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-3-c",
+              "title": "RAM and ROM",
+              "spec_ref": ["1.1.3(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.3 Input, output and storage, point (c) (page 6; PDF page 12)",
+                  "quote": "RAM and ROM.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-1-3-d",
+              "title": "Virtual storage",
+              "spec_ref": ["1.1.3(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), The characteristics of contemporary processors, input, output and storage devices, 1.1.3 Input, output and storage, point (d) (page 6; PDF page 12)",
+                  "quote": "Virtual storage.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alevel-cs-ocr-1-2",
+      "title": "Software and software development",
+      "children": [
+        {
+          "id": "alevel-cs-ocr-1-2-1",
+          "title": "Systems software",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-2-1-a",
+              "title": "Purpose of operating systems",
+              "spec_ref": ["1.2.1(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.1 Systems Software, point (a) (page 7; PDF page 13)",
+                  "quote": "The need for, function and purpose of operating systems.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-1-b",
+              "title": "Memory management",
+              "spec_ref": ["1.2.1(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.1 Systems Software, point (b) (page 7; PDF page 13)",
+                  "quote": "Memory Management (paging, segmentation and virtual memory).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-1-c",
+              "title": "Interrupts and interrupt service routines",
+              "spec_ref": ["1.2.1(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.1 Systems Software, point (c) (page 7; PDF page 13)",
+                  "quote": "Interrupts, the role of interrupts and Interrupt Service Routines (ISR)",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-1-d",
+              "title": "Scheduling algorithms",
+              "spec_ref": ["1.2.1(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.1 Systems Software, point (d) (page 7; PDF page 13)",
+                  "quote": "Scheduling: round robin, first come first served, multi-level feedback queues, shortest job first and shortest remaining time.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-1-e",
+              "title": "Types of operating system",
+              "spec_ref": ["1.2.1(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.1 Systems Software, point (e) (page 7; PDF page 13)",
+                  "quote": "Distributed, embedded, multi-tasking, multi-user and Real Time operating systems.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-1-f",
+              "title": "BIOS",
+              "spec_ref": ["1.2.1(f)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.1 Systems Software, point (f) (page 7; PDF page 13)",
+                  "quote": "BIOS.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-1-g",
+              "title": "Device drivers",
+              "spec_ref": ["1.2.1(g)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.1 Systems Software, point (g) (page 7; PDF page 13)",
+                  "quote": "Device drivers.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-1-h",
+              "title": "Virtual machines",
+              "spec_ref": ["1.2.1(h)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.1 Systems Software, point (h) (page 7; PDF page 13)",
+                  "quote": "Virtual machines, any instance where software is used to take on the function of a machine, including executing intermediate code or running an operating system within another.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-2-2",
+          "title": "Applications generation",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-2-2-a",
+              "title": "Choosing applications",
+              "spec_ref": ["1.2.2(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.2 Applications Generation, point (a) (page 7; PDF page 13)",
+                  "quote": "The nature of applications, justifying suitable applications for a specific purpose.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-2-b",
+              "title": "Utilities",
+              "spec_ref": ["1.2.2(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.2 Applications Generation, point (b) (page 7; PDF page 13)",
+                  "quote": "Utilities.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-2-c",
+              "title": "Open source and closed source",
+              "spec_ref": ["1.2.2(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.2 Applications Generation, point (c) (page 7; PDF page 13)",
+                  "quote": "Open source vs closed source.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-2-d",
+              "title": "Interpreters, compilers and assemblers",
+              "spec_ref": ["1.2.2(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.2 Applications Generation, point (d) (page 7; PDF page 13)",
+                  "quote": "Interpreters, compilers and assemblers.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-2-e",
+              "title": "Stages of compilation",
+              "spec_ref": ["1.2.2(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.2 Applications Generation, point (e) (page 7; PDF page 13)",
+                  "quote": "Stages of compilation (lexical analysis, syntax analysis, code generation and optimisation).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-2-f",
+              "title": "Linkers, loaders and libraries",
+              "spec_ref": ["1.2.2(f)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.2 Applications Generation, point (f) (page 7; PDF page 13)",
+                  "quote": "Linkers and loaders and use of libraries.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-2-3",
+          "title": "Software development",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-2-3-a",
+              "title": "Development methodologies",
+              "spec_ref": ["1.2.3(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.3 Software Development, point (a) (page 7; PDF page 13)",
+                  "quote": "Understand the waterfall lifecycle, agile methodologies, extreme programming, the spiral model and rapid application development.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-3-b",
+              "title": "Comparing methodologies",
+              "spec_ref": ["1.2.3(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.3 Software Development, point (b) (page 7; PDF page 13)",
+                  "quote": "The relative merits and drawbacks of different methodologies and when they might be used.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-3-c",
+              "title": "Writing and following algorithms",
+              "spec_ref": ["1.2.3(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.3 Software Development, point (c) (page 7; PDF page 13)",
+                  "quote": "Writing and following algorithms.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-2-4",
+          "title": "Types of programming language",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-2-4-a",
+              "title": "Programming paradigms",
+              "spec_ref": ["1.2.4(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.4 Types of Programming Language, point (a) (page 7; PDF page 13)",
+                  "quote": "Need for and characteristics of a variety of programming paradigms.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-4-b",
+              "title": "Procedural languages",
+              "spec_ref": ["1.2.4(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.4 Types of Programming Language, point (b) (page 7; PDF page 13)",
+                  "quote": "Procedural languages.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-4-c",
+              "title": "Assembly language and Little Man Computer",
+              "spec_ref": ["1.2.4(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.4 Types of Programming Language, point (c) (page 7; PDF page 13)",
+                  "quote": "Assembly language (including following and writing simple programs with the Little Man Computer instruction set).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-4-d",
+              "title": "Addressing modes",
+              "spec_ref": ["1.2.4(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.4 Types of Programming Language, point (d) (page 7; PDF page 13)",
+                  "quote": "Modes of addressing memory (immediate, direct, indirect and indexed).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-2-4-e",
+              "title": "Object-oriented languages",
+              "spec_ref": ["1.2.4(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Software and software development, 1.2.4 Types of Programming Language, point (e) (page 7; PDF page 13)",
+                  "quote": "with an understanding of classes, objects, methods, attributes, inheritance, encapsulation and polymorphism.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alevel-cs-ocr-1-3",
+      "title": "Exchanging data",
+      "children": [
+        {
+          "id": "alevel-cs-ocr-1-3-1",
+          "title": "Compression, encryption and hashing",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-3-1-a",
+              "title": "Lossy and lossless compression",
+              "spec_ref": ["1.3.1(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.1 Compression, Encryption and Hashing, point (a) (page 8; PDF page 14)",
+                  "quote": "Lossy vs Lossless compression.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-1-b",
+              "title": "Run length encoding and dictionary coding",
+              "spec_ref": ["1.3.1(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.1 Compression, Encryption and Hashing, point (b) (page 8; PDF page 14)",
+                  "quote": "Run length encoding and dictionary coding for lossless compression.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-1-c",
+              "title": "Symmetric and asymmetric encryption",
+              "spec_ref": ["1.3.1(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.1 Compression, Encryption and Hashing, point (c) (page 8; PDF page 14)",
+                  "quote": "Symmetric and asymmetric encryption.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-1-d",
+              "title": "Uses of hashing",
+              "spec_ref": ["1.3.1(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.1 Compression, Encryption and Hashing, point (d) (page 8; PDF page 14)",
+                  "quote": "Different uses of hashing.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-3-2",
+          "title": "Databases",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-3-2-a",
+              "title": "Relational databases, keys and entity relationships",
+              "spec_ref": ["1.3.2(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.2 Databases, point (a) (page 8; PDF page 14)",
+                  "quote": "Relational database, flat file, primary key, foreign key, secondary key, entity relationship modelling, normalisation and indexing.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-2-b",
+              "title": "Capturing, selecting, managing and exchanging data",
+              "spec_ref": ["1.3.2(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.2 Databases, point (b) (page 8; PDF page 14)",
+                  "quote": "Methods of capturing, selecting, managing and exchanging data.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-2-c",
+              "title": "Normalisation to 3NF",
+              "spec_ref": ["1.3.2(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.2 Databases, point (c) (page 8; PDF page 14)",
+                  "quote": "Normalisation to 3NF.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-2-d",
+              "title": "SQL",
+              "spec_ref": ["1.3.2(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.2 Databases, point (d) (page 8; PDF page 14)",
+                  "quote": "SQL – Interpret and modify.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-2-e",
+              "title": "Referential integrity",
+              "spec_ref": ["1.3.2(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.2 Databases, point (e) (page 8; PDF page 14)",
+                  "quote": "Referential integrity.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-2-f",
+              "title": "Transactions, ACID and record locking",
+              "spec_ref": ["1.3.2(f)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.2 Databases, point (f) (page 8; PDF page 14)",
+                  "quote": "Transaction processing, ACID (Atomicity, Consistency, Isolation, Durability), record locking and redundancy.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-3-3",
+          "title": "Networks",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-3-3-a",
+              "title": "Network characteristics, protocols and standards",
+              "spec_ref": ["1.3.3(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.3 Networks, point (a) (page 8; PDF page 14)",
+                  "quote": "Characteristics of networks and the importance of protocols and standards.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-3-b",
+              "title": "Internet structure: TCP/IP, DNS, LANs, WANs and switching",
+              "spec_ref": ["1.3.3(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.3 Networks, point (b) (page 8; PDF page 14)",
+                  "quote": "The internet structure:",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-3-c",
+              "title": "Network security and threats",
+              "spec_ref": ["1.3.3(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.3 Networks, point (c) (page 8; PDF page 14)",
+                  "quote": "Network security and threats, use of firewalls, proxies and encryption.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-3-d",
+              "title": "Network hardware",
+              "spec_ref": ["1.3.3(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.3 Networks, point (d) (page 8; PDF page 14)",
+                  "quote": "Network hardware.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-3-e",
+              "title": "Client-server and peer to peer",
+              "spec_ref": ["1.3.3(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.3 Networks, point (e) (page 8; PDF page 14)",
+                  "quote": "Client-server and peer to peer.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-3-4",
+          "title": "Web technologies",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-3-4-a",
+              "title": "HTML, CSS and JavaScript",
+              "spec_ref": ["1.3.4(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.4 Web Technologies, point (a) (page 8; PDF page 14)",
+                  "quote": "HTML, CSS and JavaScript.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-4-b",
+              "title": "Search engine indexing",
+              "spec_ref": ["1.3.4(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.4 Web Technologies, point (b) (page 8; PDF page 14)",
+                  "quote": "Search engine indexing.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-4-c",
+              "title": "PageRank algorithm",
+              "spec_ref": ["1.3.4(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.4 Web Technologies, point (c) (page 8; PDF page 14)",
+                  "quote": "PageRank algorithm.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-3-4-d",
+              "title": "Server-side and client-side processing",
+              "spec_ref": ["1.3.4(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Exchanging data, 1.3.4 Web Technologies, point (d) (page 8; PDF page 14)",
+                  "quote": "Server and client side processing.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alevel-cs-ocr-1-4",
+      "title": "Data types, data structures and algorithms",
+      "children": [
+        {
+          "id": "alevel-cs-ocr-1-4-1",
+          "title": "Data types",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-4-1-a",
+              "title": "Primitive data types",
+              "spec_ref": ["1.4.1(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (a) (page 9; PDF page 15)",
+                  "quote": "Primitive data types, integer, real/floating point, character, string and Boolean.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-b",
+              "title": "Positive integers in binary",
+              "spec_ref": ["1.4.1(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (b) (page 9; PDF page 15)",
+                  "quote": "Represent positive integers in binary.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-c",
+              "title": "Sign and magnitude and two's complement",
+              "spec_ref": ["1.4.1(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (c) (page 9; PDF page 15)",
+                  "quote": "Use of sign and magnitude and two’s complement to represent negative numbers in binary.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-d",
+              "title": "Binary addition and subtraction",
+              "spec_ref": ["1.4.1(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (d) (page 9; PDF page 15)",
+                  "quote": "Addition and subtraction of binary integers.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-e",
+              "title": "Positive integers in hexadecimal",
+              "spec_ref": ["1.4.1(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (e) (page 9; PDF page 15)",
+                  "quote": "Represent positive integers in hexadecimal.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-f",
+              "title": "Converting between binary, hexadecimal and denary",
+              "spec_ref": ["1.4.1(f)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+                  "quote": "Convert positive integers between binary hexadecimal and denary.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-g",
+              "title": "Floating point representation and normalisation",
+              "spec_ref": ["1.4.1(g)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (g) (page 9; PDF page 15)",
+                  "quote": "Representation and normalisation of floating point numbers in binary.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-h",
+              "title": "Floating point addition and subtraction",
+              "spec_ref": ["1.4.1(h)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (h) (page 9; PDF page 15)",
+                  "quote": "Floating point arithmetic, positive and negative numbers, addition and subtraction.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-i",
+              "title": "Bitwise shifts and masks",
+              "spec_ref": ["1.4.1(i)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+                  "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-1-j",
+              "title": "Character sets: ASCII and Unicode",
+              "spec_ref": ["1.4.1(j)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (j) (page 9; PDF page 15)",
+                  "quote": "How character sets (ASCII and UNICODE) are used to represent text.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-4-2",
+          "title": "Data structures",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-4-2-a",
+              "title": "Arrays, records, lists and tuples",
+              "spec_ref": ["1.4.2(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.2 Data Structures, point (a) (page 9; PDF page 15)",
+                  "quote": "Arrays (of up to 3 dimensions), records, lists, tuples.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-2-b",
+              "title": "Linked lists, graphs, stacks, queues, trees and hash tables",
+              "spec_ref": ["1.4.2(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.2 Data Structures, point (b) (page 9; PDF page 15)",
+                  "quote": "The following structures to store data: linked-list, graph (directed and undirected), stack, queue, tree, binary search tree, hash table.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-2-c",
+              "title": "Creating, traversing, adding to and removing from structures",
+              "spec_ref": ["1.4.2(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.2 Data Structures, point (c) (page 9; PDF page 15)",
+                  "quote": "How to create, traverse, add data to and remove data from the data structures mentioned above.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-4-3",
+          "title": "Boolean algebra",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-4-3-a",
+              "title": "Defining problems with Boolean logic",
+              "spec_ref": ["1.4.3(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (a) (page 9; PDF page 15)",
+                  "quote": "Define problems using Boolean logic.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-3-b",
+              "title": "Manipulating expressions and Karnaugh maps",
+              "spec_ref": ["1.4.3(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (b) (page 9; PDF page 15)",
+                  "quote": "Manipulate Boolean expressions, including the use of Karnaugh maps to simplify Boolean expressions.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-3-c",
+              "title": "Boolean rules: De Morgan, distribution, association, commutation",
+              "spec_ref": ["1.4.3(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (c) (page 9; PDF page 15)",
+                  "quote": "Use the following rules to derive or simplify statements in Boolean algebra: De Morgan’s Laws, distribution, association, commutation, double negation.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-3-d",
+              "title": "Logic gate diagrams and truth tables",
+              "spec_ref": ["1.4.3(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (d) (page 9; PDF page 15)",
+                  "quote": "Using logic gate diagrams and truth tables.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-4-3-e",
+              "title": "D type flip flops, half and full adders",
+              "spec_ref": ["1.4.3(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.3 Boolean Algebra, point (e) (page 9; PDF page 15)",
+                  "quote": "The logic associated with D type flip flops, half and full adders.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alevel-cs-ocr-1-5",
+      "title": "Legal, moral, cultural and ethical issues",
+      "children": [
+        {
+          "id": "alevel-cs-ocr-1-5-1",
+          "title": "Computing related legislation",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-1-5-1-a",
+              "title": "Data Protection Act 1998",
+              "spec_ref": ["1.5.1(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Legal, moral, cultural and ethical issues, 1.5.1 Computing related legislation, point (a) (page 10; PDF page 16)",
+                  "quote": "The Data Protection Act 1998.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-5-1-b",
+              "title": "Computer Misuse Act 1990",
+              "spec_ref": ["1.5.1(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Legal, moral, cultural and ethical issues, 1.5.1 Computing related legislation, point (b) (page 10; PDF page 16)",
+                  "quote": "The Computer Misuse Act 1990.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-5-1-c",
+              "title": "Copyright Design and Patents Act 1988",
+              "spec_ref": ["1.5.1(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Legal, moral, cultural and ethical issues, 1.5.1 Computing related legislation, point (c) (page 10; PDF page 16)",
+                  "quote": "The Copyright Design and Patents Act 1988.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-1-5-1-d",
+              "title": "Regulation of Investigatory Powers Act 2000",
+              "spec_ref": ["1.5.1(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Computer systems (Component 01), Legal, moral, cultural and ethical issues, 1.5.1 Computing related legislation, point (d) (page 10; PDF page 16)",
+                  "quote": "The Regulation of Investigatory Powers Act 2000.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-1-5-2",
+          "title": "Moral and ethical issues",
+          "spec_ref": ["1.5.2"],
+          "citations": [
+            {
+              "source_type": "specification",
+              "publisher": "Cambridge OCR",
+              "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+              "document_ref": "H446 Version 3.0 (April 2026)",
+              "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+              "location": "2c. Content of Computer systems (Component 01), Legal, moral, cultural and ethical issues, 1.5.2 Moral and ethical Issues (page 10; PDF page 16)",
+              "quote": "The individual moral, social, ethical and cultural opportunities and risks of digital technology:",
+              "retrieved_at": "2026-11-27",
+              "supports": ["topic"],
+              "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alevel-cs-ocr-2-1",
+      "title": "Elements of computational thinking",
+      "children": [
+        {
+          "id": "alevel-cs-ocr-2-1-1",
+          "title": "Thinking abstractly",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-2-1-1-a",
+              "title": "The nature of abstraction",
+              "spec_ref": ["2.1.1(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.1 Thinking abstractly, point (a) (page 11; PDF page 17)",
+                  "quote": "The nature of abstraction.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-1-b",
+              "title": "The need for abstraction",
+              "spec_ref": ["2.1.1(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.1 Thinking abstractly, point (b) (page 11; PDF page 17)",
+                  "quote": "The need for abstraction.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-1-c",
+              "title": "Abstraction and reality",
+              "spec_ref": ["2.1.1(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.1 Thinking abstractly, point (c) (page 11; PDF page 17)",
+                  "quote": "The differences between an abstraction and reality.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-1-d",
+              "title": "Devising abstract models",
+              "spec_ref": ["2.1.1(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.1 Thinking abstractly, point (d) (page 11; PDF page 17)",
+                  "quote": "Devise an abstract model for a variety of situations.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-2-1-2",
+          "title": "Thinking ahead",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-2-1-2-a",
+              "title": "Inputs and outputs",
+              "spec_ref": ["2.1.2(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.2 Thinking ahead, point (a) (page 11; PDF page 17)",
+                  "quote": "Identify the inputs and outputs for a given situation.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-2-b",
+              "title": "Preconditions",
+              "spec_ref": ["2.1.2(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.2 Thinking ahead, point (b) (page 11; PDF page 17)",
+                  "quote": "Determine the preconditions for devising a solution to a problem.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-2-c",
+              "title": "Caching",
+              "spec_ref": ["2.1.2(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.2 Thinking ahead, point (c) (page 11; PDF page 17)",
+                  "quote": "The nature, benefits and drawbacks of caching.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-2-d",
+              "title": "Reusable program components",
+              "spec_ref": ["2.1.2(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.2 Thinking ahead, point (d) (page 11; PDF page 17)",
+                  "quote": "The need for reusable program components.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-2-1-3",
+          "title": "Thinking procedurally",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-2-1-3-a",
+              "title": "Components of a problem",
+              "spec_ref": ["2.1.3(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.3 Thinking procedurally, point (a) (page 11; PDF page 17)",
+                  "quote": "Identify the components of a problem.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-3-b",
+              "title": "Components of a solution",
+              "spec_ref": ["2.1.3(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.3 Thinking procedurally, point (b) (page 11; PDF page 17)",
+                  "quote": "Identify the components of a solution to a problem.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-3-c",
+              "title": "Ordering the steps",
+              "spec_ref": ["2.1.3(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.3 Thinking procedurally, point (c) (page 11; PDF page 17)",
+                  "quote": "Determine the order of the steps needed to solve a problem.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-3-d",
+              "title": "Sub-procedures",
+              "spec_ref": ["2.1.3(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.3 Thinking procedurally, point (d) (page 11; PDF page 17)",
+                  "quote": "Identify sub-procedures necessary to solve a problem.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-2-1-4",
+          "title": "Thinking logically",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-2-1-4-a",
+              "title": "Decision points",
+              "spec_ref": ["2.1.4(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.4 Thinking logically, point (a) (page 11; PDF page 17)",
+                  "quote": "Identify the points in a solution where a decision has to be taken.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-4-b",
+              "title": "Logical conditions",
+              "spec_ref": ["2.1.4(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.4 Thinking logically, point (b) (page 11; PDF page 17)",
+                  "quote": "Determine the logical conditions that affect the outcome of a decision.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-4-c",
+              "title": "Decisions and program flow",
+              "spec_ref": ["2.1.4(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.4 Thinking logically, point (c) (page 11; PDF page 17)",
+                  "quote": "Determine how decisions affect flow through a program.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-2-1-5",
+          "title": "Thinking concurrently",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-2-1-5-a",
+              "title": "Parts that can run at the same time",
+              "spec_ref": ["2.1.5(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.5 Thinking concurrently, point (a) (page 11; PDF page 17)",
+                  "quote": "Determine the parts of a problem that can be tackled at the same time.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-1-5-b",
+              "title": "Benefits and trade-offs of concurrency",
+              "spec_ref": ["2.1.5(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Elements of computational thinking, 2.1.5 Thinking concurrently, point (b) (page 11; PDF page 17)",
+                  "quote": "Outline the benefits and trade offs that might result from concurrent processing in a particular situation.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alevel-cs-ocr-2-2",
+      "title": "Problem solving and programming",
+      "children": [
+        {
+          "id": "alevel-cs-ocr-2-2-1",
+          "title": "Programming techniques",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-2-2-1-a",
+              "title": "Sequence, iteration and branching",
+              "spec_ref": ["2.2.1(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.1 Programming techniques, point (a) (page 12; PDF page 18)",
+                  "quote": "Programming constructs: sequence, iteration, branching.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-1-b",
+              "title": "Recursion",
+              "spec_ref": ["2.2.1(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.1 Programming techniques, point (b) (page 12; PDF page 18)",
+                  "quote": "Recursion, how it can be used and compares to an iterative approach.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-1-c",
+              "title": "Global and local variables",
+              "spec_ref": ["2.2.1(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.1 Programming techniques, point (c) (page 12; PDF page 18)",
+                  "quote": "Global and local variables.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-1-d",
+              "title": "Modularity and parameter passing",
+              "spec_ref": ["2.2.1(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.1 Programming techniques, point (d) (page 12; PDF page 18)",
+                  "quote": "Modularity, functions and procedures, parameter passing by value and by reference.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-1-e",
+              "title": "Using an IDE",
+              "spec_ref": ["2.2.1(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.1 Programming techniques, point (e) (page 12; PDF page 18)",
+                  "quote": "Use of an IDE to develop/debug a program.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-1-f",
+              "title": "Object-oriented techniques",
+              "spec_ref": ["2.2.1(f)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.1 Programming techniques, point (f) (page 12; PDF page 18)",
+                  "quote": "Use of object oriented techniques.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alevel-cs-ocr-2-2-2",
+          "title": "Computational methods",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-2-2-2-a",
+              "title": "Problems solvable by computation",
+              "spec_ref": ["2.2.2(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.2 Computational methods, point (a) (page 12; PDF page 18)",
+                  "quote": "Features that make a problem solvable by computational methods.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-2-b",
+              "title": "Problem recognition",
+              "spec_ref": ["2.2.2(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.2 Computational methods, point (b) (page 12; PDF page 18)",
+                  "quote": "Problem recognition.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-2-c",
+              "title": "Problem decomposition",
+              "spec_ref": ["2.2.2(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.2 Computational methods, point (c) (page 12; PDF page 18)",
+                  "quote": "Problem decomposition.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-2-d",
+              "title": "Divide and conquer",
+              "spec_ref": ["2.2.2(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.2 Computational methods, point (d) (page 12; PDF page 18)",
+                  "quote": "Use of divide and conquer.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-2-e",
+              "title": "Abstraction in problem solving",
+              "spec_ref": ["2.2.2(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.2 Computational methods, point (e) (page 12; PDF page 18)",
+                  "quote": "Use of abstraction.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-2-2-f",
+              "title": "Backtracking, data mining, heuristics and more",
+              "spec_ref": ["2.2.2(f)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Problem solving and programming, 2.2.2 Computational methods, point (f) (page 12; PDF page 18)",
+                  "quote": "Learners should apply their knowledge of:",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "alevel-cs-ocr-2-3",
+      "title": "Algorithms",
+      "children": [
+        {
+          "id": "alevel-cs-ocr-2-3-1",
+          "title": "Algorithms",
+          "children": [
+            {
+              "id": "alevel-cs-ocr-2-3-1-a",
+              "title": "Analysing and designing algorithms",
+              "spec_ref": ["2.3.1(a)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Algorithms, 2.3.1 Algorithms, point (a) (page 12; PDF page 18)",
+                  "quote": "Analysis and design of algorithms for a given situation.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-3-1-b",
+              "title": "Choosing algorithms for time and space",
+              "spec_ref": ["2.3.1(b)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Algorithms, 2.3.1 Algorithms, point (b) (page 12; PDF page 18)",
+                  "quote": "The suitability of different algorithms for a given task and data set, in terms of execution time and space.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-3-1-c",
+              "title": "Efficiency and Big O notation",
+              "spec_ref": ["2.3.1(c)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Algorithms, 2.3.1 Algorithms, point (c) (page 12; PDF page 18)",
+                  "quote": "Measures and methods to determine the efficiency of different algorithms, Big O notation (constant, linear, polynomial, exponential and logarithmic complexity).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-3-1-d",
+              "title": "Comparing complexity",
+              "spec_ref": ["2.3.1(d)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Algorithms, 2.3.1 Algorithms, point (d) (page 12; PDF page 18)",
+                  "quote": "Comparison of the complexity of algorithms.",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-3-1-e",
+              "title": "Algorithms for stacks, queues, trees and linked lists",
+              "spec_ref": ["2.3.1(e)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Algorithms, 2.3.1 Algorithms, point (e) (page 12; PDF page 18)",
+                  "quote": "Algorithms for the main data structures, (stacks, queues, trees, linked lists, depth-first (post-order) and breadth-first traversal of trees).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            },
+            {
+              "id": "alevel-cs-ocr-2-3-1-f",
+              "title": "Standard sorts, searches and path-finding",
+              "spec_ref": ["2.3.1(f)"],
+              "citations": [
+                {
+                  "source_type": "specification",
+                  "publisher": "Cambridge OCR",
+                  "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+                  "document_ref": "H446 Version 3.0 (April 2026)",
+                  "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+                  "location": "2c. Content of Algorithms and programming (Component 02), Algorithms, 2.3.1 Algorithms, point (f) (page 12; PDF page 18)",
+                  "quote": "Standard algorithms (bubble sort, insertion sort, merge sort, quick sort, Dijkstra’s shortest path algorithm, A* algorithm, binary search and linear search).",
+                  "retrieved_at": "2026-11-27",
+                  "supports": ["topic"],
+                  "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
