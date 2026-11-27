@@ -11,6 +11,14 @@ export async function settle(page: Page) {
     () =>
       new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))),
   );
+  // A look's font loads the first time the look is shown: wait for it, and for the reflow it
+  // brings, so text is not measured where it was before the font arrived (train #408).
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise<void>((done) =>
+      requestAnimationFrame(() => requestAnimationFrame(() => done())),
+    );
+  });
   await page.evaluate(() =>
     Promise.all(
       document

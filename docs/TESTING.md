@@ -184,7 +184,8 @@ sweep does not cover. Data comes from the web app's own mock handlers
   and the first three focus rings, measured on screenshots. At each scroll stop only what is
   fully on show is measured: a line cut by the edge of the screen, or a part under the bottom nav
   or a header, waits for a stop where it shows in full (stops overlap by a fifth of a screen).
-  Each row records the stop it was read at (`@ 640`). Focus rings are read twice (a ring counts as failing only when
+  Each row records the stop it was read at (`@ 640`). Before measuring, it waits for animations and for
+  fonts: a look's font loads the first time the look is shown. Focus rings are read twice (a ring counts as failing only when
   both readings fail it, so one caught mid-animation cannot flake the run). When the focused
   control is itself invisible (an answer's hidden radio), the ring is looked for around its label.
   Text too faint to sample is a failure, not a skip (decision 0012). Nightly with every variant

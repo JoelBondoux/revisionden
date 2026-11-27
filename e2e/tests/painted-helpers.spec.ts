@@ -1,6 +1,13 @@
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { expect, test, type Page } from '@playwright/test';
 import { computedContrastFailures } from './support/contrastStyles';
-import { focusRingFailures, paintedTextFailures, paintedUiFailures } from './support/painted';
+import {
+  focusRingFailures,
+  paintedTextFailures,
+  paintedUiFailures,
+  settle,
+} from './support/painted';
 
 /*
  * W21: the painted helpers on small made-up pages, so their rules are pinned down apart from the
@@ -171,3 +178,35 @@ test.describe(
     });
   },
 );
+
+test.describe('a look whose font is still loading', { tag: '@contrast' }, () => {
+  test('the sweep waits for the font before it measures (train #408)', async ({ page }) => {
+    // A look's font loads the first time the look is shown; text measured before it arrives
+    // moves when it does, so its boxes miss the letters. Here the font is held back a second.
+    const font = readFileSync(
+      createRequire(import.meta.url).resolve(
+        '@fontsource/baloo-2/files/baloo-2-latin-800-normal.woff2',
+      ),
+    );
+    await page.route('http://look.test/slow-font.woff2', async (route) => {
+      await new Promise((r) => setTimeout(r, 1000));
+      await route.fulfill({ body: font, contentType: 'font/woff2' });
+    });
+    await page.route('http://look.test/', (route) =>
+      route.fulfill({
+        contentType: 'text/html',
+        body: `<!doctype html>
+          <style>
+            @font-face { font-family: 'Slow'; src: url('/slow-font.woff2') format('woff2'); }
+            body { margin: 0; padding: 40px; background: #fff; color: #111; font: 20px sans-serif; }
+            .look p { font-family: 'Slow', sans-serif; }
+          </style>
+          <p>Words in the look's own font</p>`,
+      }),
+    );
+    await page.goto('http://look.test/');
+    await page.evaluate(() => document.body.classList.add('look'));
+    await settle(page);
+    expect(await page.evaluate(() => document.fonts.check("20px 'Slow'"))).toBe(true);
+  });
+});
