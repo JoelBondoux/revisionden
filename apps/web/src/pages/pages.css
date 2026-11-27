@@ -12,7 +12,8 @@
      at 320px with text at 200% (W15, WCAG 1.4.10). Unchanged from 390px up. */
   font-size: clamp(2rem, 12vw, 2.5rem);
   overflow-wrap: anywhere;
-  color: var(--color-primary);
+  /* The edge colour reads on the page in light and dark (J17x part 2; the dark main colour was dim). */
+  color: var(--color-primary-edge);
   margin: var(--space-2) 0 0;
 }
 
@@ -346,7 +347,7 @@
 
 .hex:focus-visible {
   box-shadow: none;
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 4px;
 }
 
@@ -408,11 +409,16 @@
   margin-bottom: 5px;
 }
 
-.option input {
+.option input,
+.option input[type='radio'] {
   position: absolute;
   opacity: 0;
   inset: 0;
   margin: 0;
+  /* Hidden: draws nothing of its own (base.css draws visible radios, J17x part 2). */
+  appearance: auto;
+  border: 0;
+  background: none;
   cursor: inherit;
 }
 

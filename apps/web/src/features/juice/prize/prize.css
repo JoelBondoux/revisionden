@@ -15,6 +15,10 @@
   gap: 0.6rem;
   text-align: center;
   color: #fff;
+  /* The box is always a dark panel, even inside a lesson, whose arena text now takes the look's
+     ink (J17x): its own light arena text, so its heading reads (J17x part 2, W21 sweep). */
+  --arena-text: #ffffff;
+  --arena-text-secondary: #d9d2f7;
   background:
     radial-gradient(circle at 50% 62%, rgba(255, 224, 102, 0.35), transparent 55%),
     rgba(14, 10, 40, 0.94);
