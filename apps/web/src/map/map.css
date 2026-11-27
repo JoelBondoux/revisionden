@@ -347,7 +347,7 @@
 }
 
 .unit-path:focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 

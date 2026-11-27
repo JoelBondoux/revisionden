@@ -34,6 +34,11 @@ page, lesson "+XP", "Best combo", header XP and comeback text), each fixed one a
     background (blocking), plus a guard that fails if a route is missing from the sweep;
   - the full painted-page sweep: nightly, on any pull request that changes a look's styles, and as
     a required check before anything is promoted to staging.
+  - temporary (lead ruling, 2026-11-27, W21c): on pull requests the painted sweep only reports
+    (its job summary lists new and fixed rows, and the report is kept) and does not fail, because
+    the known list was made locally and CI draws text slightly differently. Nightly and the
+    staging gate still fail on new rows; tier 1 stays blocking. Blocking on pull requests returns
+    once the list is made from a CI run and two CI runs in a row are green (W21b).
     Known failures are listed in `e2e/tests/contrast-known.json` (one open entry in
     `operations/contradictions.md`) and are marked expected-to-fail, so each fix turns its check
     green and a regression turns it red. A new look, route or dialog is not finished until both

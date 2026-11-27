@@ -139,9 +139,14 @@
   --color-control-edge: var(--color-text-secondary);
   --color-selected: var(--color-primary);
   --color-on-selected: var(--color-text-on-primary);
+  /* J17x part 2 (W21 painted sweep): focus rings in the look's edge colour (a deeper main colour in
+     light, the light accent in dark), which stands out 3:1 from every look's page in both modes. */
+  --color-focus: var(--color-primary-edge);
+  --focus-ring: 0 0 0 3px var(--color-surface), 0 0 0 6px var(--color-focus);
 }
 
 :root[data-theme='dark'] {
   --color-selected: var(--color-primary-edge);
   --color-on-selected: var(--color-background);
+  --focus-ring: 0 0 0 3px var(--color-surface), 0 0 0 6px var(--color-focus);
 }

@@ -54,3 +54,22 @@ test('the contrast sweep (tier 1) runs once on the shared build, not in every sh
   assert.match(contrast, /--grep @contrast /);
   assert.match(job('e2e'), /--grep-invert @contrast/);
 });
+
+const painted = readFileSync(
+  new URL('../.github/workflows/contrast-painted.yml', import.meta.url),
+  'utf8',
+);
+
+test('the painted sweep only reports on pull requests for now; nightly and the staging gate still fail (W21c, decision 0012)', () => {
+  // A caller (the staging gate) can say whether it blocks; it does unless told otherwise.
+  assert.match(painted, /workflow_call:\n\s+inputs:\n\s+blocking:\n(?:.*\n)*?\s+default: true/);
+  // Only a pull request's own run carries on past new rows.
+  assert.match(
+    painted,
+    /continue-on-error: \$\{\{ github\.event_name == 'pull_request' && !inputs\.blocking \}\}/,
+  );
+  // Every run that found something keeps its report and lists the new and fixed rows.
+  assert.match(painted, /id: sweep/);
+  assert.match(painted, /if: steps\.sweep\.outcome == 'failure'/);
+  assert.match(painted, /GITHUB_STEP_SUMMARY/);
+});

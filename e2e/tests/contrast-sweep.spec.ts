@@ -54,6 +54,27 @@ interface Screen {
   visit: string;
   /** Not swept, and why (a redirect, or a later pull request). */
   skip?: string;
+  /**
+   * Holds the screen's ever-growing lists to the same few made-up lines on every run, so a new
+   * changelog line or package cannot move rows in or out of the sweep or change their keys.
+   */
+  steady?: (page: Page) => Promise<void>;
+}
+
+/** /about with three made-up What's new lines and its first three licences (see SCREENS). */
+async function steadyAbout(page: Page) {
+  await page.evaluate(() => {
+    const versions = Array.from(document.querySelectorAll('.about__version'));
+    versions.slice(1).forEach((v) => v.remove());
+    const lines = Array.from(versions[0]?.querySelectorAll('li') ?? []);
+    lines.slice(3).forEach((l) => l.remove());
+    lines.slice(0, 3).forEach((l, n) => {
+      l.textContent = `A made-up line about a change, number ${n + 1}, the same on every run.`;
+    });
+    Array.from(document.querySelectorAll('.about__licences li'))
+      .slice(3)
+      .forEach((l) => l.remove());
+  });
 }
 
 const SCREENS: Screen[] = [
@@ -71,7 +92,9 @@ const SCREENS: Screen[] = [
   { route: '/settings/look-and-sound', who: 'pupil', visit: '/settings/look-and-sound' },
   { route: '/settings/more', who: 'pupil', visit: '/settings/more' },
   { route: '/install', who: 'pupil', visit: '/install' },
-  { route: '/about', who: 'pupil', visit: '/about' },
+  // What's new gains a line with every change and the licences list with every package: three
+  // of each, alike in style, show the colours just as well (lead, after train #403).
+  { route: '/about', who: 'pupil', visit: '/about', steady: steadyAbout },
   { route: '/legal', who: 'pupil', visit: '/legal' },
   { route: '/legal/:name', who: 'pupil', visit: '/legal/privacy-notice' },
   { route: '/feedback', who: 'pupil', visit: '/feedback' },
@@ -234,6 +257,35 @@ test('every route in routes.tsx has a row in the contrast sweep', { tag: '@contr
   ).toEqual([]);
 });
 
+test(
+  '/about is swept with the same few lines on every run (after train #403)',
+  { tag: '@contrast' },
+  async ({ page }, info) => {
+    test.skip(info.project.name !== 'desktop', 'one check is enough');
+    const about = SCREENS.find((s) => s.route === '/about')!;
+    await open(page, about.who, 'light', about.visit);
+    expect(about.steady, '/about holds its lists steady').toBeDefined();
+    await about.steady!(page);
+    await expect(page.locator('.about__version')).toHaveCount(1);
+    await expect(page.locator('.about__version li')).toHaveText([
+      'A made-up line about a change, number 1, the same on every run.',
+      'A made-up line about a change, number 2, the same on every run.',
+      'A made-up line about a change, number 3, the same on every run.',
+    ]);
+    await expect(page.locator('.about__licences li')).toHaveCount(3);
+  },
+);
+
+test(
+  'the footer shows the same made-up commit on every build (after train #403)',
+  { tag: '@contrast' },
+  async ({ page }, info) => {
+    test.skip(info.project.name !== 'desktop', 'one check is enough');
+    await open(page, 'pupil', 'light', '/about');
+    await expect(page.locator('.version-footer-item').nth(1)).toHaveText('(Staging, abcdef0)');
+  },
+);
+
 test.describe('which painted readings count (decision 0012)', { tag: '@contrast' }, () => {
   test('text too faint to sample is a failure, not a skip', () => {
     const faint = '"For:" has too few letter pixels to check';
@@ -279,6 +331,13 @@ async function open(page: Page, who: Who, mode: (typeof MODES)[number], visit: s
     await page.evaluate(() => document.documentElement.dataset.readingTint ?? null),
   ).toBeNull();
   await expect(page.getByRole('alert').filter({ hasText: 'Something went wrong' })).toHaveCount(0);
+  // The footer names this build's commit, which changes with every build; a made-up one keeps
+  // its rows' keys the same (after train #403). Same words, same style.
+  await page.evaluate(() => {
+    for (const item of Array.from(document.querySelectorAll('.version-footer-item')))
+      if (item.textContent?.startsWith('('))
+        item.textContent = item.textContent.replace(/, [0-9a-f]{7,}\)$/, ', abcdef0)');
+  });
   await page.addStyleTag({
     content: '*, *::before, *::after { transition: none !important; animation: none !important; }',
   });
@@ -332,6 +391,7 @@ test.describe('tier 1: contrast from computed styles', { tag: '@contrast' }, () 
       test(`${screen.route} reads in every look, ${mode} mode`, async ({ page }, info) => {
         test.skip(info.project.name === 'tablet', 'phone (every look) and desktop (default look)');
         await open(page, screen.who, mode, screen.visit);
+        await screen.steady?.(page);
         await sweep(page, mode, screen.route, looksFor(info.project.name));
       });
     }
@@ -456,6 +516,7 @@ test.describe('tier 2: painted contrast', { tag: '@contrast-painted' }, () => {
         test.skip(info.project.name === 'tablet', 'phone (every look) and desktop (default look)');
         test.setTimeout(300_000);
         await open(page, screen.who, mode, screen.visit);
+        await screen.steady?.(page);
         await paintedSweep(page, mode, screen.route, looksFor(info.project.name));
       });
     }

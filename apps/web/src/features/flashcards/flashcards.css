@@ -9,7 +9,7 @@
 .tabs__tab {
   min-height: var(--tap-target);
   padding: 0 var(--space-4);
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-control-edge);
   border-radius: var(--radius-pill);
   background: var(--color-surface);
   color: var(--color-text);
@@ -19,10 +19,11 @@
   cursor: pointer;
 }
 
+/* The current tab is filled, like a selected chip (J17x part 2; the soft fill failed in dark). */
 .tabs__tab--active {
-  border-color: var(--color-primary);
-  background: var(--color-primary-soft);
-  color: var(--color-primary-edge);
+  border-color: var(--color-selected);
+  background: var(--color-selected);
+  color: var(--color-on-selected);
 }
 
 .tabs__tab:focus-visible {
@@ -195,6 +196,6 @@
 }
 
 .flip-card:focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 4px;
 }

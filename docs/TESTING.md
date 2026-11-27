@@ -183,6 +183,13 @@ every look; the desktop runs the default look. Data comes from the web app's own
   on demand, on pull requests that touch looks or design CSS, and before staging. Helpers:
   `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
   `e2e/tests/support/painted.ts`.
+- **Report-only on pull requests, for now** (W21c, decision 0012): a pull request's tier 2 run
+  lists new and fixed rows in its job summary and keeps the report, but does not fail. Nightly
+  and the staging gate (`workflow_call`, `blocking` defaults to true) still fail. This lasts
+  until the known list is made from a CI run.
+- **Steady screens:** anything that changes with every build is held to made-up values, so a
+  row's place and key never move with the changelog: `/about` keeps three made-up What's new lines
+  and three licences, and the version footer shows a made-up commit (W21c).
 - **Known failures:** `e2e/tests/contrast-known.json`. A test fails on anything new and on a
   listed failure that is now fixed, so a fix removes its lines in the same change. To refresh the
   list after a fix: run the sweep with `CONTRAST_UPDATE=1` (add `CONTRAST_SWEEP=1` for tier 2),

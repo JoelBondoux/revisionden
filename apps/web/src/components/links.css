@@ -68,7 +68,7 @@
 }
 
 .link-tile:focus-within {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 3px;
 }
 
@@ -148,7 +148,7 @@
 }
 
 .link-chip:focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 3px;
 }
 
@@ -168,7 +168,7 @@
 }
 
 .text-link:focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -263,7 +263,7 @@
 }
 
 .button-tile:focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 3px;
 }
 
