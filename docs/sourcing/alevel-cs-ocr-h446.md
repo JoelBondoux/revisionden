@@ -54,6 +54,24 @@ committed (public repository); the quote checker caches it outside the repo.
   and exponent with the binary point after the first bit; each question must state this itself,
   so no item relies on an unstated convention.
 
+## Items, strand 1 (data representation)
+
+- 119 template items (17 templates) for 1.4.1 (b) to (i). Each item's citation is its topic
+  leaf's citation, word for word, with `supports: ["question"]`: the specification puts the
+  question in scope; the answer is computed by the CS engine and rechecked by a second method.
+- Quote check, 2026-11-27: all 119 items pass (exact).
+- Unsupported by any cited source (listed in `facts`, decision 0009): two's complement place
+  values and negation, sign and magnitude, the meaning of the mantissa bits, the normalisation
+  rule, shift fill rules, and AND/OR/XOR. These 70 items need individual human approval.
+- Model checks on a sample of 17 (one per template; OpenAI `gpt-5.4-2026-03-05` for blind answer
+  and adversarial review, while Gemini is capped): see the PR for results.
+- Floating point blind-answer failures (lead ruling 2026-11-27): the four sampled floating point
+  items failed blind answer because the model's own arithmetic was wrong (it gave 9, then 4.5,
+  for an item whose answer is 1.125). They go to individual review and are not re-run to get a
+  pass. Each item's `maths-engine` check records that the CS engine wrote the answer and the
+  template's independent recheck agreed; every floating point item is also hand-checkable in
+  `docs/TEMPLATE_PREVIEW_CS.md`.
+
 ## Still open
 
 - Owner to confirm the board.
