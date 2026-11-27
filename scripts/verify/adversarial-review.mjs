@@ -72,11 +72,13 @@ const PARTS = [
   'steps',
 ];
 
-/** The definition a decision-0008 item rests on, from its grounded-writing note, or null. */
+/** The sentences of a decision-0008 item's grounded-writing note that name its definition, or null. */
 function definitionOf(item) {
   const notes = item.verification?.checks?.find((c) => c.name === 'grounded-writing')?.notes ?? '';
-  const m = /Decision 0008:[^(]*\((.*)\) that /.exec(notes);
-  return m ? m[1] : null;
+  // Note formats vary ("Decision 0008: … (definition), which …", "… (decision 0008): …"), so
+  // pass every sentence that names the decision (Codex on #433).
+  const sentences = notes.split(/(?<=[.!?])\s+(?=[A-Z])/).filter((t) => /\b0008\b/.test(t));
+  return sentences.length ? sentences.join(' ') : null;
 }
 
 /** The prompt for the reviewer: the whole item including its answer, plus the cited quotes. */

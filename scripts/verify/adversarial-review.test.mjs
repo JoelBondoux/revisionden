@@ -315,3 +315,31 @@ test('a reviewer that relies on no declared fact records nothing extra', async (
   });
   assert.equal(r.check.notes, 'no problems found');
 });
+
+const noted = (notes) => ({
+  ...item,
+  needs_human_approval: true,
+  verification: {
+    ...item.verification,
+    checks: [{ name: 'grounded-writing', result: 'pass', notes }],
+  },
+});
+
+test('every 0008 note format in the bank is shown to the reviewer (Codex on #433)', () => {
+  // Formats copied from real items: n15-0004 ("), which ...") and a3-0101 ("(decision 0008)").
+  const n15 = noted(
+    'Written from the spec. Decision 0008: the answer rests on the standard definition of an error interval (rounding: lower bound ≤ x < upper bound; truncation: stated value ≤ x < next value), which the 1MA1 spec names (N15) but does not define, so needs_human_approval is set. Hint added.',
+  );
+  assert.match(
+    reviewPrompt(n15).prompt,
+    /standard definition of an error interval \(rounding: lower bound/,
+  );
+  assert.doesNotMatch(reviewPrompt(n15).prompt, /Hint added/);
+  const a3 = noted(
+    'Question scope cited (spec A3). The answer rests on the specification point naming the term plus a standard definition (decision 0008): needs individual human approval.',
+  );
+  assert.match(
+    reviewPrompt(a3).prompt,
+    /Declared standard definitions[\s\S]*plus a standard definition \(decision 0008\)/,
+  );
+});

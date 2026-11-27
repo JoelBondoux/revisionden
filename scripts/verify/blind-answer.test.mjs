@@ -549,5 +549,40 @@ test('a maths engine error fails the check with a note instead of stopping the r
   };
   const r = await runBlindAnswer(item, said('3.6v'), { now: AT, maths: broken });
   assert.equal(r.result, 'fail');
-  assert.match(r.check.notes, /maths engine could not check/);
+  assert.match(r.check.notes, /maths engine unavailable, so the answer is not accepted/);
+});
+
+test('a number answer must be a whole number value, not an expression or a choice (Codex on #433)', async () => {
+  for (const bad of ['75*2', '75^2', '75 or 76', '75, 76']) {
+    assert.equal(
+      (await runBlindAnswer(workedNumber, said(bad), { now: AT, maths: noMaths })).result,
+      'fail',
+      bad,
+    );
+  }
+  assert.equal(
+    (await runBlindAnswer(workedNumber, said('75 pounds'), { now: AT, maths: noMaths })).result,
+    'pass',
+  );
+  assert.equal(
+    (await runBlindAnswer(card('20 heads'), said('20 or 21'), { now: AT })).result,
+    'fail',
+  );
+  assert.equal((await runBlindAnswer(card('0.1'), said('0.1 + 0.2'), { now: AT })).result, 'fail');
+});
+
+test('the engine fallback keeps the form the item requires in verify.form (Codex on #433)', async () => {
+  const item = draftItem('fixture-factorise', undefined, {
+    type: 'worked_maths',
+    prompt: 'Factorise 6x^2 + 9x.',
+    answer: { expression: '3x(2x + 3)' },
+    verify: { method: 'expression', expression: '6x^2 + 9x', form: 'factorised' },
+  });
+  const calls = [];
+  const maths = async (checks) => {
+    calls.push(...checks);
+    return checks.map((c) => ({ id: c.id, ok: false }));
+  };
+  await runBlindAnswer(item, said('6x^2 + 9x'), { now: AT, maths });
+  assert.equal(calls[0].form, 'factorised');
 });

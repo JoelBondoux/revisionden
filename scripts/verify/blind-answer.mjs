@@ -90,6 +90,20 @@ function closeEnough(given, expected, tolerance) {
   return Math.abs(a - b) <= (tolerance ?? 1e-9 * Math.max(1, Math.abs(b)));
 }
 
+/**
+ * The final value of an answer as a plain number, or null (Codex on #433): the text after the last
+ * "=", with an optional leading £ and a trailing unit allowed, and nothing else, so "£75" and
+ * "3/30 = 0.1" give a number but "75*2", "75^2" and "75 or 76" do not.
+ */
+function plainValue(text) {
+  const v = finalValue(text)
+    .replace(/,(?=\d{3})/g, '')
+    .replace(/^[£$]\s*/, '')
+    .replace(/\s*[A-Za-z°%²³][A-Za-z°%²³\s/]*$/, '')
+    .trim();
+  return isPlainNumber(v) ? v : null;
+}
+
 /** The value after the last "=" ("3/30 = 0.1" gives "0.1"), as text. */
 function finalValue(text) {
   return String(text).split('=').pop().trim();
@@ -180,7 +194,8 @@ function expectation(item) {
       return {
         expected: item.back,
         matches: (a) =>
-          words(a) === words(item.back) || (number !== null && closeEnough(finalValue(a), number)),
+          words(a) === words(item.back) ||
+          (number !== null && plainValue(a) !== null && closeEnough(plainValue(a), number)),
       };
     }
     case 'worked_maths':
@@ -206,7 +221,8 @@ function expectation(item) {
           // A number answer (S4): compare the final value as a number ("£75", "150/2 = 75").
           return (
             isPlainNumber(item.answer.expression) &&
-            closeEnough(finalValue(given), item.answer.expression)
+            plainValue(given) !== null &&
+            closeEnough(plainValue(given), item.answer.expression)
           );
         },
       };
@@ -271,12 +287,17 @@ async function expressionVerdict(item, answer, maths) {
         kind: 'expression',
         expression: item.answer.expression,
         answer: given,
-        form: item.answer.form,
+        form: item.answer.form ?? item.verify?.form,
         subject: item.answer.subject,
       },
     ]);
   } catch (error) {
-    return { ok: false, notes: [`maths engine could not check: ${error.message.split('\n')[0]}`] };
+    return {
+      ok: false,
+      notes: [
+        `maths engine unavailable, so the answer is not accepted: ${error.message.split('\n')[0]}`,
+      ],
+    };
   }
   return {
     ok: Boolean(result?.ok),
