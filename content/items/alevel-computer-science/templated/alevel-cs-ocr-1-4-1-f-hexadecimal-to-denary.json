@@ -1,0 +1,445 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-denary-01",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-denary",
+    "expected_seconds": 90,
+    "prompt": "What is the hexadecimal number C74 in denary?",
+    "answer": { "value": "3188" },
+    "verify": { "expression": "12 * 256 + 7 * 16 + 4 * 1" },
+    "marks": 1,
+    "hint": "The place values in hexadecimal are 256, 16 and 1; A to F are 10 to 15.",
+    "explanation": "C × 256 + 7 × 16 + 4 × 1 = 3072 + 112 + 4 = 3188.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 3,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:32Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:33:58Z",
+          "notes": "model answered \"3188\"; expected \"3188\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:33:59Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-denary-02",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-denary",
+    "expected_seconds": 90,
+    "prompt": "What is the hexadecimal number F74 in denary?",
+    "answer": { "value": "3956" },
+    "verify": { "expression": "15 * 256 + 7 * 16 + 4 * 1" },
+    "marks": 1,
+    "hint": "The place values in hexadecimal are 256, 16 and 1; A to F are 10 to 15.",
+    "explanation": "F × 256 + 7 × 16 + 4 × 1 = 3840 + 112 + 4 = 3956.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 3,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:32Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-denary-03",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-denary",
+    "expected_seconds": 90,
+    "prompt": "What is the hexadecimal number 3F3 in denary?",
+    "answer": { "value": "1011" },
+    "verify": { "expression": "3 * 256 + 15 * 16 + 3 * 1" },
+    "marks": 1,
+    "hint": "The place values in hexadecimal are 256, 16 and 1; A to F are 10 to 15.",
+    "explanation": "3 × 256 + F × 16 + 3 × 1 = 768 + 240 + 3 = 1011.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 3,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:33Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-denary-04",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-denary",
+    "expected_seconds": 90,
+    "prompt": "What is the hexadecimal number A51 in denary?",
+    "answer": { "value": "2641" },
+    "verify": { "expression": "10 * 256 + 5 * 16 + 1 * 1" },
+    "marks": 1,
+    "hint": "The place values in hexadecimal are 256, 16 and 1; A to F are 10 to 15.",
+    "explanation": "A × 256 + 5 × 16 + 1 × 1 = 2560 + 80 + 1 = 2641.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary", "version": 1, "seed": 4 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:34Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-denary-05",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-denary",
+    "expected_seconds": 90,
+    "prompt": "What is the hexadecimal number 7F7 in denary?",
+    "answer": { "value": "2039" },
+    "verify": { "expression": "7 * 256 + 15 * 16 + 7 * 1" },
+    "marks": 1,
+    "hint": "The place values in hexadecimal are 256, 16 and 1; A to F are 10 to 15.",
+    "explanation": "7 × 256 + F × 16 + 7 × 1 = 1792 + 240 + 7 = 2039.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:35Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-denary-06",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-denary",
+    "expected_seconds": 90,
+    "prompt": "What is the hexadecimal number FDE in denary?",
+    "answer": { "value": "4062" },
+    "verify": { "expression": "15 * 256 + 13 * 16 + 14 * 1" },
+    "marks": 1,
+    "hint": "The place values in hexadecimal are 256, 16 and 1; A to F are 10 to 15.",
+    "explanation": "F × 256 + D × 16 + E × 1 = 3840 + 208 + 14 = 4062.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary", "version": 1, "seed": 6 },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:36Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-denary-07",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-denary",
+    "expected_seconds": 90,
+    "prompt": "What is the hexadecimal number 2C6 in denary?",
+    "answer": { "value": "710" },
+    "verify": { "expression": "2 * 256 + 12 * 16 + 6 * 1" },
+    "marks": 1,
+    "hint": "The place values in hexadecimal are 256, 16 and 1; A to F are 10 to 15.",
+    "explanation": "2 × 256 + C × 16 + 6 × 1 = 512 + 192 + 6 = 710.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary", "version": 1, "seed": 7 },
+    "verification": {
+      "status": "draft",
+      "version": 3,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary v1",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-cs-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:45:00Z",
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:33:37Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

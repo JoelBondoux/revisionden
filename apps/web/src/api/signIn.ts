@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { defaultBaseUrl } from './ApiContext';
 import { apiRequest, type ClientOptions } from './client';
 import type { SignInProvider } from './signInProviders';
+import { forgetLastProblem } from '../features/feedback/details';
 
 const SocialSignInResponseSchema = z.object({ url: z.string().url() });
 const SessionSchema = z
@@ -43,6 +44,7 @@ export async function startSignIn(
 
 /** Ends the parent's session (`POST /api/auth/sign-out`). */
 export async function signOut(options: ClientOptions = browserOptions()): Promise<void> {
+  forgetLastProblem(); // F18: the next person on this device never sends this one's code
   await apiRequest(options, 'api/auth/sign-out', z.unknown(), {
     method: 'POST',
     body: '{}',
