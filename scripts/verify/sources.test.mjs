@@ -29,6 +29,8 @@ test('allows only the official exam board and government hosts over https', () =
   assert.ok(ALLOWED_HOSTS.includes('www.aqa.org.uk'));
   assert.equal(isAllowedSource('https://www.ocr.org.uk/a.pdf'), true);
   assert.equal(isAllowedSource('https://assets.publishing.service.gov.uk/x.pdf'), true);
+  assert.equal(isAllowedSource('https://www.legislation.gov.uk/ukpga/1985/72/schedule/1'), true);
+  assert.equal(isAllowedSource('https://legislation.gov.uk.example.com/x'), false);
   assert.equal(isAllowedSource('http://www.aqa.org.uk/a.pdf'), false);
   assert.equal(isAllowedSource('https://www.revision-site.example/a'), false);
   assert.equal(isAllowedSource('https://aqa.org.uk.evil.example/a'), false);

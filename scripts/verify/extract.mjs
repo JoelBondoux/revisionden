@@ -1,4 +1,5 @@
 // Extracts plain text from a source document: one string per page for PDFs, one for web pages.
+import { HEADING } from './normalise.mjs';
 
 const PDF_MAGIC = [0x25, 0x50, 0x44, 0x46, 0x2d]; // "%PDF-"
 
@@ -13,11 +14,15 @@ const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: '\u00
 const BLOCKS =
   /<\/?(p|div|br|li|ul|ol|tr|td|th|table|h[1-6]|section|article|header|footer|main|nav|dd|dt|dl|blockquote|pre|hr)\b[^>]*>/gi;
 
-/** Plain text of an HTML page: drops scripts, styles, comments and tags; decodes entities. */
+/**
+ * Plain text of an HTML page: drops scripts, styles, comments and tags; decodes entities. Each
+ * heading (h1 to h6) starts with HEADING, so headings can be told from running text.
+ */
 export function htmlToText(html) {
   return html
     .replace(/<!--[\s\S]*?-->/g, ' ')
     .replace(/<(script|style|noscript|template)\b[\s\S]*?<\/\1>/gi, ' ')
+    .replace(/<h[1-6]\b[^>]*>/gi, `\n${HEADING}`)
     .replace(BLOCKS, '\n')
     .replace(/<[^>]+>/g, '')
     .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))

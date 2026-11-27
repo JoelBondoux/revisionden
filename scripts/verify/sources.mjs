@@ -16,6 +16,8 @@ export const ALLOWED_HOSTS = [
   'www.wjec.co.uk',
   'www.gov.uk',
   'assets.publishing.service.gov.uk',
+  // UK legislation, for unit definitions only (lead's ruling for S4, 2026-11-27).
+  'www.legislation.gov.uk',
 ];
 
 export const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
