@@ -73,3 +73,39 @@ test('the painted sweep only reports on pull requests for now; nightly and the s
   assert.match(painted, /if: steps\.sweep\.outcome == 'failure'/);
   assert.match(painted, /GITHUB_STEP_SUMMARY/);
 });
+
+test('the nightly painted sweep covers every variant, sharded wider; other runs are standard only (W21b)', () => {
+  // Nightly, or a pull request labelled contrast-variants: colour-blind palette and each reading
+  // tint, on 12 shards. Style pull requests and the staging gate: standard palette, on 4.
+  const full =
+    "(github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants'))";
+  assert.match(painted, /schedule:/);
+  assert.ok(painted.includes(`CONTRAST_VARIANTS: \${{ ${full} && '1' || '' }}`), 'variants');
+  assert.ok(
+    painted.includes(
+      `fromJSON(${full} && '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]' || '[1, 2, 3, 4]')`,
+    ),
+    '12 shards',
+  );
+  assert.ok(
+    painted.includes(`--shard=\${{ matrix.shard }}/\${{ ${full} && 12 || 4 }}`),
+    'the shard count matches',
+  );
+  assert.match(painted, /types: \[opened, synchronize, reopened, labeled\]/);
+  assert.match(painted, /workflow_call:/);
+  assert.match(painted, /CONTRAST_SWEEP: '1'/);
+});
+
+test('the painted sweep prints what CI found, so the known list is made from CI (W21b)', () => {
+  assert.match(painted, /CONTRAST_RECORD: '1'/);
+  assert.match(painted, /echo "CONTRAST-RESULT \$\(basename "\$f"\)"/);
+  assert.match(painted, /echo "CONTRAST-END"/);
+  // A change to the sweep itself runs it too.
+  for (const path of [
+    'e2e/tests/contrast-sweep.spec.ts',
+    'e2e/tests/contrast-known.json',
+    'e2e/tests/support/painted.ts',
+    '.github/workflows/contrast-painted.yml',
+  ])
+    assert.ok(painted.includes(`- '${path}'`), `runs on changes to ${path}`);
+});

@@ -165,22 +165,32 @@ only the parent's side is checked).
 ## 7. Contrast sweep
 
 `e2e/tests/contrast-sweep.spec.ts` checks every screen in `apps/web/src/routes.tsx` and the main
-dialogs in all 10 looks, light and dark, with reading tints off (decision 0012). The phone runs
-every look; the desktop runs the default look. Data comes from the web app's own mock handlers
+dialogs in all 10 looks, light and dark, in each colour choice a family can make: the standard
+and colour-blind palettes and each reading tint (decision 0012, W21b). The phone runs every look;
+the desktop runs the default look. Pupil, parent and staff screens are seeded with made-up data;
+public screens are seen signed out. A second guard fails if the app gains a palette or tint the
+sweep does not cover. Data comes from the web app's own mock handlers
 (`e2e/tests/support/seed.ts` answers each call with `apps/web/src/features/*/mocks.ts`).
 
 - **Route guard:** a route in `routes.tsx` or `LESSON_PATHS` with no row in the sweep's table
   fails the first test. Add a row (or a skip with a reason, such as a redirect).
-- **Tier 1, every pull request** (the `contrast` job in `.github/workflows/e2e.yml`, about a minute): computed
+- **Tier 1, every pull request** (the `contrast` job in `.github/workflows/e2e.yml`, every
+  variant, about four minutes): computed
   styles only. Text 4.5:1 (3:1 when large) against the nearest opaque background, and buttons,
   inputs, switches and tabs 3:1 by fill or border. Text over page art, gradients or shadows is
   left to tier 2. Helper: `e2e/tests/support/contrastStyles.ts`.
 - **Tier 2, painted** (`CONTRAST_SWEEP=1`; `.github/workflows/contrast-painted.yml`): text in
-  every box (down the whole page, a screen at a time), UI parts' edges and the first three focus
-  rings, measured on screenshots in two
-  passes (a finding counts only when both passes see it, so a ring caught mid-animation cannot
-  flake the run). Text too faint to sample is a failure, not a skip (decision 0012). Nightly,
-  on demand, on pull requests that touch looks or design CSS, and before staging. Helpers:
+  every box (down the whole page, a screen at a time to the end, with no cap), UI parts' edges
+  and the first three focus rings, measured on screenshots. At each scroll stop only what is
+  fully on show is measured: a line cut by the edge of the screen, or a part under the bottom nav
+  or a header, waits for a stop where it shows in full (stops overlap by a fifth of a screen).
+  Each row records the stop it was read at (`@ 640`). Focus rings are read twice (a ring counts as failing only when
+  both readings fail it, so one caught mid-animation cannot flake the run). When the focused
+  control is itself invisible (an answer's hidden radio), the ring is looked for around its label.
+  Text too faint to sample is a failure, not a skip (decision 0012). Nightly with every variant
+  (`CONTRAST_VARIANTS=1`, 12 shards; also on a pull request labelled `contrast-variants`), and
+  with the standard palette on demand, on pull requests
+  that touch looks or design CSS, and before staging (4 shards). Helpers:
   `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
   `e2e/tests/support/painted.ts`.
 - **Report-only on pull requests, for now** (W21c, decision 0012): a pull request's tier 2 run
@@ -193,7 +203,12 @@ every look; the desktop runs the default look. Data comes from the web app's own
 - **Known failures:** `e2e/tests/contrast-known.json`. A test fails on anything new and on a
   listed failure that is now fixed, so a fix removes its lines in the same change. To refresh the
   list after a fix: run the sweep with `CONTRAST_UPDATE=1` (add `CONTRAST_SWEEP=1` for tier 2),
-  then `node e2e/scripts/contrast-known.mjs`.
+  then `node e2e/scripts/contrast-known.mjs`. **Tier 2's list is made from CI, not locally**:
+  a developer's machine draws text a little differently. Every CI run prints what each test
+  found (`CONTRAST_RECORD=1`) between `CONTRAST-RESULT` and `CONTRAST-END` in its job log; save
+  each shard's log, then `node e2e/scripts/contrast-from-log.mjs shard1.log …` and
+  `node e2e/scripts/contrast-known.mjs`. Tier 1 reads styles, not pixels, so it can be refreshed
+  locally.
 
 ```bash
 pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts --project=phone --project=desktop --grep @contrast --grep-invert @contrast-painted

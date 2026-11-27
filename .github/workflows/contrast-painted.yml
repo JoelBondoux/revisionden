@@ -9,6 +9,10 @@ name: Contrast sweep (tier 2, painted)
 # the known list was made on a machine that draws text a little differently from CI. Nightly and
 # the staging gate still fail on new rows. Temporary, until the list is made from a CI run
 # (decision 0012). Tier 1 (e2e.yml) stays blocking.
+# W21b (lead ruling): nightly also sweeps the colour-blind palette and each reading tint, on 12
+# shards to finish in about 20 minutes, as does a pull request labelled contrast-variants (to
+# make or check those rows from CI); style pull requests and the staging gate keep the standard
+# palette, light and dark, on 4.
 on:
   schedule:
     - cron: '17 2 * * *'
@@ -21,10 +25,18 @@ on:
         default: true
   pull_request:
     branches: [dev, staging, main]
+    # labeled: adding contrast-variants runs the full variant sweep on that pull request.
+    types: [opened, synchronize, reopened, labeled]
     paths:
       - 'apps/web/src/features/juice/styles/**'
       - 'apps/web/src/design/**'
       - 'apps/web/src/features/learn/learn.css'
+      # The sweep itself (W21b).
+      - 'e2e/tests/contrast-sweep.spec.ts'
+      - 'e2e/tests/contrast-known.json'
+      - 'e2e/tests/support/painted.ts'
+      - 'e2e/tests/support/contrastFilter.ts'
+      - '.github/workflows/contrast-painted.yml'
 
 permissions:
   contents: read
@@ -35,13 +47,13 @@ concurrency:
 
 jobs:
   tier2:
-    name: Contrast tier 2 (shard ${{ matrix.shard }}/4)
+    name: Contrast tier 2 (shard ${{ matrix.shard }}/${{ (github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && 12 || 4 }})
     runs-on: ubuntu-latest
     timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: ${{ fromJSON((github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]' || '[1, 2, 3, 4]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -62,9 +74,12 @@ jobs:
         shell: bash
         env:
           CONTRAST_SWEEP: '1'
+          # Also write what each test found, for the step below to print (W21b).
+          CONTRAST_RECORD: '1'
+          CONTRAST_VARIANTS: ${{ (github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && '1' || '' }}
         run: >-
           pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts
-          --project=phone --project=desktop --grep @contrast-painted --shard=${{ matrix.shard }}/4 --trace off
+          --project=phone --project=desktop --grep @contrast-painted --shard=${{ matrix.shard }}/${{ (github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && 12 || 4 }} --trace off
           2>&1 | tee sweep.log
       - name: List new and fixed rows
         if: steps.sweep.outcome == 'failure'
@@ -81,6 +96,19 @@ jobs:
                  /^ *\+ +"/ { sub(/^ *\+ +/, ""); print kind " " $0 }' sweep.log | sort -u
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
+      # What CI found, test by test, so the known list is made from CI rather than a
+      # developer's machine: save the logs, then e2e/scripts/contrast-from-log.mjs (W21b).
+      - name: Print what was found
+        if: always()
+        shell: bash
+        run: |
+          for f in e2e/test-results/contrast/*.json; do
+            [ -e "$f" ] || continue
+            echo "CONTRAST-RESULT $(basename "$f")"
+            cat "$f"
+            echo
+            echo "CONTRAST-END"
+          done
       - name: Keep the report when something fails
         if: steps.sweep.outcome == 'failure'
         uses: actions/upload-artifact@v4

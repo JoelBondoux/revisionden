@@ -6,7 +6,26 @@
     "no visible focus ring": "Focusing the control changed nothing visible around it or its label (WCAG 2.4.7).",
     "focus ring (N)": "The ring is visible but contrasts N:1 with what is behind it; 3:1 is needed (WCAG 1.4.11)."
   },
-  "tier1": {},
+  "tier1": {
+    "pop-burst+colourblind|dark|/parent/friends/:studentId|ui|input.input (field)|Private label for Wren_#": 2.41,
+    "pop-burst+colourblind|dark|/parent/reminders/:studentId|ui|div.field > input (field)|Quiet from": 2.41,
+    "pop-burst+colourblind|dark|/parent/reminders/:studentId|ui|div.field > input (field)|Quiet until": 2.41,
+    "pop-burst+colourblind|dark|/parent/reminders/:studentId|ui|div.field > input (field)|School day ends": 2.41,
+    "pop-burst+colourblind|dark|/parent/reminders/:studentId|ui|div.field > input (field)|School day starts": 2.41,
+    "pop-burst+colourblind|dark|/parent/reminders/:studentId|ui|div.field > input (field)|Session reminder at": 2.41,
+    "pop-burst+colourblind|dark|/parent/reminders/:studentId|ui|div.field > input (field)|Streak reminder at": 2.41,
+    "pop-burst+colourblind|dark|/parent/stats|ui|label.field > input (field)|Other days (minutes)": 2.41,
+    "pop-burst+colourblind|dark|/parent/stats|ui|label.field > input (field)|School days (minutes)": 2.41,
+    "pop-burst|dark|/parent/friends/:studentId|ui|input.input (field)|Private label for Wren_#": 2.41,
+    "pop-burst|dark|/parent/reminders/:studentId|ui|div.field > input (field)|Quiet from": 2.41,
+    "pop-burst|dark|/parent/reminders/:studentId|ui|div.field > input (field)|Quiet until": 2.41,
+    "pop-burst|dark|/parent/reminders/:studentId|ui|div.field > input (field)|School day ends": 2.41,
+    "pop-burst|dark|/parent/reminders/:studentId|ui|div.field > input (field)|School day starts": 2.41,
+    "pop-burst|dark|/parent/reminders/:studentId|ui|div.field > input (field)|Session reminder at": 2.41,
+    "pop-burst|dark|/parent/reminders/:studentId|ui|div.field > input (field)|Streak reminder at": 2.41,
+    "pop-burst|dark|/parent/stats|ui|label.field > input (field)|Other days (minutes)": 2.41,
+    "pop-burst|dark|/parent/stats|ui|label.field > input (field)|School days (minutes)": 2.41
+  },
   "tier2": {
     "comic-pop|dark|/help|text|\"## or under\" has too few letter pixels to check": "text|\"25 or under\" has too few letter pixels to check",
     "comic-pop|dark|/help|text|\"For:\" has too few letter pixels to check": "text|\"For:\" has too few letter pixels to check",

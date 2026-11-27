@@ -303,7 +303,7 @@ function FriendsSheet({
                   {w.status === 'confirm' && (
                     <span className="league-check">
                       <Button
-                        aria-label={`Yes, ${w.nickname} is my friend`}
+                        aria-label={`Yes, my friend: ${w.nickname}`}
                         onClick={async () => {
                           await api.confirm(w.requestId);
                           onChanged();

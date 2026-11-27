@@ -54,7 +54,7 @@ export function ParentRewardsPanel({ api, studentId, nickname }: PanelProps) {
               {!r.givenAt && (
                 <Button
                   variant="secondary"
-                  aria-label={`Mark ${r.title} as given`}
+                  aria-label={`Mark as given: ${r.title}`}
                   onClick={act(() => api.markGiven(studentId, r.id))}
                 >
                   Mark as given

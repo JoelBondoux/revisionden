@@ -96,7 +96,10 @@ describe('Parent rewards panel', () => {
   it('marks a reward as given, then keeps it as history', async () => {
     const { api } = memoryApi([{ ...cinemaTrip, reached: true }]);
     render(<ParentRewardsPanel api={api} studentId="s1" nickname="Comet" />);
-    await userEvent.click(await screen.findByRole('button', { name: 'Mark Cinema trip as given' }));
+    // The name starts with the words on the button, so voice control can say them (WCAG 2.5.3).
+    await userEvent.click(
+      await screen.findByRole('button', { name: 'Mark as given: Cinema trip' }),
+    );
     expect(await screen.findByText('Given')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Remove Cinema trip' })).not.toBeInTheDocument();
   });
