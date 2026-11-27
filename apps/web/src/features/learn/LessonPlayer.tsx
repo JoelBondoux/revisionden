@@ -18,6 +18,7 @@ import { Card } from '../../components/Card';
 import { CloseIcon } from '../../components/icons';
 import { MathText } from '../../components/MathText';
 import { ReadAloudButton, itemSpeechText } from '../read-aloud';
+import { useServedOptionOrder } from './shuffle';
 import { LearnMore, learnLinksByTopic, learnMoreLinks } from '../learn-links';
 import {
   ArenaProgress,
@@ -250,6 +251,9 @@ export function LessonPlayer({
   // F16: a bug report names the question on screen (its content id, never its text).
   const onScreen = done ? undefined : queue[index]?.item;
   useOnScreenContent(onScreen ? (onScreen.contentId ?? onScreen.id) : undefined);
+  // F22: one option order per serve (a retry of the same item gets a fresh one), shared by the
+  // answers and read aloud so the spoken option numbers match the screen (Codex on #448).
+  const optionOrder = useServedOptionOrder(queue[index]?.item, index);
 
   if (items.length === 0) {
     return (
@@ -417,10 +421,11 @@ export function LessonPlayer({
       {comeBackNote(entry) && <p className="lesson__comeback">{comeBackNote(entry)}</p>}
       {/* The question and its answers: a calm stage each effect style keeps plain (J10a2). */}
       <div className="lesson__stage">
-        <ReadAloudButton text={itemSpeechText(item)} label="Read the question aloud" />
-        <Shake key={item.id} active={result?.correct === false}>
+        <ReadAloudButton text={itemSpeechText(item, optionOrder)} label="Read the question aloud" />
+        <Shake key={`${item.id}-${index}`} active={result?.correct === false}>
           <ItemInput
-            key={item.id}
+            key={`${item.id}-${index}`}
+            optionOrder={optionOrder}
             item={item}
             draft={draft}
             disabled={result !== null || skipped || checking}

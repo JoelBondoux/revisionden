@@ -66,12 +66,18 @@ export function mathsToSpeech(text: string): string {
     .trim();
 }
 
-/** What read aloud says for a question: the prompt, then any options or unit. */
-export function itemSpeechText(item: LearnItem): string {
+/**
+ * What read aloud says for a question: the prompt, then any options or unit. Options are read in
+ * the order shown (`order`, F22), so "Option 2" is the second one on screen.
+ */
+export function itemSpeechText(item: LearnItem, order?: readonly number[]): string {
   if (item.type === 'flashcard') return mathsToSpeech(item.front);
   const parts = [mathsToSpeech(item.prompt)];
   if (item.type === 'multiple_choice') {
-    item.options.forEach((option, i) => parts.push(`Option ${i + 1}: ${mathsToSpeech(option)}.`));
+    const shown = order?.length === item.options.length ? order : item.options.map((_, i) => i);
+    shown.forEach((index, i) =>
+      parts.push(`Option ${i + 1}: ${mathsToSpeech(item.options[index]!)}.`),
+    );
   }
   if (item.type === 'numeric' && item.unit) parts.push(`Answer in ${mathsToSpeech(item.unit)}.`);
   if (item.type === 'area_model') {

@@ -60,6 +60,8 @@ interface ItemInputProps {
   onSelfCheck?: (knewIt: boolean) => void;
   /** After marking (Learn mode only): how each multiple choice option looks, and any effect in it. */
   optionMark?: (index: number) => OptionMark;
+  /** F22: the serve's option order, when the page shares it (with read aloud). */
+  optionOrder?: number[];
 }
 
 export interface OptionMark {
@@ -214,10 +216,12 @@ function MultipleChoiceInput({
   disabled,
   onChange,
   optionMark,
+  optionOrder,
 }: Omit<ItemInputProps, 'item' | 'onSelfCheck'> & {
   item: Extract<LearnItem, { type: 'multiple_choice' }>;
 }) {
-  const order = useOptionOrder(item.options);
+  const ownOrder = useOptionOrder(item.options);
+  const order = optionOrder?.length === item.options.length ? optionOrder : ownOrder;
   return (
     <fieldset className="question">
       <legend className="question__prompt">
@@ -259,6 +263,7 @@ export function ItemInput({
   onChange,
   onSelfCheck,
   optionMark,
+  optionOrder,
 }: ItemInputProps) {
   const text = typeof draft === 'string' ? draft : '';
   const working = useRef<HTMLTextAreaElement>(null);
@@ -271,6 +276,7 @@ export function ItemInput({
           disabled={disabled}
           onChange={onChange}
           optionMark={optionMark}
+          optionOrder={optionOrder}
         />
       );
     case 'flashcard':
