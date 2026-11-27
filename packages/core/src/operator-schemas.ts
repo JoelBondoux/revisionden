@@ -232,6 +232,8 @@ export const OperatorTicketStatusBodySchema = z
   .object({ status: z.enum(['new', 'looking_into_it', 'fixed', 'will_not_fix']) })
   .strict();
 export const OperatorDuplicateBodySchema = z.object({ duplicateOf: uuid }).strict();
+/** L13: marks a student as a tester account (or not). Only the operator console sets it. */
+export const OperatorTesterBodySchema = z.object({ tester: z.boolean() }).strict();
 
 /** O3b: an export or deletion request a family sent by email. */
 export const OperatorDataRequestSchema = z

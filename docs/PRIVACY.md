@@ -100,7 +100,7 @@ text and never a student's own card; how the screen looked: the look (effect sty
 screen's pixel density, pinch zoom and the text size against 16px). Settings and sizes only. Never the
 reading tint, the dyslexia-friendly font or the colour-blind colours (or other reading or motion
 settings), which could hint at a health condition (L ruling, notice 1.11). Never IP, location or contacts. The interactive lesson pilot's one-tap "Did this help?" (W8) stores only Yes or No
-and the lesson item, never text. Deleted 12 months after closing. Policy confirmations store only the policy, version and
+and the lesson item, never text. Deleted 12 months after closing. The bug button rest (L13) keeps only two dates on the student: when it was last switched back on and, if it was removed, when; both go with the student. Policy confirmations store only the policy, version and
 date per parent sign-in.
 
 ## Error reports
@@ -134,8 +134,19 @@ date per parent sign-in.
 - A student's "Ask a parent to raise something" request (topic, optional note ≤300 with no
   email or phone number) is shown to the student's parents only, never to AppDeck; deleted when a
   parent acts on it, with the student, or after 90 days; in the family export.
+- The lead's triage token (L14): a scoped machine credential, not a person's sign-in. Only its
+  SHA-256 is stored, as the Worker secret `TRIAGE_TOKEN_HASH` (never in the repository or chat).
+  It opens only `GET /v1/triage/tickets` and `GET /v1/triage/tickets/{id}` (id, kind, sender role, text, item, content id, device
+  details, status, outcome, tester flag and time; never names, emails, nicknames or family ids)
+  and confirm, duplicate and Not a bug on a ticket. Every call is audited as `triage-bot`: each
+  list read as `tickets.list` (how many came back and what was asked, never ticket text), each
+  ticket read as `ticket.read` against its family, and each change with a required reason (at
+  most 300 characters). The list returns at most 200 tickets a page, newest first, with
+  `nextBefore` for older ones; `status=unreviewed` leaves out reviewed tickets. Off in production: sending feedback text to the
+  lead's AI session there needs privacy notice 9.3 and the processors list updated first
+  (`project_memory/operations/contradictions.md`).
 - Every operator read of a family and every action is recorded (`operator_audit_log`: operator
-  email and role, action, target id, time; no content), kept 2 years.
+  email and role, action, target id, time, and for triage its reason; no content), kept 2 years.
 
 ## Own flashcards
 

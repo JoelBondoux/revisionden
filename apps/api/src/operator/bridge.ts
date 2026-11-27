@@ -210,6 +210,8 @@ export async function audit(
     targetType?: string;
     targetId?: string;
     outcome?: 'ok' | 'denied';
+    /** L14: the reason the lead's triage gave. */
+    reason?: string;
   },
   /** The request's time; the database clock when not given. */
   now?: Date,
@@ -222,6 +224,7 @@ export async function audit(
     targetId: entry.targetId ?? null,
     requestId: operator.requestId,
     outcome: entry.outcome ?? 'ok',
+    reason: entry.reason ?? null,
     ...(now ? { createdAt: now } : {}),
   });
 }

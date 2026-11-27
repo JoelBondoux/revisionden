@@ -993,10 +993,21 @@ Tags: #product #rules #limits #defaults
 
 ## Bug Hunter and secret achievements (planned)
 
-- Bug icon on every screen opens the bug report sheet (student app: in the top row beside Get help and sound; parent screens, `/parent…` and `/family…`: a top row of its own; other focused and public screens: a corner button, with room below the page). A student's bug confirmed by the operator:
+- Bug icon on every screen opens the bug report sheet (student app: in the top row beside Get help and sound; parent screens, `/parent…` and `/family…`: a top row of its own; other focused and public screens: a corner button, with room below the page). A student's bug confirmed by the lead's triage, or by the operator:
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
+- Lead's triage (L14; owner ruling 2026-11-27): a scoped triage token (Worker secret `TRIAGE_TOKEN_HASH`, its SHA-256 only) lets the lead confirm, mark duplicate or Not a bug at `/v1/triage` with a reason (≤300), audited as `triage-bot` (list reads too, as `tickets.list` with the count and query, and single reads as `ticket.read`; pages of up to 200 with `nextBefore`; `status=unreviewed`); same rules as the operator. The operator can undo a triage outcome within 7 days (`TRIAGE_UNDO_DAYS`); undoing a Not a bug lifts a saved removal only if it came at or before the removal. Off in production until the owner approves.
+- Bug button rest (L13): the operator can mark a student's bug report Not a bug (no reward,
+  closed). 3 within 14 days rest the bug button for 7 days; the 3rd rest within 90 days removes
+  it until a parent (Parent home) or the operator switches it back on. Server-enforced; numbers in
+  `packages/core/src/bug-button.ts`. Never hides Get help or Ask a parent. A removal is saved on
+  the student (`students.bug_button_removed_at`), so the 12-month feedback clean-up never brings the
+  button back; only a switch-on clears it. The student's app asks again on focus, on each page
+  change and when a rest ends, so a switch-on shows without a reload.
+- Tester accounts (L13, owner 2026-11-27): the operator console can flag a student as a tester
+  (the adults testing on dev share one pupil test account). Their confirmed bugs earn no XP or Bug
+  Hunter step, and their Not-a-bug outcomes never rest the button. Reports show a "Tester" tag.
 - Built (L7): the bug button and confirm flow; rules in `packages/core/src/bug-hunter.ts`
   (`bugReward`). The week is Monday to Sunday, UK time, and the 3-a-week cap counts full and
   duplicate rewards; past the cap the student is thanked with no XP and no track step. Bug XP is

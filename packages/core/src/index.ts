@@ -33,6 +33,7 @@ export * from './daily-limit';
 export * from './daily-limit-schemas';
 export * from './secret-stats';
 export * from './bug-hunter';
+export * from './bug-button';
 export * from './recall';
 export * from './flashcard-session';
 export * from './target-grades';

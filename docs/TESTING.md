@@ -96,7 +96,9 @@ check to require in branch protection. Another check that needs the built app ca
 `e2e.yml` with `needs: build` and download `web-dist` rather than building again. The contrast
 sweep does this (W21, section 7): its tier 1 tests are tagged `@contrast`, the shards skip them
 (`--grep-invert @contrast`), the `contrast` job runs them once, and **End-to-end result** needs it
-too. Tier 2 (`@contrast-painted`) has its own workflow, `contrast-painted.yml`.
+too. Tier 2 (`@contrast-painted`) has its own workflow, `contrast-painted.yml`. Before each
+`playwright install --with-deps` the jobs delete the runner image's `packages.microsoft.com` apt
+source, which is no longer signed on ubuntu-26.04 and can fail `apt-get update` (G12).
 Every axe check goes through `axeWhenSettled(page)` (`e2e/tests/support/axe.ts`): it waits for
 finite animations to finish first, because axe measures colours as drawn and a button still fading
 in reads as low contrast. The rules stay WCAG 2.2 A/AA (or what the check passes in `configure`).

@@ -61,6 +61,7 @@ import { adminErrorReportRoutes, errorReportRoutes } from './feedback/error-repo
 import type { StatsAdapters } from './stats/adapters';
 import { parentComplaintRoutes, studentComplaintRequestRoutes } from './complaints/routes';
 import { OPERATOR_BASE_PATH, operatorRoutes } from './operator/routes';
+import { triageRoutes } from './feedback/triage';
 import { parentProgrammeRoutes } from './operator/tags';
 import { createMemoryRateLimiter } from './rate-limit';
 
@@ -229,6 +230,8 @@ export function createApp(deps: AppDeps) {
   );
 
   app.route('/v1/error-reports', errorReportRoutes(deps));
+  // L14: the lead's triage token (scoped machine credential); 404 when no token hash is set.
+  app.route('/v1/triage', triageRoutes(deps));
   // Operator bridge (AppDeck): signed requests only; 404 when no shared secret is set.
   app.route(
     OPERATOR_BASE_PATH,

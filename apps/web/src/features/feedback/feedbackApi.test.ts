@@ -174,4 +174,42 @@ describe('feedback API client', () => {
     await api.markRewardsSeen(['f1']);
     expect(seen).toEqual({ ids: ['f1'] });
   });
+
+  it('reads and switches on the bug button, and marks a report Not a bug (L13)', async () => {
+    const seen: string[] = [];
+    server.use(
+      http.get('*/v1/student/bug-button', () =>
+        HttpResponse.json({ state: 'paused', until: '2026-12-08T10:00:00.000Z' }),
+      ),
+      http.get('*/v1/students/:id/bug-button', ({ params }) => {
+        seen.push(`get ${String(params.id)}`);
+        return HttpResponse.json({ state: 'removed' });
+      }),
+      http.post('*/v1/students/:id/bug-button/on', ({ params }) => {
+        seen.push(`on ${String(params.id)}`);
+        return HttpResponse.json({ state: 'on' });
+      }),
+      http.post('*/v1/admin/feedback/:id/not-a-bug', ({ params }) =>
+        HttpResponse.json({
+          item: {
+            id: params.id,
+            kind: 'bug',
+            text: null,
+            status: 'will_not_fix',
+            senderRole: 'student',
+            createdAt: '2026-11-25T09:00:00.000Z',
+            updatedAt: '2026-11-25T09:00:00.000Z',
+            outcome: 'not_a_bug',
+            rewardXp: 0,
+            device: null,
+          },
+        }),
+      ),
+    );
+    expect(await api.bugButton()).toEqual({ state: 'paused', until: '2026-12-08T10:00:00.000Z' });
+    expect(await api.childBugButton('kid-1')).toEqual({ state: 'removed' });
+    expect(await api.switchChildBugButtonOn('kid-1')).toEqual({ state: 'on' });
+    expect(seen).toEqual(['get kid-1', 'on kid-1']);
+    expect(await api.markNotABug('f1')).toMatchObject({ id: 'f1', outcome: 'not_a_bug' });
+  });
 });

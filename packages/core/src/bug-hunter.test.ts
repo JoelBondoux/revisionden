@@ -37,4 +37,17 @@ describe('bugReward', () => {
       message: 'Thank you for reporting this bug.',
     });
   });
+
+  it('records a tester account report as helped, with no XP and no track step (L13)', () => {
+    expect(
+      bugReward({ senderRole: 'student', duplicate: false, rewardsThisWeek: 0, tester: true }),
+    ).toEqual({
+      xp: 0,
+      trackStep: false,
+      message: 'Thanks, tester! This bug is confirmed (tester accounts earn no rewards).',
+    });
+    expect(
+      bugReward({ senderRole: 'student', duplicate: true, rewardsThisWeek: 0, tester: true }).xp,
+    ).toBe(0);
+  });
 });

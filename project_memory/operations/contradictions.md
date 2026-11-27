@@ -5,6 +5,14 @@
 
 ## Open
 
+- [ ] **Lead's triage (L14) sends feedback text to an AI session, but privacy notice 9.3 says
+      feedback is never sent automatically to any other service.** `docs/legal/privacy-notice.md`
+      9.3 (and the processors list) against `apps/api/src/feedback/triage.ts`. Not settled: the
+      routes are off in production in code (`apps/api/src/env.ts`), and turning them on there needs
+      a privacy-notice change (version bump and parent re-prompt) and the AI provider named as a
+      processor for feedback, both signed off by the owner (and solicitor). Dev and staging hold
+      only made-up or adult-tester reports.
+
 - [ ] **Contrast sweep known failures (decision 0012).** The contrast sweep
       (`e2e/tests/contrast-sweep.spec.ts`) finds text and UI parts below WCAG AA in some looks and
       modes. Each one is listed in `e2e/tests/contrast-known.json` (tier 1 from computed styles, tier
@@ -35,7 +43,10 @@
       off privacy notice 1.11 and young people's 1.8, and the parent re-prompt, on 2026-11-27 (via
       lead), with the exclusions above. If the
       solicitor says high contrast is also too revealing, F drops it and the notice changes again.
-      Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.12 and 1.9
+      The owner also signed off privacy notice 1.12 (9.5, the bug button rest) and young people's
+      1.9, the parent re-prompt and the rest numbers (3 in 14 days, 7-day rest, removal at the 3rd
+      rest in 90 days) on 2026-11-27 (via lead), for L13 (#409).
+      Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.13 and 1.10
       when it lands.
 
 - [x] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test

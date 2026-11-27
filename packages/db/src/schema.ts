@@ -210,6 +210,15 @@ export const students = pgTable(
     leagueHidden: boolean('league_hidden').notNull().default(false),
     // Weekly league wins so far (FL PR 3); lasts after league_weeks rows are cleared.
     leagueWins: integer('league_wins').notNull().default(0),
+    // Bug button rest (L13, packages/core bugButtonState): when a parent or the operator last
+    // switched the bug button back on. Not-a-bug outcomes before it no longer count.
+    bugButtonResetAt: timestamp('bug_button_reset_at', { withTimezone: true }),
+    // L13: when the bug button was removed (the third rest in 90 days). Kept on the student, so
+    // the 12-month feedback clean-up never brings it back; only a switch-on after it counts.
+    bugButtonRemovedAt: timestamp('bug_button_removed_at', { withTimezone: true }),
+    // L13: a tester account (an adult testing the app), set only in the operator console. Its bug
+    // reports earn no XP or Bug Hunter steps, and Not-a-bug outcomes never rest its bug button.
+    tester: boolean('tester').notNull().default(false),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -1171,6 +1180,7 @@ export const FEEDBACK_KINDS = [
 ] as const;
 export const LESSON_FEEDBACK_KINDS = ['lesson_helped', 'lesson_not_helped'] as const;
 export const FEEDBACK_STATUSES = ['new', 'looking_into_it', 'fixed', 'will_not_fix'] as const;
+export const FEEDBACK_OUTCOMES = ['confirmed', 'duplicate', 'not_a_bug'] as const;
 export const FEEDBACK_MAX_TEXT = 500;
 
 /** Device details a sender may include: never IP address, location or contacts. */
@@ -1180,6 +1190,15 @@ export interface FeedbackDevice {
   browserFamily?: string;
   screenSize?: string;
   online?: boolean;
+  /** E8, F16: short codes and settings only, never free text (see the feedback route schema). */
+  lastProblem?: string;
+  contentId?: string;
+  look?: string;
+  theme?: string;
+  pattern?: string;
+  pixelRatio?: number;
+  zoom?: number;
+  textScale?: number;
 }
 
 export const feedback = pgTable(
@@ -1209,7 +1228,8 @@ export const feedback = pgTable(
     // Bug Hunter (L7): the operator confirms a bug report, or marks it a duplicate of an earlier
     // confirmed one. reward_xp and track_step record what the student earned (packages/core
     // bugReward); reward_seen_at is set once the student has seen the thank-you in the app.
-    outcome: text('outcome', { enum: ['confirmed', 'duplicate'] }),
+    // L13: or marks it Not a bug (no reward); not_a_bug_at feeds the bug button rest.
+    outcome: text('outcome', { enum: FEEDBACK_OUTCOMES }),
     duplicateOf: uuid('duplicate_of').references((): AnyPgColumn => feedback.id, {
       onDelete: 'set null',
     }),
@@ -1217,6 +1237,10 @@ export const feedback = pgTable(
     trackStep: boolean('track_step').notNull().default(false),
     confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
     rewardSeenAt: timestamp('reward_seen_at', { withTimezone: true }),
+    notABugAt: timestamp('not_a_bug_at', { withTimezone: true }),
+    // L14: who set the outcome, the operator or the lead's triage (token); a triage outcome can be
+    // undone in the operator console within 7 days.
+    reviewedBy: text('reviewed_by', { enum: ['operator', 'triage'] }),
   },
   (t) => [
     index('feedback_family_id_idx').on(t.familyId),
@@ -1236,7 +1260,9 @@ export const feedback = pgTable(
       sql`${t.status} in ('new', 'looking_into_it', 'fixed', 'will_not_fix')`,
     ),
     check('feedback_text_length', sql`char_length(${t.text}) <= 500`),
-    check('feedback_outcome_values', sql`${t.outcome} in ('confirmed', 'duplicate')`),
+    check('feedback_outcome_values', sql`${t.outcome} in ('confirmed', 'duplicate', 'not_a_bug')`),
+    index('feedback_student_not_a_bug_idx').on(t.studentId, t.notABugAt),
+    check('feedback_reviewed_by_values', sql`${t.reviewedBy} in ('operator', 'triage')`),
     index('feedback_student_confirmed_idx').on(t.studentId, t.confirmedAt),
     // One "Did this help?" tap per student and item (W8b): a second tap updates the first. The
     // route's ON CONFLICT repeats this WHERE exactly, so Postgres can use the partial index.
@@ -1356,6 +1382,8 @@ export const operatorAuditLog = pgTable(
     targetId: text('target_id'),
     requestId: text('request_id').notNull(),
     outcome: text('outcome', { enum: OPERATOR_AUDIT_OUTCOMES }).notNull(),
+    // L14: the reason the lead's triage gave (actor `triage-bot`); null for console actions.
+    reason: text('reason'),
     createdAt: createdAt(),
   },
   (t) => [
@@ -1363,6 +1391,7 @@ export const operatorAuditLog = pgTable(
     index('operator_audit_log_target_idx').on(t.targetType, t.targetId),
     check('operator_audit_log_role_values', sql`${t.operatorRole} in ('agent', 'manager')`),
     check('operator_audit_log_outcome_values', sql`${t.outcome} in ('ok', 'denied')`),
+    check('operator_audit_log_reason_length', sql`char_length(${t.reason}) <= 300`),
   ],
 );
 

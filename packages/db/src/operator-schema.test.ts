@@ -58,6 +58,8 @@ describe('operator_audit_log table (workstream O)', () => {
       'operator_email',
       'operator_role',
       'outcome',
+      // L14: the triage reason (at most 300 characters); never content.
+      'reason',
       'request_id',
       'target_id',
       'target_type',

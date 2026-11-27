@@ -15,6 +15,7 @@ import {
 } from '../components/icons';
 import { ButtonTile, ButtonTiles, LinkButton } from '../components/links';
 import { useBugButton } from '../features/feedback/bugButtonContext';
+import { BugButtonRestNote } from '../features/feedback/BugButtonRest';
 import { DeviceReminders } from '../features/notifications';
 import { AppearanceSettingsCard } from '../features/appearance';
 import { EffectStyleCard } from '../features/juice/styles';
@@ -110,6 +111,7 @@ export function MoreSettingsPage() {
         <p className="secondary-text">
           The small bug in the corner opens a bug report. Saved on this device.
         </p>
+        <BugButtonRestNote />
       </Card>
       <Card title="Parents">
         <ButtonTiles>

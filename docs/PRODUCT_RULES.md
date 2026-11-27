@@ -789,7 +789,7 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   questions. It opens the bug report
   sheet straight away, with the current screen filled in. Students can turn the icon off in
   Settings.
-- When the operator confirms a student's bug, the student is told in the app and earns the Bug
+- When the lead's triage, or the operator, confirms a student's bug, the student is told in the app and earns the Bug
   Hunter rewards in `REWARDS.md`.
 - Operator triage (`/admin/feedback`) has **Confirm bug** and **Duplicate of…** (an earlier
   confirmed report) for bug reports. Each report can be confirmed once. Rules:
@@ -798,6 +798,30 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   student sees the thank-you once (a toast on their next visit). Bug XP counts towards total XP,
   not the daily goal or streak. The button's on/off setting is per device
   (`revisionden.bugButton`). Built in L7.
+- **Lead's triage (L14).** Owner ruling, 2026-11-27: "Confirm is an automated process by you [the
+  lead] if you see a genuine issue that needs fixing." The lead confirms, marks duplicate or marks
+  Not a bug with a scoped triage token (`/v1/triage`, `docs/PRIVACY.md`) through the same code and
+  rules as the operator, giving a reason (at most 300 characters) each time. The operator can undo
+  a triage outcome for 7 days in AppDeck (`tickets/{id}/undo-triage`): the reward is taken back and
+  an undone Not a bug no longer rests the bug button. Dev and staging only until the owner approves
+  production.
+- **Bug button rest (L13, owner request 2026-11-27):** operator triage also has **Not a bug** for
+  bug reports (outcome `not_a_bug`, closed as will not fix, no reward). Only reports sent as a bug
+  and marked Not a bug count; ideas, "confusing", content reports and unreviewed reports never
+  do. 3 Not-a-bug outcomes within a rolling 14 days rest the student's bug button for 7 days from
+  the third; the 3rd rest within 90 days removes it. The outcomes behind a rest don't count
+  again. Rules and numbers: `packages/core/src/bug-button.ts`. The server enforces it
+  (`GET /v1/student/bug-button`; `POST /v1/student/feedback` with kind `bug` answers 403
+  `bug_button_resting`; other kinds still work). The app hides the icon and Settings shows a kind
+  note ("The bug button is taking a rest until …"); Settings can't switch a removed button back
+  on. Parents see a note on Parent home and can switch it back on (`POST
+/v1/students/:id/bug-button/on`); so can the operator from the ticket (AppDeck, audited). Get
+  help, Ask a parent and every safeguarding route are never hidden by this.
+- **Tester accounts (L13, owner 2026-11-27):** an operator-console flag on a student (`tester`,
+  default off, audited `student.tester`; never hard-coded). A tester's bug reports are fixed as
+  normal, but Confirm and Duplicate give no XP and no Bug Hunter step (the outcome is still
+  recorded), and their Not-a-bug outcomes never rest or remove the bug button. `/admin/feedback`
+  tags their reports "Tester".
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.) Also, from the interactive lesson
