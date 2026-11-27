@@ -180,7 +180,8 @@ every look; the desktop runs the default look. Data comes from the web app's own
   rings, measured on screenshots in two
   passes (a finding counts only when both passes see it, so a ring caught mid-animation cannot
   flake the run). Text too faint to sample is a failure, not a skip (decision 0012). Nightly,
-  on demand, on pull requests that touch looks or design CSS, and before staging. Helpers:
+  on demand, on pull requests that touch looks or design CSS, and before staging (every
+  `deploy-staging.yml` run calls it as job `contrast` and the app deploy needs it; G11). Helpers:
   `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
   `e2e/tests/support/painted.ts`.
 - **Known failures:** `e2e/tests/contrast-known.json`. A test fails on anything new and on a

@@ -112,6 +112,9 @@ Workflows: `deploy-dev.yml` (push to `dev`), `deploy-staging.yml` (push to `stag
 into it (`content:sync`; dev and staging only), deploys the API
 Worker with the version from `VERSION`, builds and deploys the web app, then checks `/health`
 (`scripts/check-deploy.mjs`). Each can also be run by hand from the Actions tab.
+`deploy-staging.yml` first runs the painted contrast sweep on the commit being deployed (job
+`contrast`, calling `contrast-painted.yml`; G11). The app deploy needs it, so a staging push with a
+new contrast failure does not deploy the app. The public website deploy does not wait for it.
 
 Why GitHub Actions and not Cloudflare Workers Builds: Workers Builds would need six build
 triggers (two Workers, three environments) set up by hand in the dashboard, because the shared
