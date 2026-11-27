@@ -76,6 +76,11 @@ jobs:
         working-directory: apps/api
         run: pnpm exec wrangler deploy --env ${{ inputs.environment }} --define "__APP_VERSION__:\"$(cat ../../VERSION)\""
 
+      # The About page reads What's new from CHANGELOG.md; fold the not-yet-released fragments
+      # (changes/unreleased, G13) into this build's copy. Nothing is committed.
+      - name: Fold changelog fragments in for the About page
+        run: node scripts/changelog.mjs assemble --keep
+
       - name: Build the web app
         env:
           VITE_ENVIRONMENT: ${{ inputs.environment == 'dev' && 'development' || inputs.environment }}

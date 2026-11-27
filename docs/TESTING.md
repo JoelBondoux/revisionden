@@ -49,6 +49,10 @@ CI fails below the gate. Raising a gate is welcome; lowering one needs a reason 
   real models are called, and it is never run in CI by default.
 - Time and randomness are injected so tests are repeatable.
 - A flaky test is a bug: fix it or delete it the same day.
+- Changelog: add a fragment, `changes/unreleased/<your-branch>.md` (`changes/README.md`), not a line
+  in `CHANGELOG.md`. `pnpm changelog:check` checks every fragment; the **Changelog fragment** check
+  on pull requests into `dev` fails without one (label `no-changelog`, or a test- or CI-only
+  change, is exempt). `scripts/changelog.test.mjs` covers the fold and the check (G13).
 - Web tests: every `findBy…` and `waitFor` waits up to 5 seconds for a screen's data and each test has 15 seconds (`apps/web/src/test-setup.ts`), so a slow CI runner does not time a test out while it is still loading. No per-file `LOAD` timeout is needed.
 
 ## 5. Running tests
