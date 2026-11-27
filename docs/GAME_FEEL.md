@@ -409,6 +409,9 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
     system's own. Icon-only buttons (bug button, map arrows, the Home cards shortcut) have a
     `--color-control-edge` edge. A dark panel inside a lesson (the prize box) sets its own light
     `--arena-text`, since lesson arena text takes the look's ink.
+  - **typing boxes (J17x part 3, W21b):** a text, number, date, time or other typing box with no
+    class of its own gets a 2px `--color-control-edge` border from `design/base.css`, inside
+    `:where()` so any page rule for its own boxes wins.
     `e2e/tests/lesson.spec.ts` holds each of these still and measures it on what is painted behind
     it (`paintedTextFailures`), in every look, light and dark.
 - **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with
