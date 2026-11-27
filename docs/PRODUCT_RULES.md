@@ -841,7 +841,13 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   never a student's own card), so the content team can find it. It also says how the screen
   looked (F16): look, light or dark, pattern, pixel density, pinch zoom and text size against
   16px (never the reading tint, dyslexia-friendly font or colour-blind colours: L ruling, notice
-  1.11), so a layout or touch bug can be reproduced. Never IP
+  1.11), so a layout or touch bug can be reproduced. If a screen showed a problem code in the last 15 minutes (F18: an error's "RD-…" from any
+  `<ErrorRef>`, or a passkey or phone sign-in code), the form shows it as its own item, "Problem
+  code: …", apart from device details (owner, 2026-11-27: "Parents auto, kids one tap"; notice
+  9.2a): a parent's report includes it unless they tap Remove; a student sees an "Include it" tick,
+  off until they tap it, and ticking it sends only `{ lastProblem }`, never the device details with
+  it. A newer code replaces it, and signing out forgets it. Sending the bug report does not send the
+  error report: that still needs the "Send error report" tap (owner, 2026-11-27). Never IP
   address, location or contacts.
 - Students can send feedback; the form tells them their parent can see it. Parents see their
   family's feedback and its status in the parent portal.
