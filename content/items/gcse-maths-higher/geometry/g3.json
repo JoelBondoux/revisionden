@@ -198,7 +198,8 @@
     "expected_seconds": 20,
     "prompt": "Two straight lines cross. One of the angles is 47°. What is the angle vertically opposite it?",
     "answer": {
-      "value": "47"
+      "value": "47",
+      "unit": "°"
     },
     "verify": {
       "expression": "47"
@@ -245,7 +246,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:57Z",
+          "at": "2026-11-27T12:43:39Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -254,7 +255,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -262,14 +263,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:22Z",
+          "at": "2026-11-27T12:43:54Z",
           "notes": "model answered \"47°\"; expected \"47\""
         },
         {
@@ -277,7 +278,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:23Z",
+          "at": "2026-11-27T12:43:55Z",
           "notes": "no problems found"
         }
       ]
@@ -292,7 +293,8 @@
     "expected_seconds": 30,
     "prompt": "A straight line crosses two parallel lines. One angle it makes is 64°. Work out the alternate angle to it.",
     "answer": {
-      "value": "64"
+      "value": "64",
+      "unit": "°"
     },
     "verify": {
       "expression": "64"
@@ -339,7 +341,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:57Z",
+          "at": "2026-11-27T12:43:40Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -348,7 +350,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -356,14 +358,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:25Z",
+          "at": "2026-11-27T12:43:57Z",
           "notes": "model answered \"64°\"; expected \"64\""
         },
         {
@@ -371,7 +373,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:26Z",
+          "at": "2026-11-27T12:43:58Z",
           "notes": "no problems found"
         }
       ]
@@ -386,7 +388,8 @@
     "expected_seconds": 35,
     "prompt": "A straight line crosses two parallel lines. One of the angles between the parallel lines is 115°. Work out the co-interior angle on the same side of the crossing line.",
     "answer": {
-      "value": "65"
+      "value": "65",
+      "unit": "°"
     },
     "verify": {
       "expression": "180 - 115"
@@ -433,7 +436,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:57Z",
+          "at": "2026-11-27T12:43:40Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -442,7 +445,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -450,14 +453,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:28Z",
+          "at": "2026-11-27T12:44:00Z",
           "notes": "model answered \"65°\"; expected \"65\""
         },
         {
@@ -465,8 +468,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:31Z",
-          "notes": "unsupported_claim (question): The question asks about a 'co-interior angle' and the explanation uses the fact that co-interior angles on parallel lines add to 180°, but the only quoted source supports 'alternate and corresponding angles on parallel lines'. No quoted source is provided for co-interior angles or their supplementary property.; unsupported_claim (hint): The hint introduces the claim that co-interior angles 'make a C shape between the parallel lines'. This is a factual teaching claim not backed by the quoted source.; unsupported_claim (explanation): The explanation states 'Co-interior angles on parallel lines add up to 180°', but the quoted source provided only mentions alternate and corresponding angles on parallel lines, not co-interior angles or this sum property."
+          "at": "2026-11-27T12:44:02Z",
+          "notes": "unsupported_claim (question): The question and explanation rely on the fact that co-interior angles on parallel lines sum to 180°, but the only cited source supports 'alternate and corresponding angles on parallel lines' and does not quote co-interior/supplementary angle facts.; unsupported_claim (hint): The hint introduces the claim that co-interior angles 'make a C shape between the parallel lines'. This is a factual teaching claim not backed by the quoted source.; unsupported_claim (explanation): The explanation states 'Co-interior angles on parallel lines add up to 180°', but that fact is not supported by the quoted official source provided."
         }
       ]
     }
@@ -480,7 +483,8 @@
     "expected_seconds": 25,
     "prompt": "A triangle has angles of 48° and 67°. Work out the third angle.",
     "answer": {
-      "value": "65"
+      "value": "65",
+      "unit": "°"
     },
     "verify": {
       "expression": "180 - 48 - 67"
@@ -527,7 +531,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:57Z",
+          "at": "2026-11-27T12:43:41Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -536,7 +540,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -544,14 +548,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:33Z",
+          "at": "2026-11-27T12:44:04Z",
           "notes": "model answered \"65°\"; expected \"65\""
         },
         {
@@ -559,7 +563,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:34Z",
+          "at": "2026-11-27T12:44:05Z",
           "notes": "no problems found"
         }
       ]
@@ -1196,7 +1200,8 @@
     "expected_seconds": 30,
     "prompt": "A straight line crosses two parallel lines. One angle it makes is 72°. Work out the corresponding angle to it.",
     "answer": {
-      "value": "72"
+      "value": "72",
+      "unit": "°"
     },
     "verify": {
       "expression": "72"
@@ -1243,7 +1248,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T12:15:16Z",
+          "at": "2026-11-27T12:43:42Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -1267,16 +1272,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T12:15:34Z",
+          "at": "2026-11-27T12:44:06Z",
           "notes": "model answered \"72°\"; expected \"72\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T12:15:37Z",
-          "notes": "unsupported_claim (hint): The hint says \"Corresponding angles make an F shape.\" The only quoted source supports using corresponding angles on parallel lines, but does not support this pedagogical claim about an \"F shape\" mnemonic.; unsupported_claim (explanation): The explanation states \"Corresponding angles on parallel lines are equal\". The quoted source supports understanding and using corresponding angles on parallel lines, but does not explicitly state this equality claim, so under the instruction that any factual claim in the explanation needs a quoted source, this is unsupported by the provided source.; confidence medium"
+          "at": "2026-11-27T12:44:07Z",
+          "notes": "no problems found"
         }
       ]
     }

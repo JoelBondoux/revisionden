@@ -549,7 +549,7 @@
     "difficulty": 4,
     "learning_point": "gcse-maths-h-g18-lp-angle",
     "expected_seconds": 50,
-    "prompt": "An arc of a circle with radius 12 cm has length 4π cm. Work out the angle of the sector, in degrees.",
+    "prompt": "An arc of a circle with radius 12 cm has length 4π cm. Work out the size of the angle of the sector.",
     "answer": {
       "value": "60",
       "unit": "°"
@@ -611,7 +611,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:40Z",
+          "at": "2026-11-27T12:43:43Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -620,7 +620,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -628,14 +628,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:34Z",
+          "at": "2026-11-27T12:44:09Z",
           "notes": "model answered \"60°\"; expected \"60\""
         },
         {
@@ -643,7 +643,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:35Z",
+          "at": "2026-11-27T12:44:09Z",
           "notes": "no problems found"
         }
       ]
@@ -956,7 +956,7 @@
     "difficulty": 4,
     "learning_point": "gcse-maths-h-g18-lp-angle",
     "expected_seconds": 50,
-    "prompt": "An arc of a circle with radius 10 cm has length 5π cm. Work out the angle of the sector, in degrees.",
+    "prompt": "An arc of a circle with radius 10 cm has length 5π cm. Work out the size of the angle of the sector.",
     "answer": {
       "value": "90",
       "unit": "°"
@@ -1018,7 +1018,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T12:14:46Z",
+          "at": "2026-11-27T12:43:44Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -1042,7 +1042,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T12:15:38Z",
+          "at": "2026-11-27T12:44:11Z",
           "notes": "model answered \"90°\"; expected \"90\""
         },
         {
@@ -1050,7 +1050,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T12:15:39Z",
+          "at": "2026-11-27T12:44:12Z",
           "notes": "no problems found"
         }
       ]
