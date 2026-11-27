@@ -972,8 +972,10 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   region says "One minute left." once and "Time is up." at the end. It belongs to the whole page
   (F14b), so it stays mounted from the test to the results and is still read when the results
   come back at once. The visible clock stays `aria-live="off"`, so it never reads every
-  second. Whether the 5-minute limit can be turned off or extended (WCAG 2.2.1) is an owner
-  decision still to be made; the limit is unchanged.
+  second. The 5-minute limit can be extended (F17, owner decision 2026-11-27, WCAG 2.2.1
+  "extend"): in the last minute a "More time" button sits by the clock and adds 2 minutes, up to
+  10 times; each use is announced ("2 more minutes added.") and the next last minute warns again.
+  The intro says so. The limit is kept in the app only (the API does not enforce it).
 - Implemented: `apps/web/src/features/sound/**` (`SoundProvider`, `useSound().play(event, { mode })`,
   `MuteButton`, `SoundSettingsCard`, the synthesised sound bank in `bank.ts`, the Test mode rule in
   `events.ts`), with one-line `play()` calls in lessons, the starting test and flashcards. Reward

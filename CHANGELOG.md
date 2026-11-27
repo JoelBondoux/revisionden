@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Starting test: if you need longer, a "More time" button appears in the last minute and adds 2 minutes. You can use it up to 10 times.
 - The privacy notices now say exactly what a bug report's device details include: the question or card you were looking at (just its code) and how the app looked on your device. They never include your reading tint, font or colour choices.
 - Fixed: on a phone, the "Add a card" boxes on the Cards page now fit the screen, even with large text.
 - Fixed: in every style, the chosen chip, tab and Week/Month button are now clearly filled in, chip, tab and drop-down edges are easy to see, and the flashcard topic, the thanks after sending feedback and "Up next" on Home are easy to read in dark mode.
@@ -295,6 +296,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- F17 (owner decision, WCAG 2.2.1 Timing Adjustable): the starting test's 5-minute limit can be extended. In the last minute a "More time" button by the clock adds 2 minutes, up to 10 times (`startingTestTime.ts`); each use is announced ("2 more minutes added.") and the next last minute warns again; the intro says so. The header row wraps so the button fits a 320 px phone at 200% text. Unit tests in `startingTestTime.test.ts` and `StartingTestPage.test.tsx`, e2e in `starting-test-timer.spec.ts`. Contradiction ticked.
 - E2E `parent-settings`: a parent's phone and a child's phone share one made-up family. Subject changes (Maths to Foundation, add Physics) reach the child's map and Subject selection, turning friends on opens the child's league, and reminder times are saved and kept; axe on every screen (W20, coverage gap 3; `docs/TESTING.md` section 6 updated).
 - E2E `starting-test`: the starting test from intro to "Your starting point" (answer, skip, finish; Test mode quiet, bug button back only on the results; attempts carry mode `test` and the test id), and the timer on Playwright's clock (warning look at 1:00, time up marks what was answered), axe on every screen (W19, coverage gap 2; `docs/TESTING.md` section 6 updated). Logged the 5-minute limit vs WCAG 2.2.1 as open in `project_memory/operations/contradictions.md`, routed to the owner.
 - E2E `daily-and-cards`: the 5-a-day from Home to Lesson complete and back to Home showing it done, and a whole flashcard session (with an Again) to "Done for today!", then "10 more" to "Deck done!", axe on every screen (W18, coverage gap 1; `docs/TESTING.md` section 6 updated).
