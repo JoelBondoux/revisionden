@@ -73,3 +73,17 @@ test('the painted sweep only reports on pull requests for now; nightly and the s
   assert.match(painted, /if: steps\.sweep\.outcome == 'failure'/);
   assert.match(painted, /GITHUB_STEP_SUMMARY/);
 });
+
+test('every Playwright system install first drops the runner image Microsoft apt source (G12)', () => {
+  // ubuntu-26.04 images list packages.microsoft.com, whose apt release file is no longer signed,
+  // so `playwright install --with-deps` (apt-get update) can fail on it.
+  const installs = [...workflow.matchAll(/playwright install --with-deps/g)];
+  assert.ok(installs.length > 0);
+  const steps = workflow.split(/\n(?= {6}- )/);
+  steps.forEach((s, i) => {
+    if (!s.includes('playwright install --with-deps')) return;
+    assert.match(steps[i - 1], /- name: Drop the unsigned Microsoft apt source/);
+    assert.match(steps[i - 1], /packages\.microsoft\.com/);
+    assert.match(steps[i - 1], /\/etc\/apt\/sources\.list\.d/);
+  });
+});
