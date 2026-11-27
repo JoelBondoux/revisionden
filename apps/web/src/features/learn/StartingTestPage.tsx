@@ -28,7 +28,7 @@ function Results({ result, timeUp, earned, subjectId }: Outcome & { subjectId: s
   return (
     <div className="complete arena">
       <Card title="Your starting point">
-        {timeUp && <p role="status">Time is up, so we marked what you answered.</p>}
+        {timeUp && <p>Time is up, so we marked what you answered.</p>}
         <p>
           You got {result.correct} of {result.total} right.
         </p>
@@ -58,9 +58,12 @@ function Results({ result, timeUp, earned, subjectId }: Outcome & { subjectId: s
 function Runner({
   test,
   onFinished,
+  onAnnounce,
 }: {
   test: StartingTestResponse;
   onFinished: (outcome: Outcome) => void;
+  /** Said once by screen readers (F14): "One minute left." and "Time is up." */
+  onAnnounce: (text: string) => void;
 }) {
   const api = useLearnApi();
   const { play } = useSound();
@@ -75,8 +78,6 @@ function Runner({
   const shownAt = useRef(Date.now());
   const finishing = useRef(false);
   const warned = useRef(false);
-  /** Said once by screen readers (F14): the visible clock stays quiet, so it never reads every second. */
-  const [announcement, setAnnouncement] = useState('');
 
   const finish = useCallback(
     async (timeUp: boolean) => {
@@ -103,15 +104,15 @@ function Runner({
       if (left <= 60 && !warned.current && test.timeLimitSeconds > 60) {
         warned.current = true;
         play('timerWarning', { mode: 'test' });
-        setAnnouncement('One minute left.');
+        onAnnounce('One minute left.');
       }
       if (left === 0) {
-        setAnnouncement('Time is up.');
+        onAnnounce('Time is up.');
         void finish(true);
       }
     }, 250);
     return () => clearInterval(timer);
-  }, [finish, play, test.timeLimitSeconds]);
+  }, [finish, play, test.timeLimitSeconds, onAnnounce]);
 
   const item = test.items[index]!;
   const isLast = index === test.items.length - 1;
@@ -155,9 +156,6 @@ function Runner({
         <span className={`timer${secondsLeft <= 60 ? ' timer--warning' : ''}`} aria-live="off">
           {clockText(secondsLeft)}
         </span>
-        <span className="visually-hidden" aria-live="polite" data-testid="timer-announcer">
-          {announcement}
-        </span>
       </div>
       {test.draftContent && <DraftBanner />}
       <h1>Starting test</h1>
@@ -194,6 +192,15 @@ export function StartingTestPage() {
   const [problem, setProblem] = useState<{ text: string; ref?: ErrorDetails } | null>(null);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const onFinished = useCallback((finished: Outcome) => setOutcome(finished), []);
+  // F14b: one live region for the whole page, so it stays mounted from the test to the results
+  // and "Time is up." is still read when the results come back at once. The visible clock stays
+  // quiet (aria-live off), so nothing reads every second.
+  const [announcement, setAnnouncement] = useState('');
+  const announcer = (
+    <span className="visually-hidden" aria-live="polite" data-testid="timer-announcer">
+      {announcement}
+    </span>
+  );
 
   async function start() {
     setProblem(null);
@@ -210,8 +217,22 @@ export function StartingTestPage() {
     }
   }
 
-  if (outcome) return <Results {...outcome} subjectId={subjectId} />;
-  if (test) return <Runner test={test} onFinished={onFinished} />;
+  if (outcome) {
+    return (
+      <>
+        <Results {...outcome} subjectId={subjectId} />
+        {announcer}
+      </>
+    );
+  }
+  if (test) {
+    return (
+      <>
+        <Runner test={test} onFinished={onFinished} onAnnounce={setAnnouncement} />
+        {announcer}
+      </>
+    );
+  }
   return (
     <div className="lesson arena">
       <h1>Starting test</h1>

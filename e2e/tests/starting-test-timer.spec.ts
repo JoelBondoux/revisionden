@@ -70,5 +70,6 @@ test('the starting test tells screen readers at one minute left and when time is
 
   await page.clock.fastForward('01:00');
   await expect(page.getByRole('heading', { name: 'Your starting point' })).toBeVisible();
-  await expect(page.getByRole('status').filter({ hasText: 'Time is up' })).toBeVisible();
+  // F14b: the same live region is still there on the results, now saying "Time is up."
+  await expect(announcer).toHaveText('Time is up.');
 });
