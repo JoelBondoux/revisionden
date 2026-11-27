@@ -514,7 +514,12 @@ Tags: #product #rules #limits #defaults
   pseudocode without files or classes; output, final variables and a trace for trace tables.
   Where appendix 5d is silent it chooses: `/` gives a whole number when exact, `DIV`/`MOD` round
   down, booleans print `true`/`false`, `NOT a==b` is `NOT (a==b)`, `-2^2` is -4; items must not
-  depend on these. Not yet wired into `pnpm content:validate`.
+  depend on these. Tracers (`app/cs/tracers.py`): sorts, searches, stacks, queues, binary
+  search trees, Dijkstra and A*, with chosen conventions (bubble sort stops after a pass with
+  no swaps; quick sort pivots on the first item; merge sort splits at `len // 2`; binary search
+  `mid = (low + high) DIV 2`; ties alphabetical) that questions state when they matter. LMC
+  (`app/cs/lmc.py`): OCR mnemonics and accepted alternatives; BRP branches on zero or more; a
+  value outside -999 to 999 is an error. Not yet wired into `pnpm content:validate`.
 
 ## Reminders
 

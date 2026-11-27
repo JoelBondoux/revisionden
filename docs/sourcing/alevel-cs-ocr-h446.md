@@ -44,7 +44,11 @@ committed (public repository); the quote checker caches it outside the repo.
 - Pseudocode: the interpreter follows the appendix 5d guide (printed pages 32 to 37). The
   guide says learners may answer "in any style of pseudocode", so the interpreter computes
   answers to questions; it never marks a student's code. Files and classes are not built yet.
-- LMC mnemonics, SQL, HTML and CSS: read; not built yet.
+- LMC: the simulator uses the mnemonic table on printed page 40 (PDF page 46), including the
+  alternatives OCR accepts. SQL, HTML and CSS: read; not built yet.
+- Standard algorithms (2.3.1(e) and (f)): the specification names them but not their exact
+  variants, so the tracers' conventions are our own, and a question that depends on one must
+  state it.
 - Floating point: the specification names "Representation and normalisation of floating point
   numbers in binary" (1.4.1(g)) but not the format. The engine uses a two's complement mantissa
   and exponent with the binary point after the first bit; each question must state this itself,

@@ -83,8 +83,17 @@ answers by code, with no AI:
   variables and a trace (one row per assignment or output, with its line) for trace tables. No
   Python `eval`; a step limit stops runaway loops. Not yet: files and classes.
 
-Not yet: algorithm tracers (next S5 step), and a content-check kind so `pnpm content:validate`
-re-runs CS answers.
+- `tracers.py`: every intermediate state of bubble, insertion, merge and quick sort, linear and
+  binary search, array stacks and queues (linear or circular, with overflow, underflow, full
+  and empty recorded), binary search tree traversals and search paths, Dijkstra and A*. The
+  conventions the specification does not fix (first-item pivot, `mid = (low + high) DIV 2`,
+  alphabetical tie-breaks and so on) are listed in the module; a question that depends on one
+  states it.
+- `lmc.py`: Little Man Computer assembler and simulator with OCR's mnemonics and the
+  alternatives appendix 5d accepts, labels, 100 mailboxes and a trace.
+
+Not yet: a content-check kind so `pnpm content:validate` re-runs CS answers (with the first CS
+items).
 
 ## Run and test
 

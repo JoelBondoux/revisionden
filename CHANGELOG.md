@@ -302,6 +302,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- S5: algorithm tracers (`services/maths/app/cs/tracers.py`: bubble, insertion, merge and quick sort, linear and binary search, stacks, queues, binary search trees, Dijkstra, A*) and a Little Man Computer assembler and simulator (`app/cs/lmc.py`). Tests: `services/maths/tests/test_cs_tracers.py`, `test_cs_lmc.py`.
 - S5: OCR exam reference pseudocode interpreter (`services/maths/app/cs/pseudocode.py`) for computed program output and trace tables: loops, selection, switch, subroutines with byVal/byRef, recursion, arrays, strings and casting; step limit, no `eval`. Tests: `services/maths/tests/test_cs_pseudocode.py`.
 - S5: Computer Science engine in `services/maths/app/cs/`: number bases, signed binary, binary addition and subtraction, shifts and masks (`bases.py`), normalised floating point (`floating.py`) and Boolean logic in OCR notation with truth tables, simplification and Karnaugh maps (`logic.py`). Tests: `services/maths/tests/test_cs_*.py`.
 - G11: every staging deploy now runs the painted contrast sweep first (`deploy-staging.yml` job `contrast` calls `.github/workflows/contrast-painted.yml`), and the app deploy needs it, so staging no longer relies on a pull request run that only fires on style paths. Test: `scripts/deploy-staging-workflow.test.mjs`.

@@ -3,4 +3,7 @@
 - ``bases``: binary, hexadecimal, signed binary, binary addition and subtraction, shifts, masks.
 - ``floating``: normalised floating point binary (two's complement mantissa and exponent).
 - ``logic``: Boolean expressions in OCR's notation, truth tables, simplification, Karnaugh maps.
+- ``pseudocode``: OCR exam reference pseudocode: output, final variables and trace tables.
+- ``tracers``: every state of the standard sorts, searches, stacks, queues, trees, Dijkstra, A*.
+- ``lmc``: Little Man Computer assembler and simulator.
 """
