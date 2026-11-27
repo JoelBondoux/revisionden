@@ -6,9 +6,11 @@
  * - Maths answers (anything with a digit or a maths sign): all spaces and case are ignored;
  *   the unicode minus and dashes are a minus; ×, ·, * (and x between two numbers) are one
  *   multiply sign, dropped unless it sits between two numbers or before a sign (`3n*-2`); ÷ is /; superscripts are ^;
- *   ≤ and ≥ are <= and >=; √, sqrt and sqrt( ) are the same; "and" and ; separate a list like ,.
- * - Only when the item says order does not matter (`any_order`): products and sums may be
- *   written in any order (signs stay with their terms), a list of values in any order, and an
+ *   ≤ and ≥ are <= and >=; √, sqrt and sqrt( ) are the same; "and" and ; separate a list like ,;
+ *   outer set braces around a whole list are optional (`{4, 5, 6}` is `4, 5, 6`; F23).
+ * - Only when the item says order does not matter (`any_order`): a list of values in any order,
+ *   but each item exactly as written (F23: `HT` and `TH` are different outcomes in a list); a
+ *   single answer may write products and sums in any order (signs stay with their terms) and an
  *   equation either way round; a short run of letters (`pq`, up to 4) counts as a product.
  *   Coordinates in brackets and inequalities are never reordered.
  * - Optional units (`units`): the answer may end with one of the item's units, or leave it off.
@@ -76,7 +78,7 @@ export function normaliseAnswer(text: string, options: AnswerOptions = {}): stri
         ? sign
         : '',
     );
-  s = withoutUnit(s, options.units);
+  s = withoutSetBraces(withoutUnit(s, options.units));
   return options.anyOrder ? anyOrder(s) : s;
 }
 
@@ -110,9 +112,19 @@ function splitTop(s: string, at: (s: string, i: number) => boolean): string[] {
   return parts;
 }
 
+/** F23: `{4,5,6}` is the list `4,5,6` (one pair of braces around the whole answer). */
+function withoutSetBraces(s: string): string {
+  return /^\{[^{}]*\}$/.test(s) ? s.slice(1, -1) : s;
+}
+
+/**
+ * A list's items in any order, each item as written (F23: inside a list, `ht` stays `ht`); a
+ * single answer may commute its products and sums, and swap the sides of an equation.
+ */
 function anyOrder(s: string): string {
   const parts = splitTop(s, (t, i) => t[i] === ',').map((p, i) => (i === 0 ? p : p.slice(1)));
-  return parts.map(relation).sort().join(',');
+  if (parts.length > 1) return parts.sort().join(',');
+  return relation(s);
 }
 
 function relation(s: string): string {

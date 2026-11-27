@@ -92,6 +92,24 @@ describe('answers whose order does not matter', () => {
     expect(sameAnswer('x = 3, y = 2', 'x = 2, y = 3', any)).toBe(false);
   });
 
+  it('reorders the items of a list, never the letters inside an item (F23)', () => {
+    const outcomes = 'HH, HT, TH, TT';
+    expect(sameAnswer(outcomes, 'TH, HH, TT, HT', any)).toBe(true);
+    expect(sameAnswer(outcomes, 'HH, HT, HT, TT', any)).toBe(false);
+    expect(sameAnswer('HT', 'TH', any)).toBe(true); // one item on its own is still a product
+    expect(sameAnswer('HT, TT', 'TH, TT', any)).toBe(false);
+  });
+
+  it('accepts a list with or without outer set braces (F23)', () => {
+    expect(sameAnswer('4, 5, 6', '{4, 5, 6}', any)).toBe(true);
+    expect(sameAnswer('{4, 5, 6}', '6, 4, 5', any)).toBe(true);
+    // Codex on the Probability train: the braces come off before the items are reordered.
+    expect(sameAnswer('4, 5, 6', '{6, 5, 4}', any)).toBe(true);
+    expect(sameAnswer('4, 5, 6', '{5, 4, 6}', any)).toBe(true);
+    expect(sameAnswer('4, 5, 6', '{4, 5, 6}')).toBe(true);
+    expect(sameAnswer('4, 5, 6', '{4, 5, 7}', any)).toBe(false);
+  });
+
   it('never reorders a coordinate', () => {
     expect(sameAnswer('(3, 1)', '(1, 3)', any)).toBe(false);
   });

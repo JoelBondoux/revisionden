@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { server } from '../mocks/server';
 import { ErrorRef, refOf } from './ErrorRef';
 import { ApiError } from './client';
+import { collectDeviceDetails, forgetLastProblem } from '../features/feedback/details';
 
 const show = (path = '/family/00000000-0000-4000-8000-0000000000a1/rewards') =>
   render(
@@ -46,6 +47,24 @@ describe('ErrorRef', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Send error report' }));
     expect(await screen.findByText(/could not be sent/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Send error report' })).toBeEnabled();
+  });
+
+  it('remembers the code it shows for the next bug report, even after it is gone (F18)', () => {
+    forgetLastProblem();
+    const device = () =>
+      collectDeviceDetails({
+        appVersion: '1',
+        route: '/map',
+        userAgent: '',
+        width: 1,
+        height: 1,
+        online: true,
+      });
+    const { unmount } = show();
+    expect(device().lastProblem).toBe('RD-VDMW5E');
+    unmount();
+    expect(device().lastProblem).toBe('RD-VDMW5E');
+    forgetLastProblem();
   });
 
   it('shows nothing without a code', () => {
