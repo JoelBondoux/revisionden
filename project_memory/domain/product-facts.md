@@ -510,7 +510,11 @@ Tags: #product #rules #limits #defaults
   it in its own text. Boolean answers are read in OCR's notation and every alternative appendix
   5d accepts; a "simplify" answer must be equivalent and have no more letters than the shortest
   sum of products. Binding, tightest first: NOT, AND, XOR, OR, ≡ (our choice; questions bracket
-  anything else). Not yet wired into `pnpm content:validate`.
+  anything else). Pseudocode interpreter (`app/cs/pseudocode.py`): OCR exam reference
+  pseudocode without files or classes; output, final variables and a trace for trace tables.
+  Where appendix 5d is silent it chooses: `/` gives a whole number when exact, `DIV`/`MOD` round
+  down, booleans print `true`/`false`, `NOT a==b` is `NOT (a==b)`, `-2^2` is -4; items must not
+  depend on these. Not yet wired into `pnpm content:validate`.
 
 ## Reminders
 
