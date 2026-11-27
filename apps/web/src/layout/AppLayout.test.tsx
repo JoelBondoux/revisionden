@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import { renderRoute } from '../test/render';
 
 const bugButton = () => screen.getByRole('button', { name: 'Report a bug' });
@@ -52,10 +52,11 @@ describe('Pip, the Home button', () => {
     async (path) => {
       renderRoute(path);
       await screen.findByRole('heading', { level: 1 });
-      // J14b: one Pip, in the lesson's own header row; the layout's Pip row steps aside.
+      // J14b: one Pip, in the lesson's own header row; the layout's Pip row steps aside once the
+      // lesson's effect claims it, which can land a tick after the heading on a slow machine.
+      await waitFor(() => expect(document.querySelector('.lesson-top-row')).toBeNull());
       const pip = screen.getByRole('button', { name: 'Home' });
       expect(pip.closest('.lesson__top')).not.toBeNull();
-      expect(document.querySelector('.lesson-top-row')).toBeNull();
       pip.click();
       expect(await screen.findByRole('dialog', { name: 'Leave this lesson?' })).toBeInTheDocument();
     },
