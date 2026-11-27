@@ -382,6 +382,28 @@ describe('operator undo of a triage outcome (L14)', () => {
     expect(await state()).not.toEqual({ state: 'removed' });
   });
 
+  it('keeps an older removal when a later, unrelated triage Not a bug is undone', async () => {
+    const f = await makeFamily();
+    // Removed long ago; its reports are already gone (12-month clean-up).
+    await t.db
+      .update(students)
+      .set({ bugButtonRemovedAt: new Date(t.clock.now().getTime() - 400 * DAY) })
+      .where(eq(students.id, f.studentId));
+    const later = await ticket(f, {
+      ...fromStudent(f),
+      outcome: 'not_a_bug',
+      notABugAt: t.clock.now(),
+      reviewedBy: 'triage',
+      status: 'will_not_fix',
+      closedAt: t.clock.now(),
+    });
+    expect((await post(`/tickets/${later.id}/undo-triage`)).data).toEqual({ ok: true });
+    const res = await t.app.request('/v1/student/bug-button', {
+      headers: await t.signInStudent(f.studentId),
+    });
+    expect(await res.json()).toEqual({ state: 'removed' });
+  });
+
   it('reverses a triage confirm and takes back its reward', async () => {
     const f = await makeFamily();
     const row = await ticket(f, {
