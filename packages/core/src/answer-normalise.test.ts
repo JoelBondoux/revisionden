@@ -103,6 +103,9 @@ describe('answers whose order does not matter', () => {
   it('accepts a list with or without outer set braces (F23)', () => {
     expect(sameAnswer('4, 5, 6', '{4, 5, 6}', any)).toBe(true);
     expect(sameAnswer('{4, 5, 6}', '6, 4, 5', any)).toBe(true);
+    // Codex on the Probability train: the braces come off before the items are reordered.
+    expect(sameAnswer('4, 5, 6', '{6, 5, 4}', any)).toBe(true);
+    expect(sameAnswer('4, 5, 6', '{5, 4, 6}', any)).toBe(true);
     expect(sameAnswer('4, 5, 6', '{4, 5, 6}')).toBe(true);
     expect(sameAnswer('4, 5, 6', '{4, 5, 7}', any)).toBe(false);
   });
