@@ -334,3 +334,13 @@ test('a Part named only in running text, with no heading, does not confirm a Par
   assert.equal(r.locationConfirmed, false);
   assert.match(r.reason, /no Part heading before the quote/);
 });
+
+test('a quote that runs across a heading is still an exact match (Codex on #435)', () => {
+  const page = [htmlToText('<h2>N7</h2><p>Calculate with</p><h3>roots and indices</h3>')];
+  const r = locateQuote({ quote: 'Calculate with roots and indices', location: 'N7' }, page, {
+    paged: false,
+  });
+  assert.equal(r.found, true);
+  assert.equal(r.match, 'exact');
+  assert.equal(r.locationConfirmed, true);
+});
