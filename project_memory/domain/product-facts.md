@@ -496,7 +496,10 @@ Tags: #product #rules #limits #defaults
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
   commuted products and sums, reordered lists and swapped equation sides (never coordinates or
-  inequalities); `answer.units` lists optional units. A multiply sign before a sign is kept
+  inequalities); `answer.units` lists optional units, accepted in any spelling numeric answers
+  accept (F25: `unitSpellings`, now with °/degrees, ml/mL/millilitres, mg, %, days, N/m², m/s²,
+  kg/m³, g/cm³, l/min, km/min). `answer.kind: "hex"` (F24, opt-in) ignores case, `0x` and leading
+  zeros. A multiply sign before a sign is kept
   (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
   and `a = x` either way round). Repeated alternatives on a final line count once, and a line
   with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is

@@ -148,3 +148,42 @@ describe('marking a short answer', () => {
     expect(markShortAnswer({ accepted: ['3n + 2'], any_order: true }, '3n + 3')).toEqual(no);
   });
 });
+
+describe('hexadecimal answers (F24, opt-in per item)', () => {
+  const hex = { kind: 'hex' as const };
+
+  it('accepts the same value with a 0x prefix, either case or leading zeros', () => {
+    for (const given of ['2F', '2f', '0x2F', '0X2f', '02F', '0x002f', ' 2F ']) {
+      expect(sameAnswer('2F', given, hex), given).toBe(true);
+    }
+  });
+
+  it('still rejects a different value or something that is not hex', () => {
+    expect(sameAnswer('2F', '2E', hex)).toBe(false);
+    expect(sameAnswer('2F', 'F2', hex)).toBe(false);
+    expect(sameAnswer('2F', '2G', hex)).toBe(false);
+    expect(sameAnswer('2F', '47', hex)).toBe(false); // 47 is 2F in denary, but not as hex
+    expect(sameAnswer('2F', '', hex)).toBe(false);
+  });
+
+  it('leaves ordinary answers alone when the item does not ask for it', () => {
+    expect(sameAnswer('2F', '0x2F')).toBe(false);
+    expect(sameAnswer('02F', '2F')).toBe(false);
+  });
+
+  it('is read from the item by short answer marking', () => {
+    expect(markShortAnswer({ accepted: ['2F'], kind: 'hex' }, '0x2f')).toEqual(ok);
+    expect(markShortAnswer({ accepted: ['2F'] }, '0x2f')).toEqual(no);
+  });
+});
+
+describe('spelt-out units on short answers (F25)', () => {
+  it('accepts a unit written out in words, as numeric answers do', () => {
+    const key = (units: string[]) => ({ accepted: ['60'], units });
+    expect(markShortAnswer(key(['°']), '60 degrees')).toEqual(ok);
+    expect(markShortAnswer(key(['°']), '60°')).toEqual(ok);
+    expect(markShortAnswer({ accepted: ['250'], units: ['ml'] }, '250 millilitres')).toEqual(ok);
+    expect(markShortAnswer({ accepted: ['40'], units: ['N/m²'] }, '40 N/m^2')).toEqual(ok);
+    expect(markShortAnswer(key(['°']), '60 radians')).toEqual(no);
+  });
+});

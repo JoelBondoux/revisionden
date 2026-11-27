@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Typed answers are marked more fairly: units written out in words now count ("60 degrees", "250 millilitres", "20 per cent"), and hexadecimal answers accept 0x2F, 2f or 02F for 2F.
 - A-Level Computer Science is on its way: the topic map for OCR's specification (H446) is in place, with every topic checked word for word against OCR's own document. Questions come next.
 - Fixed: in Pop Burst dark mode, the boxes you type in on the parent screens (daily time limits, reminder times, a friend's private label and the family join code) now have an edge you can see. In Starlight dark mode, smaller grey words such as the timer note on Starting test are brighter.
 - If several bug reports from a student turn out not to be bugs, their bug button takes a rest for a week (and after repeated rests, switches off until a parent turns it back on from Parent home). Get help and "Ask a parent" always stay.
@@ -304,6 +305,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- F24: `answer.kind: "hex"` for short answers (opt-in per item; content schema, `sameAnswer`, `markShortAnswer`, blind check): case, a `0x` prefix and leading zeros are ignored, so `0x2F`, `2f` and `02F` match `2F`; ordinary answers are unchanged. F25: more unit spellings in `UNIT_SPELLINGS` (° as degrees or deg, ml/mL/millilitres, mg, %, days, N/m², m/s², kg/m³, g/cm³, litres per minute and km per minute), found by listing every unit in `content/items`; a shared `unitSpellings` now serves short-answer `units` too, so "60 degrees" marks right where the unit is °. Tests in `answer-normalise.test.ts`, `answer-format.test.ts` and `blind-answer.test.mjs`.
 - S4 (Ratio): 185 draft GCSE Maths Higher items for 1MA1 Ratio, proportion and rates of change, R1 to R16 (`content/items/gcse-maths-higher/ratio/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point. Quote check and schema pass for all; blind answer and adversarial review by OpenAI (Gemini is over its spend cap); 41 need individual approval (unit and scale definitions, decision 0008).
 - S5: Computer Science engine in `services/maths/app/cs/`: number bases, signed binary, binary addition and subtraction, shifts and masks (`bases.py`), normalised floating point (`floating.py`) and Boolean logic in OCR notation with truth tables, simplification and Karnaugh maps (`logic.py`). Tests: `services/maths/tests/test_cs_*.py`.
 - G11: every staging deploy now runs the painted contrast sweep first (`deploy-staging.yml` job `contrast` calls `.github/workflows/contrast-painted.yml`), and the app deploy needs it, so staging no longer relies on a pull request run that only fires on style paths. Test: `scripts/deploy-staging-workflow.test.mjs`.

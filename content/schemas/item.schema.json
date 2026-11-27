@@ -410,6 +410,10 @@
                 "$ref": "#/$defs/text"
               },
               "description": "Units the answer may end with, or leave off (for example cm)."
+            },
+            "kind": {
+              "enum": ["hex"],
+              "description": "Compare as a value of this kind. hex: case, a 0x prefix and leading zeros are ignored (0x2F, 2f and 02F all match 2F)."
             }
           },
           "additionalProperties": false
