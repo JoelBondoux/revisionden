@@ -118,7 +118,11 @@ describe('the order subjects are offered in (UX-1, lead ruling)', () => {
   });
 
   it('works with maps that do not say when subjects were practised', () => {
-    const old = four.map(({ lastPractisedAt: _, ...s }) => s);
+    const old = four.map((s) => ({
+      subjectId: s.subjectId,
+      subject: s.subject,
+      hasContent: s.hasContent,
+    }));
     expect(ids(pickerOrder(old, undefined).now)).toEqual(['biology', 'chemistry', 'maths']);
   });
 });
