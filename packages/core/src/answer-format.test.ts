@@ -8,6 +8,7 @@ import {
   standardForm,
   withoutSubject,
   withoutThousands,
+  withoutUnit,
 } from './answer-format';
 
 describe('answers that state their subject', () => {
@@ -254,5 +255,31 @@ describe('answer forms', () => {
       expect(inForm(text, 'index_form'), text).toBe(false);
     }
     expect(inForm('2^3 × 3^2 × 5', 'index_form')).toBe(true);
+  });
+});
+
+describe('spelt-out units (F25)', () => {
+  // Units used in content, written the ways pupils write them. A different unit stays wrong.
+  it.each([
+    ['°', ['60°', '60 °', '60 degrees', '60 degree', '60 deg', '60 Degrees']],
+    ['ml', ['250ml', '250 ml', '250 mL', '250 millilitres', '250 milliliters']],
+    ['mg', ['5 mg', '5 milligrams', '5 milligram']],
+    ['%', ['20%', '20 %', '20 percent', '20 per cent']],
+    ['days', ['3 days', '3 day']],
+    ['N/m²', ['40 N/m²', '40 N/m^2', '40 newtons per square metre', '40 newtons per square meter']],
+    ['m/s^2', ['9.8 m/s^2', '9.8 m/s²', '9.8 metres per second squared']],
+    ['kg/m³', ['1000 kg/m³', '1000 kg/m^3', '1000 kilograms per cubic metre']],
+    ['g/cm³', ['8 g/cm³', '8 g/cm^3', '8 grams per cubic centimetre']],
+    ['litres per minute', ['12 litres per minute', '12 l/min', '12 L/min', '12 litre per minute']],
+    ['km per minute', ['2 km per minute', '2 km/min']],
+  ])('accepts the spellings of %s', (unit, answers) => {
+    const value = answers[0]!.match(/^[\d.]+/)![0];
+    for (const answer of answers) expect(withoutUnit(answer, unit), answer).toBe(value);
+  });
+
+  it('leaves a different unit in place, so the answer stays wrong', () => {
+    expect(withoutUnit('60 radians', '°')).toBe('60 radians');
+    expect(withoutUnit('250 litres', 'ml')).toBe('250 litres');
+    expect(withoutUnit('40 N/m', 'N/m²')).toBe('40 N/m');
   });
 });

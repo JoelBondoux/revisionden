@@ -1,13 +1,14 @@
 # Changelog
 
 All notable changes are recorded here. Versions use the format `xx.xx.xxx` (major.minor.patch).
-Every push to `main` bumps the version automatically; add entries under **Unreleased** in each PR.
+Every push to `main` bumps the version automatically; each PR adds a fragment in
+`changes/unreleased/` (see `changes/README.md`) rather than editing this file.
 
 ## [Unreleased]
 
 ### What's new
 
-- Multiple choice answers now come in a different order each time, so the right answer isn't always the first one.
+- Typed answers are marked more fairly: units written out in words now count ("60 degrees", "250 millilitres", "20 per cent"), and hexadecimal answers accept 0x2F, 2f or 02F for 2F.
 - No more empty lessons: topics whose questions aren't ready yet show as "coming soon" on the map, and if a lesson ever has nothing to show, it offers a topic that's ready.
 - Bug reports: if the app showed you a problem code (like RD-7K2M9Q) in the last 15 minutes, a parent's report now includes it (you can remove it), and a student can tick "Include it" to add it.
 - The privacy notices now say that a bug report can carry the code of a problem the app showed you in the last 15 minutes (just the short code, such as RD-7K2M9Q). Parents can remove it; students choose to add it. Signing out forgets it.
@@ -185,7 +186,6 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
-- F22 (marking fairness, found by Codex on S4's content): the right answer was option 1 in nearly every multiple choice item (Statistics 17/17, Probability 16/16, Geometry 54/60), and options showed in stored order. They are now shuffled each serve (`shuffledOptionOrder` in core, with injected randomness; `useOptionOrder` in the web), with "None of these"-type options kept last, in lessons, the starting test, the 5-a-day and recall checks. Marking goes by the option's original position, so attempts and the right-answer highlight line up. Tests: core `option-order.test.ts` (2,000 serves: the first option comes first about a quarter of the time), web `parts.shuffle.test.tsx`.
 - W26: the lesson look checks (`"+XP" and the combo`, `the XP count and come-back notes`) run as one test per look and mode instead of one loop of ten looks, so none comes near the 30s timeout (the come-back loop took about 28s and timed out on a CI runner). Home's 320px at 200% test now waits for fonts and the reflow to settle, using the shared `settle` from `support/painted.ts`.
 - F19 (UX-3, owner-approved UX report): no dead-end lessons. The map and the subject's topic list count only questions a lesson would serve (`lessonReadyItem`: typed working only with the maths engine, never interactive pilot steps alone), so a topic that is open never opens "No questions are ready here yet". A locked topic now says "<topic> is coming soon: its questions are still being checked." (it said "Finish the topics before…", but locked only ever meant no questions). An empty topic lesson offers "Try a topic that's ready" (the map's next mission) above Back. The 5-a-day and starting test already pick items, so they never show empty topics. Tests: `ready-topics.test.ts` (API), `LessonPlayer.test.tsx`, `MapPage.test.tsx`.
 - S4: `scripts/content/s4-marking.test.mjs` gains the guards from the Ratio fix for Codex on #442 (a numeric answer typed with the unit the question asks in is marked right; a subscripted unknown needs `answer.subject`). This strand already passes them.
@@ -314,6 +314,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Added
 
+- F24: `answer.kind: "hex"` for short answers (opt-in per item; content schema, `sameAnswer`, `markShortAnswer`, blind check): case, a `0x` prefix and leading zeros are ignored, so `0x2F`, `2f` and `02F` match `2F`; ordinary answers are unchanged. F25: more unit spellings in `UNIT_SPELLINGS` (° as degrees or deg, ml/mL/millilitres, mg, %, days, N/m², m/s², kg/m³, g/cm³, litres per minute and km per minute), found by listing every unit in `content/items`; a shared `unitSpellings` now serves short-answer `units` too, so "60 degrees" marks right where the unit is °. Tests in `answer-normalise.test.ts`, `answer-format.test.ts` and `blind-answer.test.mjs`.
 - S4 (Statistics): 67 draft GCSE Maths Higher items for 1MA1 Statistics, S1 to S6 (`content/items/gcse-maths-higher/statistics/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point; data is given in the question, so no diagrams. Quote check, maths engine and schema pass for all; blind answer and adversarial review by OpenAI; 22 need individual approval (decision 0008).
 - S4 (Ratio): 185 draft GCSE Maths Higher items for 1MA1 Ratio, proportion and rates of change, R1 to R16 (`content/items/gcse-maths-higher/ratio/`), 10 to 13 a topic, each with a hint, an explanation and a cited specification point. Quote check and schema pass for all; blind answer and adversarial review by OpenAI (Gemini is over its spend cap); 41 need individual approval (unit and scale definitions, decision 0008).
 - S4 (Probability): 95 draft GCSE Maths Higher items for 1MA1 Probability, P1 to P9 (`content/items/gcse-maths-higher/probability/`), 9 to 12 a topic, each with a hint, an explanation and a cited specification point; terms such as relative frequency are defined in the question. Quote check, maths engine and schema pass for all; blind answer and adversarial review by OpenAI; 8 need individual approval (decision 0008) and 27 list standard facts for the fact-check stage.
