@@ -26,6 +26,20 @@ function renderWithSpeech(path: string) {
 const click = (name: string | RegExp) => userEvent.click(screen.getByRole('button', { name }));
 
 describe('read aloud wiring', () => {
+  it('reads multiple choice options in the order they are shown (F22)', async () => {
+    const mc = demoItems.find((i) => i.type === 'multiple_choice')!;
+    server.use(
+      http.get('*/v1/student/learn/lesson', () =>
+        HttpResponse.json({ items: [mc], draftContent: true }),
+      ),
+    );
+    const speech = renderWithSpeech('/learn/topic/demo-topic-a');
+    await userEvent.click(await screen.findByRole('button', { name: 'Read the question aloud' }));
+    const shown = screen.getAllByRole('radio').map((r) => r.closest('label')!.textContent!);
+    const spoken = speech.spoken.at(-1)!.text;
+    shown.forEach((option, i) => expect(spoken).toContain(`Option ${i + 1}: ${option}.`));
+  });
+
   it('reads a lesson question aloud, then the answer and explanation', async () => {
     server.use(
       http.get('*/v1/student/learn/lesson', () =>

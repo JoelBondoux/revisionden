@@ -172,6 +172,8 @@ Tags: #product #rules #limits #defaults
   `apps/web/src/features/stats/countUp.tsx`. Detail: `docs/PRODUCT_RULES.md`.
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, working 20,
   long answer 30; part marks earn part.
+- Multiple choice options are shuffled each serve (F22; "None/All/Both/Neither of …" stay last);
+  marking uses the option's original position, never where it was shown.
 - The 14 original rewards keep their ids and avatar items (the 100-day streak unlocks two: crown
   and Alien skin). They are now part of the five-year catalogue (see "Rewards progression").
 - XP per correct answer: flashcard 5, multiple choice 10, short answer or numeric 15, worked maths
@@ -540,6 +542,10 @@ Tags: #product #rules #limits #defaults
   Where appendix 5d is silent it chooses: `/` gives a whole number when exact, `DIV`/`MOD` round
   down, booleans print `true`/`false`, `NOT a==b` is `NOT (a==b)`, `-2^2` is -4; items must not
   depend on these. Not yet wired into `pnpm content:validate`.
+
+- CS fact proofs (S5, 2026-11-27, decision 0009 (b)): a fact's `engine` may be `cs_arithmetic`,
+  `cs_base`, `cs_signed` or `cs_logic_equivalence` (`services/maths/app/cs/facts.py`). Like the
+  maths proofs, each passes a fact only together with a third provider's blind statement.
 
 ## Reminders
 
@@ -1267,6 +1273,19 @@ Tags: #product #rules #limits #defaults
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
   Superseded on 2026-11-26 by Q6 (above): every link re-read and match-checked, Bitesize added
   once the provider hosts were allowed in the build environment.
+- Past papers (Q7, owner request 2026-11-27, cut-down X5: links only): page
+  `/learn/subject/:subjectId/past-papers`, from a "Past papers" button on the subject's Learn page
+  (not a nav tab). The student's board first (from `GET /v1/student/subjects`), then the other
+  boards offering the subject; all boards when the board is Not sure. Links open in a new tab, to
+  each board's public finder only (no PDFs, no teacher-only deep links), recorded with status 200,
+  page title and date in `PAST_PAPER_PAGES` (`packages/core/src/past-papers.ts`), checked
+  2026-11-27: AQA www.aqa.org.uk/find-past-papers-and-mark-schemes, Pearson
+  qualifications.pearson.com/en/support/support-topics/exams/past-papers.html, OCR
+  www.ocr.org.uk/qualifications/past-paper-finder/, Eduqas
+  www.eduqas.co.uk/home/past-papers-and-mark-schemes/. Pearson keeps the last 12 months for
+  teachers; OCR's past paper policy keeps five years public. Wording checked by L (2026-11-27):
+  a visible "leaving RevisionDen" note above the links, no referrer sent (`referrerPolicy="no-referrer"`),
+  board names only (no logos).
 - Learn it first, in-house goal (owner direction 2026-11-26, not yet built): RevisionDen should
   eventually write its own verified teaching content (topic notes, explanations per learning
   point, worked examples, code-drawn diagrams) under `docs/VERIFICATION.md`, and retire each

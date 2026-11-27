@@ -279,6 +279,7 @@ Spec: `docs/GAME_FEEL.md`. Mockup 22.
 - [ ] X2 Board-style paper builder from verified items, matching structure and marks.
 - [ ] X3 Exam player: exam conditions or practice, countdown, per-question timing, review and finish, no feedback until the end.
 - [ ] X4 Results: marks, grade against latest boundaries, pacing chart (time vs target per question), rule-based pacing advice, per-question improvement notes, AI commentary for long answers (double-marked, labelled).
+- [x] X5a Past paper links (lead task "Q7", owner request 2026-11-27): a Past papers page per subject with each board's public past-paper finder, own board first. Self-marking (the rest of X5) still to do.
 - [ ] X5 Official past papers as links: guided self-marking with the board's mark scheme, or per-answer photo marking via Mark my homework; legal review first.
 - [ ] X6 Parent dashboard and study plan integration; "Full past papers" milestones.
 - Tests: timing per question with going back, extra time, time running out, pacing flags (1.5× slow, 0.5× rushed with marks lost), grade from boundaries, no feedback before the end, citations present for every duration and total.

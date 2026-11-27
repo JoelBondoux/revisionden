@@ -33,8 +33,13 @@ export const REVIEW_SCHEMA = {
       },
     },
     confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
+    facts_relied_on: {
+      type: 'array',
+      items: { type: 'integer' },
+      description: 'Numbers of the declared standard facts the review relied on (empty if none).',
+    },
   },
-  required: ['problems', 'confidence'],
+  required: ['problems', 'confidence', 'facts_relied_on'],
   additionalProperties: false,
 };
 
@@ -66,6 +71,15 @@ const PARTS = [
   'explanation',
   'steps',
 ];
+
+/** The sentences of a decision-0008 item's grounded-writing note that name its definition, or null. */
+function definitionOf(item) {
+  const notes = item.verification?.checks?.find((c) => c.name === 'grounded-writing')?.notes ?? '';
+  // Note formats vary ("Decision 0008: … (definition), which …", "… (decision 0008): …"), so
+  // pass every sentence that names the decision (Codex on #433).
+  const sentences = notes.split(/(?<=[.!?])\s+(?=[A-Z])/).filter((t) => /\b0008\b/.test(t));
+  return sentences.length ? sentences.join(' ') : null;
+}
 
 /** The prompt for the reviewer: the whole item including its answer, plus the cited quotes. */
 export function reviewPrompt(item) {
@@ -138,6 +152,30 @@ export function reviewPrompt(item) {
             'are never reordered.',
         ]
       : [];
+  // Declared standard facts (decision 0009) and decision-0008 definitions (lead's ruling for S4):
+  // a matching claim is checked elsewhere (step 4b, or a person), so it is not "unsupported", but
+  // a false or misapplied one is still an error, and anything neither cited nor declared still
+  // needs a source.
+  const facts = Array.isArray(item.facts) ? item.facts : [];
+  const definition = item.needs_human_approval ? definitionOf(item) : null;
+  const declared =
+    facts.length || definition
+      ? [
+          '',
+          ...(facts.length
+            ? [
+                'Declared standard facts (each is checked separately at step 4b, the fact check):',
+                ...facts.map((f, i) => `${i + 1}. ${f.statement}`),
+              ]
+            : []),
+          ...(definition
+            ? [
+                `Declared standard definitions (decision 0008; this item is approved individually by a person): ${definition}`,
+              ]
+            : []),
+          'A claim that matches a declared fact or definition is not unsupported_claim. Still report factual_error if a declared fact or definition is false or misapplied here, and still report unsupported_claim for any claim that is neither cited nor declared. List in facts_relied_on the numbers of the declared facts you relied on.',
+        ]
+      : [];
   const sources = item.citations.map(
     (c, i) =>
       `${i + 1}. ${c.publisher}, ${c.title} (${c.document_ref}), ${c.location}; supports ${c.supports.join(', ')}:\n` +
@@ -152,11 +190,20 @@ export function reviewPrompt(item) {
       ...hint,
       ...explanation,
       ...order,
+      ...declared,
       '',
       'Official sources:',
       ...sources,
     ].join('\n'),
   };
+}
+
+/** Audit notes for the declared facts the reviewer relied on ("relied on declared fact 1 (...)"). */
+function relied(item, numbers) {
+  const facts = Array.isArray(item.facts) ? item.facts : [];
+  return numbers
+    .filter((n) => Number.isInteger(n) && n >= 1 && n <= facts.length)
+    .map((n) => `relied on declared fact ${n} (${facts[n - 1].statement})`);
 }
 
 /** Runs the adversarial review for one item: { id, result, problems, check }. */
@@ -166,7 +213,7 @@ export async function runAdversarialReview(item, provider, { now = () => new Dat
     schema: REVIEW_SCHEMA,
     schemaName: 'adversarial_review',
   });
-  const { problems, confidence } = output;
+  const { problems, confidence, facts_relied_on: reliedOn = [] } = output;
   const sure = confidence === 'high';
   const result = problems.length === 0 && sure ? 'pass' : 'fail';
   const found = problems.length
@@ -182,7 +229,9 @@ export async function runAdversarialReview(item, provider, { now = () => new Dat
       tool: `${provider.provider}:${provider.model}`,
       tool_version: modelVersion,
       at: stamp(now()),
-      notes: sure ? found : `${found}; confidence ${confidence}`,
+      notes: [found, ...relied(item, reliedOn), ...(sure ? [] : [`confidence ${confidence}`])].join(
+        '; ',
+      ),
     },
   };
 }

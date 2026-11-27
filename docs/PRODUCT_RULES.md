@@ -35,6 +35,17 @@
 - Details settled in code:
   - XP per correct answer: flashcard 5, multiple choice 10, short answer 15, numeric 15, worked
     maths 20, extended answer 30. Part marks earn part of it (rounded). Wrong answers earn 0.
+  - Multiple choice options are shown in a fresh order each time a question is served (F22,
+    marking fairness: the right answer was option 1 in nearly every item). Lessons, the starting
+    test, the 5-a-day and recall checks all use it; "None of these", "All of the above", "Both of
+    them" and "Neither of these" stay last. Marking goes by the option itself (its original
+    position), so attempts, the right-answer highlight and review screens line up whatever the
+    shown order. Read aloud says the options in the shown order ("Option 2" is the second on
+    screen), and a missed question served straight back gets a different order from the one just
+    seen (one order per serve, `useServedOptionOrder`; Codex on #448).
+    `packages/core/src/option-order.ts` (`shuffledOptionOrder`, injected randomness);
+    `apps/web/src/features/learn/shuffle.tsx`. The operator's content review keeps the authored
+    order. Flashcard choices (F20) follow once #441 lands.
   - Combo bonus (`docs/GAME_FEEL.md`): +5 XP per right answer from the 3rd right answer in a row,
     added to that answer's XP (so levels and rewards count it, with the usual daily cap). Learn
     mode: the API counts the run from the student's own recent answers; a wrong or part-marked
@@ -1398,6 +1409,34 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   pupil page). BBC Bitesize and Isaac pages are already made for students.
   All 90 Oak links (84 lessons) were switched and re-read on 2026-11-26; every lesson had a pupil
   page, so none is marked `no_pupil_page`.
+
+### Past papers
+
+- **Past papers** (owner request, 2026-11-27: "the list of links to get past exam papers from
+  various boards"; a cut-down X5, links only, no self-marking yet): a "Past papers" button on
+  each subject's Learn page opens a page of links to the exam boards' own past-paper finders. It
+  is not a nav tab.
+- The student's board for that subject comes first ("Your exam board"), then the other boards that
+  offer the subject ("Other boards"). If the board is not known yet ("Not sure"), or the
+  subjects cannot be loaded, every board that offers the subject is listed ("Exam boards").
+- Links only, each to the board's own public past-paper or finder page, opened in a new tab
+  under the line "Papers and mark schemes are on the exam board's website." ("each exam board's"
+  when the board is not known). Nothing is copied or embedded, nothing is loaded from the boards
+  until a link is tapped, and taps are not recorded.
+- Leaving RevisionDen (L, 2026-11-27, ICO children's code): above the links, a visible note says
+  "These links take you to the exam board's own website. It is not part of RevisionDen and has
+  its own rules, so check with a parent if you're not sure." Each link also says "(opens in a new
+  tab)" to screen readers, and sends no referrer (`rel="noopener noreferrer"`,
+  `referrerPolicy="no-referrer"`), so a board never learns which app page a child came from.
+  Board names only, no board logos.
+- No deep links to papers a board keeps for teachers: we link to the public finder, which shows
+  what students may see. Pearson keeps the last 12 months' papers for teachers; OCR's past paper
+  policy (read 2026-11-27) keeps five years of papers on its site. The page says: "The newest
+  papers are sometimes for teachers only, so ask your teacher if you can't find one."
+
+- Each page was fetched (200) and read, and its title and the date recorded, in
+  `packages/core/src/past-papers.ts`. A test checks that every subject and board we support has a
+  page or an explicit `'none'`.
 
 ### Read aloud and reading comfort
 
