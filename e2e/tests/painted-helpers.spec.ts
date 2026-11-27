@@ -214,6 +214,55 @@ test.describe('a look whose font is still loading', { tag: '@contrast' }, () => 
   });
 });
 
+// J's report on the CI list: chart labels are SVG <text> painted by `fill`, not `color`, so the
+// sweep could not see them ("too few letter pixels"). They are measured like any other text.
+test.describe('chart labels drawn as SVG text', { tag: '@contrast' }, () => {
+  const chart = (page: Page, fill: string) =>
+    page.setContent(`
+      <style>body { margin: 0; padding: 40px; background: #fff; font: 16px sans-serif; }</style>
+      <svg width="240" height="60" role="img" aria-label="Chart">
+        <text x="10" y="40" style="fill: ${fill}; font-size: 20px">Mon Tue Wed</text>
+      </svg>`);
+
+  test('dark labels are measured, and pass', async ({ page }) => {
+    await chart(page, '#333');
+    expect(await paintedTextFailures(page)).toEqual([]);
+  });
+
+  test('faint labels are measured, and fail on their real colour', async ({ page }) => {
+    await chart(page, '#ccc');
+    const found = await paintedTextFailures(page);
+    expect(found).toHaveLength(1);
+    expect(found[0]).not.toMatch(/too few letter pixels/);
+    expect(found[0]).toMatch(/Mon Tue Wed/);
+  });
+});
+
+// J's report on the CI list: on /help, text inside a closed "More about …" section has boxes
+// but is not drawn, so it read as "too few letter pixels". It is measured when open.
+test.describe('text inside a closed details section', { tag: '@contrast' }, () => {
+  const section = (page: Page, open: boolean) =>
+    page.setContent(`
+      <style>body { margin: 0; padding: 40px; background: #fff; font: 16px sans-serif; }</style>
+      <details${open ? ' open' : ''}>
+        <summary style="color: #222">More about it</summary>
+        <p style="color: #ddd">For: All ages.</p>
+      </details>`);
+
+  test('is not measured while the section is closed', async ({ page }) => {
+    await section(page, false);
+    expect(await paintedTextFailures(page)).toEqual([]);
+  });
+
+  test('is measured once the section is open', async ({ page }) => {
+    await section(page, true);
+    const found = await paintedTextFailures(page);
+    expect(found).toHaveLength(1);
+    expect(found[0]).toMatch(/For: All ages/);
+    expect(found[0]).not.toMatch(/too few letter pixels/);
+  });
+});
+
 test('a clean retry clears the differences an earlier attempt recorded (Codex on #408)', () => {
   // CI retries a failed test once, under the same file name: a retry that matches the list must
   // not leave the first attempt's differences for the log, or contrast-from-log.mjs would apply
