@@ -25,6 +25,8 @@ import {
 import './feedback.css';
 
 const MAX_TEXT = 500;
+/** An error's reference code (F18b): sent on its own by default, not as a device detail. */
+const isProblemCode = (code: string | undefined): code is string => !!code && /^RD-/.test(code);
 
 function currentDeviceDetails(route: string): DeviceDetails {
   return {
@@ -68,6 +70,11 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const device = currentDeviceDetails(route);
+  // F18b (lead ruling): a reference code the screen showed is attached by default, even with
+  // device details off, and the sender can remove it. It is a random code, never personal data.
+  const problemCode = isProblemCode(device.lastProblem) ? device.lastProblem : undefined;
+  const [keepProblem, setKeepProblem] = useState(true);
+  const sentProblem = problemCode && keepProblem ? problemCode : undefined;
   const id = useId();
 
   const submit = async (event: FormEvent) => {
@@ -76,7 +83,13 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
     if (findPersonalDetails(text)) return setError(PERSONAL_DETAILS_MESSAGE);
     const body: FeedbackRequest = { kind };
     if (text.trim()) body.text = text.trim();
-    if (includeDevice) body.device = device;
+    if (includeDevice) {
+      const { lastProblem, ...rest } = device;
+      const keptLast = problemCode ? sentProblem : lastProblem;
+      body.device = keptLast ? { ...rest, lastProblem: keptLast } : rest;
+    } else if (sentProblem) {
+      body.device = { lastProblem: sentProblem };
+    }
     setBusy(true);
     setError(undefined);
     setErrorRef(undefined);
@@ -169,6 +182,18 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
       </p>
 
       <Card>
+        {sentProblem && (
+          <div className="feedback__problem">
+            <p>Problem code: {sentProblem}</p>
+            <Button
+              variant="secondary"
+              aria-label="Remove problem code"
+              onClick={() => setKeepProblem(false)}
+            >
+              Remove
+            </Button>
+          </div>
+        )}
         <label className="feedback__toggle">
           <input
             type="checkbox"
@@ -184,12 +209,7 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
             <li>Browser: {device.browserFamily}</li>
             <li>Screen size: {device.screenSize}</li>
             <li>Connection: {device.online ? 'online' : 'offline'}</li>
-            {device.lastProblem && (
-              <li>
-                {/^RD-/.test(device.lastProblem) ? 'Problem code' : 'Last problem'}:{' '}
-                {device.lastProblem}
-              </li>
-            )}
+            {device.lastProblem && !problemCode && <li>Last problem: {device.lastProblem}</li>}
             {device.contentId && <li>Question or card: {device.contentId}</li>}
             <li>
               Look: {device.look ?? 'default'}, {device.theme}, pattern {device.pattern}

@@ -300,9 +300,10 @@ Tags: #product #rules #limits #defaults
   and says how the screen looked (look, light or dark, pattern, pixel density, pinch zoom, text size
   against 16px). Never the reading tint, dyslexia-friendly font or colour-blind colours (L, notice 1.11).
 - Bug reports (F18, owner 2026-11-27): an error reference code shown by `<ErrorRef>` is kept for
-  15 minutes (`LAST_PROBLEM_KEEP_MS`, newest wins, cleared by parent sign-out) and sent as the
-  device details' `lastProblem`; the form shows "Problem code: RD-…". It is in device details, so a
-  student's report carries it only if they turn device details on. No automatic error report.
+  15 minutes (`LAST_PROBLEM_KEEP_MS`, newest wins, cleared by parent sign-out) and sent as
+  `device.lastProblem` by default, even with device details off (F18b, lead ruling: then device is
+  just `{ lastProblem }`). The form shows "Problem code: RD-…" on its own line with "Remove". No
+  automatic error report.
 - Lesson reactions (F13, for J14, owner 2026-11-26): `LessonPlayer` calls
   `onAnswerReaction({ kind: 'right' | 'wrong' | 'helped' | 'goal', combo })` once per marked
   answer (never for an unmarked one). F decides when; J decides how Pip and the avatar react.

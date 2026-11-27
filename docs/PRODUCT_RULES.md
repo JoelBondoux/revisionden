@@ -839,8 +839,10 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   16px (never the reading tint, dyslexia-friendly font or colour-blind colours: L ruling, notice
   1.11), so a layout or touch bug can be reproduced. If a screen showed an error's reference code
   in the last 15 minutes (F18: any `<ErrorRef>`), the report carries that code as `lastProblem`
-  and the form lists it as "Problem code: RD-…" (passkey and phone codes stay "Last problem");
-  a newer code replaces it, and signing out forgets it. Sending the bug report does not send the
+  by default, on its own line "Problem code: RD-…" with a Remove button, even when device details
+  are off (F18b, lead ruling: it is a random code, no personal data; with device details off only
+  `{ lastProblem }` is sent). Passkey and phone codes stay "Last problem" under device details. A
+  newer code replaces it, and signing out forgets it. Sending the bug report does not send the
   error report: that still needs the "Send error report" tap (owner, 2026-11-27). Never IP
   address, location or contacts.
 - Students can send feedback; the form tells them their parent can see it. Parents see their

@@ -93,6 +93,33 @@ describe('feedback form', () => {
     forgetLastProblem();
   });
 
+  it("sends a student's problem code by default, without the device details (F18b)", async () => {
+    rememberLastProblem('RD-VDMW5E');
+    const api = fakeApi();
+    show(api, { studentId: '00000000-0000-4000-8000-0000000000b1' });
+    expect(screen.getByRole('checkbox', { name: 'Include device details' })).not.toBeChecked();
+    expect(screen.getByText('Problem code: RD-VDMW5E')).toBeInTheDocument();
+    await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith('student', {
+      kind: 'bug',
+      device: { lastProblem: 'RD-VDMW5E' },
+    });
+    forgetLastProblem();
+  });
+
+  it('lets the sender remove the problem code before sending (F18b)', async () => {
+    rememberLastProblem('RD-VDMW5E');
+    const api = fakeApi();
+    show(api, { studentId: '00000000-0000-4000-8000-0000000000b1' });
+    await userEvent.click(screen.getByRole('button', { name: 'Remove problem code' }));
+    expect(screen.queryByText(/Problem code:/)).not.toBeInTheDocument();
+    await userEvent.click(screen.getByRole('radio', { name: 'Bug' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Send' }));
+    expect(api.send).toHaveBeenCalledWith('student', { kind: 'bug' });
+    forgetLastProblem();
+  });
+
   it('keeps calling a passkey or phone problem the last problem (E8)', () => {
     rememberLastProblem('passkey:NotAllowedError:RD-7K2M9Q');
     show(fakeApi());

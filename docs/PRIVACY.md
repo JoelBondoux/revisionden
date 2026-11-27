@@ -114,8 +114,10 @@ date per parent sign-in.
   `NotAllowedError`; strict pattern, never the browser's message). A bug report sent from that
   screen may carry the same short code as `lastProblem` (letters, digits, `_`, `:` and `-` only).
   F18: any error reference code a screen showed in the last 15 minutes is carried the same way
-  (just the code, for example `RD-7K2M9Q`), only with device details on; signing out forgets it.
-  It never sends the error report by itself.
+  (just the code, for example `RD-7K2M9Q`). F18b: it is sent by default on its own line, even
+  with device details off (then the report's device field holds only `lastProblem`), and the
+  sender can remove it before sending; signing out forgets it. It never sends the error report by
+  itself. L adjusts the notice wording to match (merges with this change).
   A failed "Use my phone instead" sign-in (E10) is logged the same way, with the path `/unlock`.
 
 ## Operator console (AppDeck)

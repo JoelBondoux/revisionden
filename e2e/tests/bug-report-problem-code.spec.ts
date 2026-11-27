@@ -30,12 +30,13 @@ test('a reference code on screen goes into the next bug report', async ({ page }
   await expect(page.getByText(REF).first()).toBeVisible();
 
   await page.getByRole('button', { name: 'Report a bug' }).click();
-  await page.getByRole('checkbox', { name: 'Include device details' }).check();
+  // F18b: the code is attached by default, even with device details off (a pupil's default).
+  await expect(page.getByRole('checkbox', { name: 'Include device details' })).not.toBeChecked();
   await expect(page.getByText(`Problem code: ${REF}`)).toBeVisible();
   await page.getByRole('radio', { name: 'Bug' }).check();
   await page.getByLabel(/Tell us more/).fill('The map would not load');
   await page.getByRole('button', { name: 'Send', exact: true }).click();
 
   await expect.poll(() => sent.length).toBe(1);
-  expect(sent[0]?.device?.lastProblem).toBe(REF);
+  expect(sent[0]?.device).toEqual({ lastProblem: REF });
 });
