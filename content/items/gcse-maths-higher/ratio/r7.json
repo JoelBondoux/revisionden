@@ -1,0 +1,903 @@
+[
+  {
+    "id": "gcse-maths-h-r7-0101",
+    "topic": "gcse-maths-h-r7",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r7-lp-missing-value",
+    "expected_seconds": 35,
+    "prompt": "3 : 5 = 12 : x. Work out x.",
+    "answer": {
+      "value": "20"
+    },
+    "verify": {
+      "expression": "5 * 12/3"
+    },
+    "marks": 1,
+    "explanation": "3 has been multiplied by 4 to make 12, so multiply 5 by 4 too: x = 20.",
+    "hint": "What do you multiply 3 by to get 12? Do the same to the other part.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:19Z",
+          "notes": "model answered \"20\"; expected \"20\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:20Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:52Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0102",
+    "topic": "gcse-maths-h-r7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r7-lp-missing-value",
+    "expected_seconds": 40,
+    "prompt": "7 : 4 = x : 10. Work out x.",
+    "answer": {
+      "value": "17.5"
+    },
+    "verify": {
+      "expression": "7 * 10/4"
+    },
+    "marks": 1,
+    "explanation": "4 has been multiplied by 2.5 to make 10, so x = 7 × 2.5 = 17.5.",
+    "hint": "Find the multiplier that takes 4 to 10, and use it on 7.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:22Z",
+          "notes": "model answered \"17.5\"; expected \"17.5\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:23Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:52Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0103",
+    "topic": "gcse-maths-h-r7",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r7-lp-missing-value",
+    "expected_seconds": 90,
+    "prompt": "The ratios 5 : x and 8 : 12 are equal. Work out x.",
+    "answer": {
+      "solutions": ["15/2"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "5/x = 8/12",
+      "variable": "x"
+    },
+    "steps": ["5/x = 8/12", "8*x = 60", "x = 15/2"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 5/x = 8/12 or 8x = 60", "A1 for x = 7.5"],
+    "explanation": "Equal ratios give equal fractions: 5/x = 8/12. Cross-multiplying gives 8x = 60, so x = 7.5.",
+    "hint": "Write the equal ratios as equal fractions and cross-multiply.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). Answer backed by the maths engine (answer and every step). Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:25Z",
+          "notes": "model answered \"7.5\"; expected \"15/2\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:25Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:52Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0104",
+    "topic": "gcse-maths-h-r7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r7-lp-missing-value",
+    "expected_seconds": 45,
+    "prompt": "A recipe uses 250 g of flour to make 6 cakes. The ratio of flour to cakes stays the same. How much flour is needed for 15 cakes?",
+    "answer": {
+      "value": "625",
+      "unit": "g"
+    },
+    "verify": {
+      "expression": "250 * 15/6"
+    },
+    "marks": 1,
+    "explanation": "15 cakes is 15 ÷ 6 = 2.5 times as many, so use 2.5 × 250 = 625 g of flour.",
+    "hint": "How many times as many cakes is 15 compared with 6?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:27Z",
+          "notes": "model answered \"625 g\"; expected \"625\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:28Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0105",
+    "topic": "gcse-maths-h-r7",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r7-lp-check-proportion",
+    "expected_seconds": 30,
+    "prompt": "Which ratio is equal to 4 : 6?",
+    "options": ["6 : 8", "10 : 15", "8 : 10", "12 : 16"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "4 : 6 simplifies to 2 : 3. 10 : 15 also simplifies to 2 : 3. The others simplify to 3 : 4, 4 : 5 and 3 : 4.",
+    "hint": "Simplify every ratio and compare.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:30Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:31Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0106",
+    "topic": "gcse-maths-h-r7",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r7-lp-check-proportion",
+    "expected_seconds": 35,
+    "prompt": "Which ratio is equal to 9 : 12?",
+    "options": ["15 : 20", "12 : 15", "18 : 21", "6 : 9"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "9 : 12 simplifies to 3 : 4. 15 : 20 also simplifies to 3 : 4. The others simplify to 4 : 5, 6 : 7 and 2 : 3.",
+    "hint": "Write each ratio in its simplest form.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:32Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:33Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0107",
+    "topic": "gcse-maths-h-r7",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r7-lp-check-proportion",
+    "expected_seconds": 35,
+    "prompt": "Are the ratios 6 : 15 and 10 : 25 equal? Answer yes or no.",
+    "answer": {
+      "accepted": ["yes"]
+    },
+    "marks": 1,
+    "explanation": "6 : 15 simplifies to 2 : 5 (divide by 3) and 10 : 25 simplifies to 2 : 5 (divide by 5). They are equal.",
+    "hint": "Simplify both ratios and compare them.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:34Z",
+          "notes": "model answered \"Yes\"; expected \"yes\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:35Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0108",
+    "topic": "gcse-maths-h-r7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r7-lp-check-proportion",
+    "expected_seconds": 45,
+    "prompt": "A photo is 10 cm wide and 15 cm tall. It is enlarged so that its width and height stay in the same ratio. The new width is 24 cm. Work out the new height.",
+    "answer": {
+      "value": "36",
+      "unit": "cm"
+    },
+    "verify": {
+      "expression": "15 * 24/10"
+    },
+    "marks": 1,
+    "explanation": "The width has been multiplied by 24 ÷ 10 = 2.4, so the height is 15 × 2.4 = 36 cm.",
+    "hint": "Find the multiplier for the width and apply it to the height.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:37Z",
+          "notes": "model answered \"36 cm\"; expected \"36\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:38Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0109",
+    "topic": "gcse-maths-h-r7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r7-lp-proportion-recall",
+    "expected_seconds": 10,
+    "front": "2 : 3 = 6 : ?",
+    "back": "9",
+    "explanation": "2 × 3 = 6, so 3 × 3 = 9.",
+    "hint": "What multiplies 2 to give 6?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:40Z",
+          "notes": "model answered \"9\"; expected \"9\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:41Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0110",
+    "topic": "gcse-maths-h-r7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r7-lp-proportion-recall",
+    "expected_seconds": 10,
+    "front": "5 : 4 = ? : 12",
+    "back": "15",
+    "explanation": "4 × 3 = 12, so 5 × 3 = 15.",
+    "hint": "What multiplies 4 to give 12?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:43Z",
+          "notes": "model answered \"15\"; expected \"15\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:44Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:53Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r7-0111",
+    "topic": "gcse-maths-h-r7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r7-lp-proportion-recall",
+    "expected_seconds": 10,
+    "front": "1 : 7 = 3 : ?",
+    "back": "21",
+    "explanation": "1 × 3 = 3, so 7 × 3 = 21.",
+    "hint": "What multiplies 1 to give 3?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R7 (page 16; PDF page 28)",
+        "quote": "understand and use proportion as equality of ratios",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:46Z",
+          "notes": "model answered \"21\"; expected \"21\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:47Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:54Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]

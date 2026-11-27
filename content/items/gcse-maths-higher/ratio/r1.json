@@ -1,0 +1,949 @@
+[
+  {
+    "id": "gcse-maths-h-r1-0101",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r1-lp-standard-units",
+    "expected_seconds": 30,
+    "prompt": "Change 4.75 litres to millilitres.",
+    "answer": {
+      "value": "4750",
+      "unit": "ml"
+    },
+    "verify": {
+      "expression": "4.75 * 1000"
+    },
+    "marks": 1,
+    "explanation": "There are 1000 millilitres in 1 litre, so multiply by 1000: 4.75 × 1000 = 4750 ml.",
+    "hint": "Think about how many millilitres make 1 litre, then multiply.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 litre = 1000 ml = 1000 cm³) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:33Z",
+          "notes": "model answered \"4750 mL\"; expected \"4750\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:35Z",
+          "notes": "unsupported_claim (hint): The hint states that there is a fixed conversion from litres to millilitres ('how many millilitres make 1 litre') but no quoted source is provided for this factual claim. The instruction says new factual claims in the hint need a quoted source like any other.; unsupported_claim (explanation): The explanation states 'There are 1000 millilitres in 1 litre' without a quoted source backing that specific conversion fact. The cited specification supports changing between related standard units, but does not itself state this conversion ratio."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0102",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r1-lp-standard-units",
+    "expected_seconds": 45,
+    "prompt": "Change 6 m² to cm².",
+    "answer": {
+      "value": "60000",
+      "unit": "cm²"
+    },
+    "verify": {
+      "expression": "6 * 100^2"
+    },
+    "marks": 1,
+    "explanation": "1 m = 100 cm, so 1 m² = 100 × 100 = 10 000 cm². Then 6 × 10 000 = 60 000 cm².",
+    "hint": "A square metre is 100 cm by 100 cm. Work out how many cm² that is first.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 m = 100 cm, so 1 m² = 10 000 cm² and 1 m³ = 1 000 000 cm³) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:23Z",
+          "notes": "model answered \"60,000 cm²\"; expected \"60000\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:24Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0103",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r1-lp-standard-units",
+    "expected_seconds": 40,
+    "prompt": "Change 3 hours 24 minutes to hours. Give your answer as a decimal.",
+    "answer": {
+      "value": "3.4",
+      "unit": "hours"
+    },
+    "verify": {
+      "expression": "3 + 24/60"
+    },
+    "marks": 1,
+    "explanation": "24 minutes is 24/60 of an hour = 0.4 hours. So 3 hours 24 minutes = 3 + 0.4 = 3.4 hours.",
+    "hint": "Write the minutes as a fraction of 60, then change that fraction to a decimal.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 hour = 60 minutes = 3600 seconds) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:25Z",
+          "notes": "model answered \"3.4 hours\"; expected \"3.4\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:26Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0104",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r1-lp-standard-units",
+    "expected_seconds": 50,
+    "prompt": "Change 0.0085 m³ to cm³.",
+    "answer": {
+      "value": "8500",
+      "unit": "cm³"
+    },
+    "verify": {
+      "expression": "0.0085 * 100^3"
+    },
+    "marks": 1,
+    "explanation": "1 m = 100 cm, so 1 m³ = 100 × 100 × 100 = 1 000 000 cm³. Then 0.0085 × 1 000 000 = 8500 cm³.",
+    "hint": "A cubic metre is 100 cm by 100 cm by 100 cm. Find how many cm³ that is, then multiply.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 m = 100 cm, so 1 m² = 10 000 cm² and 1 m³ = 1 000 000 cm³) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:28Z",
+          "notes": "model answered \"8500 cm³\"; expected \"8500\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:29Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0105",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r1-lp-compound-units",
+    "expected_seconds": 50,
+    "prompt": "Change a speed of 72 km/h to m/s.",
+    "answer": {
+      "value": "20",
+      "unit": "m/s"
+    },
+    "verify": {
+      "expression": "72 * 1000 / 3600"
+    },
+    "marks": 1,
+    "explanation": "72 km = 72 000 m, and 1 hour = 3600 seconds. So the speed is 72 000 ÷ 3600 = 20 m/s.",
+    "hint": "Change the kilometres to metres and the hour to seconds, then divide.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 km = 1000 m and 1 hour = 3600 seconds) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:31Z",
+          "notes": "model answered \"20 m/s\"; expected \"20\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:31Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:31Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0106",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r1-lp-compound-units",
+    "expected_seconds": 60,
+    "prompt": "A metal has a density of 7.8 g/cm³. Write this density in kg/m³.",
+    "answer": {
+      "value": "7800",
+      "unit": "kg/m³"
+    },
+    "verify": {
+      "expression": "7.8 * 100^3 / 1000"
+    },
+    "marks": 1,
+    "explanation": "1 m³ = 1 000 000 cm³, so 1 m³ of the metal has mass 7.8 × 1 000 000 = 7 800 000 g. That is 7 800 000 ÷ 1000 = 7800 kg, so 7800 kg/m³.",
+    "hint": "Find the mass in grams of 1 m³ of the metal, then change grams to kilograms.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 kg = 1000 g and 1 m³ = 1 000 000 cm³) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:33Z",
+          "notes": "model answered \"7800 kg/m³\"; expected \"7800\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:34Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0107",
+    "topic": "gcse-maths-h-r1",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r1-lp-compound-units",
+    "expected_seconds": 40,
+    "prompt": "Water flows from a tap at 0.4 litres per second. Write this rate in litres per minute.",
+    "answer": {
+      "value": "24",
+      "unit": "litres per minute"
+    },
+    "verify": {
+      "expression": "0.4 * 60"
+    },
+    "marks": 1,
+    "explanation": "There are 60 seconds in a minute, so in one minute 0.4 × 60 = 24 litres flow out.",
+    "hint": "How many seconds are in one minute? Multiply the rate per second by that.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 hour = 60 minutes = 3600 seconds) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:35Z",
+          "notes": "model answered \"24 litres per minute\"; expected \"24\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:36Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0108",
+    "topic": "gcse-maths-h-r1",
+    "type": "worked_maths",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r1-lp-compound-units",
+    "expected_seconds": 120,
+    "prompt": "An object moves at v m/s. Write an expression in the form kv for its speed in km/h.",
+    "answer": {
+      "expression": "3.6*v"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "v * 3600 / 1000"
+    },
+    "steps": ["v * 3600 / 1000", "3600*v/1000", "3.6*v"],
+    "marks": 2,
+    "mark_scheme": ["M1 for v × 3600 (metres in one hour)", "A1 for 3.6v"],
+    "explanation": "In one hour (3600 seconds) it moves 3600v metres. Divide by 1000 to get kilometres: 3600v ÷ 1000 = 3.6v.",
+    "hint": "Work out how many metres it goes in one hour, then change metres to kilometres.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). Answer backed by the maths engine (answer and every step). Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 km = 1000 m and 1 hour = 3600 seconds) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:37Z",
+          "notes": "model answered \"3.6v\"; expected \"3.6*v\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:38Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0109",
+    "topic": "gcse-maths-h-r1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r1-lp-unit-recall",
+    "expected_seconds": 10,
+    "front": "How many millilitres are in 1 litre?",
+    "back": "1000 ml",
+    "explanation": "\"Milli\" means one thousandth, so 1 litre = 1000 ml.",
+    "hint": "\"Milli\" means one thousandth.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 litre = 1000 ml = 1000 cm³) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:39Z",
+          "notes": "model answered \"1000 mL\"; expected \"1000 ml\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:41Z",
+          "notes": "unsupported_claim (hint): The hint states '\"Milli\" means one thousandth.' This is a new factual claim, but the only quoted source supports changing between related standard units and does not support the meaning of the prefix 'milli'.; unsupported_claim (explanation): The explanation states '\"Milli\" means one thousandth', which is a factual claim not supported by the quoted source.; unsupported_claim (explanation): The explanation concludes 'so 1 litre = 1000 ml.' The quoted source supports conversion between related standard units in general, but it does not specifically state the litre–millilitre relationship, so this exact factual claim is not backed by the provided source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0110",
+    "topic": "gcse-maths-h-r1",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r1-lp-unit-recall",
+    "expected_seconds": 15,
+    "front": "A speed of 1 m/s is how many km/h?",
+    "back": "3.6 km/h",
+    "explanation": "In 1 hour (3600 seconds) you go 3600 m, which is 3.6 km. So 1 m/s = 3.6 km/h.",
+    "hint": "Work out how far you go in one hour, in kilometres.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 km = 1000 m and 1 hour = 3600 seconds) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:43Z",
+          "notes": "model answered \"3.6 km/h\"; expected \"3.6 km/h\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:43Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r1-0111",
+    "topic": "gcse-maths-h-r1",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r1-lp-unit-recall",
+    "expected_seconds": 10,
+    "front": "How many cm³ are in 1 litre?",
+    "back": "1000 cm³",
+    "explanation": "1 litre is the same as 1000 ml, and 1 ml = 1 cm³, so 1 litre = 1000 cm³.",
+    "hint": "One millilitre is the same as one cubic centimetre.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R1 (page 16; PDF page 28)",
+        "quote": "change freely between related standard units (e.g. time, length, area, volume/capacity, mass) and compound units (e.g. speed, rates of pay, prices, density, pressure) in numerical and algebraic contexts",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R1). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 litre = 1000 ml = 1000 cm³) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:45Z",
+          "notes": "model answered \"1000 cm³\"; expected \"1000 cm³\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:47Z",
+          "notes": "unsupported_claim (hint): The hint states 'One millilitre is the same as one cubic centimetre.' The only quoted source supports changing between related standard units for volume/capacity, but it does not explicitly state this equivalence. As a new factual claim, it needs direct support from a quoted source.; unsupported_claim (explanation): The explanation states '1 litre is the same as 1000 ml, and 1 ml = 1 cm³'. These are factual unit equivalences, but the quoted source does not explicitly provide either equivalence. Since factual claims in the explanation need quoted support, these claims are unsupported by the source provided."
+        }
+      ]
+    }
+  }
+]

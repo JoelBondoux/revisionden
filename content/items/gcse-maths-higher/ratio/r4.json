@@ -1,0 +1,952 @@
+[
+  {
+    "id": "gcse-maths-h-r4-0101",
+    "topic": "gcse-maths-h-r4",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r4-lp-simplify",
+    "expected_seconds": 25,
+    "prompt": "Write the ratio 12 : 18 in its simplest form.",
+    "answer": {
+      "accepted": ["2:3"]
+    },
+    "marks": 1,
+    "explanation": "The highest common factor of 12 and 18 is 6. 12 ÷ 6 = 2 and 18 ÷ 6 = 3, so 12 : 18 = 2 : 3.",
+    "hint": "Divide both numbers by their highest common factor.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:19Z",
+          "notes": "model answered \"2:3\"; expected \"2:3\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:19Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0102",
+    "topic": "gcse-maths-h-r4",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r4-lp-simplify",
+    "expected_seconds": 35,
+    "prompt": "Write the ratio 45 : 60 : 75 in its simplest form.",
+    "answer": {
+      "accepted": ["3:4:5"]
+    },
+    "marks": 1,
+    "explanation": "All three numbers divide by 15: 45 ÷ 15 = 3, 60 ÷ 15 = 4 and 75 ÷ 15 = 5. So the ratio is 3 : 4 : 5.",
+    "hint": "Find a number that divides all three parts, as large as possible.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:21Z",
+          "notes": "model answered \"3 : 4 : 5\"; expected \"3:4:5\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:22Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0103",
+    "topic": "gcse-maths-h-r4",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r4-lp-simplify",
+    "expected_seconds": 40,
+    "prompt": "Write the ratio 1.5 : 2.5 in its simplest form.",
+    "answer": {
+      "accepted": ["3:5"]
+    },
+    "marks": 1,
+    "explanation": "Multiply both parts by 2 to make whole numbers: 3 : 5. 3 and 5 have no common factor, so this is simplest.",
+    "hint": "Multiply both parts by the same number to clear the decimals first.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:24Z",
+          "notes": "model answered \"3:5\"; expected \"3:5\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:25Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0104",
+    "topic": "gcse-maths-h-r4",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r4-lp-simplify",
+    "expected_seconds": 50,
+    "prompt": "Write the ratio 2/3 : 5/6 in its simplest form.",
+    "answer": {
+      "accepted": ["4:5"]
+    },
+    "marks": 1,
+    "explanation": "Multiply both parts by 6: 2/3 × 6 = 4 and 5/6 × 6 = 5. So the ratio is 4 : 5.",
+    "hint": "Multiply both parts by a common denominator to make whole numbers.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:27Z",
+          "notes": "model answered \"4:5\"; expected \"4:5\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:28Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0105",
+    "topic": "gcse-maths-h-r4",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r4-lp-simplify",
+    "expected_seconds": 45,
+    "prompt": "Write the ratio of 40 cm to 2 m in its simplest form.",
+    "answer": {
+      "accepted": ["1:5"]
+    },
+    "marks": 1,
+    "explanation": "2 m = 200 cm, so the ratio is 40 : 200. Divide both by 40: 1 : 5.",
+    "hint": "Write both lengths in the same unit before simplifying.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the answer rests on standard unit definitions or a standard compound-measure definition (1 m = 100 cm) that no 1MA1 or DfE document states, and the maths engine cannot prove a unit definition, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:34Z",
+          "notes": "model answered \"1:5\"; expected \"1:5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:28:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0106",
+    "topic": "gcse-maths-h-r4",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r4-lp-simplify",
+    "expected_seconds": 25,
+    "prompt": "What is the ratio 16 : 24 in its simplest form?",
+    "options": ["4 : 6", "2 : 3", "8 : 12", "3 : 2"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "The highest common factor of 16 and 24 is 8: 16 ÷ 8 = 2 and 24 ÷ 8 = 3. 4 : 6 and 8 : 12 are equal ratios but can still be simplified, and 3 : 2 is the wrong way round.",
+    "hint": "Divide both parts by the largest number that goes into both.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:32Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:33Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0107",
+    "topic": "gcse-maths-h-r4",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-r4-lp-unit-ratio",
+    "expected_seconds": 35,
+    "prompt": "The ratio 8 : 20 can be written in the form 1 : n. Work out n.",
+    "answer": {
+      "value": "2.5"
+    },
+    "verify": {
+      "expression": "20/8"
+    },
+    "marks": 1,
+    "explanation": "Divide both parts by 8: 8 ÷ 8 = 1 and 20 ÷ 8 = 2.5. So 8 : 20 = 1 : 2.5.",
+    "hint": "Divide both parts by the first number.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:35Z",
+          "notes": "model answered \"2.5\"; expected \"2.5\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:36Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:48Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0108",
+    "topic": "gcse-maths-h-r4",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r4-lp-unit-ratio",
+    "expected_seconds": 35,
+    "prompt": "The ratio 5 : 12 can be written in the form 1 : n. Work out n.",
+    "answer": {
+      "value": "2.4"
+    },
+    "verify": {
+      "expression": "12/5"
+    },
+    "marks": 1,
+    "explanation": "Divide both parts by 5: 5 ÷ 5 = 1 and 12 ÷ 5 = 2.4. So 5 : 12 = 1 : 2.4.",
+    "hint": "Make the first part 1 by dividing both parts by the same number.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:37Z",
+          "notes": "model answered \"2.4\"; expected \"2.4\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:38Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:49Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0109",
+    "topic": "gcse-maths-h-r4",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r4-lp-unit-ratio",
+    "expected_seconds": 40,
+    "prompt": "The ratio 6 : 15 can be written in the form n : 1. Work out n.",
+    "answer": {
+      "value": "0.4"
+    },
+    "verify": {
+      "expression": "6/15"
+    },
+    "marks": 1,
+    "explanation": "Divide both parts by 15: 6 ÷ 15 = 0.4 and 15 ÷ 15 = 1. So 6 : 15 = 0.4 : 1.",
+    "hint": "This time make the second part 1: divide both parts by the second number.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:40Z",
+          "notes": "model answered \"0.4\"; expected \"0.4\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:41Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:49Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0110",
+    "topic": "gcse-maths-h-r4",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r4-lp-ratio-recall",
+    "expected_seconds": 10,
+    "front": "How many parts are there in total in the ratio 2 : 7?",
+    "back": "9",
+    "explanation": "Add the parts: 2 + 7 = 9.",
+    "hint": "Add the numbers in the ratio.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:43Z",
+          "notes": "model answered \"9\"; expected \"9\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:44Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:49Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0111",
+    "topic": "gcse-maths-h-r4",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r4-lp-ratio-recall",
+    "expected_seconds": 15,
+    "front": "The ratio 3 : 12 written as 1 : n. What is n?",
+    "back": "4",
+    "explanation": "Divide both parts by 3: 3 : 12 = 1 : 4.",
+    "hint": "Divide both parts by the first number.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:45Z",
+          "notes": "model answered \"4\"; expected \"4\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:46Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:49Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r4-0112",
+    "topic": "gcse-maths-h-r4",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r4-lp-ratio-recall",
+    "expected_seconds": 10,
+    "front": "How many parts are there in total in the ratio 3 : 4 : 1?",
+    "back": "8",
+    "explanation": "Add the parts: 3 + 4 + 1 = 8.",
+    "hint": "Add all the numbers in the ratio.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R4 (page 16; PDF page 28)",
+        "quote": "use ratio notation, including reduction to simplest form",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:48Z",
+          "notes": "model answered \"8\"; expected \"8\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:48Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:49Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  }
+]
