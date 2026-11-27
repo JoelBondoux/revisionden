@@ -41,8 +41,8 @@ describe('subjects with no questions yet (RD-MBXKTC)', () => {
       units: [],
     });
     expect(body.subjects).toEqual([
-      { subjectId: EMPTY, subject: 'Chemistry', hasContent: false },
-      { subjectId: ALSO_EMPTY, subject: 'Drama', hasContent: false },
+      { subjectId: EMPTY, subject: 'Chemistry', hasContent: false, lastPractisedAt: null },
+      { subjectId: ALSO_EMPTY, subject: 'Drama', hasContent: false, lastPractisedAt: null },
     ]);
   });
 

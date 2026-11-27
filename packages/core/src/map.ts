@@ -70,6 +70,11 @@ export const MapSubjectSchema = z.object({
   subject: z.string(),
   /** False while no question in the subject may be served yet ("coming soon"). */
   hasContent: z.boolean(),
+  /**
+   * When the student last answered a question in it (ISO), or null if never (UX-1: the picker
+   * lists recent subjects first). Optional so older stored or mocked maps still parse.
+   */
+  lastPractisedAt: z.string().nullable().optional(),
 });
 export type MapSubject = z.infer<typeof MapSubjectSchema>;
 
@@ -114,7 +119,7 @@ export interface BuildTopicMapInput {
   mastery: ReadonlyMap<string, number>;
   progress: { xpToday: number; dailyGoalXp: number; streakDays: number };
   /** The student's subjects in enrolment order, for the subject switcher. */
-  subjects?: readonly { subjectId: string; hasContent: boolean }[];
+  subjects?: readonly { subjectId: string; hasContent: boolean; lastPractisedAt?: string | null }[];
 }
 
 const capitalise = (word: string) => word.charAt(0).toUpperCase() + word.slice(1);
@@ -214,6 +219,7 @@ export function buildTopicMap(input: BuildTopicMapInput): TopicMap {
       subjectId: s.subjectId,
       subject: subjectNames(s.subjectId, 'none').subject,
       hasContent: s.hasContent,
+      lastPractisedAt: s.lastPractisedAt ?? null,
     })),
     ...subjectNames(input.subjectId, input.tier),
     streakDays: input.progress.streakDays,

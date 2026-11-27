@@ -77,14 +77,27 @@ test('the switcher is on Cards too, and its last line opens the subject picker',
   await expect(page.getByRole('region', { name: 'Pick a subject' })).toBeVisible();
 });
 
-test('the subject picker lists the current subject, then ones you can start, then folds the rest', async ({
+test('the subject picker lists recent subjects first, then ones to start, then folds the rest', async ({
   page,
 }) => {
+  // Lead's ruling (UX-1): practised subjects most recent first, then the others with questions,
+  // then the coming-soon ones folded; pupils cannot add subjects, so a parent is the way.
   const many = [
-    { subjectId: 'art', subject: 'Art', hasContent: false },
-    { subjectId: 'biology', subject: 'Biology', hasContent: true },
-    { subjectId: 'chemistry', subject: 'Chemistry', hasContent: false },
-    { subjectId: 'maths', subject: 'Maths', hasContent: true },
+    { subjectId: 'art', subject: 'Art', hasContent: false, lastPractisedAt: null },
+    {
+      subjectId: 'biology',
+      subject: 'Biology',
+      hasContent: true,
+      lastPractisedAt: '2026-11-20T10:00:00.000Z',
+    },
+    { subjectId: 'chemistry', subject: 'Chemistry', hasContent: false, lastPractisedAt: null },
+    { subjectId: 'french', subject: 'French', hasContent: true, lastPractisedAt: null },
+    {
+      subjectId: 'maths',
+      subject: 'Maths',
+      hasContent: true,
+      lastPractisedAt: '2026-11-26T10:00:00.000Z',
+    },
   ];
   await seedApp(page, 'pupil');
   await page.route('**/v1/student/map**', (route) =>
@@ -93,9 +106,10 @@ test('the subject picker lists the current subject, then ones you can start, the
   await page.goto('/map');
   await page.locator('.map-play').click();
   const picker = page.getByRole('region', { name: 'Pick a subject' });
-  await expect(picker.locator('.map-subjects-grid').getByRole('button')).toHaveText([
+  await expect(picker.locator('.map-subjects-grid').first().getByRole('button')).toHaveText([
     /^Maths/,
     /^Biology/,
+    /^French/,
   ]);
   const later = picker.getByText('2 more subjects coming soon');
   await expect(later).toBeVisible();
@@ -103,4 +117,7 @@ test('the subject picker lists the current subject, then ones you can start, the
   await later.click();
   await expect(picker.getByRole('button', { name: 'Art Coming soon' })).toBeVisible();
   await expect(picker.getByRole('button', { name: 'Chemistry Coming soon' })).toBeVisible();
+  await expect(picker).toContainText('Want a different subject?');
+  await picker.getByRole('link', { name: 'Ask a parent' }).click();
+  await expect(page).toHaveURL(/\/ask-a-parent$/);
 });

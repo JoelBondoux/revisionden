@@ -295,8 +295,12 @@ Tags: #product #rules #limits #defaults
   device per student (`localStorage` `revisionden.subject.<studentId>`) and shared by Home and the
   map; a subject the student no longer takes falls back to the API default. Cards' deck is not
   split by subject, so switching there changes only what Home and Learn show. Picker and sheet
-  order: the current subject, then the others with questions (in the order the family added them),
-  then the coming-soon ones folded into one "N more subjects coming soon" line.
+  order (lead's ruling): subjects the student has practised, most recent first (`/map` sends
+  `lastPractisedAt` per subject, the time of the last answer, or null), then the others with
+  questions in the order the family added them, then the coming-soon ones folded into one "N more
+  subjects coming soon" line (a current coming-soon subject stays at the top). Pupils cannot add
+  subjects (a parent's choice, `/parent/subjects/:studentId`), so the picker ends "Want a different
+  subject? Ask a parent", linking to `/ask-a-parent`.
 - Daily flashcard limit (F11, owner 2026-11-26): 20 review cards a day (`DAILY_CARD_LIMIT`),
   "10 more" on request (`EXTRA_CARDS`). Badge and "Due today" show today's remaining (0–20).
   Order: relearning, most overdue for its interval, then weak spots, then recent wrong answers.

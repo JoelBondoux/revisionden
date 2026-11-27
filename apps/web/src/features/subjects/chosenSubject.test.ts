@@ -80,29 +80,46 @@ describe('the chosen subject (UX-1)', () => {
   });
 });
 
-describe('the order subjects are offered in (UX-1)', () => {
+describe('the order subjects are offered in (UX-1, lead ruling)', () => {
   const four = [
-    { subjectId: 'art', subject: 'Art', hasContent: false },
-    { subjectId: 'biology', subject: 'Biology', hasContent: true },
-    { subjectId: 'chemistry', subject: 'Chemistry', hasContent: false },
-    { subjectId: 'maths', subject: 'Maths', hasContent: true },
+    { subjectId: 'art', subject: 'Art', hasContent: false, lastPractisedAt: null },
+    {
+      subjectId: 'biology',
+      subject: 'Biology',
+      hasContent: true,
+      lastPractisedAt: '2026-11-20T10:00:00.000Z',
+    },
+    { subjectId: 'chemistry', subject: 'Chemistry', hasContent: true, lastPractisedAt: null },
+    { subjectId: 'drama', subject: 'Drama', hasContent: false, lastPractisedAt: null },
+    {
+      subjectId: 'maths',
+      subject: 'Maths',
+      hasContent: true,
+      lastPractisedAt: '2026-11-26T10:00:00.000Z',
+    },
   ];
   const ids = (list: { subjectId: string }[]) => list.map((s) => s.subjectId);
 
-  it('puts the current subject first, then the others with questions, and folds the rest', () => {
-    const { now, later } = pickerOrder(four, 'maths');
-    expect(ids(now)).toEqual(['maths', 'biology']);
-    expect(ids(later)).toEqual(['art', 'chemistry']);
+  it('lists started subjects most recent first, then ones to start, and folds the rest', () => {
+    const { now, later } = pickerOrder(four, 'biology');
+    expect(ids(now)).toEqual(['maths', 'biology', 'chemistry']);
+    expect(ids(later)).toEqual(['art', 'drama']);
+  });
+
+  it("keeps the family's order among subjects not started yet", () => {
+    const fresh = four.map((s) => ({ ...s, lastPractisedAt: null }));
+    expect(ids(pickerOrder(fresh, undefined).now)).toEqual(['biology', 'chemistry', 'maths']);
   });
 
   it('keeps a current subject that is coming soon at the top, not folded away', () => {
     const { now, later } = pickerOrder(four, 'art');
-    expect(ids(now)).toEqual(['art', 'biology', 'maths']);
-    expect(ids(later)).toEqual(['chemistry']);
+    expect(ids(now)).toEqual(['art', 'maths', 'biology', 'chemistry']);
+    expect(ids(later)).toEqual(['drama']);
   });
 
-  it('works before any subject is current', () => {
-    expect(ids(pickerOrder(four, undefined).now)).toEqual(['biology', 'maths']);
+  it('works with maps that do not say when subjects were practised', () => {
+    const old = four.map(({ lastPractisedAt: _, ...s }) => s);
+    expect(ids(pickerOrder(old, undefined).now)).toEqual(['biology', 'chemistry', 'maths']);
   });
 });
 

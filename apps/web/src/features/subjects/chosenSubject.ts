@@ -104,19 +104,24 @@ export function resetKnownSubjects(): void {
 }
 
 /**
- * UX-1: the order subjects are offered in. The one on screen first, then the others with
- * questions to start, each in the order the family added them; subjects still coming soon go in
- * `later`, for one folded line (not an A–Z grid with the current subject in the middle).
+ * UX-1 (lead's ruling): the order subjects are offered in. Subjects the student has practised,
+ * most recent first; then the others with questions, in the order the family added them; and the
+ * ones still coming soon in `later`, for one folded line. A current subject that is coming soon
+ * stays at the top rather than folded away.
  */
 export function pickerOrder(
   subjects: readonly MapSubject[],
   current: string | undefined,
 ): { now: MapSubject[]; later: MapSubject[] } {
-  const mine = subjects.filter((s) => s.subjectId === current);
-  const rest = subjects.filter((s) => s.subjectId !== current);
+  const started = subjects
+    .filter((s) => s.lastPractisedAt)
+    .sort((a, b) => b.lastPractisedAt!.localeCompare(a.lastPractisedAt!));
+  const toStart = subjects.filter((s) => !s.lastPractisedAt && s.hasContent);
+  const soon = subjects.filter((s) => !s.lastPractisedAt && !s.hasContent);
+  const pinned = soon.filter((s) => s.subjectId === current);
   return {
-    now: [...mine, ...rest.filter((s) => s.hasContent)],
-    later: rest.filter((s) => !s.hasContent),
+    now: [...pinned, ...started, ...toStart],
+    later: soon.filter((s) => s.subjectId !== current),
   };
 }
 

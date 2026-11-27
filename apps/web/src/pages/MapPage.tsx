@@ -7,6 +7,7 @@ import { useApiResource } from '../api/useApiResource';
 import { FlameIcon } from '../components/icons';
 import { Pill } from '../components/Pill';
 import { Toast } from '../components/Toast';
+import { TextLink } from '../components/links';
 import { PipFigure, setPipSubject } from '../features/juice/pip';
 import { lookFor, outfitFor } from '../features/juice/pip/outfits';
 import { SubjectsNudge } from '../features/onboarding/checksUi';
@@ -100,6 +101,10 @@ function SubjectPicker({
           <div className="map-subjects-grid">{later.map(choice)}</div>
         </details>
       )}
+      {/* UX-1 (lead): a family's subjects are a parent's choice, so pupils ask one. */}
+      <p className="map-subjects-ask">
+        Want a different subject? <TextLink to="/ask-a-parent">Ask a parent</TextLink>
+      </p>
     </section>
   );
 }

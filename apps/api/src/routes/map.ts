@@ -1,14 +1,14 @@
 /**
  * The Map tab's data for a signed-in student device (workstream F2), under /v1/student:
  * GET /map?subjectId=… (default: the first enrolled subject with questions, else the first
- * enrolled subject) and GET /cards/due. A subject with no questions yet answers with
+ * enrolled subject; each subject says when it was last practised, UX-1) and GET /cards/due. A subject with no questions yet answers with
  * `status: "coming_soon"`, never an error; 404 only when the student has no subject at all.
  * Topics count only items that may be served (verified, plus drafts with the dev flag on).
  */
 import { Hono } from 'hono';
 import { and, asc, eq, inArray, sql } from 'drizzle-orm';
 import { buildTopicMap, type CardsDue, type TopicMap } from '@revisionden/core';
-import { enrolments, items, mastery, topics } from '@revisionden/db';
+import { attempts, enrolments, items, mastery, topics } from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { ApiError } from '../errors';
 import { todaysCards } from '../learning/card-limit';
@@ -49,9 +49,35 @@ export function studentMapRoutes({ db, clock, config }: LearnDeps) {
             )
             .groupBy(topics.subjectId);
     const withContent = new Set(counts.filter((r) => r.n > 0).map((r) => r.subjectId));
+    // UX-1: the last answer in each subject, so the picker can list recent subjects first.
+    const practised =
+      enrolled.length === 0
+        ? []
+        : await db
+            .select({
+              subjectId: topics.subjectId,
+              last: sql<Date | string>`max(${attempts.createdAt})`,
+            })
+            .from(attempts)
+            .innerJoin(items, eq(items.id, attempts.itemId))
+            .innerJoin(topics, eq(topics.id, items.topicId))
+            .where(
+              and(
+                eq(attempts.studentId, studentId),
+                inArray(
+                  topics.subjectId,
+                  enrolled.map((e) => e.subjectId),
+                ),
+              ),
+            )
+            .groupBy(topics.subjectId);
+    const lastPractised = new Map(
+      practised.map((r) => [r.subjectId, new Date(r.last).toISOString()]),
+    );
     const subjects = enrolled.map((e) => ({
       subjectId: e.subjectId,
       hasContent: withContent.has(e.subjectId),
+      lastPractisedAt: lastPractised.get(e.subjectId) ?? null,
     }));
     const subjectId =
       c.req.query('subjectId') ??
