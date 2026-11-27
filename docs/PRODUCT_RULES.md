@@ -391,8 +391,12 @@ Product owner decision, 2026-11-25: **parent view only**.
 - **Command-word lessons** (exam technique basics) are items tagged `command-word` in `content/`.
   None are verified yet, so the lesson says nothing is ready.
 - **Topic map (F2):** units are the top-level topics of a subject's tree; each shows its leaf
-  topics in specification order. A topic is locked while none of its items may be served,
-  mastered at 80% or more, a weak spot when tried and below 60%, otherwise in progress. Unit
+  topics in specification order. A topic is locked while a lesson on it would find no question
+  (UX-3: none of its items may be served, or the only ones are typed working without the maths
+  engine or interactive pilot steps; the same rule, `lessonReadyItem`, filters the subject's topic
+  list). Tapping a locked topic says "<topic> is coming soon: its questions are still being
+  checked." If a lesson still finds nothing, it offers "Try a topic that's ready" (the map's next
+  mission) above Back. Otherwise a topic is mastered at 80% or more, a weak spot when tried and below 60%, otherwise in progress. Unit
   mastery is the average of its open topics and its challenge unlocks at 80% (the challenge lesson
   draws on every topic in the unit). The next mission is the weakest weak spot, else the first
   topic not yet mastered, else a review of the weakest mastered topic. Implemented in

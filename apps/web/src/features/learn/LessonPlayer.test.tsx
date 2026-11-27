@@ -133,6 +133,35 @@ describe('Lesson player', () => {
     expect(await screen.findByText(/No questions are ready here yet/)).toBeInTheDocument();
   });
 
+  it("offers a topic that's ready instead of a dead end (UX-3)", async () => {
+    server.use(
+      http.get('*/v1/student/learn/lesson', () =>
+        HttpResponse.json({ items: [], draftContent: false }),
+      ),
+    );
+    renderRoute('/learn/topic/demo-topic-a');
+    // The map's next suggested topic (mock: Surds).
+    expect(await screen.findByRole('link', { name: "Try a topic that's ready" })).toHaveAttribute(
+      'href',
+      '/learn/topic/surds',
+    );
+    expect(screen.getByRole('link', { name: 'Back' })).toBeInTheDocument();
+  });
+
+  it('only offers Back when no topic is ready either (UX-3)', async () => {
+    server.use(
+      http.get('*/v1/student/learn/lesson', () =>
+        HttpResponse.json({ items: [], draftContent: false }),
+      ),
+      http.get('*/v1/student/map', () => HttpResponse.error()),
+    );
+    renderRoute('/learn/topic/demo-topic-a');
+    expect(await screen.findByRole('link', { name: 'Back' })).toBeInTheDocument();
+    expect(
+      screen.queryByRole('link', { name: "Try a topic that's ready" }),
+    ).not.toBeInTheDocument();
+  });
+
   it('asks you to try again when an answer cannot be checked', async () => {
     only(0);
     server.use(http.post('*/v1/student/learn/attempts', () => HttpResponse.error()));
