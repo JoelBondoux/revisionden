@@ -196,6 +196,22 @@ congruence conditions, circle parts, plans and elevations, bearings and units). 
 has no inverse trigonometric functions, so the six questions that find an angle by sin⁻¹ or cos⁻¹
 are multiple choice, with every option worked out in SymPy.
 
+## Step 2 progress: S4 Statistics (S1 to S6, 2026-11-27)
+
+67 draft items in `content/items/gcse-maths-higher/statistics/` (s1.json to s6.json): 32 numeric,
+17 multiple choice and 18 flashcards. Citations quote the S points on page 20 (PDF page 32). Data is
+given in the question (frequency tables, quartiles, cumulative frequencies), so no item needs a
+chart; frequency density is defined in the question.
+
+| Step                 | Result                                                                                         |
+| -------------------- | ---------------------------------------------------------------------------------------------- |
+| 2 Quote check        | 67 pass, all exact                                                                             |
+| 3 Blind answer       | OpenAI: 66 pass. s4-0106 fails on the model's arithmetic (the estimated mean is 110 ÷ 10 = 11) |
+| 4 Adversarial review | OpenAI: 56 pass. 11 fail, mostly "unsupported claim"; s5-0106 is an inference the owner judges |
+| 4b Fact check        | Not run (needs Gemini): 9 items list `facts`                                                   |
+| 5 Maths engine       | All 32 numeric items pass                                                                      |
+| 6 Schema and links   | Pass                                                                                           |
+
 ## Step 2 progress: S4 (Ratio, Geometry, Probability, Statistics)
 
 **Ratio, R1 to R16 (2026-11-27).** 185 draft items in `content/items/gcse-maths-higher/ratio/`
