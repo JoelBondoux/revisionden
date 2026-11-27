@@ -513,6 +513,16 @@ Tags: #product #rules #limits #defaults
   with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is
   marked wrong, so a long run of `a = x` cannot tie up the engine (#151).
 
+- Computer Science engine (S5, 2026-11-27): `services/maths/app/cs/` (`bases`, `floating`,
+  `logic`), no AI. Binary answers must show every bit (spaces ignored); hexadecimal is read by
+  value. Floating point is a two's complement mantissa and exponent with the binary point after
+  the mantissa's first bit; normalised means the first two mantissa bits differ. That
+  convention is not stated in the H446 specification, so every floating point question must say
+  it in its own text. Boolean answers are read in OCR's notation and every alternative appendix
+  5d accepts; a "simplify" answer must be equivalent and have no more letters than the shortest
+  sum of products. Binding, tightest first: NOT, AND, XOR, OR, ≡ (our choice; questions bracket
+  anything else). Not yet wired into `pnpm content:validate`.
+
 ## Reminders
 
 - Web push per device, turned on by the student from Settings (the permission prompt appears

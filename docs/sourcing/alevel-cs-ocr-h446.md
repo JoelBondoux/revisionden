@@ -35,6 +35,18 @@ committed (public repository); the quote checker caches it outside the repo.
 - Quote check (`pnpm content:quote-check --only alevel-computer-science-ocr-h446`), 2026-11-27:
   111 of 111 citations exact, 0 near matches.
 
+## Engine notation (appendix 5d, printed pages 32 to 43; PDF pages 38 to 49)
+
+- Boolean algebra: OCR uses ∧, ∨, ¬, exclusive disjunction and ≡, and accepts AND, A.B, OR, +,
+  a bar, ~, NOT, XOR, ⊕ and ↔ from learners. The engine reads all of them except the bar (not
+  typeable). The specification's glyphs for exclusive disjunction do not survive text
+  extraction, so questions write ⊕, an accepted alternative.
+- Pseudocode, LMC mnemonics, SQL, HTML and CSS: read for the interpreter step (not built yet).
+- Floating point: the specification names "Representation and normalisation of floating point
+  numbers in binary" (1.4.1(g)) but not the format. The engine uses a two's complement mantissa
+  and exponent with the binary point after the first bit; each question must state this itself,
+  so no item relies on an unstated convention.
+
 ## Still open
 
 - Owner to confirm the board.
