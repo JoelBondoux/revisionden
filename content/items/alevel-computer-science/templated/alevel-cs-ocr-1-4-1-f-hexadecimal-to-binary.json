@@ -1,0 +1,480 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-binary-01",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-binary",
+    "expected_seconds": 60,
+    "prompt": "Write the hexadecimal number BA as an 8-bit binary number.",
+    "answer": {
+      "accepted": ["10111010", "1011 1010"]
+    },
+    "marks": 1,
+    "hint": "Each hexadecimal digit is exactly 4 bits.",
+    "explanation": "B = 1011, A = 1010. Together: 10111010.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:51:49Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:53:40Z",
+          "notes": "model answered \"10111010\"; expected \"10111010 | 1011 1010\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:53:41Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-binary-02",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-binary",
+    "expected_seconds": 60,
+    "prompt": "Write the hexadecimal number 6D as an 8-bit binary number.",
+    "answer": {
+      "accepted": ["01101101", "0110 1101"]
+    },
+    "marks": 1,
+    "hint": "Each hexadecimal digit is exactly 4 bits.",
+    "explanation": "6 = 0110, D = 1101. Together: 01101101.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:51:50Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-binary-03",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-binary",
+    "expected_seconds": 60,
+    "prompt": "Write the hexadecimal number 7C as an 8-bit binary number.",
+    "answer": {
+      "accepted": ["01111100", "0111 1100"]
+    },
+    "marks": 1,
+    "hint": "Each hexadecimal digit is exactly 4 bits.",
+    "explanation": "7 = 0111, C = 1100. Together: 01111100.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary",
+      "version": 1,
+      "seed": 3
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:51:51Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-binary-04",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-binary",
+    "expected_seconds": 60,
+    "prompt": "Write the hexadecimal number AE as an 8-bit binary number.",
+    "answer": {
+      "accepted": ["10101110", "1010 1110"]
+    },
+    "marks": 1,
+    "hint": "Each hexadecimal digit is exactly 4 bits.",
+    "explanation": "A = 1010, E = 1110. Together: 10101110.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:51:52Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-binary-05",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-binary",
+    "expected_seconds": 60,
+    "prompt": "Write the hexadecimal number 5E as an 8-bit binary number.",
+    "answer": {
+      "accepted": ["01011110", "0101 1110"]
+    },
+    "marks": 1,
+    "hint": "Each hexadecimal digit is exactly 4 bits.",
+    "explanation": "5 = 0101, E = 1110. Together: 01011110.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:51:53Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-binary-06",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-binary",
+    "expected_seconds": 60,
+    "prompt": "Write the hexadecimal number A9 as an 8-bit binary number.",
+    "answer": {
+      "accepted": ["10101001", "1010 1001"]
+    },
+    "marks": 1,
+    "hint": "Each hexadecimal digit is exactly 4 bits.",
+    "explanation": "A = 1010, 9 = 1001. Together: 10101001.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary",
+      "version": 1,
+      "seed": 6
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:51:54Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-f-t-hexadecimal-to-binary-07",
+    "topic": "alevel-cs-ocr-1-4-1-f",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-f-lp-hexadecimal-to-binary",
+    "expected_seconds": 60,
+    "prompt": "Write the hexadecimal number 8B as an 8-bit binary number.",
+    "answer": {
+      "accepted": ["10001011", "1000 1011"]
+    },
+    "marks": 1,
+    "hint": "Each hexadecimal digit is exactly 4 bits.",
+    "explanation": "8 = 1000, B = 1011. Together: 10001011.",
+    "source_ref": "OCR H446 specification 1.4.1(f)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (f) (page 9; PDF page 15)",
+        "quote": "Convert positive integers between binary hexadecimal and denary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary",
+      "version": 1,
+      "seed": 7
+    },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:51:55Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

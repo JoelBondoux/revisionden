@@ -192,6 +192,11 @@ Components 01 and 02 in specification version 3.0 (April 2026), 111 leaves, each
 quote that passes the quote check exactly. The board stays provisional until the owner confirms
 it. Record: [`sourcing/alevel-cs-ocr-h446.md`](sourcing/alevel-cs-ocr-h446.md). Still `draft`.
 
+Items, strand 1 (data representation, 1.4.1 (b) to (i)): 119 template items in
+`content/items/alevel-computer-science/templated/` (`docs/TEMPLATES.md`), all draft, all quotes
+exact. 70 of them state a rule no cited source states, so they list `facts` and need individual
+human approval (decision 0009).
+
 ## Citation conventions (settled while sourcing the pilot)
 
 - **`url`** points at the document itself (the PDF), not the qualification page, so the

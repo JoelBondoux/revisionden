@@ -1,0 +1,487 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-masks-01",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-masks",
+    "expected_seconds": 90,
+    "prompt": "The 8-bit binary number 10110000 is combined with the mask 01011111 using XOR. What is the result?",
+    "answer": { "accepted": ["11101111", "1110 1111"] },
+    "marks": 1,
+    "hint": "Line the two numbers up and combine each pair of bits: XOR gives 1 where the bits are different.",
+    "explanation": "Bit by bit, XOR gives 1 where the bits are different: 10110000 XOR 01011111 = 11101111.",
+    "facts": [
+      {
+        "statement": "Combining bits with AND gives 1 only where both bits are 1, with OR gives 1 where either bit is 1, and with XOR gives 1 where the two bits are different.",
+        "ask": "For each pair of bits, what do AND, OR and XOR give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-masks", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-masks v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-masks (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:55Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:57:51Z",
+          "notes": "model answered \"11101111\"; expected \"11101111 | 1110 1111\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:57:52Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-masks-02",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-masks",
+    "expected_seconds": 90,
+    "prompt": "The 8-bit binary number 01100100 is combined with the mask 00000010 using AND. What is the result?",
+    "answer": { "accepted": ["00000000", "0000 0000"] },
+    "marks": 1,
+    "hint": "Line the two numbers up and combine each pair of bits: AND gives 1 only where both bits are 1.",
+    "explanation": "Bit by bit, AND gives 1 only where both bits are 1: 01100100 AND 00000010 = 00000000.",
+    "facts": [
+      {
+        "statement": "Combining bits with AND gives 1 only where both bits are 1, with OR gives 1 where either bit is 1, and with XOR gives 1 where the two bits are different.",
+        "ask": "For each pair of bits, what do AND, OR and XOR give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-masks", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-masks v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-masks (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:56Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-masks-03",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-masks",
+    "expected_seconds": 90,
+    "prompt": "The 8-bit binary number 00100111 is combined with the mask 11000110 using XOR. What is the result?",
+    "answer": { "accepted": ["11100001", "1110 0001"] },
+    "marks": 1,
+    "hint": "Line the two numbers up and combine each pair of bits: XOR gives 1 where the bits are different.",
+    "explanation": "Bit by bit, XOR gives 1 where the bits are different: 00100111 XOR 11000110 = 11100001.",
+    "facts": [
+      {
+        "statement": "Combining bits with AND gives 1 only where both bits are 1, with OR gives 1 where either bit is 1, and with XOR gives 1 where the two bits are different.",
+        "ask": "For each pair of bits, what do AND, OR and XOR give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-masks", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-masks v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-masks (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:57Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-masks-04",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-masks",
+    "expected_seconds": 90,
+    "prompt": "The 8-bit binary number 10100011 is combined with the mask 00010110 using OR. What is the result?",
+    "answer": { "accepted": ["10110111", "1011 0111"] },
+    "marks": 1,
+    "hint": "Line the two numbers up and combine each pair of bits: OR gives 1 where either bit is 1.",
+    "explanation": "Bit by bit, OR gives 1 where either bit is 1: 10100011 OR 00010110 = 10110111.",
+    "facts": [
+      {
+        "statement": "Combining bits with AND gives 1 only where both bits are 1, with OR gives 1 where either bit is 1, and with XOR gives 1 where the two bits are different.",
+        "ask": "For each pair of bits, what do AND, OR and XOR give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-masks", "version": 1, "seed": 4 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-masks v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-masks (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:58Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-masks-05",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-masks",
+    "expected_seconds": 90,
+    "prompt": "The 8-bit binary number 01101010 is combined with the mask 00100100 using XOR. What is the result?",
+    "answer": { "accepted": ["01001110", "0100 1110"] },
+    "marks": 1,
+    "hint": "Line the two numbers up and combine each pair of bits: XOR gives 1 where the bits are different.",
+    "explanation": "Bit by bit, XOR gives 1 where the bits are different: 01101010 XOR 00100100 = 01001110.",
+    "facts": [
+      {
+        "statement": "Combining bits with AND gives 1 only where both bits are 1, with OR gives 1 where either bit is 1, and with XOR gives 1 where the two bits are different.",
+        "ask": "For each pair of bits, what do AND, OR and XOR give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-masks", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-masks v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-masks (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:59Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-masks-06",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-masks",
+    "expected_seconds": 90,
+    "prompt": "The 8-bit binary number 11010000 is combined with the mask 11010000 using XOR. What is the result?",
+    "answer": { "accepted": ["00000000", "0000 0000"] },
+    "marks": 1,
+    "hint": "Line the two numbers up and combine each pair of bits: XOR gives 1 where the bits are different.",
+    "explanation": "Bit by bit, XOR gives 1 where the bits are different: 11010000 XOR 11010000 = 00000000.",
+    "facts": [
+      {
+        "statement": "Combining bits with AND gives 1 only where both bits are 1, with OR gives 1 where either bit is 1, and with XOR gives 1 where the two bits are different.",
+        "ask": "For each pair of bits, what do AND, OR and XOR give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-masks", "version": 1, "seed": 6 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-masks v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-masks (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:57:00Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-masks-07",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-masks",
+    "expected_seconds": 90,
+    "prompt": "The 8-bit binary number 10000100 is combined with the mask 10001001 using AND. What is the result?",
+    "answer": { "accepted": ["10000000", "1000 0000"] },
+    "marks": 1,
+    "hint": "Line the two numbers up and combine each pair of bits: AND gives 1 only where both bits are 1.",
+    "explanation": "Bit by bit, AND gives 1 only where both bits are 1: 10000100 AND 10001001 = 10000000.",
+    "facts": [
+      {
+        "statement": "Combining bits with AND gives 1 only where both bits are 1, with OR gives 1 where either bit is 1, and with XOR gives 1 where the two bits are different.",
+        "ask": "For each pair of bits, what do AND, OR and XOR give?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-masks", "version": 1, "seed": 7 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-masks v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-masks (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:57:01Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

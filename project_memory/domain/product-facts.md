@@ -502,6 +502,13 @@ Tags: #product #rules #limits #defaults
   with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is
   marked wrong, so a long run of `a = x` cannot tie up the engine (#151).
 
+- A-Level Computer Science items (S5, strand 1, 2026-11-27): 119 draft template items for data
+  representation (1.4.1 (b) to (i)), 7 per template, in
+  `content/items/alevel-computer-science/templated/`; built by `build.py --course alevel-cs`.
+  Binary answers keep every bit (the app ignores spaces and case in answers with digits).
+  Items whose hint or explanation states a rule the specification does not (two's complement
+  place values, normalisation, shift and mask rules) list `facts` and need individual human
+  approval (decision 0009); 70 of the 119.
 - Computer Science engine (S5, 2026-11-27): `services/maths/app/cs/` (`bases`, `floating`,
   `logic`), no AI. Binary answers must show every bit (spaces ignored); hexadecimal is read by
   value. Floating point is a two's complement mantissa and exponent with the binary point after

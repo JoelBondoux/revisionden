@@ -1,0 +1,487 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-shifts-01",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-shifts",
+    "expected_seconds": 90,
+    "prompt": "Apply a logical shift right by 1 place to the 8-bit binary number 01011100.",
+    "answer": { "accepted": ["00101110", "0010 1110"] },
+    "marks": 1,
+    "hint": "Move every bit along; bits that fall off the end are lost. A logical shift fills the gap with 0s; an arithmetic shift right fills it with copies of the sign bit.",
+    "explanation": "Moving 01011100 right by 1 place loses 1 bit off the right and fills the gap with 0s: 00101110.",
+    "facts": [
+      {
+        "statement": "In a logical shift the bits moved off the end are lost and the empty places are filled with 0s; in an arithmetic shift right the empty places are filled with copies of the sign bit.",
+        "ask": "When binary bits are shifted, what happens to the bits moved off the end, and what fills the empty places in a logical shift and in an arithmetic shift right?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-shifts", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-shifts v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-shifts (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:49Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:57:49Z",
+          "notes": "model answered \"00101110\"; expected \"00101110 | 0010 1110\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:57:49Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-shifts-02",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-shifts",
+    "expected_seconds": 90,
+    "prompt": "Apply a arithmetic shift right by 1 place to the 8-bit binary number 01100010.",
+    "answer": { "accepted": ["00110001", "0011 0001"] },
+    "marks": 1,
+    "hint": "Move every bit along; bits that fall off the end are lost. A logical shift fills the gap with 0s; an arithmetic shift right fills it with copies of the sign bit.",
+    "explanation": "Moving 01100010 right by 1 place loses 1 bit off the right and fills the gap with copies of the sign bit: 00110001.",
+    "facts": [
+      {
+        "statement": "In a logical shift the bits moved off the end are lost and the empty places are filled with 0s; in an arithmetic shift right the empty places are filled with copies of the sign bit.",
+        "ask": "When binary bits are shifted, what happens to the bits moved off the end, and what fills the empty places in a logical shift and in an arithmetic shift right?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-shifts", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-shifts v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-shifts (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:50Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-shifts-03",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-shifts",
+    "expected_seconds": 90,
+    "prompt": "Apply a arithmetic shift right by 1 place to the 8-bit binary number 10010110.",
+    "answer": { "accepted": ["11001011", "1100 1011"] },
+    "marks": 1,
+    "hint": "Move every bit along; bits that fall off the end are lost. A logical shift fills the gap with 0s; an arithmetic shift right fills it with copies of the sign bit.",
+    "explanation": "Moving 10010110 right by 1 place loses 1 bit off the right and fills the gap with copies of the sign bit: 11001011.",
+    "facts": [
+      {
+        "statement": "In a logical shift the bits moved off the end are lost and the empty places are filled with 0s; in an arithmetic shift right the empty places are filled with copies of the sign bit.",
+        "ask": "When binary bits are shifted, what happens to the bits moved off the end, and what fills the empty places in a logical shift and in an arithmetic shift right?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-shifts", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-shifts v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-shifts (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:51Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-shifts-04",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-shifts",
+    "expected_seconds": 90,
+    "prompt": "Apply a arithmetic shift right by 2 places to the 8-bit binary number 00001001.",
+    "answer": { "accepted": ["00000010", "0000 0010"] },
+    "marks": 1,
+    "hint": "Move every bit along; bits that fall off the end are lost. A logical shift fills the gap with 0s; an arithmetic shift right fills it with copies of the sign bit.",
+    "explanation": "Moving 00001001 right by 2 places loses 2 bits off the right and fills the gap with copies of the sign bit: 00000010.",
+    "facts": [
+      {
+        "statement": "In a logical shift the bits moved off the end are lost and the empty places are filled with 0s; in an arithmetic shift right the empty places are filled with copies of the sign bit.",
+        "ask": "When binary bits are shifted, what happens to the bits moved off the end, and what fills the empty places in a logical shift and in an arithmetic shift right?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-shifts", "version": 1, "seed": 4 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-shifts v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-shifts (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:52Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-shifts-05",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-shifts",
+    "expected_seconds": 90,
+    "prompt": "Apply a logical shift right by 3 places to the 8-bit binary number 10111010.",
+    "answer": { "accepted": ["00010111", "0001 0111"] },
+    "marks": 1,
+    "hint": "Move every bit along; bits that fall off the end are lost. A logical shift fills the gap with 0s; an arithmetic shift right fills it with copies of the sign bit.",
+    "explanation": "Moving 10111010 right by 3 places loses 3 bits off the right and fills the gap with 0s: 00010111.",
+    "facts": [
+      {
+        "statement": "In a logical shift the bits moved off the end are lost and the empty places are filled with 0s; in an arithmetic shift right the empty places are filled with copies of the sign bit.",
+        "ask": "When binary bits are shifted, what happens to the bits moved off the end, and what fills the empty places in a logical shift and in an arithmetic shift right?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-shifts", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-shifts v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-shifts (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:53Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-shifts-06",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-shifts",
+    "expected_seconds": 90,
+    "prompt": "Apply a logical shift left by 3 places to the 8-bit binary number 00011000.",
+    "answer": { "accepted": ["11000000", "1100 0000"] },
+    "marks": 1,
+    "hint": "Move every bit along; bits that fall off the end are lost. A logical shift fills the gap with 0s; an arithmetic shift right fills it with copies of the sign bit.",
+    "explanation": "Moving 00011000 left by 3 places loses 3 bits off the left and fills the gap with 0s: 11000000.",
+    "facts": [
+      {
+        "statement": "In a logical shift the bits moved off the end are lost and the empty places are filled with 0s; in an arithmetic shift right the empty places are filled with copies of the sign bit.",
+        "ask": "When binary bits are shifted, what happens to the bits moved off the end, and what fills the empty places in a logical shift and in an arithmetic shift right?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-shifts", "version": 1, "seed": 6 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-shifts v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-shifts (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:54Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-i-t-shifts-07",
+    "topic": "alevel-cs-ocr-1-4-1-i",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "alevel-cs-ocr-1-4-1-i-lp-shifts",
+    "expected_seconds": 90,
+    "prompt": "Apply a logical shift right by 1 place to the 8-bit binary number 10000111.",
+    "answer": { "accepted": ["01000011", "0100 0011"] },
+    "marks": 1,
+    "hint": "Move every bit along; bits that fall off the end are lost. A logical shift fills the gap with 0s; an arithmetic shift right fills it with copies of the sign bit.",
+    "explanation": "Moving 10000111 right by 1 place loses 1 bit off the right and fills the gap with 0s: 01000011.",
+    "facts": [
+      {
+        "statement": "In a logical shift the bits moved off the end are lost and the empty places are filled with 0s; in an arithmetic shift right the empty places are filled with copies of the sign bit.",
+        "ask": "When binary bits are shifted, what happens to the bits moved off the end, and what fills the empty places in a logical shift and in an arithmetic shift right?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(i)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (i) (page 9; PDF page 15)",
+        "quote": "Bitwise manipulation and masks: shifts, combining with AND, OR, and XOR.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-i-shifts", "version": 1, "seed": 7 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-i-shifts v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-i-shifts (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:55Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

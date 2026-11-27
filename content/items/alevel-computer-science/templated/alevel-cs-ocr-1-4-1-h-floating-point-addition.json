@@ -1,0 +1,515 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-h-t-floating-point-addition-01",
+    "topic": "alevel-cs-ocr-1-4-1-h",
+    "type": "short_answer",
+    "difficulty": 5,
+    "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
+    "expected_seconds": 300,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01011000, exponent 0100 and mantissa 10101110, exponent 0011. Give the normalised answer: the mantissa, then a space, then the exponent.",
+    "answer": { "accepted": ["01011110 0011", "01011110, 0011"] },
+    "marks": 3,
+    "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
+    "explanation": "The first number is 11 and the second is -5.125. Their sum is 5.875. Normalised, that is mantissa 01011110 and exponent 0011.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      },
+      {
+        "statement": "A floating point number with a two's complement mantissa is normalised when the first two bits of the mantissa are different: 01 for a positive number, 10 for a negative number.",
+        "ask": "How can you tell whether a floating point number with a two's complement mantissa is normalised?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(h)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (h) (page 9; PDF page 15)",
+        "quote": "Floating point arithmetic, positive and negative numbers, addition and subtraction.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 1 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-h-floating-point-addition v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-h-floating-point-addition (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:43Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:57:45Z",
+          "notes": "model answered \"11100100 0100\"; expected \"01011110 0011 | 01011110, 0011\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:57:46Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-h-t-floating-point-addition-02",
+    "topic": "alevel-cs-ocr-1-4-1-h",
+    "type": "short_answer",
+    "difficulty": 5,
+    "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
+    "expected_seconds": 300,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 10011110, exponent 0100 and mantissa 01011000, exponent 0001. Give the normalised answer: the mantissa, then a space, then the exponent.",
+    "answer": { "accepted": ["10101001 0100", "10101001, 0100"] },
+    "marks": 3,
+    "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
+    "explanation": "The first number is -12.25 and the second is 1.375. Their sum is -10.875. Normalised, that is mantissa 10101001 and exponent 0100.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      },
+      {
+        "statement": "A floating point number with a two's complement mantissa is normalised when the first two bits of the mantissa are different: 01 for a positive number, 10 for a negative number.",
+        "ask": "How can you tell whether a floating point number with a two's complement mantissa is normalised?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(h)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (h) (page 9; PDF page 15)",
+        "quote": "Floating point arithmetic, positive and negative numbers, addition and subtraction.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 2 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-h-floating-point-addition v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-h-floating-point-addition (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:44Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-h-t-floating-point-addition-03",
+    "topic": "alevel-cs-ocr-1-4-1-h",
+    "type": "short_answer",
+    "difficulty": 5,
+    "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
+    "expected_seconds": 300,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01011110, exponent 0000 and mantissa 01110000, exponent 0000. Give the normalised answer: the mantissa, then a space, then the exponent.",
+    "answer": { "accepted": ["01100111 0001", "01100111, 0001"] },
+    "marks": 3,
+    "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
+    "explanation": "The first number is 0.734375 and the second is 0.875. Their sum is 1.609375. Normalised, that is mantissa 01100111 and exponent 0001.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      },
+      {
+        "statement": "A floating point number with a two's complement mantissa is normalised when the first two bits of the mantissa are different: 01 for a positive number, 10 for a negative number.",
+        "ask": "How can you tell whether a floating point number with a two's complement mantissa is normalised?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(h)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (h) (page 9; PDF page 15)",
+        "quote": "Floating point arithmetic, positive and negative numbers, addition and subtraction.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 3 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-h-floating-point-addition v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-h-floating-point-addition (version 1, seed 3) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:45Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-h-t-floating-point-addition-04",
+    "topic": "alevel-cs-ocr-1-4-1-h",
+    "type": "short_answer",
+    "difficulty": 5,
+    "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
+    "expected_seconds": 300,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 10011010, exponent 0001 and mantissa 10110100, exponent 0000. Give the normalised answer: the mantissa, then a space, then the exponent.",
+    "answer": { "accepted": ["10111010 0010", "10111010, 0010"] },
+    "marks": 3,
+    "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
+    "explanation": "The first number is -1.59375 and the second is -0.59375. Their sum is -2.1875. Normalised, that is mantissa 10111010 and exponent 0010.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      },
+      {
+        "statement": "A floating point number with a two's complement mantissa is normalised when the first two bits of the mantissa are different: 01 for a positive number, 10 for a negative number.",
+        "ask": "How can you tell whether a floating point number with a two's complement mantissa is normalised?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(h)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (h) (page 9; PDF page 15)",
+        "quote": "Floating point arithmetic, positive and negative numbers, addition and subtraction.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 4 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-h-floating-point-addition v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-h-floating-point-addition (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:46Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-h-t-floating-point-addition-05",
+    "topic": "alevel-cs-ocr-1-4-1-h",
+    "type": "short_answer",
+    "difficulty": 5,
+    "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
+    "expected_seconds": 300,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01000110, exponent 0011 and mantissa 01000100, exponent 0100. Give the normalised answer: the mantissa, then a space, then the exponent.",
+    "answer": { "accepted": ["01100111 0100", "01100111, 0100"] },
+    "marks": 3,
+    "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
+    "explanation": "The first number is 4.375 and the second is 8.5. Their sum is 12.875. Normalised, that is mantissa 01100111 and exponent 0100.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      },
+      {
+        "statement": "A floating point number with a two's complement mantissa is normalised when the first two bits of the mantissa are different: 01 for a positive number, 10 for a negative number.",
+        "ask": "How can you tell whether a floating point number with a two's complement mantissa is normalised?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(h)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (h) (page 9; PDF page 15)",
+        "quote": "Floating point arithmetic, positive and negative numbers, addition and subtraction.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 5 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-h-floating-point-addition v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-h-floating-point-addition (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:47Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-h-t-floating-point-addition-06",
+    "topic": "alevel-cs-ocr-1-4-1-h",
+    "type": "short_answer",
+    "difficulty": 5,
+    "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
+    "expected_seconds": 300,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01010000, exponent 0100 and mantissa 10011100, exponent 0011. Give the normalised answer: the mantissa, then a space, then the exponent.",
+    "answer": { "accepted": ["01111000 0010", "01111000, 0010"] },
+    "marks": 3,
+    "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
+    "explanation": "The first number is 10 and the second is -6.25. Their sum is 3.75. Normalised, that is mantissa 01111000 and exponent 0010.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      },
+      {
+        "statement": "A floating point number with a two's complement mantissa is normalised when the first two bits of the mantissa are different: 01 for a positive number, 10 for a negative number.",
+        "ask": "How can you tell whether a floating point number with a two's complement mantissa is normalised?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(h)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (h) (page 9; PDF page 15)",
+        "quote": "Floating point arithmetic, positive and negative numbers, addition and subtraction.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 6 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-h-floating-point-addition v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-h-floating-point-addition (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:48Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-h-t-floating-point-addition-07",
+    "topic": "alevel-cs-ocr-1-4-1-h",
+    "type": "short_answer",
+    "difficulty": 5,
+    "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
+    "expected_seconds": 300,
+    "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01100110, exponent 0100 and mantissa 01001000, exponent 0100. Give the normalised answer: the mantissa, then a space, then the exponent.",
+    "answer": { "accepted": ["01010111 0101", "01010111, 0101"] },
+    "marks": 3,
+    "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
+    "explanation": "The first number is 12.75 and the second is 9. Their sum is 21.75. Normalised, that is mantissa 01010111 and exponent 0101.",
+    "facts": [
+      {
+        "statement": "In a two's complement mantissa with the binary point after the first bit, the first bit is worth -1 and the bits after the point are worth 1/2, 1/4, 1/8 and so on.",
+        "ask": "In a two's complement fixed point mantissa with the binary point after the first bit, what is each bit worth?"
+      },
+      {
+        "statement": "A floating point number with a two's complement mantissa is normalised when the first two bits of the mantissa are different: 01 for a positive number, 10 for a negative number.",
+        "ask": "How can you tell whether a floating point number with a two's complement mantissa is normalised?"
+      }
+    ],
+    "needs_human_approval": true,
+    "source_ref": "OCR H446 specification 1.4.1(h)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (h) (page 9; PDF page 15)",
+        "quote": "Floating point arithmetic, positive and negative numbers, addition and subtraction.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 7 },
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-h-floating-point-addition v1",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-h-floating-point-addition (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T13:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:56:48Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

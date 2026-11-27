@@ -1,0 +1,480 @@
+[
+  {
+    "id": "alevel-cs-ocr-1-4-1-b-t-binary-to-denary-01",
+    "topic": "alevel-cs-ocr-1-4-1-b",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-b-lp-binary-to-denary",
+    "expected_seconds": 60,
+    "prompt": "What is the 8-bit unsigned binary number 00100010 in denary?",
+    "answer": {
+      "accepted": ["34"]
+    },
+    "marks": 1,
+    "hint": "Write 128, 64, 32, 16, 8, 4, 2, 1 above the bits and add the place values that have a 1.",
+    "explanation": "The 1s are under 32 and 2. 32 + 2 = 34.",
+    "source_ref": "OCR H446 specification 1.4.1(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (b) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-b-binary-to-denary",
+      "version": 1,
+      "seed": 1
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-b-binary-to-denary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-b-binary-to-denary (version 1, seed 1) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:50:51Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:53:12Z",
+          "notes": "model answered \"34\"; expected \"34\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:53:13Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-b-t-binary-to-denary-02",
+    "topic": "alevel-cs-ocr-1-4-1-b",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-b-lp-binary-to-denary",
+    "expected_seconds": 60,
+    "prompt": "What is the 8-bit unsigned binary number 11010001 in denary?",
+    "answer": {
+      "accepted": ["209"]
+    },
+    "marks": 1,
+    "hint": "Write 128, 64, 32, 16, 8, 4, 2, 1 above the bits and add the place values that have a 1.",
+    "explanation": "The 1s are under 128, 64, 16 and 1. 128 + 64 + 16 + 1 = 209.",
+    "source_ref": "OCR H446 specification 1.4.1(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (b) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-b-binary-to-denary",
+      "version": 1,
+      "seed": 2
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-b-binary-to-denary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-b-binary-to-denary (version 1, seed 2) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:50:52Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-b-t-binary-to-denary-04",
+    "topic": "alevel-cs-ocr-1-4-1-b",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-b-lp-binary-to-denary",
+    "expected_seconds": 60,
+    "prompt": "What is the 8-bit unsigned binary number 01111110 in denary?",
+    "answer": {
+      "accepted": ["126"]
+    },
+    "marks": 1,
+    "hint": "Write 128, 64, 32, 16, 8, 4, 2, 1 above the bits and add the place values that have a 1.",
+    "explanation": "The 1s are under 64, 32, 16, 8, 4 and 2. 64 + 32 + 16 + 8 + 4 + 2 = 126.",
+    "source_ref": "OCR H446 specification 1.4.1(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (b) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-b-binary-to-denary",
+      "version": 1,
+      "seed": 4
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-b-binary-to-denary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-b-binary-to-denary (version 1, seed 4) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:50:53Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-b-t-binary-to-denary-05",
+    "topic": "alevel-cs-ocr-1-4-1-b",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-b-lp-binary-to-denary",
+    "expected_seconds": 60,
+    "prompt": "What is the 8-bit unsigned binary number 00101101 in denary?",
+    "answer": {
+      "accepted": ["45"]
+    },
+    "marks": 1,
+    "hint": "Write 128, 64, 32, 16, 8, 4, 2, 1 above the bits and add the place values that have a 1.",
+    "explanation": "The 1s are under 32, 8, 4 and 1. 32 + 8 + 4 + 1 = 45.",
+    "source_ref": "OCR H446 specification 1.4.1(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (b) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-b-binary-to-denary",
+      "version": 1,
+      "seed": 5
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-b-binary-to-denary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-b-binary-to-denary (version 1, seed 5) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:50:54Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-b-t-binary-to-denary-06",
+    "topic": "alevel-cs-ocr-1-4-1-b",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-b-lp-binary-to-denary",
+    "expected_seconds": 60,
+    "prompt": "What is the 8-bit unsigned binary number 11110010 in denary?",
+    "answer": {
+      "accepted": ["242"]
+    },
+    "marks": 1,
+    "hint": "Write 128, 64, 32, 16, 8, 4, 2, 1 above the bits and add the place values that have a 1.",
+    "explanation": "The 1s are under 128, 64, 32, 16 and 2. 128 + 64 + 32 + 16 + 2 = 242.",
+    "source_ref": "OCR H446 specification 1.4.1(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (b) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-b-binary-to-denary",
+      "version": 1,
+      "seed": 6
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-b-binary-to-denary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-b-binary-to-denary (version 1, seed 6) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:50:55Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-b-t-binary-to-denary-07",
+    "topic": "alevel-cs-ocr-1-4-1-b",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-b-lp-binary-to-denary",
+    "expected_seconds": 60,
+    "prompt": "What is the 8-bit unsigned binary number 10111111 in denary?",
+    "answer": {
+      "accepted": ["191"]
+    },
+    "marks": 1,
+    "hint": "Write 128, 64, 32, 16, 8, 4, 2, 1 above the bits and add the place values that have a 1.",
+    "explanation": "The 1s are under 128, 32, 16, 8, 4, 2 and 1. 128 + 32 + 16 + 8 + 4 + 2 + 1 = 191.",
+    "source_ref": "OCR H446 specification 1.4.1(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (b) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-b-binary-to-denary",
+      "version": 1,
+      "seed": 7
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-b-binary-to-denary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-b-binary-to-denary (version 1, seed 7) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:50:56Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alevel-cs-ocr-1-4-1-b-t-binary-to-denary-08",
+    "topic": "alevel-cs-ocr-1-4-1-b",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "alevel-cs-ocr-1-4-1-b-lp-binary-to-denary",
+    "expected_seconds": 60,
+    "prompt": "What is the 8-bit unsigned binary number 11011100 in denary?",
+    "answer": {
+      "accepted": ["220"]
+    },
+    "marks": 1,
+    "hint": "Write 128, 64, 32, 16, 8, 4, 2, 1 above the bits and add the place values that have a 1.",
+    "explanation": "The 1s are under 128, 64, 16, 8 and 4. 128 + 64 + 16 + 8 + 4 = 220.",
+    "source_ref": "OCR H446 specification 1.4.1(b)",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Cambridge OCR",
+        "title": "Cambridge OCR Level 3 Advanced GCE in Computer Science H446 Specification",
+        "document_ref": "H446 Version 3.0 (April 2026)",
+        "url": "https://www.ocr.org.uk/Images/170844-specification-accredited-a-level-gce-computer-science-h446.pdf",
+        "location": "2c. Content of Computer systems (Component 01), Data types, data structures and algorithms, 1.4.1 Data Types, point (b) (page 9; PDF page 15)",
+        "quote": "Represent positive integers in binary.",
+        "retrieved_at": "2026-11-27",
+        "supports": ["question"],
+        "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
+      }
+    ],
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-b-binary-to-denary",
+      "version": 1,
+      "seed": 8
+    },
+    "verification": {
+      "status": "draft",
+      "version": 2,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "result": "pass",
+          "tool": "revisionden-maths-templates",
+          "tool_version": "alevel-cs-ocr-1-4-1-b-binary-to-denary v1",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Generated from template alevel-cs-ocr-1-4-1-b-binary-to-denary (version 1, seed 8) written from the cited specification point. Question, answer, steps and explanation come from the same parameters."
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "at": "2026-11-27T12:00:00Z",
+          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:50:57Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        }
+      ]
+    }
+  }
+]

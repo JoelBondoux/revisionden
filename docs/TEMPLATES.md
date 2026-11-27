@@ -122,6 +122,45 @@ explanation.
 
 The recheck for N10 does long division of the answer; for N5 it counts the meals one by one.
 
+## A-Level Computer Science, strand 1: data representation (S5, 2026-11-27)
+
+OCR H446, board provisional. `app/templates/alevel_cs.py`, built with
+`python -m app.templates.build --course alevel-cs` (part of `pnpm content:templates`) into
+`content/items/alevel-computer-science/templated/`, 7 items per template; preview for the owner:
+`docs/TEMPLATE_PREVIEW_CS.md`.
+
+- Answers come from the CS engine (`app/cs/bases.py`, `app/cs/floating.py`). Each `recheck`
+  reads the question text back and recomputes by another method (place values, Python's own
+  integer conversions, digit tables, bit weights), so `GenerationError` stops any disagreement.
+- Citations are the topic tree leaf's own citation (quote check passed), with `supports:
+["question"]`; a test checks they match the tree word for word.
+- Every question states the conventions it depends on (8 bits, two's complement, the floating
+  point format), and a guard test fails if one does not.
+- Hints and explanations that state a rule the specification does not state (two's complement
+  place values, normalisation, shift and mask rules) list it in `facts` with a neutral `ask`, and
+  the item sets `needs_human_approval: true` (decision 0009), until the fact-check stage can run.
+- `build.py` now takes `--course` (`COURSES`); GCSE Maths Higher stays the default, unchanged.
+
+| Template                                            | Topic   | Items | Facts (0009) |
+| --------------------------------------------------- | ------- | ----- | ------------ |
+| `alevel-cs-ocr-1-4-1-b-binary-to-denary`            | 1-4-1-b | 7     | no           |
+| `alevel-cs-ocr-1-4-1-b-denary-to-binary`            | 1-4-1-b | 7     | no           |
+| `alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude`    | 1-4-1-c | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-c-denary-to-twos-complement`   | 1-4-1-c | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-c-twos-complement-to-denary`   | 1-4-1-c | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-d-binary-addition`             | 1-4-1-d | 7     | no           |
+| `alevel-cs-ocr-1-4-1-d-twos-complement-subtraction` | 1-4-1-d | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-e-denary-to-hexadecimal`       | 1-4-1-e | 7     | no           |
+| `alevel-cs-ocr-1-4-1-f-binary-to-hexadecimal`       | 1-4-1-f | 7     | no           |
+| `alevel-cs-ocr-1-4-1-f-hexadecimal-to-binary`       | 1-4-1-f | 7     | no           |
+| `alevel-cs-ocr-1-4-1-f-hexadecimal-to-denary`       | 1-4-1-f | 7     | no           |
+| `alevel-cs-ocr-1-4-1-g-denary-to-floating-point`    | 1-4-1-g | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-g-floating-point-to-denary`    | 1-4-1-g | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-g-normalise-floating-point`    | 1-4-1-g | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-h-floating-point-addition`     | 1-4-1-h | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-i-masks`                       | 1-4-1-i | 7     | yes          |
+| `alevel-cs-ocr-1-4-1-i-shifts`                      | 1-4-1-i | 7     | yes          |
+
 ## Later
 
 - Fresh numbers per student at run time (the engine serves a new seed per attempt, marked against
