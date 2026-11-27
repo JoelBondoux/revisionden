@@ -176,9 +176,10 @@ every look; the desktop runs the default look. Data comes from the web app's own
   inputs, switches and tabs 3:1 by fill or border. Text over page art, gradients or shadows is
   left to tier 2. Helper: `e2e/tests/support/contrastStyles.ts`.
 - **Tier 2, painted** (`CONTRAST_SWEEP=1`; `.github/workflows/contrast-painted.yml`): text in
-  every box, UI parts' edges and the first three focus rings, measured on screenshots in two
+  every box (down the whole page, a screen at a time), UI parts' edges and the first three focus
+  rings, measured on screenshots in two
   passes (a finding counts only when both passes see it, so a ring caught mid-animation cannot
-  flake the run). Nightly,
+  flake the run). Text too faint to sample is a failure, not a skip (decision 0012). Nightly,
   on demand, on pull requests that touch looks or design CSS, and before staging. Helpers:
   `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
   `e2e/tests/support/painted.ts`.
