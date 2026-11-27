@@ -76,6 +76,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:05Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:25:45Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:25:50Z",
+          "notes": "wrong_answer (answer): The marked answer is option 1, but option 1 is not the simplest sum of products for the given Karnaugh map. Grouping the 1s gives terms ¬B∧¬D for the wraparound pair on row AB=00, plus ¬A∧B∧D for row AB=01 columns 01 and 11, plus A∧¬B∧D for row AB=10 columns 01 and 11. So the simplified SOP is option 0, not option 1.; factual_error (explanation): The explanation states that '(A ∧ ¬B ∧ D) ∨ (¬A ∧ B ∧ D) ∨ (¬A ∧ ¬B ∧ ¬D) is 1 in exactly the cells that hold 1'. This is false: it misses the 1 at AB=00, CD=10 (A=0,B=0,C=1,D=0), where the expression evaluates to 0.; factual_error (explanation): The explanation claims that no sum of products with fewer letters exists. But the map contains a wraparound pair at AB=00 with CD=00 and CD=10, giving the 2-literal term ¬B∧¬D. Therefore a simpler valid SOP exists, namely option 0."
         }
       ]
     }
@@ -157,6 +173,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:06Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:25:53Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:00Z",
+          "notes": "wrong_answer (answer): The marked answer (option 0) is not the simplest sum of products for the given Karnaugh map. Grouping the 1s gives terms ¬A∧D (a 2×2 block over rows AB=00,01 and columns CD=01,11), A∧¬B∧¬D (a pair on row AB=10 across columns 10 and 00 by wraparound), and ¬B∧¬C∧D (a vertical wraparound pair at column CD=01 across rows AB=00 and 10). This simplifies to (¬A ∧ D) ∨ (A ∧ ¬B ∧ ¬D) ∨ (¬B ∧ ¬C ∧ D), not the marked expression.; factual_error (explanation): The explanation states that '(¬A ∧ D) ∨ (A ∧ ¬B ∧ ¬D) ∨ (¬A ∧ ¬B ∧ C) is 1 in exactly the cells that hold 1'. This is false: ¬A∧¬B∧C is also 1 when A=0,B=0,C=1,D=0, corresponding to row AB=00, column CD=10, but that cell is 0 in the map.; factual_error (explanation): The explanation states that 'no sum of products with fewer letters is' possible for the marked expression. This is false because the marked expression does not match the map, and a correct 8-letter SOP exists: (¬A ∧ D) ∨ (A ∧ ¬B ∧ ¬D) ∨ (¬B ∧ ¬C ∧ D).; second_correct_option (options): None of the listed options matches the given Karnaugh map exactly, so the question has no uniquely correct option. For example, option 0 incorrectly makes Q=1 at AB=00, CD=10; option 1 makes all cells with B=0 and D=0 equal to 1; option 2 makes all cells with A=1 and D=0 equal to 1; option 3 makes all cells with A=1 and B=0 equal to 1. A student could not choose a correct answer from the provided options."
         }
       ]
     }

@@ -7,9 +7,7 @@
     "learning_point": "alevel-cs-ocr-1-4-3-d-lp-truth-table",
     "expected_seconds": 150,
     "prompt": "Complete the truth table for Q = ¬(¬A ⊕ B) ∧ C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.",
-    "answer": {
-      "accepted": ["00010100"]
-    },
+    "answer": { "accepted": ["00010100"] },
     "marks": 1,
     "hint": "Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.",
     "explanation": "Row by row (ABC): 000 gives 0; 001 gives 0; 010 gives 0; 011 gives 1; 100 gives 0; 101 gives 1; 110 gives 0; 111 gives 0. So the Q column is 00010100.",
@@ -36,11 +34,7 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-3-d-truth-table",
-      "version": 1,
-      "seed": 1
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-3-d-truth-table", "version": 1, "seed": 1 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -60,6 +54,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T00:00:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:36Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
     }
@@ -72,9 +74,7 @@
     "learning_point": "alevel-cs-ocr-1-4-3-d-lp-truth-table",
     "expected_seconds": 150,
     "prompt": "Complete the truth table for Q = (A ∨ B) ∧ C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.",
-    "answer": {
-      "accepted": ["00010101"]
-    },
+    "answer": { "accepted": ["00010101"] },
     "marks": 1,
     "hint": "Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.",
     "explanation": "Row by row (ABC): 000 gives 0; 001 gives 0; 010 gives 0; 011 gives 1; 100 gives 0; 101 gives 1; 110 gives 0; 111 gives 1. So the Q column is 00010101.",
@@ -101,11 +101,7 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-3-d-truth-table",
-      "version": 1,
-      "seed": 2
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-3-d-truth-table", "version": 1, "seed": 2 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -125,6 +121,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T00:00:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:37Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
     }
@@ -137,9 +141,7 @@
     "learning_point": "alevel-cs-ocr-1-4-3-d-lp-truth-table",
     "expected_seconds": 150,
     "prompt": "Complete the truth table for Q = ¬A ∨ ¬B. Work row by row with AB = 00, 01, 10, 11 (top row first) and give the Q column as one string of bits, top row first.",
-    "answer": {
-      "accepted": ["1110"]
-    },
+    "answer": { "accepted": ["1110"] },
     "marks": 1,
     "hint": "Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.",
     "explanation": "Row by row (AB): 00 gives 1; 01 gives 1; 10 gives 1; 11 gives 0. So the Q column is 1110.",
@@ -166,11 +168,7 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-3-d-truth-table",
-      "version": 1,
-      "seed": 3
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-3-d-truth-table", "version": 1, "seed": 3 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -190,6 +188,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T00:00:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:38Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
     }
@@ -202,9 +208,7 @@
     "learning_point": "alevel-cs-ocr-1-4-3-d-lp-truth-table",
     "expected_seconds": 150,
     "prompt": "Complete the truth table for Q = (A ∧ ¬B) ∨ (¬B ∧ ¬C). Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.",
-    "answer": {
-      "accepted": ["10001100"]
-    },
+    "answer": { "accepted": ["10001100"] },
     "marks": 1,
     "hint": "Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.",
     "explanation": "Row by row (ABC): 000 gives 1; 001 gives 0; 010 gives 0; 011 gives 0; 100 gives 1; 101 gives 1; 110 gives 0; 111 gives 0. So the Q column is 10001100.",
@@ -231,11 +235,7 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-3-d-truth-table",
-      "version": 1,
-      "seed": 4
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-3-d-truth-table", "version": 1, "seed": 4 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -255,6 +255,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T00:00:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:39Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
     }
@@ -267,9 +275,7 @@
     "learning_point": "alevel-cs-ocr-1-4-3-d-lp-truth-table",
     "expected_seconds": 150,
     "prompt": "Complete the truth table for Q = (¬A ⊕ B) ∨ C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.",
-    "answer": {
-      "accepted": ["11010111"]
-    },
+    "answer": { "accepted": ["11010111"] },
     "marks": 1,
     "hint": "Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.",
     "explanation": "Row by row (ABC): 000 gives 1; 001 gives 1; 010 gives 0; 011 gives 1; 100 gives 0; 101 gives 1; 110 gives 1; 111 gives 1. So the Q column is 11010111.",
@@ -296,11 +302,7 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-3-d-truth-table",
-      "version": 1,
-      "seed": 5
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-3-d-truth-table", "version": 1, "seed": 5 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -320,6 +322,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T00:00:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:40Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
     }
@@ -332,9 +342,7 @@
     "learning_point": "alevel-cs-ocr-1-4-3-d-lp-truth-table",
     "expected_seconds": 150,
     "prompt": "Complete the truth table for Q = (¬A ⊕ B) ∨ ¬C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.",
-    "answer": {
-      "accepted": ["11101011"]
-    },
+    "answer": { "accepted": ["11101011"] },
     "marks": 1,
     "hint": "Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.",
     "explanation": "Row by row (ABC): 000 gives 1; 001 gives 1; 010 gives 1; 011 gives 0; 100 gives 1; 101 gives 0; 110 gives 1; 111 gives 1. So the Q column is 11101011.",
@@ -361,11 +369,7 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-3-d-truth-table",
-      "version": 1,
-      "seed": 6
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-3-d-truth-table", "version": 1, "seed": 6 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -385,6 +389,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T00:00:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:41Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
     }
@@ -397,9 +409,7 @@
     "learning_point": "alevel-cs-ocr-1-4-3-d-lp-truth-table",
     "expected_seconds": 150,
     "prompt": "Complete the truth table for Q = (A ⊕ B) ∧ ¬C. Work row by row with ABC = 000, 001, 010, 011, 100, 101, 110, 111 (top row first) and give the Q column as one string of bits, top row first.",
-    "answer": {
-      "accepted": ["00101000"]
-    },
+    "answer": { "accepted": ["00101000"] },
     "marks": 1,
     "hint": "Take one row at a time: put in the values of the letters, work out each bracket, then the operation outside it.",
     "explanation": "Row by row (ABC): 000 gives 0; 001 gives 0; 010 gives 1; 011 gives 0; 100 gives 1; 101 gives 0; 110 gives 0; 111 gives 0. So the Q column is 00101000.",
@@ -426,11 +436,7 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": {
-      "id": "alevel-cs-ocr-1-4-3-d-truth-table",
-      "version": 1,
-      "seed": 7
-    },
+    "template": { "id": "alevel-cs-ocr-1-4-3-d-truth-table", "version": 1, "seed": 7 },
     "verification": {
       "status": "draft",
       "version": 2,
@@ -450,6 +456,14 @@
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T00:00:00Z",
           "notes": "Template cross-check: the CS engine (services/maths/app/cs/logic) wrote the answer, and the template's recheck read the question text back and checked it by a second method (its own evaluator built on Python's ast module, the shapes of the two expressions, or binary arithmetic); the two agreed."
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T15:25:41Z",
+          "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
         }
       ]
     }
