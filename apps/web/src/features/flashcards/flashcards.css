@@ -115,6 +115,14 @@
   text-align: center;
 }
 
+/* The answer face's content, laid out before reveal so the card keeps one height. */
+.flip-card__answer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
 .flip-card__verdict {
   margin: 0;
   font-weight: var(--font-weight-black);

@@ -120,20 +120,24 @@ function FlipCard({
             )}
           </div>
           <div className="flip-card__face flip-card__face--back" aria-hidden={!flipped}>
-            {revealed && (
-              <>
-                <span className="flip-card__label">Answer</span>
-                {choice && chosen !== null && (
-                  <p className="flip-card__verdict">
-                    {chosen === card.answerOption ? 'Right!' : 'Not quite. The answer is:'}
-                  </p>
-                )}
-                <p className="flip-card__text">
-                  <MathText text={card.back} subject={card.subjectId} />
+            {/* Laid out from the start so the card is as tall as its answer before it turns
+                (Codex on #441), but invisible (so never flashed, and hidden from screen readers)
+                until the answer is revealed (F7). */}
+            <div
+              className="flip-card__answer"
+              style={revealed ? undefined : { visibility: 'hidden' }}
+            >
+              <span className="flip-card__label">Answer</span>
+              {choice && (
+                <p className="flip-card__verdict">
+                  {chosen === card.answerOption ? 'Right!' : 'Not quite. The answer is:'}
                 </p>
-                {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
-              </>
-            )}
+              )}
+              <p className="flip-card__text">
+                <MathText text={card.back} subject={card.subjectId} />
+              </p>
+              {card.sourceRef && <small className="flip-card__ref">{card.sourceRef}</small>}
+            </div>
           </div>
         </div>
       </div>

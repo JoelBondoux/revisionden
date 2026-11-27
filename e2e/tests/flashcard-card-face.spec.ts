@@ -155,3 +155,23 @@ test('a multiple choice card is answered by tapping a choice, which sets the rat
   await page.getByRole('button', { name: 'Next card' }).click();
   await expect.poll(() => ratings).toEqual(['again']);
 });
+
+test('a long answer does not make the card grow when it is revealed (Codex on #441)', async ({
+  page,
+}) => {
+  const long = { ...plain, back: `Demo long answer ${'with many made-up words '.repeat(14)}end.` };
+  await stub(page, [long]);
+  await page.goto('/cards');
+  await expect(page.getByText('Demo front 1')).toBeVisible();
+  const card = await box(page, '[data-testid="flip-card"]');
+  // Page positions (the click may scroll a tall card's button into view).
+  const pageY = (name: string | RegExp) =>
+    page.getByRole('button', { name }).evaluate((el) => el.getBoundingClientRect().top + scrollY);
+  const show = await pageY('Show answer');
+  await page.getByRole('button', { name: 'Show answer' }).click();
+  await expect(page.getByText(/Demo long answer/)).toBeVisible();
+  await page.waitForTimeout(600); // the turn
+  const after = await box(page, '[data-testid="flip-card"]');
+  expect(Math.round(after.height)).toBe(Math.round(card.height));
+  expect(Math.round(await pageY(/^Again/))).toBe(Math.round(show));
+});
