@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { axeWhenSettled } from './support/axe';
 import topicMap from './fixtures/topic-map-gcse-maths.json' with { type: 'json' };
+import { settle } from './support/painted';
 
 // J15b (owner, 2026-11-26): Home, the screen Pip takes you to, fits one phone screen with one big
 // call to action; Pip sits top left on every student screen and, in a lesson, asks before leaving.
@@ -55,21 +56,6 @@ async function asStudent(page: Page, { reducedMotion = false } = {}) {
   await page.addInitScript((id) => localStorage.setItem('revisionden.studentId', id), STUDENT_ID);
 }
 
-async function settle(page: Page) {
-  await page.evaluate(
-    () =>
-      new Promise<void>((done) => requestAnimationFrame(() => requestAnimationFrame(() => done()))),
-  );
-  await page.evaluate(() =>
-    Promise.all(
-      document
-        .getAnimations()
-        .filter((a) => a.effect?.getTiming().iterations !== Infinity)
-        .map((a) => a.finished),
-    ),
-  );
-}
-
 test.beforeEach(async ({ page }, testInfo) => {
   void page;
   test.skip(testInfo.project.name !== 'phone', 'Home layout checks are phone checks');
@@ -99,11 +85,15 @@ test('Home never scrolls sideways at 320px with text at 200%', async ({ page }) 
   await page.goto('/home');
   await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
   await expect(page.getByRole('link', { name: /^Go:/ })).toBeVisible();
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-    ),
-  ).toBeLessThanOrEqual(0);
+  // Measured once fonts and the reflow at 200% have settled, not mid-reflow (lead, train #437).
+  await settle(page);
+  await expect
+    .poll(() =>
+      page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      ),
+    )
+    .toBeLessThanOrEqual(0);
 });
 
 for (const scheme of ['light', 'dark'] as const) {
