@@ -38,7 +38,19 @@ test('the suite is sharded across parallel jobs with the same browser setup', ()
 
 test('one summary check passes only when every shard passed, so it can be required', () => {
   const result = job('e2e-result');
-  assert.match(result, /needs: \[build, e2e\]/);
+  assert.match(result, /needs: \[build, e2e, contrast\]/);
   assert.match(result, /if: always\(\)/);
   assert.match(result, /needs\.e2e\.result/);
+  assert.match(result, /needs\.contrast\.result/);
+});
+
+test('the contrast sweep (tier 1) runs once on the shared build, not in every shard (W21)', () => {
+  const contrast = job('contrast');
+  assert.match(contrast, /needs: build/);
+  assert.match(contrast, /actions\/download-artifact@v4/);
+  assert.match(contrast, /name: web-dist/);
+  assert.doesNotMatch(contrast, /@revisionden\/web build/);
+  assert.match(contrast, /tests\/contrast-sweep\.spec\.ts/);
+  assert.match(contrast, /--grep @contrast /);
+  assert.match(job('e2e'), /--grep-invert @contrast/);
 });

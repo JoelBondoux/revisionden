@@ -93,7 +93,10 @@ pull requests into `dev`, `staging` and `main` (G10). It builds the web app once
 artifact `web-dist`), runs four shards in parallel against that build (about 6 minutes in all), and
 reports one check, **End-to-end result**, that is green only when every shard passed: that is the
 check to require in branch protection. Another check that needs the built app can add a job to
-`e2e.yml` with `needs: build` and download `web-dist` rather than building again.
+`e2e.yml` with `needs: build` and download `web-dist` rather than building again. The contrast
+sweep does this (W21, section 7): its tier 1 tests are tagged `@contrast`, the shards skip them
+(`--grep-invert @contrast`), the `contrast` job runs them once, and **End-to-end result** needs it
+too. Tier 2 (`@contrast-painted`) has its own workflow, `contrast-painted.yml`.
 Every axe check goes through `axeWhenSettled(page)` (`e2e/tests/support/axe.ts`): it waits for
 finite animations to finish first, because axe measures colours as drawn and a button still fading
 in reads as low contrast. The rules stay WCAG 2.2 A/AA (or what the check passes in `configure`).
@@ -158,3 +161,34 @@ These are suggestions only: none is started until the lead or owner says so. Gap
 W17 list are done: the 5-a-day and a whole flashcard session (W18), the starting test (W19),
 and parent settings reaching the child (W20; reminders reach a child only as notifications, so
 only the parent's side is checked).
+
+## 7. Contrast sweep
+
+`e2e/tests/contrast-sweep.spec.ts` checks every screen in `apps/web/src/routes.tsx` and the main
+dialogs in all 10 looks, light and dark, with reading tints off (decision 0012). The phone runs
+every look; the desktop runs the default look. Data comes from the web app's own mock handlers
+(`e2e/tests/support/seed.ts` answers each call with `apps/web/src/features/*/mocks.ts`).
+
+- **Route guard:** a route in `routes.tsx` or `LESSON_PATHS` with no row in the sweep's table
+  fails the first test. Add a row (or a skip with a reason, such as a redirect).
+- **Tier 1, every pull request** (the `contrast` job in `.github/workflows/e2e.yml`, about a minute): computed
+  styles only. Text 4.5:1 (3:1 when large) against the nearest opaque background, and buttons,
+  inputs, switches and tabs 3:1 by fill or border. Text over page art, gradients or shadows is
+  left to tier 2. Helper: `e2e/tests/support/contrastStyles.ts`.
+- **Tier 2, painted** (`CONTRAST_SWEEP=1`; `.github/workflows/contrast-painted.yml`): text in
+  every box (down the whole page, a screen at a time), UI parts' edges and the first three focus
+  rings, measured on screenshots in two
+  passes (a finding counts only when both passes see it, so a ring caught mid-animation cannot
+  flake the run). Text too faint to sample is a failure, not a skip (decision 0012). Nightly,
+  on demand, on pull requests that touch looks or design CSS, and before staging. Helpers:
+  `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
+  `e2e/tests/support/painted.ts`.
+- **Known failures:** `e2e/tests/contrast-known.json`. A test fails on anything new and on a
+  listed failure that is now fixed, so a fix removes its lines in the same change. To refresh the
+  list after a fix: run the sweep with `CONTRAST_UPDATE=1` (add `CONTRAST_SWEEP=1` for tier 2),
+  then `node e2e/scripts/contrast-known.mjs`.
+
+```bash
+pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts --project=phone --project=desktop --grep @contrast --grep-invert @contrast-painted
+CONTRAST_SWEEP=1 pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts --project=phone --project=desktop --grep @contrast-painted
+```

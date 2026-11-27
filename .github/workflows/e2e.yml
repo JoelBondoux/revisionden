@@ -68,7 +68,8 @@ jobs:
           name: web-dist
           path: apps/web/dist
       - name: Run this shard of the end-to-end suite (all projects)
-        run: pnpm --filter @revisionden/e2e e2e --shard=${{ matrix.shard }}/4
+        # The contrast sweep runs once in its own job below, not in every shard (W21).
+        run: pnpm --filter @revisionden/e2e e2e --shard=${{ matrix.shard }}/4 --grep-invert @contrast
       - name: Keep the report when something fails
         if: failure()
         uses: actions/upload-artifact@v4
@@ -77,13 +78,48 @@ jobs:
           path: e2e/playwright-report
           retention-days: 7
 
+  contrast:
+    # W21 (decision 0012): every screen and the main dialogs in all 10 looks, light and dark,
+    # from computed styles. It fails on a contrast failure not in e2e/tests/contrast-known.json,
+    # on a listed one that is now fixed, and on a route in routes.tsx with no row in the sweep.
+    name: Contrast sweep (tier 1)
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install Chromium for Playwright
+        run: pnpm --filter @revisionden/e2e exec playwright install --with-deps chromium
+      - name: Use the shared build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-dist
+          path: apps/web/dist
+      - name: Run the tier 1 contrast sweep (phone, every look; desktop, default look)
+        run: >-
+          pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts
+          --project=phone --project=desktop --grep @contrast --grep-invert @contrast-painted --trace off
+      - name: Keep the report when something fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contrast-report
+          path: e2e/playwright-report
+          retention-days: 7
+
   e2e-result:
     name: End-to-end result
-    needs: [build, e2e]
+    needs: [build, e2e, contrast]
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Every shard passed
+      - name: Every shard and the contrast sweep passed
         run: |
-          echo "build: ${{ needs.build.result }}, e2e: ${{ needs.e2e.result }}"
-          [ "${{ needs.build.result }}" = "success" ] && [ "${{ needs.e2e.result }}" = "success" ]
+          echo "build: ${{ needs.build.result }}, e2e: ${{ needs.e2e.result }}, contrast: ${{ needs.contrast.result }}"
+          [ "${{ needs.build.result }}" = "success" ] && [ "${{ needs.e2e.result }}" = "success" ] && [ "${{ needs.contrast.result }}" = "success" ]
