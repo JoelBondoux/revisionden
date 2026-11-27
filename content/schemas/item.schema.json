@@ -184,7 +184,7 @@
           "engine": {
             "type": "object",
             "required": ["kind"],
-            "description": "Optional maths engine check that proves the fact (services/maths app/content_check.py and app/facts.py; fields per kind in docs/VERIFICATION.md step 4b). For example {\"kind\": \"transformation\", \"graph\": \"f(x - a)\", \"image\": \"(x + a, y)\"}.",
+            "description": "Optional maths engine check that proves the fact (services/maths app/content_check.py, app/facts.py and app/cs/facts.py; fields per kind in docs/VERIFICATION.md step 4b). For example {\"kind\": \"transformation\", \"graph\": \"f(x - a)\", \"image\": \"(x + a, y)\"}.",
             "properties": {
               "kind": {
                 "enum": [
@@ -198,7 +198,11 @@
                   "sign_change",
                   "parallel",
                   "trig_value",
-                  "graph_measure"
+                  "graph_measure",
+                  "cs_arithmetic",
+                  "cs_base",
+                  "cs_signed",
+                  "cs_logic_equivalence"
                 ]
               }
             }

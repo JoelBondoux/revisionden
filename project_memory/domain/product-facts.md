@@ -543,6 +543,10 @@ Tags: #product #rules #limits #defaults
   down, booleans print `true`/`false`, `NOT a==b` is `NOT (a==b)`, `-2^2` is -4; items must not
   depend on these. Not yet wired into `pnpm content:validate`.
 
+- CS fact proofs (S5, 2026-11-27, decision 0009 (b)): a fact's `engine` may be `cs_arithmetic`,
+  `cs_base`, `cs_signed` or `cs_logic_equivalence` (`services/maths/app/cs/facts.py`). Like the
+  maths proofs, each passes a fact only together with a third provider's blind statement.
+
 ## Reminders
 
 - Web push per device, turned on by the student from Settings (the permission prompt appears
