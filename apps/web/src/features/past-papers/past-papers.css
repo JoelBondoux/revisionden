@@ -1,4 +1,11 @@
 /* Past papers (workstream Q7). */
+.past-papers__leaving {
+  padding: var(--space-3);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
 .past-papers__note {
   color: var(--color-text-secondary);
 }

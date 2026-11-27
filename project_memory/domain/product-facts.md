@@ -1242,7 +1242,9 @@ Tags: #product #rules #limits #defaults
   qualifications.pearson.com/en/support/support-topics/exams/past-papers.html, OCR
   www.ocr.org.uk/qualifications/past-paper-finder/, Eduqas
   www.eduqas.co.uk/home/past-papers-and-mark-schemes/. Pearson keeps the last 12 months for
-  teachers; OCR's past paper policy keeps five years public.
+  teachers; OCR's past paper policy keeps five years public. Wording checked by L (2026-11-27):
+  a visible "leaving RevisionDen" note above the links, no referrer sent (`referrerPolicy="no-referrer"`),
+  board names only (no logos).
 - Learn it first, in-house goal (owner direction 2026-11-26, not yet built): RevisionDen should
   eventually write its own verified teaching content (topic notes, explanations per learning
   point, worked examples, code-drawn diagrams) under `docs/VERIFICATION.md`, and retire each

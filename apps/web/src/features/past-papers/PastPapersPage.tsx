@@ -17,7 +17,13 @@ function BoardLinks({ heading, links }: { heading: string; links: PastPaperLink[
       <ul className="past-papers__list">
         {links.map((link) => (
           <li key={link.board}>
-            <LinkButton href={link.url} newTab variant="secondary" block>
+            <LinkButton
+              href={link.url}
+              newTab
+              referrerPolicy="no-referrer"
+              variant="secondary"
+              block
+            >
               {link.name} past papers
             </LinkButton>
           </li>
@@ -41,14 +47,21 @@ export function PastPapersPage() {
       ? subjects.data.enrolments.find((e) => e.subjectId === subjectId)?.board
       : undefined;
   const { own, others } = pastPaperLinks(subjectId, board);
+  // "the exam board's" only when we know the board (L, 2026-11-27).
+  const which = own ? "the exam board's" : "each exam board's";
   return (
     <div className="past-papers">
       <header className="page-header">
         <h1>{subjectLabel(subjectId)} past papers</h1>
       </header>
-      <p>Papers and mark schemes are on the exam board's website.</p>
+      <p>Papers and mark schemes are on {which} website.</p>
+      <p className="past-papers__leaving">
+        These links take you to {which} own website. It is not part of RevisionDen and has its own
+        rules, so check with a parent if you're not sure.
+      </p>
       <p className="past-papers__note">
-        The newest papers are sometimes for teachers only, so your teacher may have more.
+        The newest papers are sometimes for teachers only, so ask your teacher if you can't find
+        one.
       </p>
       {own && <BoardLinks heading="Your exam board" links={[own]} />}
       <BoardLinks heading={own ? 'Other boards' : 'Exam boards'} links={others} />

@@ -62,9 +62,21 @@ describe('PastPapersPage', () => {
     expect(
       await screen.findByText("Papers and mark schemes are on the exam board's website."),
     ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "These links take you to the exam board's own website. It is not part of RevisionDen and has its own rules, so check with a parent if you're not sure.",
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "The newest papers are sometimes for teachers only, so ask your teacher if you can't find one.",
+      ),
+    ).toBeInTheDocument();
     for (const link of screen.getAllByRole('link')) {
       expect(link).toHaveAttribute('target', '_blank');
       expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+      // The board never learns which app page a child came from (L, 2026-11-27).
+      expect(link).toHaveAttribute('referrerpolicy', 'no-referrer');
       expect(link).toHaveAccessibleName(/opens in a new tab/);
     }
   });
@@ -79,6 +91,10 @@ describe('PastPapersPage', () => {
     renderPage(api);
     const others = await screen.findByRole('region', { name: 'Exam boards' });
     expect(within(others).getAllByRole('link')).toHaveLength(4);
+    expect(
+      screen.getByText("Papers and mark schemes are on each exam board's website."),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/each exam board's own website/)).toBeInTheDocument();
     expect(screen.queryByRole('region', { name: 'Your exam board' })).toBeNull();
   });
 
