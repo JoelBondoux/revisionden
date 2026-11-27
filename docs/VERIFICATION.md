@@ -288,8 +288,8 @@ reliance can be audited. The bar is unchanged: every declared fact still has to 
 **Number answers in the blind check (S4, 2026-11-27).** A flashcard whose back is a number or a
 fraction, optionally with £ or a unit ("0.1", "1/4", "20 heads", "£121", "180°"), passes when the
 final value of the answer (after its last "=") equals it as a number, so "3/30 = 0.1" matches 0.1;
-any other back is still compared word for word. The final value must be a number on its own (an optional £ before it or a unit after it), so "75*2", "75^2" and "75 or 76" never match. A worked expression that is a number is compared
-the same way ("£75", "150/2 = 75"). Any other worked expression that is not written the same is
+any other back is still compared word for word. The final value must be a number on its own (an optional £ before it or a unit after it), so "75*2", "75^2" and "75 or 76" never match. A unit is a fixed symbol (°, °C, %, mm, cm, km with ² or ³, kg, mg, ml, km/h, m/s) or a word of four or more letters ("people", "minutes"); one to three other letters are algebra, so "2" never matches a back of "2n", nor "35" one of "35y" (Codex on #433). A worked expression that is a number is compared
+the same way ("£75", "150/2 = 75"), after the answer passes the number form the item asks for (a fraction, simplest or improper fraction, standard or index form), so "2.4" never matches 12/5 asked as an improper fraction. A blind-answer test runs this compare over every item in the bank: each item's own key passes, and its key with an algebra letter or its fraction form dropped fails. Any other worked expression that is not written the same is
 sent to the maths engine's `expression` check, so "3.6v" matches 18v/5 and "3.5v" does not; the check keeps the item's required form (`answer.form`, or else `verify.form`). If the engine cannot run, the answer is not accepted and the note says the engine was unavailable.
 
 **Hints (S3-A-H, 2026-11-26).** A `hint` is educational content and goes through the same checks

@@ -91,18 +91,39 @@ function closeEnough(given, expected, tolerance) {
 }
 
 /**
+ * A unit that may follow a number (Codex on #433): a fixed list of symbols, or a word of four or
+ * more letters ("people", "minutes", "litres per minute"). One to three letters are never a unit
+ * here, so "2n" and "35y" stay algebra and never match "2" or "35".
+ */
+const UNIT_TAIL = String.raw`(?:°C?|%|(?:mm|cm|km)(?:[²³]|\^[23])?|kg|mg|ml|km/h|m/s|[A-Za-z]{4,}(?:\s+[A-Za-z]{2,})*)`;
+const WITH_UNIT = new RegExp(String.raw`^(.*?\d)\s*${UNIT_TAIL}$`);
+
+/** `text` without a trailing unit from UNIT_TAIL ("180°" is "180", "2n" stays "2n"). */
+const withoutUnitTail = (text) => WITH_UNIT.exec(text)?.[1] ?? text;
+
+/**
  * The final value of an answer as a plain number, or null (Codex on #433): the text after the last
  * "=", with an optional leading £ and a trailing unit allowed, and nothing else, so "£75" and
- * "3/30 = 0.1" give a number but "75*2", "75^2" and "75 or 76" do not.
+ * "3/30 = 0.1" give a number but "75*2", "75^2", "75 or 76" and "2n" do not.
  */
 function plainValue(text) {
-  const v = finalValue(text)
-    .replace(/,(?=\d{3})/g, '')
-    .replace(/^[£$]\s*/, '')
-    .replace(/\s*[A-Za-z°%²³][A-Za-z°%²³\s/]*$/, '')
-    .trim();
+  const v = withoutUnitTail(
+    finalValue(text)
+      .replace(/,(?=\d{3})/g, '')
+      .replace(/^[£$]\s*/, '')
+      .trim(),
+  ).trim();
   return isPlainNumber(v) ? v : null;
 }
+
+/** The forms inForm reads (answer.form); verify.form may also name an algebra form. */
+const NUMBER_FORMS = new Set([
+  'fraction',
+  'simplest_fraction',
+  'improper_fraction',
+  'standard_form',
+  'index_form',
+]);
 
 /** The value after the last "=" ("3/30 = 0.1" gives "0.1"), as text. */
 function finalValue(text) {
@@ -111,14 +132,13 @@ function finalValue(text) {
 
 /**
  * The number on a flashcard back that is a number or fraction, optionally with a leading £ and a
- * trailing unit of letters or symbols ("20 heads", "£121", "180°"); otherwise null.
+ * trailing unit from UNIT_TAIL ("20 heads", "£121", "180°"); otherwise null, so "2n" is not 2.
  */
 function numberOnBack(back) {
-  const m =
-    /^\s*£?\s*(-?\d+(?:\.\d+)?(?:\s*\/\s*\d+(?:\.\d+)?)?)\s*[A-Za-z°²³%][A-Za-z°²³%\s]*$|^\s*£?\s*(-?\d+(?:\.\d+)?(?:\s*\/\s*\d+(?:\.\d+)?)?)\s*$/.exec(
-      String(back),
-    );
-  return m ? (m[1] ?? m[2]).replace(/\s+/g, '') : null;
+  const m = /^\s*£?\s*(-?\d+(?:\.\d+)?(?:\s*\/\s*\d+(?:\.\d+)?)?)\s*$/.exec(
+    withoutUnitTail(String(back).trim()),
+  );
+  return m ? m[1].replace(/\s+/g, '') : null;
 }
 
 function sameValue(given, expected) {
@@ -217,6 +237,13 @@ function expectation(item) {
         expected: item.answer.expression,
         matches: (a) => {
           const given = withoutSubject(String(a), item.answer.subject);
+          // The asked number form first, as for numeric items (Codex on #433): 12/5, never 2.4.
+          // Algebra forms (factorised, expanded) are the maths engine's to judge.
+          const form = item.answer.form ?? item.verify?.form;
+          if (NUMBER_FORMS.has(form)) {
+            const said = withoutSubject(words(withMinus(String(a))), item.answer.subject);
+            if (!inForm(said, form)) return false;
+          }
           if (tight(given) === tight(item.answer.expression)) return true;
           // A number answer (S4): compare the final value as a number ("£75", "150/2 = 75").
           return (

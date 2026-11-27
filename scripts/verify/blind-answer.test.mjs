@@ -1,5 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readdirSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { blindAnswerPrompt, runBlindAnswer, writerProviderOf } from './blind-answer.mjs';
 import { draftItem } from './test-content.mjs';
 
@@ -585,4 +588,84 @@ test('the engine fallback keeps the form the item requires in verify.form (Codex
   };
   await runBlindAnswer(item, said('6x^2 + 9x'), { now: AT, maths });
   assert.equal(calls[0].form, 'factorised');
+});
+
+// Codex on #433: the number compare must not accept a wrong answer. Real items from the bank.
+const BANK = join(dirname(fileURLToPath(import.meta.url)), '../../content/items');
+const bankItems = readdirSync(BANK, { recursive: true })
+  .filter((f) => f.endsWith('.json'))
+  .flatMap((f) => {
+    const data = JSON.parse(readFileSync(join(BANK, f), 'utf8'));
+    return Array.isArray(data) ? data : [];
+  });
+const bankItem = (id) => bankItems.find((i) => i.id === id);
+
+test('a flashcard back with a variable is not a number with a unit (a25-0108, Codex on #433)', async () => {
+  const item = bankItem('gcse-maths-h-a25-0108');
+  assert.equal(item.back, '2n');
+  assert.equal((await blind(item, '2')).result, 'fail');
+  assert.equal((await blind(item, '2n')).result, 'pass');
+  const y = { ...item, id: 'fixture-35y', back: '35y' };
+  assert.equal((await blind(y, '35')).result, 'fail');
+});
+
+test('a flashcard answer still matches a back with a real unit or a counted noun', async () => {
+  const card = (back) =>
+    draftItem('fixture-unit-card', undefined, { type: 'flashcard', front: 'F?', back });
+  assert.equal((await blind(card('180°'), '180')).result, 'pass');
+  assert.equal((await blind(card('12 cm²'), '12')).result, 'pass');
+  assert.equal((await blind(card('20 people'), '20')).result, 'pass');
+  assert.equal((await blind(card('20'), '20n')).result, 'fail');
+});
+
+test('a numeric worked answer must be in the asked form (n2-0003, Codex on #433)', async () => {
+  const item = bankItem('gcse-maths-h-n2-0003');
+  assert.equal(item.answer.form, 'improper_fraction');
+  assert.equal((await blind(item, '2.4')).result, 'fail');
+  assert.equal((await blind(item, '2 2/5')).result, 'fail');
+  assert.equal((await blind(item, '12/5')).result, 'pass');
+});
+
+// Every item in the bank: its own key passes, and the key with its letter or its form dropped
+// does not (lead's ruling on #433).
+// Short unit symbols ("100 cm" may be answered "100"); any other 1 to 3 letters are algebra.
+const SHORT_UNITS = new Set(['mm', 'cm', 'km', 'kg', 'mg', 'ml']);
+const lettersDropped = (text) => {
+  const m = /^\s*(-?\d+(?:\.\d+)?)\s*([a-z]{1,3})\s*$/.exec(String(text));
+  return m && !SHORT_UNITS.has(m[2]) ? m[1] : null;
+};
+const asDecimal = (fraction) => {
+  const m = /^(-?\d+)\/(\d+)$/.exec(String(fraction).replace(/\s+/g, ''));
+  if (!m) return null;
+  const d = Number(m[1]) / Number(m[2]);
+  return Number.isFinite(d) && String(d).length < 12 ? String(d) : null;
+};
+
+test('every bank item passes with its own key, and fails with its letter or form dropped', async () => {
+  const wrong = [];
+  const own = [];
+  for (const item of bankItems) {
+    if (item.type === 'flashcard' && !item.back_formula) {
+      if ((await blind(item, item.back)).result !== 'pass') own.push(item.id);
+      const dropped = lettersDropped(item.back);
+      if (dropped && (await blind(item, dropped)).result === 'pass')
+        wrong.push(`${item.id} "${dropped}"`);
+    }
+    if (item.type === 'worked_maths' && typeof item.answer.expression === 'string') {
+      if ((await blind(item, item.answer.expression)).result !== 'pass') own.push(item.id);
+      const form = item.answer.form ?? item.verify?.form;
+      const decimal = form && /fraction/.test(form) ? asDecimal(item.answer.expression) : null;
+      if (decimal && (await blind(item, decimal)).result === 'pass')
+        wrong.push(`${item.id} "${decimal}"`);
+    }
+    if (item.type === 'numeric') {
+      if ((await blind(item, item.answer.value)).result !== 'pass') own.push(item.id);
+      const decimal =
+        item.answer.form && /fraction/.test(item.answer.form) ? asDecimal(item.answer.value) : null;
+      if (decimal && (await blind(item, decimal)).result === 'pass')
+        wrong.push(`${item.id} "${decimal}"`);
+    }
+  }
+  assert.deepEqual(own, []);
+  assert.deepEqual(wrong, []);
 });
