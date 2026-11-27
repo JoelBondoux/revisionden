@@ -1,0 +1,984 @@
+[
+  {
+    "id": "gcse-maths-h-p7-0101",
+    "topic": "gcse-maths-h-p7",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p7-lp-two-dice",
+    "expected_seconds": 45,
+    "prompt": "Two fair dice are rolled and the scores are added. Work out the probability of a total of 7. Give your answer as a fraction in its simplest form.",
+    "answer": {
+      "value": "1/6",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "6/36"
+    },
+    "marks": 1,
+    "explanation": "Of the 36 equally likely pairs, 6 give 7: (1,6), (2,5), (3,4), (4,3), (5,2), (6,1). 6/36 = 1/6.",
+    "hint": "Draw a 6 by 6 grid of totals and count the 7s.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:28Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:09Z",
+          "notes": "model answered \"1/6\"; expected \"1/6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:10Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0102",
+    "topic": "gcse-maths-h-p7",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p7-lp-two-dice",
+    "expected_seconds": 40,
+    "prompt": "Two fair dice are rolled. Work out the probability of a double (both dice showing the same number). Give your answer as a fraction in its simplest form.",
+    "answer": {
+      "value": "1/6",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "6/36"
+    },
+    "marks": 1,
+    "explanation": "There are 6 doubles out of 36 outcomes: 6/36 = 1/6.",
+    "hint": "Count the doubles on a 6 by 6 grid.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:28Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:12Z",
+          "notes": "model answered \"1/6\"; expected \"1/6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:13Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0103",
+    "topic": "gcse-maths-h-p7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p7-lp-two-dice",
+    "expected_seconds": 45,
+    "prompt": "Two fair dice are rolled and the scores are added. Work out the probability of a total of 10. Give your answer as a fraction in its simplest form.",
+    "answer": {
+      "value": "1/12",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "3/36"
+    },
+    "marks": 1,
+    "explanation": "Totals of 10 come from (4,6), (5,5) and (6,4): 3 out of 36 = 1/12.",
+    "hint": "List the pairs that add to 10.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:28Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:15Z",
+          "notes": "model answered \"1/12\"; expected \"1/12\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:16Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0104",
+    "topic": "gcse-maths-h-p7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p7-lp-two-dice",
+    "expected_seconds": 45,
+    "prompt": "Two fair dice are rolled and the scores are added. Work out the probability that the total is more than 9. Give your answer as a fraction in its simplest form.",
+    "answer": {
+      "value": "1/6",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "(3 + 2 + 1)/36"
+    },
+    "marks": 1,
+    "explanation": "Totals of 10, 11 and 12 come from 3 + 2 + 1 = 6 pairs out of 36: 6/36 = 1/6.",
+    "hint": "Count the pairs for totals of 10, 11 and 12.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:28Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:18Z",
+          "notes": "model answered \"1/6\"; expected \"1/6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:19Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0105",
+    "topic": "gcse-maths-h-p7",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p7-lp-combined",
+    "expected_seconds": 40,
+    "prompt": "A fair coin is flipped and a fair dice is rolled. Work out the probability of getting heads and an even number. Give your answer as a fraction in its simplest form.",
+    "answer": {
+      "value": "1/4",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "3/12"
+    },
+    "marks": 1,
+    "explanation": "There are 2 × 6 = 12 outcomes. Heads with 2, 4 or 6 is 3 of them: 3/12 = 1/4.",
+    "hint": "List the 12 outcomes and count the ones that fit.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:28Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:21Z",
+          "notes": "model answered \"1/4\"; expected \"1/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:22Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0106",
+    "topic": "gcse-maths-h-p7",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p7-lp-combined",
+    "expected_seconds": 50,
+    "prompt": "Two fair spinners are each numbered 1 to 4. They are spun and the numbers are multiplied. Work out the probability that the product is 4. Give your answer as a fraction.",
+    "answer": {
+      "value": "3/16",
+      "form": "fraction"
+    },
+    "verify": {
+      "expression": "3/16"
+    },
+    "marks": 1,
+    "explanation": "There are 4 × 4 = 16 outcomes. A product of 4 comes from (1,4), (2,2) and (4,1): 3/16.",
+    "hint": "Draw a 4 by 4 grid of products.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:28Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:24Z",
+          "notes": "model answered \"3/16\"; expected \"3/16\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:25Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0107",
+    "topic": "gcse-maths-h-p7",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p7-lp-combined",
+    "expected_seconds": 35,
+    "prompt": "Two fair coins are flipped. Work out the probability of getting at least one head.",
+    "answer": {
+      "value": "3/4"
+    },
+    "verify": {
+      "expression": "3/4"
+    },
+    "marks": 1,
+    "explanation": "The outcomes are HH, HT, TH and TT. Three of the four have at least one head: 3/4.",
+    "hint": "List the four outcomes.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:28Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:26Z",
+          "notes": "model answered \"3/4\"; expected \"3/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:27Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0108",
+    "topic": "gcse-maths-h-p7",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p7-lp-two-dice",
+    "expected_seconds": 40,
+    "prompt": "Two fair dice are rolled and the scores are added. Which total is most likely?",
+    "options": ["6", "2", "7", "12"],
+    "answer": {
+      "option": 2
+    },
+    "marks": 1,
+    "explanation": "A total of 7 can be made in 6 ways, more than any other total (6 can be made in 5 ways, and 2 and 12 in only 1 way each).",
+    "hint": "Count how many pairs give each total.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:20Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:32Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:33Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0109",
+    "topic": "gcse-maths-h-p7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p7-lp-space-recall",
+    "expected_seconds": 15,
+    "front": "Two fair coins are flipped. What is the probability of two heads?",
+    "back": "1/4",
+    "explanation": "HH is 1 of the 4 outcomes: 1/4.",
+    "hint": "List the outcomes.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:29Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:32Z",
+          "notes": "model answered \"1/4\"; expected \"1/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:33Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0110",
+    "topic": "gcse-maths-h-p7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p7-lp-space-recall",
+    "expected_seconds": 10,
+    "front": "A fair dice is rolled. What is the probability of an even number?",
+    "back": "1/2",
+    "explanation": "2, 4 and 6 are 3 of the 6 outcomes: 3/6 = 1/2.",
+    "hint": "Count the even numbers.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:29Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:21:25Z",
+          "notes": "model answered \"1/2\"; expected \"1/2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:21:26Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p7-0111",
+    "topic": "gcse-maths-h-p7",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p7-lp-space-recall",
+    "expected_seconds": 10,
+    "front": "How many outcomes are there when two dice are rolled?",
+    "back": "36",
+    "explanation": "6 × 6 = 36.",
+    "hint": "Think of a grid.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P7",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P7 (page 19; PDF page 31)",
+        "quote": "construct theoretical possibility spaces for single and combined experiments with equally likely outcomes and use these to calculate theoretical probabilities",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P7). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:29Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:37Z",
+          "notes": "model answered \"36\"; expected \"36\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:39Z",
+          "notes": "unsupported_claim (explanation): The explanation states '6 × 6 = 36.' This uses the factual claim that each die has 6 outcomes, but the only quoted source supports constructing possibility spaces for combined experiments and does not explicitly state that a die has 6 outcomes. Under the stated rules, factual claims in the explanation need quoted source support.; confidence medium"
+        }
+      ]
+    }
+  }
+]

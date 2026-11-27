@@ -1,0 +1,1076 @@
+[
+  {
+    "id": "gcse-maths-h-r13-0101",
+    "topic": "gcse-maths-h-r13",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r13-lp-direct-equation",
+    "expected_seconds": 90,
+    "prompt": "y is directly proportional to x, so y = kx. When x = 5, y = 35. Work out the value of k.",
+    "answer": {
+      "solutions": ["7"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "35 = 5*k",
+      "variable": "k"
+    },
+    "steps": ["35 = 5*k", "k = 7"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 35 = 5k", "A1 for k = 7"],
+    "explanation": "Put x = 5 and y = 35 into y = kx: 35 = 5k, so k = 35 ÷ 5 = 7.",
+    "hint": "Substitute the pair of values into y = kx.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). Answer backed by the maths engine (answer and every step). Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:19Z",
+          "notes": "model answered \"7\"; expected \"7\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:19Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:38Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0102",
+    "topic": "gcse-maths-h-r13",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r13-lp-direct-equation",
+    "expected_seconds": 60,
+    "prompt": "y is directly proportional to x². When x = 3, y = 36. Work out y when x = 5.",
+    "answer": {
+      "value": "100",
+      "subject": "y"
+    },
+    "verify": {
+      "expression": "36/3^2 * 5^2"
+    },
+    "marks": 3,
+    "mark_scheme": ["M1 for y = kx²", "M1 for k = 4", "A1 for 100"],
+    "explanation": "y = kx². 36 = k × 9, so k = 4. When x = 5, y = 4 × 25 = 100.",
+    "hint": "Write y = kx² and use the values given to find k.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:37Z",
+          "notes": "model answered \"100\"; expected \"100\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:38Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0103",
+    "topic": "gcse-maths-h-r13",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r13-lp-direct-equation",
+    "expected_seconds": 60,
+    "prompt": "d is directly proportional to the square root of h. When h = 16, d = 10. Work out d when h = 64.",
+    "answer": {
+      "value": "20",
+      "subject": "d"
+    },
+    "verify": {
+      "expression": "10/sqrt(16) * sqrt(64)"
+    },
+    "marks": 3,
+    "mark_scheme": ["M1 for d = k√h", "M1 for k = 2.5", "A1 for 20"],
+    "explanation": "d = k√h. 10 = k × 4, so k = 2.5. When h = 64, d = 2.5 × 8 = 20.",
+    "hint": "Write d = k√h and find k first.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:33Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:40Z",
+          "notes": "model answered \"20\"; expected \"20\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:41Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0104",
+    "topic": "gcse-maths-h-r13",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r13-lp-inverse-equation",
+    "expected_seconds": 50,
+    "prompt": "y is inversely proportional to x. When x = 4, y = 9. Work out y when x = 6.",
+    "answer": {
+      "value": "6",
+      "subject": "y"
+    },
+    "verify": {
+      "expression": "4*9/6"
+    },
+    "marks": 1,
+    "explanation": "y = k/x. 9 = k/4, so k = 36. When x = 6, y = 36 ÷ 6 = 6.",
+    "hint": "Write y = k/x and use the values given to find k.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "understand that X is inversely proportional to Y is equivalent to X is proportional to",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:34Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:43Z",
+          "notes": "model answered \"6\"; expected \"6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:43Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0105",
+    "topic": "gcse-maths-h-r13",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r13-lp-inverse-equation",
+    "expected_seconds": 60,
+    "prompt": "F is inversely proportional to d². When d = 2, F = 45. Work out F when d = 3.",
+    "answer": {
+      "value": "20",
+      "subject": "F"
+    },
+    "verify": {
+      "expression": "45*2^2/3^2"
+    },
+    "marks": 3,
+    "mark_scheme": ["M1 for F = k/d²", "M1 for k = 180", "A1 for 20"],
+    "explanation": "F = k/d². 45 = k/4, so k = 180. When d = 3, F = 180 ÷ 9 = 20.",
+    "hint": "Write F = k/d² and find k first.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "understand that X is inversely proportional to Y is equivalent to X is proportional to",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:35Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:45Z",
+          "notes": "model answered \"20\"; expected \"20\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:46Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0106",
+    "topic": "gcse-maths-h-r13",
+    "type": "worked_maths",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-r13-lp-inverse-equation",
+    "expected_seconds": 100,
+    "prompt": "y is inversely proportional to x. When x = 8, y = 1.5. Write a formula for y in terms of x.",
+    "answer": {
+      "expression": "12/x",
+      "subject": "y"
+    },
+    "verify": {
+      "method": "expression",
+      "expression": "12/x"
+    },
+    "steps": ["(8*1.5)/x", "12/x"],
+    "marks": 3,
+    "mark_scheme": ["M1 for y = k/x", "M1 for k = 12", "A1 for y = 12/x"],
+    "explanation": "y = k/x. 1.5 = k/8, so k = 8 × 1.5 = 12. The formula is y = 12/x.",
+    "hint": "Start from y = k/x and use the pair of values to find k.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "understand that X is inversely proportional to Y is equivalent to X is proportional to",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). Answer backed by the maths engine (answer and every step). Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:33Z",
+          "notes": "model answered \"y = 12/x\"; expected \"12/x\""
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:34Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:39Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0107",
+    "topic": "gcse-maths-h-r13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r13-lp-interpret",
+    "expected_seconds": 40,
+    "prompt": "y = 20/x. What happens to y when x is doubled?",
+    "options": ["y is doubled", "y is halved", "y is multiplied by 4", "y does not change"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "Doubling x gives y = 20/(2x) = 10/x, which is half of 20/x. So y is halved.",
+    "hint": "Replace x with 2x in the formula and compare.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:36Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:37Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:39Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0108",
+    "topic": "gcse-maths-h-r13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r13-lp-interpret",
+    "expected_seconds": 35,
+    "prompt": "Which equation shows that P is inversely proportional to the square of r? (k is a constant.)",
+    "options": ["P = kr²", "P = k/r²", "P = k/r", "P = k√r"],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "Inversely proportional to r² means proportional to 1/r², so P = k × 1/r² = k/r².",
+    "hint": "\"Inversely proportional to\" something means proportional to 1 over it.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "understand that X is inversely proportional to Y is equivalent to X is proportional to",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:38Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:39Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:39Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0109",
+    "topic": "gcse-maths-h-r13",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r13-lp-equation-recall",
+    "expected_seconds": 15,
+    "front": "y is directly proportional to x. Write the equation, using k for the constant.",
+    "back": "y = kx",
+    "back_formula": {
+      "formula": "y = k*x"
+    },
+    "explanation": "Direct proportion means y is always the same multiple of x: y = kx.",
+    "hint": "y is a constant times x.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:42Z",
+          "notes": "model answered \"y = k*x\"; expected \"y = k*x\"; maths engine: same formula"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:43Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:39Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0110",
+    "topic": "gcse-maths-h-r13",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r13-lp-equation-recall",
+    "expected_seconds": 15,
+    "front": "y is inversely proportional to x. Write the equation, using k for the constant.",
+    "back": "y = k/x",
+    "back_formula": {
+      "formula": "y = k/x"
+    },
+    "explanation": "For inverse proportion, x × y stays the same. Call that number k: then xy = k, so y = k/x.",
+    "hint": "What happens to y when x doubles?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "understand that X is inversely proportional to Y is equivalent to X is proportional to",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (y is inversely proportional to x means y = k/x for a constant k; the cited quote states the equivalence with proportional to 1/x, but its last part (1/Y) is broken in the PDF text) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:30:22Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:30:24Z",
+          "notes": "model answered \"y = k/x where x != 0\"; expected \"y = k/x\"; maths engine: same formula"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:30:26Z",
+          "notes": "unsupported_claim (hint): The hint says 'What happens to y when x doubles?' This introduces the factual claim that changing x by a factor affects y in a corresponding inverse way, but the quoted sources only support constructing/interpreting inverse proportion equations and the equivalence statement about inverse proportion. They do not explicitly support this doubling relationship, so the hint makes a new unsupported factual claim.; unsupported_claim (explanation): The explanation states 'For inverse proportion, x × y stays the same.' The quoted sources given do not explicitly support this product-constant property, so this is a factual claim not backed by the provided sources."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0111",
+    "topic": "gcse-maths-h-r13",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-r13-lp-equation-recall",
+    "expected_seconds": 15,
+    "front": "y is directly proportional to x². Write the equation, using k for the constant.",
+    "back": "y = kx^2",
+    "back_formula": {
+      "formula": "y = k*x^2"
+    },
+    "explanation": "y is always the same multiple of x²: y = kx².",
+    "hint": "y is a constant times x squared.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:50Z",
+          "notes": "model answered \"y = k*x^2\"; expected \"y = k*x^2\"; maths engine: same formula"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T15:00:00Z"
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T10:23:50Z",
+          "notes": "no problems found"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T10:27:40Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-r13-0112",
+    "topic": "gcse-maths-h-r13",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-r13-lp-interpret",
+    "expected_seconds": 40,
+    "prompt": "y = 12/x. What happens to y when x is multiplied by 3?",
+    "options": [
+      "y is multiplied by 3",
+      "y is divided by 3",
+      "y does not change",
+      "y goes down by 3"
+    ],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "Replacing x with 3x gives y = 12/(3x) = (12/x) ÷ 3, so y is divided by 3.",
+    "hint": "Replace x with 3x in the formula and compare.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference R13",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 3. Ratio, proportion and rates of change, content reference R13 (page 16; PDF page 28)",
+        "quote": "construct and interpret equations that describe direct and inverse proportion",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec R13). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:16:56Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:16:57Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:16:58Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]
