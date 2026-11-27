@@ -54,7 +54,10 @@ describe('multiple choice flashcards (F20)', () => {
     await screen.findByText('Demo choice question');
     await click('Demo option C');
     expect(screen.getByText('Not quite. The answer is:')).toBeInTheDocument();
-    expect(screen.getByText('Demo option B')).toBeInTheDocument();
+    const answerFace = document.querySelector<HTMLElement>('.flip-card__face--back')!;
+    expect(within(answerFace).getByText('Demo option B')).toBeInTheDocument();
+    // The choices stay (so the card keeps its height) but can no longer be pressed.
+    expect(screen.getByRole('button', { name: 'Demo option A', hidden: true })).toBeDisabled();
     await click('Next card');
     await screen.findByText('Demo front 1');
     expect(ratings).toEqual(['again']);

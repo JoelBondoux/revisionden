@@ -147,6 +147,10 @@ test('a multiple choice card is answered by tapping a choice, which sets the rat
 
   await choices.getByRole('button', { name: 'Demo option C' }).click();
   await expect(page.getByText('Not quite. The answer is:')).toBeVisible();
+  // Codex on #441: the front (with its choices) is the taller face, so the card keeps that height.
+  await page.waitForTimeout(600); // the turn
+  const turned = await box(page, '[data-testid="flip-card"]');
+  expect(Math.round(turned.height)).toBe(Math.round(card.height));
   await expectAccessible(page, 'the answered choice card');
   await page.getByRole('button', { name: 'Next card' }).click();
   await expect.poll(() => ratings).toEqual(['again']);

@@ -101,13 +101,16 @@ function FlipCard({
             <p className="flip-card__text">
               <MathText text={card.front} subject={card.subjectId} />
             </p>
-            {choice && !flipped && (
+            {/* Kept after the turn (disabled, and this face is aria-hidden then) so the front keeps
+                its height and nothing below the card moves (Codex on #441). */}
+            {choice && (
               <div role="group" aria-label="Choose an answer" className="flip-card__choices">
                 {card.options!.map((option, index) => (
                   <button
                     key={index}
                     type="button"
                     className="btn btn--secondary flip-card__choice"
+                    disabled={flipped}
                     onClick={() => onChoose(index)}
                   >
                     <MathText text={option} subject={card.subjectId} />
