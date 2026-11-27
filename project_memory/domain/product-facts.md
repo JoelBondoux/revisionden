@@ -881,6 +881,11 @@ Tags: #product #rules #limits #defaults
   as the fill of a selected chip, tab or period toggle, with `--color-on-selected` words. Flip card topics use
   `--color-primary-edge`; the feedback thanks line uses `--color-text`; Garden Grow and Sticker Book keep their
   pale "Up next" card in dark ink in both modes.
+- Settled in J17x part 2 (W21 painted sweep): focus rings use `--color-focus` (the look's edge colour), also in the
+  shared `--focus-ring` (3px surface, then 3px focus colour); checkboxes and radio buttons are app-drawn (22px,
+  `--color-control-edge` border, `--color-selected` fill when checked; system controls in forced colours); icon-only
+  buttons have a control-edge border; the flashcard tabs' current tab is filled like a selected chip; the prize box keeps
+  light text inside a lesson. Comic Pop's light edge colour is #0a3d7a and Garden Grow's light secondary text #3d5a46.
 - Settled in J17y (student report "touch areas don't match the buttons", Galaxy Fold 7 open, 750×832): a pressed
   button only sinks, at most 3px (`translateY`, or `translate` up to 3px each way for hard-shadow looks), with
   no squash or shrink (`apps/web/src/design/press.test.ts`). The report was filed at 05:01 on 26 Nov, 23

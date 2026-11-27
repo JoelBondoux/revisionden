@@ -401,6 +401,14 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
     the light edge colour in dark) with `--color-on-selected` words, and a selected avatar option
     gets a thick `--color-selected` ring. All three are defined once in `design/themes.css` and
     tested in every look (`design/controlContrast.test.ts`).
+  - **focus, checkboxes and icon buttons (J17x part 2, W21 painted sweep):** every focus ring uses
+    `--color-focus` (the look's edge colour): `outline` rules and the shared `--focus-ring` (a 3px
+    surface gap, then 3px of `--color-focus`). Checkboxes and radio buttons are drawn by the app
+    (`design/base.css`): a 22px box (2px edge) or circle (3px edge) with a `--color-control-edge` border, filled with
+    `--color-selected` and an on-selected tick or dot when checked; forced colours keeps the
+    system's own. Icon-only buttons (bug button, map arrows, the Home cards shortcut) have a
+    `--color-control-edge` edge. A dark panel inside a lesson (the prize box) sets its own light
+    `--arena-text`, since lesson arena text takes the look's ink.
     `e2e/tests/lesson.spec.ts` holds each of these still and measures it on what is painted behind
     it (`paintedTextFailures`), in every look, light and dark.
 - **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with

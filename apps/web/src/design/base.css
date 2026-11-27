@@ -118,6 +118,77 @@ textarea {
   color: inherit;
 }
 
+/*
+ * J17x part 2 (W21 painted sweep, WCAG 1.4.11): checkboxes and radio buttons are drawn by the app,
+ * not the browser, so their edge reaches 3:1 on every look's page and card (the browser's thin grey
+ * ring measured 1.2 to 3:1). Checked: the selected colour with an on-selected tick or dot. A radio or
+ * checkbox hidden inside a styled control (an answer button, a chip) is unaffected.
+ */
+input[type='checkbox'],
+input[type='radio'] {
+  appearance: none;
+  flex: none;
+  display: inline-grid;
+  place-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  border: 2px solid var(--color-control-edge);
+  border-radius: 6px;
+  background: var(--color-surface);
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* A round edge needs a little more weight to read as clearly as a square one at 1x. */
+input[type='radio'] {
+  border-width: 3px;
+  border-radius: 50%;
+}
+
+input[type='checkbox']::before,
+input[type='radio']::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: var(--color-on-selected);
+  transform: scale(0);
+}
+
+input[type='checkbox']::before {
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type='radio']::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+input[type='checkbox']:checked,
+input[type='radio']:checked {
+  border-color: var(--color-selected);
+  background: var(--color-selected);
+}
+
+input[type='checkbox']:checked::before,
+input[type='radio']:checked::before {
+  transform: scale(1);
+}
+
+input[type='checkbox']:disabled,
+input[type='radio']:disabled {
+  cursor: default;
+}
+
+/* Windows High Contrast and similar: the system draws its own. */
+@media (forced-colors: active) {
+  input[type='checkbox'],
+  input[type='radio'] {
+    appearance: auto;
+  }
+}
+
 /* Every select keeps an edge that shows where it is (WCAG 1.4.11), light and dark. */
 select {
   border: 2px solid var(--color-control-edge);

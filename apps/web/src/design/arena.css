@@ -148,10 +148,16 @@
   opacity: 0.55;
 }
 
-.answer-option input {
+/* The real radio is hidden: the answer button is what shows (and what gets the focus ring). It
+   draws nothing of its own (base.css draws visible radios, J17x part 2). */
+.answer-option input,
+.answer-option input[type='radio'] {
   position: absolute;
   opacity: 0;
   pointer-events: none;
+  appearance: auto;
+  border: 0;
+  background: none;
 }
 
 /* Light parts inside the arena keep dark text; labels use the arena's secondary colour. */
