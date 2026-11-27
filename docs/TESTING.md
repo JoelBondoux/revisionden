@@ -183,6 +183,9 @@ every look; the desktop runs the default look. Data comes from the web app's own
   on demand, on pull requests that touch looks or design CSS, and before staging. Helpers:
   `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
   `e2e/tests/support/painted.ts`.
+- **Steady screens:** anything that changes with every build is held to made-up values, so a
+  row's place and key never move with the changelog: `/about` keeps three made-up What's new lines
+  and three licences, and the version footer shows a made-up commit (W21c).
 - **Known failures:** `e2e/tests/contrast-known.json`. A test fails on anything new and on a
   listed failure that is now fixed, so a fix removes its lines in the same change. To refresh the
   list after a fix: run the sweep with `CONTRAST_UPDATE=1` (add `CONTRAST_SWEEP=1` for tier 2),
