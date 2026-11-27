@@ -1,0 +1,3 @@
+### Added
+
+- Contrast sweep (tier 2): SVG text such as chart labels is now measured (inked through `fill`, judged on its fill colour), and text inside a closed `<details>` is skipped until opened, as it is not drawn. Both showed as "too few letter pixels" rows on `/progress`, `/parent/stats`, `/help` and `/parent/help` (J's report on the CI list). Red-first: `e2e/tests/painted-helpers.spec.ts`. `e2e/tests/contrast-known.json` tier 2, recalibrated from this PR's CI run (all 12 shards): 2158 rows to 316. None of the chart labels or help-page rows was faint text, so none is listed. What stays is already known: focus rings on `/family` and on lesson options, `/map` icon buttons, `/admin/feedback` and some parent text.
