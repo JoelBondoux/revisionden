@@ -295,6 +295,12 @@
       "maxLength": 20,
       "description": "What the answer is the value of, such as t or f^-1(x): an answer written \"<subject> = ...\" is read as its right-hand side."
     },
+    "answer_no_subject": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 300,
+      "description": "Why a number answer has no subject although its question names a letter (the letter names a curve, line or class interval, not the answer). Read by the S4 marking guard."
+    },
     "marks": {
       "type": "integer",
       "minimum": 1
@@ -410,6 +416,9 @@
                 "$ref": "#/$defs/text"
               },
               "description": "Units the answer may end with, or leave off (for example cm)."
+            },
+            "no_subject": {
+              "$ref": "#/$defs/answer_no_subject"
             }
           },
           "additionalProperties": false
@@ -453,6 +462,9 @@
             },
             "subject": {
               "$ref": "#/$defs/answer_subject"
+            },
+            "no_subject": {
+              "$ref": "#/$defs/answer_no_subject"
             },
             "form": {
               "$ref": "#/$defs/answer_form"
