@@ -4,11 +4,21 @@ name: Contrast sweep (tier 2, painted)
 # gradients and shadows included): text in every box, UI parts' edges and focus rings, in all 10
 # looks, light and dark. Nightly, on demand, on pull requests that change the looks or the design,
 # and as a gate before staging: deploy workflows can call it (workflow_call) and need its job.
+# W21c (lead ruling, 2026-11-27): for now a pull request's own run only reports (its job summary
+# lists new and fixed rows, and the report is kept); it does not fail the pull request, because
+# the known list was made on a machine that draws text a little differently from CI. Nightly and
+# the staging gate still fail on new rows. Temporary, until the list is made from a CI run
+# (decision 0012). Tier 1 (e2e.yml) stays blocking.
 on:
   schedule:
     - cron: '17 2 * * *'
   workflow_dispatch:
   workflow_call:
+    inputs:
+      blocking:
+        description: Fail on new or fixed rows (the staging gate does)
+        type: boolean
+        default: true
   pull_request:
     branches: [dev, staging, main]
     paths:
@@ -47,13 +57,32 @@ jobs:
           VITE_ENVIRONMENT: staging
         run: pnpm --filter @revisionden/web build
       - name: Run the painted sweep
+        id: sweep
+        continue-on-error: ${{ github.event_name == 'pull_request' && !inputs.blocking }}
+        shell: bash
         env:
           CONTRAST_SWEEP: '1'
         run: >-
           pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts
           --project=phone --project=desktop --grep @contrast-painted --shard=${{ matrix.shard }}/4 --trace off
+          2>&1 | tee sweep.log
+      - name: List new and fixed rows
+        if: steps.sweep.outcome == 'failure'
+        shell: bash
+        run: |
+          {
+            echo "### Contrast tier 2, shard ${{ matrix.shard }}"
+            echo
+            echo "New rows (not in contrast-known.json) and fixed rows (listed, no longer found):"
+            echo
+            echo '```'
+            awk '/new painted contrast failures/ { kind = "new  " }
+                 /fixed: remove these/ { kind = "fixed" }
+                 /^ *\+ +"/ { sub(/^ *\+ +/, ""); print kind " " $0 }' sweep.log | sort -u
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
       - name: Keep the report when something fails
-        if: failure()
+        if: steps.sweep.outcome == 'failure'
         uses: actions/upload-artifact@v4
         with:
           name: contrast-tier2-report-${{ matrix.shard }}
