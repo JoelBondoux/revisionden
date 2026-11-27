@@ -997,6 +997,10 @@ Tags: #product #rules #limits #defaults
   +50 XP and a step on the hidden Bug Hunter track (badge, title, avatar item, frame, Pip outfit,
   effect, legendary set at 20). Duplicates +10 XP; at most 3 confirmed-bug rewards a week; parents
   are thanked, not rewarded.
+- Bug button rest (L13): the operator can mark a student's bug report Not a bug (no reward,
+  closed). 3 within 14 days rest the bug button for 7 days; the 3rd rest within 90 days removes
+  it until a parent (Parent home) or the operator switches it back on. Server-enforced; numbers in
+  `packages/core/src/bug-button.ts`. Never hides Get help or Ask a parent.
 - Built (L7): the bug button and confirm flow; rules in `packages/core/src/bug-hunter.ts`
   (`bugReward`). The week is Monday to Sunday, UK time, and the 3-a-week cap counts full and
   duplicate rewards; past the cap the student is thanked with no XP and no track step. Bug XP is

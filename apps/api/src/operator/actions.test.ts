@@ -246,6 +246,64 @@ describe('operator ticket status, confirm bug and duplicate', () => {
   });
 });
 
+describe('operator Not a bug and the bug button (L13)', () => {
+  it("marks a student's bug report Not a bug, closed with no reward, and audits it", async () => {
+    const f = await makeFamily();
+    const row = await ticket(f, {
+      senderRole: 'student',
+      senderAuthUserId: null,
+      studentId: f.studentId,
+    });
+    expect((await post(`/tickets/${row.id}/not-a-bug`)).data).toEqual({ ok: true });
+    const [saved] = await t.db.select().from(feedback).where(eq(feedback.id, row.id));
+    expect(saved).toMatchObject({ outcome: 'not_a_bug', status: 'will_not_fix', rewardXp: 0 });
+    expect(await post(`/tickets/${row.id}/not-a-bug`)).toMatchObject({
+      status: 409,
+      code: 'already_reviewed',
+    });
+    expect(await audits()).toContainEqual(
+      expect.objectContaining({ action: 'ticket.not_a_bug', targetId: f.familyId }),
+    );
+  });
+
+  it("switches the sender's bug button back on from their ticket, and audits it", async () => {
+    const f = await makeFamily();
+    const rows = [];
+    for (let i = 0; i < 3; i++) {
+      const row = await ticket(f, {
+        senderRole: 'student',
+        senderAuthUserId: null,
+        studentId: f.studentId,
+      });
+      await post(`/tickets/${row.id}/not-a-bug`);
+      rows.push(row);
+    }
+    const state = await t.app.request('/v1/student/bug-button', { headers: f.studentHeaders });
+    expect(await state.json()).toMatchObject({ state: 'paused' });
+
+    expect((await post(`/tickets/${rows[2]!.id}/bug-button-on`)).data).toEqual({ ok: true });
+    const after = await t.app.request('/v1/student/bug-button', { headers: f.studentHeaders });
+    expect(await after.json()).toEqual({ state: 'on' });
+    expect(await audits()).toContainEqual(
+      expect.objectContaining({ action: 'ticket.bug_button_on', targetId: f.familyId }),
+    );
+  });
+
+  it('refuses Not a bug on an idea, and Bug button on for a ticket a parent sent', async () => {
+    const f = await makeFamily();
+    const idea = await ticket(f, { kind: 'idea' });
+    expect(await post(`/tickets/${idea.id}/not-a-bug`)).toMatchObject({
+      status: 400,
+      code: 'not_a_bug',
+    });
+    const fromParent = await ticket(f);
+    expect(await post(`/tickets/${fromParent.id}/bug-button-on`)).toMatchObject({
+      status: 400,
+      code: 'not_a_student_ticket',
+    });
+  });
+});
+
 describe("support notes and replies in the family's own data export", () => {
   it('includes them, with the text and time only, never the operator email', async () => {
     const f = await makeFamily();

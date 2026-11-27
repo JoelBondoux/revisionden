@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import { and, desc, eq, gt, inArray, isNotNull, isNull, notInArray, sql } from 'drizzle-orm';
-import { bugReward } from '@revisionden/core';
+import { bugButtonState, bugReward, type BugButtonState } from '@revisionden/core';
 import { z } from 'zod';
 import {
   FEEDBACK_KINDS,
@@ -165,6 +165,57 @@ function rewardMessage(row: typeof feedback.$inferSelect): string {
     : `Your bug report helped! +${row.rewardXp} XP`;
 }
 
+/** The bug button as the app shows it: on, resting until a time, or removed (L13). */
+export function toBugButton(state: BugButtonState) {
+  return state.state === 'paused'
+    ? { state: state.state, until: state.until.toISOString() }
+    : { state: state.state };
+}
+
+/** A student's bug button (packages/core bugButtonState), from their Not-a-bug reports. */
+export async function studentBugButton(
+  db: Database,
+  studentId: string,
+  now: Date,
+): Promise<BugButtonState> {
+  const [student] = await db
+    .select({ resetAt: students.bugButtonResetAt })
+    .from(students)
+    .where(eq(students.id, studentId));
+  const rows = await db
+    .select({ at: feedback.notABugAt })
+    .from(feedback)
+    .where(
+      and(
+        eq(feedback.studentId, studentId),
+        eq(feedback.kind, 'bug'),
+        eq(feedback.outcome, 'not_a_bug'),
+        isNotNull(feedback.notABugAt),
+      ),
+    );
+  return bugButtonState({
+    notABugAt: rows.flatMap((r) => (r.at ? [r.at] : [])),
+    resetAt: student?.resetAt ?? null,
+    now,
+  });
+}
+
+/** Switches a student's bug button back on (a parent or the operator): older outcomes stop counting. */
+export async function switchBugButtonOn(db: Database, studentId: string, now: Date) {
+  await db
+    .update(students)
+    .set({ bugButtonResetAt: now, updatedAt: now })
+    .where(eq(students.id, studentId));
+  return studentBugButton(db, studentId, now);
+}
+
+const bugButtonResting = () =>
+  new ApiError(
+    403,
+    'bug_button_resting',
+    'The bug button is taking a rest. You can still send us an idea, or ask a parent for help.',
+  );
+
 async function sentInLastDay(db: Database, now: Date, sender: ReturnType<typeof eq>) {
   const rows = await db
     .select({ id: feedback.id })
@@ -224,9 +275,13 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
       const row = await saveLessonTap(body.kind, body.itemId, { studentId, familyId });
       return c.json(toFeedback(row), 201);
     }
+    const now = clock.now();
+    // L13: while the bug button rests or is removed, bug reports are refused (other kinds are not).
+    if (body.kind === 'bug' && (await studentBugButton(db, studentId, now)).state !== 'on') {
+      throw bugButtonResting();
+    }
     const profiles = (await familyProfiles(db, familyId)).filter((p) => p.id === studentId);
     if (body.text && containsPersonalData(body.text, profiles)) throw personalDetails();
-    const now = clock.now();
     if ((await sentInLastDay(db, now, eq(feedback.studentId, studentId))) >= FEEDBACK_PER_DAY) {
       throw limitReached();
     }
@@ -269,7 +324,7 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
       .where(
         and(
           eq(feedback.studentId, c.var.student.studentId),
-          isNotNull(feedback.outcome),
+          inArray(feedback.outcome, ['confirmed', 'duplicate']),
           isNull(feedback.rewardSeenAt),
         ),
       )
@@ -299,15 +354,29 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
 
   app.get('/bug-hunter', async (c) => c.json(await bugHunterSummary(db, c.var.student.studentId)));
 
+  // L13: whether the bug button is on, resting until a time, or removed.
+  app.get('/bug-button', async (c) =>
+    c.json(toBugButton(await studentBugButton(db, c.var.student.studentId, clock.now()))),
+  );
+
   return app;
 }
 
 /** Parent route under /v1/students: one child's Bug Hunter count (own family only). */
-export function parentBugHunterRoutes({ db }: FeedbackDeps) {
+export function parentBugHunterRoutes({ db, clock }: FeedbackDeps) {
   const app = new Hono<AppEnv>();
   app.get('/:id/bug-hunter', async (c) => {
     const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
     return c.json(await bugHunterSummary(db, student.id));
+  });
+  // L13: a parent sees whether the child's bug button is resting or removed, and can switch it on.
+  app.get('/:id/bug-button', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    return c.json(toBugButton(await studentBugButton(db, student.id, clock.now())));
+  });
+  app.post('/:id/bug-button/on', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    return c.json(toBugButton(await switchBugButtonOn(db, student.id, clock.now())));
   });
   return app;
 }
@@ -430,6 +499,12 @@ export function adminFeedbackRoutes({ db, config, clock }: FeedbackDeps) {
     return c.json({ item: toAdminFeedback(item), message });
   });
 
+  // L13: a bug report that is not a bug. Closes it; three in 14 days rest the bug button.
+  app.post('/feedback/:id/not-a-bug', async (c) => {
+    const item = await markNotABug(db, clock.now(), c.req.param('id'));
+    return c.json({ item: toAdminFeedback(item) });
+  });
+
   app.patch('/feedback/:id', async (c) => {
     const { status } = await readJson(c, statusSchema);
     const row = await setFeedbackStatus(db, clock.now(), c.req.param('id'), status);
@@ -485,6 +560,37 @@ export async function confirmFeedback(
     .returning();
   if (!updated) throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
   return { item: updated, message: reward.message };
+}
+
+/**
+ * Marks a bug report Not a bug (L13): no reward, closed as will not fix. Only a report sent as a
+ * bug, with no outcome yet. A student's Not-a-bug reports rest their bug button
+ * (packages/core bugButtonState). Shared by the operator page and the AppDeck bridge.
+ */
+export async function markNotABug(
+  db: Database,
+  now: Date,
+  id: string,
+): Promise<typeof feedback.$inferSelect> {
+  if (!isId(id)) throw notFound('Feedback not found');
+  const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
+  if (!row) throw notFound('Feedback not found');
+  if (row.kind !== 'bug')
+    throw new ApiError(400, 'not_a_bug', 'Only bug reports can be marked Not a bug.');
+  if (row.outcome) throw new ApiError(409, 'already_reviewed', 'This report is already reviewed.');
+  const [updated] = await db
+    .update(feedback)
+    .set({
+      outcome: 'not_a_bug',
+      notABugAt: now,
+      status: 'will_not_fix',
+      closedAt: now,
+      updatedAt: now,
+    })
+    .where(and(eq(feedback.id, id), isNull(feedback.outcome)))
+    .returning();
+  if (!updated) throw new ApiError(409, 'already_reviewed', 'This report is already reviewed.');
+  return updated;
 }
 
 /** Sets a ticket's status; fixed and will-not-fix close it (deleted 12 months later). */

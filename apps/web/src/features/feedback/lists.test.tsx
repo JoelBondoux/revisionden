@@ -77,6 +77,10 @@ function fakeApi(overrides: Partial<FeedbackApi> = {}): FeedbackApi {
     })),
     listRewards: vi.fn(async () => []),
     markRewardsSeen: vi.fn(async () => {}),
+    bugButton: vi.fn(async () => ({ state: 'on' as const })),
+    markNotABug: vi.fn(),
+    childBugButton: vi.fn(async () => ({ state: 'on' as const })),
+    switchChildBugButtonOn: vi.fn(async () => ({ state: 'on' as const })),
     errorReports: vi.fn(async () => ({
       since: '2026-11-24T08:00:00.000Z',
       total: 2,
@@ -194,6 +198,22 @@ describe('operator triage of bugs', () => {
     expect(await within(row).findByRole('status')).toHaveTextContent('Confirmed. +50 XP');
     expect(within(row).getByText('Confirmed')).toBeInTheDocument();
     expect(within(row).queryByRole('button', { name: 'Confirm bug' })).not.toBeInTheDocument();
+  });
+
+  it('marks a bug report Not a bug, closed as will not fix (L13)', async () => {
+    const api = showBugs({
+      markNotABug: vi.fn(async (id: string) => ({
+        ...bugs.find((i) => i.id === id)!,
+        outcome: 'not_a_bug' as const,
+        status: 'will_not_fix' as const,
+      })),
+    });
+    const row = (await screen.findAllByRole('listitem'))[2]!;
+    await userEvent.click(within(row).getByRole('button', { name: 'Not a bug' }));
+    expect(api.markNotABug).toHaveBeenCalledWith('b3');
+    expect(await within(row).findByText('Not a bug')).toBeInTheDocument();
+    expect(within(row).queryByRole('button', { name: 'Confirm bug' })).not.toBeInTheDocument();
+    expect(within(row).getByRole('combobox', { name: 'Status' })).toHaveValue('will_not_fix');
   });
 
   it('offers only earlier confirmed reports as the original of a duplicate', async () => {

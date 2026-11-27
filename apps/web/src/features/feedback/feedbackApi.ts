@@ -14,7 +14,7 @@ export const ALL_FEEDBACK_KINDS = [
   'lesson_not_helped',
 ] as const;
 export const FEEDBACK_STATUSES = ['new', 'looking_into_it', 'fixed', 'will_not_fix'] as const;
-export const FEEDBACK_OUTCOMES = ['confirmed', 'duplicate'] as const;
+export const FEEDBACK_OUTCOMES = ['confirmed', 'duplicate', 'not_a_bug'] as const;
 export type FeedbackKind = (typeof FEEDBACK_KINDS)[number];
 export type AnyFeedbackKind = (typeof ALL_FEEDBACK_KINDS)[number];
 export type FeedbackStatus = (typeof FEEDBACK_STATUSES)[number];
@@ -49,6 +49,13 @@ const rewardSchema = z.object({
   confirmedAt: z.string(),
 });
 const confirmSchema = z.object({ item: triageSchema, message: z.string() });
+/** L13: the student's bug button, from the server (it rests after reports that were not bugs). */
+const bugButtonSchema = z.discriminatedUnion('state', [
+  z.object({ state: z.literal('on') }),
+  z.object({ state: z.literal('paused'), until: z.string() }),
+  z.object({ state: z.literal('removed') }),
+]);
+export type BugButtonInfo = z.infer<typeof bugButtonSchema>;
 export type Feedback = z.infer<typeof feedbackSchema>;
 export type TriageFeedback = z.infer<typeof triageSchema>;
 export type FeedbackReward = z.infer<typeof rewardSchema>;
@@ -86,6 +93,13 @@ export interface FeedbackApi {
   markRewardsSeen(ids: readonly string[]): Promise<void>;
   /** Operator only: error reports since a time, grouped (`GET /v1/admin/error-reports`). */
   errorReports(since?: string): Promise<ErrorReportSummary>;
+  /** Student: whether the bug button is on, resting or removed (L13). */
+  bugButton(): Promise<BugButtonInfo>;
+  /** Operator: a bug report that is not a bug (closes it; three in 14 days rest the button). */
+  markNotABug(id: string): Promise<TriageFeedback>;
+  /** Parent: a child's bug button, and switching it back on. */
+  childBugButton(studentId: string): Promise<BugButtonInfo>;
+  switchChildBugButtonOn(studentId: string): Promise<BugButtonInfo>;
 }
 
 const errorBody = z.object({ error: z.object({ code: z.string(), message: z.string() }) });
@@ -167,6 +181,22 @@ export function createFeedbackApi(options: {
         method: 'POST',
         body: JSON.stringify({ ids }),
       })),
+    bugButton: () => request('student/bug-button', bugButtonSchema),
+    markNotABug: async (id) =>
+      (
+        await request(
+          `admin/feedback/${encodeURIComponent(id)}/not-a-bug`,
+          z.object({ item: triageSchema }),
+          { method: 'POST', body: '{}' },
+        )
+      ).item,
+    childBugButton: (studentId) =>
+      request(`students/${encodeURIComponent(studentId)}/bug-button`, bugButtonSchema),
+    switchChildBugButtonOn: (studentId) =>
+      request(`students/${encodeURIComponent(studentId)}/bug-button/on`, bugButtonSchema, {
+        method: 'POST',
+        body: '{}',
+      }),
   };
 }
 
@@ -198,4 +228,5 @@ export const STATUS_LABELS: Record<FeedbackStatus, string> = {
 export const OUTCOME_LABELS: Record<FeedbackOutcome, string> = {
   confirmed: 'Confirmed',
   duplicate: 'Duplicate',
+  not_a_bug: 'Not a bug',
 };

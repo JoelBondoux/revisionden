@@ -239,6 +239,13 @@
       "when": 1795707041419,
       "tag": "0033_lesson_tap_unique",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1795756937806,
+      "tag": "0034_bug_button_rest",
+      "breakpoints": true
     }
   ]
 }

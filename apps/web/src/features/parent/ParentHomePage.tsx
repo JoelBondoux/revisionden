@@ -28,6 +28,7 @@ import { BetaBadge } from '../programmes/BetaBadge';
 import { InstallCard } from '../../pwa/InstallCard';
 import { ParentFriendsTile } from '../league';
 import './parent.css';
+import { ChildBugButtonNote } from '../feedback/BugButtonRest';
 
 /**
  * Parent home (workstream P): the parent's way in to everything that is theirs. Shows nicknames
@@ -114,6 +115,7 @@ function ChildCard({ choices }: { choices: Child[] }) {
           <ButtonTile to={`/parent/subjects/${id}`} icon={<LearnIcon />} label="Subjects" />
           <ParentFriendsTile studentId={child.id} nickname={child.nickname} />
         </ButtonTiles>
+        <ChildBugButtonNote studentId={child.id} nickname={child.nickname} />
       </Card>
     </>
   );

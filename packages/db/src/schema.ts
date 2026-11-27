@@ -210,6 +210,9 @@ export const students = pgTable(
     leagueHidden: boolean('league_hidden').notNull().default(false),
     // Weekly league wins so far (FL PR 3); lasts after league_weeks rows are cleared.
     leagueWins: integer('league_wins').notNull().default(0),
+    // Bug button rest (L13, packages/core bugButtonState): when a parent or the operator last
+    // switched the bug button back on. Not-a-bug outcomes before it no longer count.
+    bugButtonResetAt: timestamp('bug_button_reset_at', { withTimezone: true }),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -1171,6 +1174,7 @@ export const FEEDBACK_KINDS = [
 ] as const;
 export const LESSON_FEEDBACK_KINDS = ['lesson_helped', 'lesson_not_helped'] as const;
 export const FEEDBACK_STATUSES = ['new', 'looking_into_it', 'fixed', 'will_not_fix'] as const;
+export const FEEDBACK_OUTCOMES = ['confirmed', 'duplicate', 'not_a_bug'] as const;
 export const FEEDBACK_MAX_TEXT = 500;
 
 /** Device details a sender may include: never IP address, location or contacts. */
@@ -1209,7 +1213,8 @@ export const feedback = pgTable(
     // Bug Hunter (L7): the operator confirms a bug report, or marks it a duplicate of an earlier
     // confirmed one. reward_xp and track_step record what the student earned (packages/core
     // bugReward); reward_seen_at is set once the student has seen the thank-you in the app.
-    outcome: text('outcome', { enum: ['confirmed', 'duplicate'] }),
+    // L13: or marks it Not a bug (no reward); not_a_bug_at feeds the bug button rest.
+    outcome: text('outcome', { enum: FEEDBACK_OUTCOMES }),
     duplicateOf: uuid('duplicate_of').references((): AnyPgColumn => feedback.id, {
       onDelete: 'set null',
     }),
@@ -1217,6 +1222,7 @@ export const feedback = pgTable(
     trackStep: boolean('track_step').notNull().default(false),
     confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
     rewardSeenAt: timestamp('reward_seen_at', { withTimezone: true }),
+    notABugAt: timestamp('not_a_bug_at', { withTimezone: true }),
   },
   (t) => [
     index('feedback_family_id_idx').on(t.familyId),
@@ -1236,7 +1242,8 @@ export const feedback = pgTable(
       sql`${t.status} in ('new', 'looking_into_it', 'fixed', 'will_not_fix')`,
     ),
     check('feedback_text_length', sql`char_length(${t.text}) <= 500`),
-    check('feedback_outcome_values', sql`${t.outcome} in ('confirmed', 'duplicate')`),
+    check('feedback_outcome_values', sql`${t.outcome} in ('confirmed', 'duplicate', 'not_a_bug')`),
+    index('feedback_student_not_a_bug_idx').on(t.studentId, t.notABugAt),
     index('feedback_student_confirmed_idx').on(t.studentId, t.confirmedAt),
     // One "Did this help?" tap per student and item (W8b): a second tap updates the first. The
     // route's ON CONFLICT repeats this WHERE exactly, so Postgres can use the partial index.
