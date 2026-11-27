@@ -184,7 +184,7 @@
     "expected_seconds": 40,
     "prompt": "A = {1, 2, 3, 4, 5, 6} and B = {4, 5, 6, 7}. List the numbers that are in both A and B.",
     "answer": {
-      "accepted": ["4, 5, 6"],
+      "accepted": ["4, 5, 6", "{4, 5, 6}"],
       "any_order": true
     },
     "marks": 1,
@@ -223,7 +223,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:26Z",
+          "at": "2026-11-27T11:48:13Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -239,15 +239,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:14Z",
-          "notes": "model answered \"4, 5, 6\"; expected \"4, 5, 6\""
+          "at": "2026-11-27T11:48:15Z",
+          "notes": "model answered \"4, 5, 6\"; expected \"4, 5, 6 | {4, 5, 6}\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:15Z",
+          "at": "2026-11-27T11:48:16Z",
           "notes": "no problems found"
         }
       ]
@@ -608,17 +608,17 @@
   {
     "id": "gcse-maths-h-p6-0108",
     "topic": "gcse-maths-h-p6",
-    "type": "short_answer",
+    "type": "multiple_choice",
     "difficulty": 2,
     "learning_point": "gcse-maths-h-p6-lp-outcomes",
     "expected_seconds": 40,
-    "prompt": "Two coins are flipped. List all the possible outcomes, using H for heads and T for tails.",
+    "prompt": "Two coins are flipped. H means heads and T means tails, with the first coin written first. Which list shows every possible outcome exactly once?",
+    "options": ["HH, HT, TH, TT", "HH, HT, TT", "HH, TT", "HT, TH"],
     "answer": {
-      "accepted": ["HH, HT, TH, TT"],
-      "any_order": true
+      "option": 0
     },
     "marks": 1,
-    "explanation": "First coin H: HH, HT. First coin T: TH, TT. That is 4 outcomes.",
+    "explanation": "First coin H: HH, HT. First coin T: TH, TT. That is 4 outcomes; HT and TH are different because the coins are in a different order.",
     "hint": "Fix the first coin, then list the second.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P6",
     "checked_by": ["author"],
@@ -653,7 +653,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:27Z",
+          "at": "2026-11-27T11:48:13Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -669,15 +669,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:27Z",
-          "notes": "model answered \"HH, HT, TH, TT\"; expected \"HH, HT, TH, TT\""
+          "at": "2026-11-27T11:48:18Z",
+          "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:28Z",
+          "at": "2026-11-27T11:48:19Z",
           "notes": "no problems found"
         }
       ]
