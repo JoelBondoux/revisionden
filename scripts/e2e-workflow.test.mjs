@@ -54,3 +54,36 @@ test('the contrast sweep (tier 1) runs once on the shared build, not in every sh
   assert.match(contrast, /--grep @contrast /);
   assert.match(job('e2e'), /--grep-invert @contrast/);
 });
+
+const painted = readFileSync(
+  new URL('../.github/workflows/contrast-painted.yml', import.meta.url),
+  'utf8',
+);
+
+test('the painted sweep only reports on pull requests for now; nightly and the staging gate still fail (W21c, decision 0012)', () => {
+  // A caller (the staging gate) can say whether it blocks; it does unless told otherwise.
+  assert.match(painted, /workflow_call:\n\s+inputs:\n\s+blocking:\n(?:.*\n)*?\s+default: true/);
+  // Only a pull request's own run carries on past new rows.
+  assert.match(
+    painted,
+    /continue-on-error: \$\{\{ github\.event_name == 'pull_request' && !inputs\.blocking \}\}/,
+  );
+  // Every run that found something keeps its report and lists the new and fixed rows.
+  assert.match(painted, /id: sweep/);
+  assert.match(painted, /if: steps\.sweep\.outcome == 'failure'/);
+  assert.match(painted, /GITHUB_STEP_SUMMARY/);
+});
+
+test('every Playwright system install first drops the runner image Microsoft apt source (G12)', () => {
+  // ubuntu-26.04 images list packages.microsoft.com, whose apt release file is no longer signed,
+  // so `playwright install --with-deps` (apt-get update) can fail on it.
+  const installs = [...workflow.matchAll(/playwright install --with-deps/g)];
+  assert.ok(installs.length > 0);
+  const steps = workflow.split(/\n(?= {6}- )/);
+  steps.forEach((s, i) => {
+    if (!s.includes('playwright install --with-deps')) return;
+    assert.match(steps[i - 1], /- name: Drop the unsigned Microsoft apt source/);
+    assert.match(steps[i - 1], /packages\.microsoft\.com/);
+    assert.match(steps[i - 1], /\/etc\/apt\/sources\.list\.d/);
+  });
+});

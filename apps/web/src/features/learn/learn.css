@@ -73,6 +73,18 @@
   white-space: nowrap;
 }
 
+/* F17: "More time" sits beside the clock in the last minute, and drops to its own line when the
+   row is too narrow (a small phone, or large text). */
+.lesson__top:has(.timer__more) {
+  flex-wrap: wrap;
+}
+
+.timer__more {
+  flex: none;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
 .subject-page__actions {
   display: grid;
   gap: var(--space-3);

@@ -15,6 +15,10 @@ function fakeApi(overrides: Partial<FeedbackApi> = {}): FeedbackApi {
     confirm: vi.fn(),
     listRewards: vi.fn(async () => []),
     markRewardsSeen: vi.fn(async () => {}),
+    bugButton: vi.fn(async () => ({ state: 'on' as const })),
+    markNotABug: vi.fn(),
+    childBugButton: vi.fn(async () => ({ state: 'on' as const })),
+    switchChildBugButtonOn: vi.fn(async () => ({ state: 'on' as const })),
     errorReports: vi.fn(),
     ...overrides,
   };

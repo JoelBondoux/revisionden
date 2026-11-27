@@ -92,7 +92,8 @@
   justify-content: center;
   width: calc(var(--tap-target) + var(--space-1));
   height: calc(var(--tap-target) + var(--space-1));
-  border: 2px solid var(--color-border);
+  /* An icon-only button: its edge reaches 3:1 on every page (J17x part 2, WCAG 1.4.11). */
+  border: 2px solid var(--color-control-edge);
   border-radius: var(--radius-pill);
   background: var(--color-surface);
   color: var(--color-text-secondary);

@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { and, desc, eq, gt, inArray, isNotNull, isNull, notInArray, sql } from 'drizzle-orm';
-import { bugReward } from '@revisionden/core';
+import { and, desc, eq, gt, gte, inArray, isNotNull, isNull, notInArray, sql } from 'drizzle-orm';
+import { bugButtonState, bugReward, type BugButtonState } from '@revisionden/core';
 import { z } from 'zod';
 import {
   FEEDBACK_KINDS,
@@ -150,11 +150,23 @@ function toFeedback(row: typeof feedback.$inferSelect) {
   };
 }
 
-const toAdminFeedback = (row: typeof feedback.$inferSelect) => ({
+const toAdminFeedback = (row: typeof feedback.$inferSelect, tester = false) => ({
   ...toFeedback(row),
   device: row.device,
   duplicateOf: row.duplicateOf ?? null,
+  // L13: sent from a tester account (operator console), so it earns nothing and never rests.
+  tester,
 });
+
+/** L13: whether a student is a tester account (set only in the operator console). */
+async function isTester(db: Database, studentId: string | null): Promise<boolean> {
+  if (!studentId) return false;
+  const [row] = await db
+    .select({ tester: students.tester })
+    .from(students)
+    .where(eq(students.id, studentId));
+  return row?.tester ?? false;
+}
 
 /** The thank-you the sender sees for a confirmed report (packages/core bugReward). */
 function rewardMessage(row: typeof feedback.$inferSelect): string {
@@ -164,6 +176,71 @@ function rewardMessage(row: typeof feedback.$inferSelect): string {
     ? `Thanks for confirming that bug! +${row.rewardXp} XP`
     : `Your bug report helped! +${row.rewardXp} XP`;
 }
+
+/** The bug button as the app shows it: on, resting until a time, or removed (L13). */
+export function toBugButton(state: BugButtonState) {
+  return state.state === 'paused'
+    ? { state: state.state, until: state.until.toISOString() }
+    : { state: state.state };
+}
+
+/** A student's bug button (packages/core bugButtonState), from their Not-a-bug reports. */
+export async function studentBugButton(
+  db: Database,
+  studentId: string,
+  now: Date,
+): Promise<BugButtonState> {
+  const [student] = await db
+    .select({
+      resetAt: students.bugButtonResetAt,
+      removedAt: students.bugButtonRemovedAt,
+      tester: students.tester,
+    })
+    .from(students)
+    .where(eq(students.id, studentId));
+  if (student?.tester) return { state: 'on' };
+  // A removal is kept on the student, so deleting old reports (12 months) never undoes it.
+  if (student?.removedAt) return { state: 'removed' };
+  const rows = await db
+    .select({ at: feedback.notABugAt })
+    .from(feedback)
+    .where(
+      and(
+        eq(feedback.studentId, studentId),
+        eq(feedback.kind, 'bug'),
+        eq(feedback.outcome, 'not_a_bug'),
+        isNotNull(feedback.notABugAt),
+      ),
+    );
+  const state = bugButtonState({
+    notABugAt: rows.flatMap((r) => (r.at ? [r.at] : [])),
+    resetAt: student?.resetAt ?? null,
+    now,
+  });
+  if (state.state === 'removed') {
+    await db
+      .update(students)
+      .set({ bugButtonRemovedAt: now, updatedAt: now })
+      .where(eq(students.id, studentId));
+  }
+  return state;
+}
+
+/** Switches a student's bug button back on (a parent or the operator): older outcomes stop counting. */
+export async function switchBugButtonOn(db: Database, studentId: string, now: Date) {
+  await db
+    .update(students)
+    .set({ bugButtonResetAt: now, bugButtonRemovedAt: null, updatedAt: now })
+    .where(eq(students.id, studentId));
+  return studentBugButton(db, studentId, now);
+}
+
+const bugButtonResting = () =>
+  new ApiError(
+    403,
+    'bug_button_resting',
+    'The bug button is taking a rest. You can still send us an idea, or ask a parent for help.',
+  );
 
 async function sentInLastDay(db: Database, now: Date, sender: ReturnType<typeof eq>) {
   const rows = await db
@@ -224,9 +301,13 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
       const row = await saveLessonTap(body.kind, body.itemId, { studentId, familyId });
       return c.json(toFeedback(row), 201);
     }
+    const now = clock.now();
+    // L13: while the bug button rests or is removed, bug reports are refused (other kinds are not).
+    if (body.kind === 'bug' && (await studentBugButton(db, studentId, now)).state !== 'on') {
+      throw bugButtonResting();
+    }
     const profiles = (await familyProfiles(db, familyId)).filter((p) => p.id === studentId);
     if (body.text && containsPersonalData(body.text, profiles)) throw personalDetails();
-    const now = clock.now();
     if ((await sentInLastDay(db, now, eq(feedback.studentId, studentId))) >= FEEDBACK_PER_DAY) {
       throw limitReached();
     }
@@ -269,7 +350,7 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
       .where(
         and(
           eq(feedback.studentId, c.var.student.studentId),
-          isNotNull(feedback.outcome),
+          inArray(feedback.outcome, ['confirmed', 'duplicate']),
           isNull(feedback.rewardSeenAt),
         ),
       )
@@ -299,15 +380,29 @@ export function studentFeedbackRoutes({ db, clock }: FeedbackDeps) {
 
   app.get('/bug-hunter', async (c) => c.json(await bugHunterSummary(db, c.var.student.studentId)));
 
+  // L13: whether the bug button is on, resting until a time, or removed.
+  app.get('/bug-button', async (c) =>
+    c.json(toBugButton(await studentBugButton(db, c.var.student.studentId, clock.now()))),
+  );
+
   return app;
 }
 
 /** Parent route under /v1/students: one child's Bug Hunter count (own family only). */
-export function parentBugHunterRoutes({ db }: FeedbackDeps) {
+export function parentBugHunterRoutes({ db, clock }: FeedbackDeps) {
   const app = new Hono<AppEnv>();
   app.get('/:id/bug-hunter', async (c) => {
     const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
     return c.json(await bugHunterSummary(db, student.id));
+  });
+  // L13: a parent sees whether the child's bug button is resting or removed, and can switch it on.
+  app.get('/:id/bug-button', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    return c.json(toBugButton(await studentBugButton(db, student.id, clock.now())));
+  });
+  app.post('/:id/bug-button/on', async (c) => {
+    const student = await requireFamilyStudent(db, c.var.parent.familyId, c.req.param('id'));
+    return c.json(toBugButton(await switchBugButtonOn(db, student.id, clock.now())));
   });
   return app;
 }
@@ -413,8 +508,12 @@ export function adminFeedbackRoutes({ db, config, clock }: FeedbackDeps) {
   });
 
   app.get('/feedback', async (c) => {
-    const rows = await db.select().from(feedback).orderBy(desc(feedback.createdAt));
-    return c.json({ feedback: rows.map(toAdminFeedback) });
+    const rows = await db
+      .select({ row: feedback, tester: students.tester })
+      .from(feedback)
+      .leftJoin(students, eq(students.id, feedback.studentId))
+      .orderBy(desc(feedback.createdAt));
+    return c.json({ feedback: rows.map((r) => toAdminFeedback(r.row, r.tester ?? false)) });
   });
 
   // Confirm a bug report, or mark it a duplicate of an earlier confirmed one, and reward the
@@ -427,13 +526,19 @@ export function adminFeedbackRoutes({ db, config, clock }: FeedbackDeps) {
       c.req.param('id'),
       duplicateOf,
     );
-    return c.json({ item: toAdminFeedback(item), message });
+    return c.json({ item: toAdminFeedback(item, await isTester(db, item.studentId)), message });
+  });
+
+  // L13: a bug report that is not a bug. Closes it; three in 14 days rest the bug button.
+  app.post('/feedback/:id/not-a-bug', async (c) => {
+    const item = await markNotABug(db, clock.now(), c.req.param('id'));
+    return c.json({ item: toAdminFeedback(item, await isTester(db, item.studentId)) });
   });
 
   app.patch('/feedback/:id', async (c) => {
     const { status } = await readJson(c, statusSchema);
     const row = await setFeedbackStatus(db, clock.now(), c.req.param('id'), status);
-    return c.json(toAdminFeedback(row));
+    return c.json(toAdminFeedback(row, await isTester(db, row.studentId)));
   });
 
   return app;
@@ -449,6 +554,7 @@ export async function confirmFeedback(
   now: Date,
   id: string,
   duplicateOf?: string,
+  by: 'operator' | 'triage' = 'operator',
 ): Promise<{ item: typeof feedback.$inferSelect; message: string }> {
   if (!isId(id)) throw notFound('Feedback not found');
   const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
@@ -469,6 +575,7 @@ export async function confirmFeedback(
     senderRole: row.senderRole,
     duplicate: duplicateOf !== undefined,
     rewardsThisWeek: row.studentId ? await bugRewardsThisWeek(db, row.studentId, now) : 0,
+    tester: await isTester(db, row.studentId),
   });
   const [updated] = await db
     .update(feedback)
@@ -479,12 +586,122 @@ export async function confirmFeedback(
       trackStep: reward.trackStep,
       confirmedAt: now,
       updatedAt: now,
+      reviewedBy: by,
       ...(row.status === 'new' ? { status: 'looking_into_it' as const } : {}),
     })
     .where(and(eq(feedback.id, id), isNull(feedback.outcome)))
     .returning();
   if (!updated) throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
   return { item: updated, message: reward.message };
+}
+
+/** L14: how long the operator can reverse an outcome the lead's triage chose. */
+export const TRIAGE_UNDO_DAYS = 7;
+
+/**
+ * L14: reverses a confirm, duplicate or Not a bug that the lead's triage chose, within
+ * TRIAGE_UNDO_DAYS. The report goes back to "looking into it" with no outcome: any reward is
+ * taken back (XP is summed from these rows) and a reversed Not a bug no longer rests the bug
+ * button. An outcome the operator chose is never undone here.
+ */
+export async function undoTriage(
+  db: Database,
+  now: Date,
+  id: string,
+): Promise<typeof feedback.$inferSelect> {
+  if (!isId(id)) throw notFound('Feedback not found');
+  const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
+  if (!row) throw notFound('Feedback not found');
+  if (!row.outcome || row.reviewedBy !== 'triage') {
+    throw new ApiError(400, 'not_triage', "Only an outcome the lead's triage chose can be undone.");
+  }
+  const decidedAt = row.notABugAt ?? row.confirmedAt;
+  if (!decidedAt || now.getTime() - decidedAt.getTime() > TRIAGE_UNDO_DAYS * 24 * 60 * 60 * 1000) {
+    throw new ApiError(
+      409,
+      'undo_too_late',
+      `A triage outcome can be undone for ${TRIAGE_UNDO_DAYS} days.`,
+    );
+  }
+  const [updated] = await db
+    .update(feedback)
+    .set({
+      outcome: null,
+      duplicateOf: null,
+      rewardXp: 0,
+      trackStep: false,
+      // So the student is told about whatever the report is decided as next.
+      rewardSeenAt: null,
+      confirmedAt: null,
+      notABugAt: null,
+      reviewedBy: null,
+      status: 'looking_into_it',
+      closedAt: null,
+      updatedAt: now,
+    })
+    .where(and(eq(feedback.id, id), eq(feedback.reviewedBy, 'triage')))
+    .returning();
+  if (
+    updated?.studentId &&
+    updated.kind === 'bug' &&
+    row.outcome === 'not_a_bug' &&
+    row.notABugAt
+  ) {
+    // Only a Not a bug from before (or at) the removal can have caused it. Such a removal is at
+    // most 7 days old (the undo window), so its reports are all still here: it is checked again
+    // from them and set again only if it still holds. A later Not a bug never lifts an older
+    // removal, whose reports the 12-month clean-up may already have deleted.
+    const [lifted] = await db
+      .update(students)
+      .set({ bugButtonRemovedAt: null, updatedAt: now })
+      .where(
+        and(
+          eq(students.id, updated.studentId),
+          isNotNull(students.bugButtonRemovedAt),
+          gte(students.bugButtonRemovedAt, row.notABugAt),
+        ),
+      )
+      .returning({ id: students.id });
+    if (lifted) await studentBugButton(db, updated.studentId, now);
+  }
+  if (!updated)
+    throw new ApiError(400, 'not_triage', "Only an outcome the lead's triage chose can be undone.");
+  return updated;
+}
+
+/**
+ * Marks a bug report Not a bug (L13): no reward, closed as will not fix. Only a report sent as a
+ * bug, with no outcome yet. A student's Not-a-bug reports rest their bug button
+ * (packages/core bugButtonState). Shared by the operator page and the AppDeck bridge.
+ */
+export async function markNotABug(
+  db: Database,
+  now: Date,
+  id: string,
+  by: 'operator' | 'triage' = 'operator',
+): Promise<typeof feedback.$inferSelect> {
+  if (!isId(id)) throw notFound('Feedback not found');
+  const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
+  if (!row) throw notFound('Feedback not found');
+  if (row.kind !== 'bug')
+    throw new ApiError(400, 'not_a_bug', 'Only bug reports can be marked Not a bug.');
+  if (row.outcome) throw new ApiError(409, 'already_reviewed', 'This report is already reviewed.');
+  const [updated] = await db
+    .update(feedback)
+    .set({
+      outcome: 'not_a_bug',
+      notABugAt: now,
+      reviewedBy: by,
+      status: 'will_not_fix',
+      closedAt: now,
+      updatedAt: now,
+    })
+    .where(and(eq(feedback.id, id), isNull(feedback.outcome)))
+    .returning();
+  if (!updated) throw new ApiError(409, 'already_reviewed', 'This report is already reviewed.');
+  // Records a removal on the student now, before the 12-month clean-up can delete the reports.
+  if (updated.studentId) await studentBugButton(db, updated.studentId, now);
+  return updated;
 }
 
 /** Sets a ticket's status; fixed and will-not-fix close it (deleted 12 months later). */

@@ -117,7 +117,10 @@ export function FeedbackListPage({ scope }: { scope: 'family' | 'mine' }) {
   );
 }
 
-/** Bug Hunter (docs/REWARDS.md): confirm a new bug, or confirm it as a duplicate. */
+/**
+ * Bug Hunter (docs/REWARDS.md): confirm a new bug, or confirm it as a duplicate. Or mark it Not a
+ * bug (L13): closed as will not fix, no reward; three in 14 days rest the student's bug button.
+ */
 function ConfirmBug({
   item,
   originals,
@@ -140,6 +143,18 @@ function ConfirmBug({
       onConfirmed(result.item, result.message);
     } catch (err) {
       setError(err instanceof FeedbackApiError ? err.message : 'Could not confirm. Try again.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const notABug = async () => {
+    setBusy(true);
+    setError(undefined);
+    try {
+      onConfirmed(await api.markNotABug(item.id), 'Marked Not a bug. Closed as will not fix.');
+    } catch (err) {
+      setError(err instanceof FeedbackApiError ? err.message : 'Could not save. Try again.');
     } finally {
       setBusy(false);
     }
@@ -171,6 +186,9 @@ function ConfirmBug({
         onClick={() => void confirm(original)}
       >
         Confirm as duplicate
+      </Button>
+      <Button variant="secondary" disabled={busy} onClick={() => void notABug()}>
+        Not a bug
       </Button>
       {error && (
         <p role="alert" className="field__error">
@@ -213,6 +231,7 @@ function TriageRow({
         <span className="secondary-text">
           {item.senderRole} · {date(item.createdAt)}
         </span>
+        {item.tester && <Pill>Tester</Pill>}
         {item.outcome && <Pill tone="success">{OUTCOME_LABELS[item.outcome]}</Pill>}
         {item.rewardXp > 0 && <span className="secondary-text">+{item.rewardXp} XP</span>}
       </div>
@@ -252,6 +271,7 @@ function TriageRow({
           originals={originals}
           onConfirmed={(next, message) => {
             setConfirmedMessage(message);
+            setStatus(next.status);
             onConfirmed(next);
           }}
         />

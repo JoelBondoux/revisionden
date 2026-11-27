@@ -5,12 +5,20 @@
 
 ## Open
 
+- [ ] **Lead's triage (L14) sends feedback text to an AI session, but privacy notice 9.3 says
+      feedback is never sent automatically to any other service.** `docs/legal/privacy-notice.md`
+      9.3 (and the processors list) against `apps/api/src/feedback/triage.ts`. Not settled: the
+      routes are off in production in code (`apps/api/src/env.ts`), and turning them on there needs
+      a privacy-notice change (version bump and parent re-prompt) and the AI provider named as a
+      processor for feedback, both signed off by the owner (and solicitor). Dev and staging hold
+      only made-up or adult-tester reports.
+
 - [ ] **Contrast sweep known failures (decision 0012).** The contrast sweep
       (`e2e/tests/contrast-sweep.spec.ts`) finds text and UI parts below WCAG AA in some looks and
       modes. Each one is listed in `e2e/tests/contrast-known.json` (tier 1 from computed styles, tier
       2 as painted), grouped in the W21 pull requests. On 2026-11-27 tier 1 was empty (J17z) and
       tier 2 held 943 rows once the sweep scrolled the whole page and counted text too faint to
-      sample (336 of them) as failing; the list is sent to J for J17x part 2. The design (looks and tokens) disagrees with
+      sample (336 of them) as failing; the list is sent to J for J17x part 2. That list was made locally; the first CI run of tier 2 (train #403) found rows only CI sees, so tier 2 reports without failing on pull requests until the list is made from a CI run (W21c, W21b). The design (looks and tokens) disagrees with
       `docs/PRODUCT_RULES.md`'s AA rule. Not settled here: J fixes them (W21 is test-only); each fix
       removes its lines from the JSON, and this box is ticked when the list is empty.
 
@@ -35,10 +43,13 @@
       off privacy notice 1.11 and young people's 1.8, and the parent re-prompt, on 2026-11-27 (via
       lead), with the exclusions above. If the
       solicitor says high contrast is also too revealing, F drops it and the notice changes again.
-      Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.12 and 1.9
+      The owner also signed off privacy notice 1.12 (9.5, the bug button rest) and young people's
+      1.9, the parent re-prompt and the rest numbers (3 in 14 days, 7-day rest, removal at the 3rd
+      rest in 90 days) on 2026-11-27 (via lead), for L13 (#409).
+      Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.13 and 1.10
       when it lands.
 
-- [ ] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test
+- [x] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test
       (`apps/web/src/features/learn/StartingTestPage.tsx`, `timeLimitSeconds` from
       `apps/api/src/routes/learn.ts`; e2e `e2e/tests/starting-test.spec.ts`) has a 5-minute
       limit that a pupil cannot turn off, adjust or extend, and its one-minute warning is a colour
@@ -47,6 +58,9 @@
       is essential. No ruling on whether it is essential was found in `docs/PRODUCT_RULES.md`,
       `docs/GAME_FEEL.md` or `project_memory/`. Not settled here: a product decision, routed to owner
       by lead (W19, 2026-11-26). The silent warning is a bug either way and is routed to F.
+      **Settled (F17, 2026-11-27):** the owner chose "extend": a "More time" button in the last
+      minute adds 2 minutes, up to 10 times (the WCAG minimum), each announced to screen readers.
+      The silent warning was fixed in F14.
 
 - [ ] **Friends league is built, but the policies still say friends are not available.** The
       friends screens (`apps/web/src/features/league/`, FL PR 2) and API (`apps/api/src/routes/friends.ts`)

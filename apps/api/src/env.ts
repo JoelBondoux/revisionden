@@ -55,6 +55,12 @@ const envSchema = z
     OPERATOR_EMAILS: z.string().optional(),
     // Workstream O: AppDeck operator bridge. Off until set; a different secret per environment.
     APPDECK_OPERATOR_SHARED_SECRET: z.string().min(32).optional(),
+    // L14: SHA-256 (hex) of the lead's triage token (the token itself is never stored here or in
+    // the repo). Development and staging only until the owner approves production.
+    TRIAGE_TOKEN_HASH: z
+      .string()
+      .regex(/^[0-9a-f]{64}$/)
+      .optional(),
     OPERATOR_RATE_LIMITER: optionalRateLimiter,
     // R5 Founding Tester: the 1.0 cut-off as a UTC timestamp. Unset until release (docs/REWARDS.md).
     BETA_ENDS_AT: z.string().datetime().optional(),
@@ -108,6 +114,8 @@ export interface AppConfig {
   operatorEmails: string[];
   /** AppDeck operator bridge (`/operator/appdeck`); unset means the bridge is off (503). */
   operatorBridge?: { secret: string };
+  /** L14: the lead's triage token (`/v1/triage`), by its SHA-256; unset means the routes are 404. */
+  triage?: { tokenHash: string };
   /** 1.0 cut-off for Founding Tester (R5); unset until release, so nobody gets it early. */
   betaEndsAt?: Date;
 }
@@ -191,6 +199,10 @@ export function parseEnv(env: Record<string, unknown>): AppConfig & { raw: Worke
     ...(e.BETA_ENDS_AT ? { betaEndsAt: new Date(e.BETA_ENDS_AT) } : {}),
     ...(e.APPDECK_OPERATOR_SHARED_SECRET
       ? { operatorBridge: { secret: e.APPDECK_OPERATOR_SHARED_SECRET } }
+      : {}),
+    // L14: never in production until the owner approves it (and the privacy notice says so).
+    ...(e.TRIAGE_TOKEN_HASH && e.ENVIRONMENT !== 'production'
+      ? { triage: { tokenHash: e.TRIAGE_TOKEN_HASH } }
       : {}),
     push:
       e.VAPID_PUBLIC_KEY && e.VAPID_PRIVATE_KEY

@@ -46,12 +46,23 @@ function palette(id: (typeof EFFECT_STYLE_IDS)[number], mode: 'light' | 'dark', 
 
 describe('the shared control colours', () => {
   it('are defined once, for light and dark (themes.css)', () => {
-    expect(squash(themes)).toContain(
-      ':root { --color-control-edge: var(--color-text-secondary); --color-selected: var(--color-primary); --color-on-selected: var(--color-text-on-primary); }',
-    );
-    expect(squash(themes)).toContain(
-      ":root[data-theme='dark'] { --color-selected: var(--color-primary-edge); --color-on-selected: var(--color-background); }",
-    );
+    const css = squash(themes);
+    const light = css.slice(css.lastIndexOf(':root {'));
+    const dark = css.slice(css.lastIndexOf(":root[data-theme='dark'] {"));
+    for (const decl of [
+      '--color-control-edge: var(--color-text-secondary);',
+      '--color-selected: var(--color-primary);',
+      '--color-on-selected: var(--color-text-on-primary);',
+      '--color-focus: var(--color-primary-edge);',
+      '--focus-ring: 0 0 0 3px var(--color-surface), 0 0 0 6px var(--color-focus);',
+    ])
+      expect(light.slice(0, light.indexOf('}')), decl).toContain(decl);
+    for (const decl of [
+      '--color-selected: var(--color-primary-edge);',
+      '--color-on-selected: var(--color-background);',
+      '--focus-ring: 0 0 0 3px var(--color-surface), 0 0 0 6px var(--color-focus);',
+    ])
+      expect(dark.slice(0, dark.indexOf('}')), decl).toContain(decl);
   });
 
   for (const mode of modes)
@@ -141,5 +152,61 @@ describe('words on the wrong colour', () => {
     const ink = /(?:^|; )color: (#[0-9a-f]{6});/.exec(decl)?.[1];
     expect(ink, `${id} .home-next color`).toBeTruthy();
     expect(contrastRatio(ink!, card)).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+// J17x part 2 (W21 painted sweep, tier 2): focus rings, icon-only buttons, the current tab and the
+// welcome title, in every look, light and dark.
+describe('focus rings and icon-only buttons', () => {
+  for (const mode of modes)
+    it.each(EFFECT_STYLE_IDS)(`show a focus ring that stands out in %s, ${mode}`, (id) => {
+      const t = palette(id, mode);
+      for (const bg of ['--color-background', '--color-surface'])
+        expect(
+          contrastRatio(t['--color-primary-edge']!, t[bg]!),
+          `focus on ${bg}`,
+        ).toBeGreaterThanOrEqual(3);
+    });
+
+  it('draw every focus outline in the focus colour, never the dim main colour', () => {
+    const sheets = [
+      'components/components.css',
+      'components/links.css',
+      'features/juice/pip/pip.css',
+      'features/flashcards/flashcards.css',
+      'features/home/home.css',
+      'map/map.css',
+      'map/wiggly.css',
+      'pages/pages.css',
+    ];
+    for (const sheet of sheets)
+      expect(read(sheet), sheet).not.toMatch(/outline: \dpx solid var\(--color-primary\)/);
+    expect(rule('components/components.css', '.btn:focus-visible')).toContain('var(--color-focus)');
+    expect(rule('features/juice/pip/pip.css', '.pip-home:focus-visible')).toContain(
+      'var(--color-focus)',
+    );
+  });
+
+  it('give icon-only buttons an edge in the control colour', () => {
+    for (const [path, selector] of [
+      ['features/feedback/feedback.css', '.bug-button'],
+      ['map/wiggly.css', '.wiggly-map__head .icon-btn'],
+      ['features/home/home.css', '.home-goals__cards'],
+    ])
+      expect(rule(path!, selector!), selector).toContain(
+        'border: 2px solid var(--color-control-edge);',
+      );
+  });
+
+  it('fill the current flashcard tab like a selected chip', () => {
+    const decl = rule('features/flashcards/flashcards.css', '.tabs__tab--active');
+    expect(decl).toContain('background: var(--color-selected);');
+    expect(decl).toContain('color: var(--color-on-selected);');
+  });
+
+  it('write the welcome title in the edge colour', () => {
+    expect(rule('pages/pages.css', '.welcome__title')).toContain(
+      'color: var(--color-primary-edge);',
+    );
   });
 });

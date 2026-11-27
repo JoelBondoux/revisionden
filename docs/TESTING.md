@@ -96,7 +96,9 @@ check to require in branch protection. Another check that needs the built app ca
 `e2e.yml` with `needs: build` and download `web-dist` rather than building again. The contrast
 sweep does this (W21, section 7): its tier 1 tests are tagged `@contrast`, the shards skip them
 (`--grep-invert @contrast`), the `contrast` job runs them once, and **End-to-end result** needs it
-too. Tier 2 (`@contrast-painted`) has its own workflow, `contrast-painted.yml`.
+too. Tier 2 (`@contrast-painted`) has its own workflow, `contrast-painted.yml`. Before each
+`playwright install --with-deps` the jobs delete the runner image's `packages.microsoft.com` apt
+source, which is no longer signed on ubuntu-26.04 and can fail `apt-get update` (G12).
 Every axe check goes through `axeWhenSettled(page)` (`e2e/tests/support/axe.ts`): it waits for
 finite animations to finish first, because axe measures colours as drawn and a button still fading
 in reads as low contrast. The rules stay WCAG 2.2 A/AA (or what the check passes in `configure`).
@@ -184,6 +186,13 @@ every look; the desktop runs the default look. Data comes from the web app's own
   `deploy-staging.yml` run calls it as job `contrast` and the app deploy needs it; G11). Helpers:
   `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
   `e2e/tests/support/painted.ts`.
+- **Report-only on pull requests, for now** (W21c, decision 0012): a pull request's tier 2 run
+  lists new and fixed rows in its job summary and keeps the report, but does not fail. Nightly
+  and the staging gate (`workflow_call`, `blocking` defaults to true) still fail. This lasts
+  until the known list is made from a CI run.
+- **Steady screens:** anything that changes with every build is held to made-up values, so a
+  row's place and key never move with the changelog: `/about` keeps three made-up What's new lines
+  and three licences, and the version footer shows a made-up commit (W21c).
 - **Known failures:** `e2e/tests/contrast-known.json`. A test fails on anything new and on a
   listed failure that is now fixed, so a fix removes its lines in the same change. To refresh the
   list after a fix: run the sweep with `CONTRAST_UPDATE=1` (add `CONTRAST_SWEEP=1` for tier 2),

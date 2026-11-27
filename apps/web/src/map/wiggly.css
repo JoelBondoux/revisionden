@@ -19,7 +19,8 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 2px solid var(--color-border);
+  /* Icon-only: an edge that reaches 3:1 on every page (J17x part 2, WCAG 1.4.11). */
+  border: 2px solid var(--color-control-edge);
   background: var(--color-surface);
   color: var(--color-text);
   font-size: 1.6rem;
@@ -81,7 +82,7 @@
 }
 
 .wiggly-map__pager:focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 2px;
 }
 
@@ -307,7 +308,7 @@
 }
 
 .path-node:focus-visible {
-  outline: 4px solid var(--color-primary);
+  outline: 4px solid var(--color-focus);
   outline-offset: 3px;
 }
 
@@ -512,7 +513,7 @@
 
 .map-play:focus-visible,
 .map-subject:focus-visible {
-  outline: 3px solid var(--color-primary);
+  outline: 3px solid var(--color-focus);
   outline-offset: 3px;
 }
 
