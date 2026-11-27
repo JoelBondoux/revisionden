@@ -1,0 +1,3 @@
+# Let local merges keep both sides of these append-mostly files (G13).
+CHANGELOG.md merge=union
+docs/WORKSTREAMS.md merge=union

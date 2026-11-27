@@ -1,7 +1,8 @@
 # Changelog
 
 All notable changes are recorded here. Versions use the format `xx.xx.xxx` (major.minor.patch).
-Every push to `main` bumps the version automatically; add entries under **Unreleased** in each PR.
+Every push to `main` bumps the version automatically; each PR adds a fragment in
+`changes/unreleased/` (see `changes/README.md`) rather than editing this file.
 
 ## [Unreleased]
 
