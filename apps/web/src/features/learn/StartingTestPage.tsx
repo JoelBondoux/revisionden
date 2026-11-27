@@ -16,6 +16,7 @@ import { useSound } from '../sound';
 import { useLearnApi } from './learnApi';
 import { NewRewards } from './NewRewards';
 import { DraftBanner, ItemInput, toAnswer, type Draft } from './parts';
+import { MORE_TIME_SECONDS, canAddTime, secondsLeft as timeLeft } from './startingTestTime';
 
 const clockText = (seconds: number) =>
   `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')} left`;
@@ -78,6 +79,18 @@ function Runner({
   const shownAt = useRef(Date.now());
   const finishing = useRef(false);
   const warned = useRef(false);
+  // F17: "More time" adds two minutes, up to ten times (WCAG 2.2.1 extend).
+  const extraSeconds = useRef(0);
+  const [moreTimeUsed, setMoreTimeUsed] = useState(0);
+  const leftNow = useCallback(
+    () =>
+      timeLeft({
+        limitSeconds: test.timeLimitSeconds,
+        extraSeconds: extraSeconds.current,
+        elapsedMs: Date.now() - startedAt.current,
+      }),
+    [test.timeLimitSeconds],
+  );
 
   const finish = useCallback(
     async (timeUp: boolean) => {
@@ -96,12 +109,9 @@ function Runner({
 
   useEffect(() => {
     const timer = setInterval(() => {
-      const left = Math.max(
-        0,
-        test.timeLimitSeconds - Math.floor((Date.now() - startedAt.current) / 1000),
-      );
+      const left = leftNow();
       setSecondsLeft(left);
-      if (left <= 60 && !warned.current && test.timeLimitSeconds > 60) {
+      if (left <= 60 && !warned.current && test.timeLimitSeconds + extraSeconds.current > 60) {
         warned.current = true;
         play('timerWarning', { mode: 'test' });
         onAnnounce('One minute left.');
@@ -112,7 +122,15 @@ function Runner({
       }
     }, 250);
     return () => clearInterval(timer);
-  }, [finish, play, test.timeLimitSeconds, onAnnounce]);
+  }, [finish, play, test.timeLimitSeconds, onAnnounce, leftNow]);
+
+  function addTime() {
+    extraSeconds.current += MORE_TIME_SECONDS;
+    warned.current = false; // the next last minute warns again
+    setMoreTimeUsed((used) => used + 1);
+    setSecondsLeft(leftNow());
+    onAnnounce(`${MORE_TIME_SECONDS / 60} more minutes added.`);
+  }
 
   const item = test.items[index]!;
   const isLast = index === test.items.length - 1;
@@ -156,6 +174,11 @@ function Runner({
         <span className={`timer${secondsLeft <= 60 ? ' timer--warning' : ''}`} aria-live="off">
           {clockText(secondsLeft)}
         </span>
+        {canAddTime({ secondsLeft, used: moreTimeUsed }) && (
+          <Button variant="secondary" className="timer__more" onClick={addTime}>
+            More time
+          </Button>
+        )}
       </div>
       {test.draftContent && <DraftBanner />}
       <h1>Starting test</h1>
@@ -239,7 +262,8 @@ export function StartingTestPage() {
       <Card>
         <p>
           This takes about 5 minutes. Answer what you can and skip what you don&apos;t know. Your
-          results come at the end and set where you start.
+          results come at the end and set where you start. If you need longer, tap More time in the
+          last minute.
         </p>
         {problem && (
           <div role="alert" className="feedback feedback--wrong">

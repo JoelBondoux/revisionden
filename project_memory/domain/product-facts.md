@@ -851,7 +851,10 @@ Tags: #product #rules #limits #defaults
   warning (once, at 1 minute left). Implemented in `apps/web/src/features/sound/`.
 - Starting test timer for screen readers (F14): a polite live region says "One minute left."
   once and "Time is up." at the end; the visible clock is `aria-live="off"`. The 5-minute limit
-  itself (WCAG 2.2.1: turn off or extend) is an open owner decision; unchanged.
+  can be extended (F17, owner decision 2026-11-27, WCAG 2.2.1 "extend"): "More time" shows in the
+  last minute and adds 2 minutes, up to 10 times (`startingTestTime.ts`: `MORE_TIME_SECONDS` 120,
+  `MORE_TIME_USES` 10); announced as "2 more minutes added."; the next last minute warns again.
+  The limit lives in the app only; the API does not enforce it.
 - Wired so far: lessons (correct, wrong, part marks, daily goal met, lesson complete), starting
   test (submit, reveal, timer warning), flashcards (flip, rating) and the Rewards screen (new
   rewards, U4). Gifts and plan sounds exist in the bank but wait for their screens.

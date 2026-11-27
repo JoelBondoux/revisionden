@@ -12,6 +12,7 @@ describe('Starting test', () => {
     renderRoute('/learn/subject/gcse-maths/start');
     expect(screen.getByRole('heading', { level: 1, name: 'Starting test' })).toBeInTheDocument();
     expect(screen.getByText(/about 5 minutes/)).toBeInTheDocument();
+    expect(screen.getByText(/tap More time in the last minute/)).toBeInTheDocument();
   });
 
   it('hides feedback during the test and shows mastery at the end', async () => {
@@ -130,6 +131,62 @@ describe('Starting test', () => {
     });
     // The visible clock never announces itself.
     expect(document.querySelector('.timer')).toHaveAttribute('aria-live', 'off');
+  });
+
+  describe('More time (F17, WCAG 2.2.1: a pupil can extend the limit)', () => {
+    const startTest = (timeLimitSeconds: number) =>
+      server.use(
+        http.post('*/v1/student/learn/starting-tests', () =>
+          HttpResponse.json(
+            {
+              id: '00000000-0000-4000-8000-000000000902',
+              subjectId: 'gcse-maths',
+              timeLimitSeconds,
+              items: demoItems.slice(0, 1),
+              draftContent: false,
+            },
+            { status: 201 },
+          ),
+        ),
+      );
+
+    afterEach(() => vi.restoreAllMocks());
+
+    it('is not offered while more than a minute is left', async () => {
+      startTest(300);
+      renderRoute('/learn/subject/gcse-maths/start');
+      await click('Start');
+      expect(await screen.findByText(/5:00|4:59/)).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: 'More time' })).not.toBeInTheDocument();
+    });
+
+    it('adds two minutes in the last minute and tells screen readers', async () => {
+      startTest(60);
+      renderRoute('/learn/subject/gcse-maths/start');
+      await click('Start');
+      await userEvent.click(await screen.findByRole('button', { name: 'More time' }));
+      expect(await screen.findByText(/^(3:00|2:59|2:58) left$/)).toBeInTheDocument();
+      expect(screen.getByTestId('timer-announcer')).toHaveTextContent('2 more minutes added.');
+      expect(screen.queryByRole('button', { name: 'More time' })).not.toBeInTheDocument();
+      expect(document.querySelector('.timer')).not.toHaveClass('timer--warning');
+    });
+
+    it('can be used ten times, then the limit stands', async () => {
+      const realNow = Date.now.bind(Date);
+      let offsetMs = 0;
+      vi.spyOn(Date, 'now').mockImplementation(() => realNow() + offsetMs);
+      startTest(60);
+      renderRoute('/learn/subject/gcse-maths/start');
+      await click('Start');
+      for (let use = 1; use <= 10; use += 1) {
+        await userEvent.click(await screen.findByRole('button', { name: 'More time' }));
+        offsetMs += 120_000; // the two added minutes pass
+        await screen.findByText(/^(1:00|0:59|0:58) left$/);
+      }
+      // Into the last minute again, after ten uses: no more time is offered.
+      await waitFor(() => expect(document.querySelector('.timer')).toHaveClass('timer--warning'));
+      expect(screen.queryByRole('button', { name: 'More time' })).not.toBeInTheDocument();
+    });
   });
 
   it('says when a subject has no questions ready', async () => {

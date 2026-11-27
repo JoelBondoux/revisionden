@@ -73,3 +73,29 @@ test('the starting test tells screen readers at one minute left and when time is
   // F14b: the same live region is still there on the results, now saying "Time is up."
   await expect(announcer).toHaveText('Time is up.');
 });
+
+// F17 (WCAG 2.2.1 extend): in the last minute a pupil can add two minutes, up to ten times, and
+// the button fits beside the clock on a small phone with text at 200%.
+test('the starting test offers more time in the last minute, and it fits a small phone at 200% text', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  await page.clock.install();
+  await stubStartingTest(page);
+  await page.goto('/learn/subject/gcse-maths/start');
+  await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+  await page.getByRole('button', { name: 'Start' }).click();
+  await expect(page.getByText('Demo starting question')).toBeVisible();
+  const more = page.getByRole('button', { name: 'More time' });
+  await expect(more).toHaveCount(0);
+
+  await page.clock.fastForward('04:01');
+  await expect(more).toBeVisible();
+  const box = await more.boundingBox();
+  expect(box!.x + box!.width).toBeLessThanOrEqual(320);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await more.click();
+  await expect(page.getByTestId('timer-announcer')).toHaveText('2 more minutes added.');
+  await expect(page.locator('.timer')).toHaveText(/^2:5\d left$/);
+  await expect(more).toHaveCount(0);
+});
