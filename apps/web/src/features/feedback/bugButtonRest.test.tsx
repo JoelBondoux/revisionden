@@ -95,6 +95,47 @@ describe('bug button rest stays up to date while the app is open (L13)', () => {
     expect(await screen.findByRole('button', { name: 'Report a bug' })).toBeInTheDocument();
   });
 
+  it('keeps checking, more slowly, if a rest has ended on this device but not on the server', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    try {
+      // The device clock is ahead: `until` has already passed here, but the server still says paused.
+      const until = new Date(Date.now() - 1000).toISOString();
+      const api = fakeApi({ state: 'paused', until });
+      showStudentInRouter(api);
+      await vi.waitFor(() => expect(api.bugButton).toHaveBeenCalledTimes(1));
+      await act(() => vi.advanceTimersByTimeAsync(1000));
+      expect(api.bugButton).toHaveBeenCalledTimes(1);
+      await act(() => vi.advanceTimersByTimeAsync(30_000));
+      expect(api.bugButton).toHaveBeenCalledTimes(2);
+      await act(() => vi.advanceTimersByTimeAsync(15 * 60_000));
+      const calls = vi.mocked(api.bugButton).mock.calls.length;
+      expect(calls).toBeGreaterThanOrEqual(3);
+      expect(calls).toBeLessThanOrEqual(6);
+      vi.mocked(api.bugButton).mockResolvedValue({ state: 'on' });
+      await act(() => vi.advanceTimersByTimeAsync(10 * 60_000));
+      expect(screen.getByRole('button', { name: 'Report a bug' })).toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('tries again later if the check at the end of a rest fails', async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    try {
+      const api = fakeApi({ state: 'paused', until: new Date(Date.now() + 1000).toISOString() });
+      showStudentInRouter(api);
+      await vi.waitFor(() => expect(api.bugButton).toHaveBeenCalledTimes(1));
+      vi.mocked(api.bugButton).mockRejectedValueOnce(new Error('offline'));
+      await act(() => vi.advanceTimersByTimeAsync(1500));
+      expect(api.bugButton).toHaveBeenCalledTimes(2);
+      vi.mocked(api.bugButton).mockResolvedValue({ state: 'on' });
+      await act(() => vi.advanceTimersByTimeAsync(60_000));
+      expect(screen.getByRole('button', { name: 'Report a bug' })).toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('ends a rest on time, with no reload', async () => {
     const until = new Date(Date.now() + 200).toISOString();
     const api = fakeApi({ state: 'paused', until });
@@ -173,6 +214,33 @@ describe("a child's bug button in the parent area (L13)", () => {
     );
     expect(api.switchChildBugButtonOn).toHaveBeenCalledWith('student-1');
     expect(await screen.findByText("test_kid's bug button is back on.")).toBeInTheDocument();
+  });
+
+  it("never shows one child's switch-on result for another child picked meanwhile", async () => {
+    const api = fakeApi({ state: 'on' }, { state: 'removed' });
+    let finish: (info: BugButtonInfo) => void = () => {};
+    vi.mocked(api.switchChildBugButtonOn).mockImplementation(
+      () => new Promise((resolve) => (finish = resolve)),
+    );
+    const { rerender } = render(
+      <FeedbackApiProvider value={api}>
+        <ChildBugButtonNote studentId="student-1" nickname="kid_a" />
+      </FeedbackApiProvider>,
+    );
+    await userEvent.click(
+      await screen.findByRole('button', { name: "Switch kid_a's bug button back on" }),
+    );
+    rerender(
+      <FeedbackApiProvider value={api}>
+        <ChildBugButtonNote studentId="student-2" nickname="kid_b" />
+      </FeedbackApiProvider>,
+    );
+    expect(
+      await screen.findByRole('button', { name: "Switch kid_b's bug button back on" }),
+    ).toBeInTheDocument();
+    await act(async () => finish({ state: 'on' }));
+    expect(screen.queryByText("kid_b's bug button is back on.")).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: "Switch kid_b's bug button back on" })).toBeEnabled();
   });
 
   it('tells the parent when the button has been removed', async () => {

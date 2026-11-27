@@ -515,7 +515,12 @@ export function operatorReadRoutes(deps: OperatorReadDeps) {
       .limit(q.limit + 1);
     const page = rows.slice(0, q.limit);
     return ok(c, {
-      entries: page.map((r) => ({ ...r, createdAt: r.createdAt.toISOString() })),
+      // L14: the triage reason stays out of AppDeck's audit list until its schema has the field.
+      entries: page.map((r) => ({
+        ...r,
+        reason: undefined,
+        createdAt: r.createdAt.toISOString(),
+      })),
       // Time and id together, so entries that share a time are never skipped.
       nextBefore:
         rows.length > q.limit

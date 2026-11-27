@@ -100,6 +100,11 @@ export function BugButtonProvider({
 
 /** The longest a timer can wait (about 24.8 days); a later rest end is checked again then. */
 const MAX_TIMER_MS = 2_147_483_647;
+/**
+ * If a rest has ended by this device's clock but the server still says paused (the clock is
+ * ahead), or the check failed, ask again after these waits, the last one repeating.
+ */
+const RETRY_MS = [30_000, 2 * 60_000, 10 * 60_000];
 
 /**
  * L13: asks the server, on a student's device only, whether the bug button is resting or removed.
@@ -143,12 +148,20 @@ function useServerRest(): [BugButtonInfo, () => void] {
   }, [studentId, refresh]);
 
   const until = rest.state === 'paused' ? rest.until : undefined;
+  // How many checks since the rest should have ended; reset when the rest changes.
+  const [late, setLate] = useState(0);
+  useEffect(() => setLate(0), [until]);
   useEffect(() => {
     if (!until) return;
-    const wait = Math.min(Math.max(new Date(until).getTime() - Date.now(), 0), MAX_TIMER_MS);
-    const timer = setTimeout(refresh, wait);
+    const left = new Date(until).getTime() - Date.now();
+    const wait =
+      left > 0 ? Math.min(left, MAX_TIMER_MS) : RETRY_MS[Math.min(late, RETRY_MS.length - 1)]!;
+    const timer = setTimeout(() => {
+      if (left <= 0) setLate((n) => n + 1);
+      refresh();
+    }, wait);
     return () => clearTimeout(timer);
-  }, [until, refresh]);
+  }, [until, late, refresh, asks]);
 
   return [rest, refresh];
 }

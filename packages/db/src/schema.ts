@@ -1190,6 +1190,15 @@ export interface FeedbackDevice {
   browserFamily?: string;
   screenSize?: string;
   online?: boolean;
+  /** E8, F16: short codes and settings only, never free text (see the feedback route schema). */
+  lastProblem?: string;
+  contentId?: string;
+  look?: string;
+  theme?: string;
+  pattern?: string;
+  pixelRatio?: number;
+  zoom?: number;
+  textScale?: number;
 }
 
 export const feedback = pgTable(
@@ -1229,6 +1238,9 @@ export const feedback = pgTable(
     confirmedAt: timestamp('confirmed_at', { withTimezone: true }),
     rewardSeenAt: timestamp('reward_seen_at', { withTimezone: true }),
     notABugAt: timestamp('not_a_bug_at', { withTimezone: true }),
+    // L14: who set the outcome, the operator or the lead's triage (token); a triage outcome can be
+    // undone in the operator console within 7 days.
+    reviewedBy: text('reviewed_by', { enum: ['operator', 'triage'] }),
   },
   (t) => [
     index('feedback_family_id_idx').on(t.familyId),
@@ -1250,6 +1262,7 @@ export const feedback = pgTable(
     check('feedback_text_length', sql`char_length(${t.text}) <= 500`),
     check('feedback_outcome_values', sql`${t.outcome} in ('confirmed', 'duplicate', 'not_a_bug')`),
     index('feedback_student_not_a_bug_idx').on(t.studentId, t.notABugAt),
+    check('feedback_reviewed_by_values', sql`${t.reviewedBy} in ('operator', 'triage')`),
     index('feedback_student_confirmed_idx').on(t.studentId, t.confirmedAt),
     // One "Did this help?" tap per student and item (W8b): a second tap updates the first. The
     // route's ON CONFLICT repeats this WHERE exactly, so Postgres can use the partial index.
@@ -1369,6 +1382,8 @@ export const operatorAuditLog = pgTable(
     targetId: text('target_id'),
     requestId: text('request_id').notNull(),
     outcome: text('outcome', { enum: OPERATOR_AUDIT_OUTCOMES }).notNull(),
+    // L14: the reason the lead's triage gave (actor `triage-bot`); null for console actions.
+    reason: text('reason'),
     createdAt: createdAt(),
   },
   (t) => [
@@ -1376,6 +1391,7 @@ export const operatorAuditLog = pgTable(
     index('operator_audit_log_target_idx').on(t.targetType, t.targetId),
     check('operator_audit_log_role_values', sql`${t.operatorRole} in ('agent', 'manager')`),
     check('operator_audit_log_outcome_values', sql`${t.outcome} in ('ok', 'denied')`),
+    check('operator_audit_log_reason_length', sql`char_length(${t.reason}) <= 300`),
   ],
 );
 

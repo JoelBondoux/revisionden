@@ -6,13 +6,21 @@ import {
   OperatorTicketListSchema,
 } from '@revisionden/core';
 import { feedback, operatorAuditLog, parents, students } from '@revisionden/db';
-import { createTestContext, type TestContext } from '../test/helpers';
+import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
+import { sha256Hex } from '../feedback/triage';
 import { signedOperatorRequest, TEST_OPERATOR_SECRET } from '../test/operator';
 
 let t: TestContext;
+const TRIAGE_TOKEN = 'test-triage-token-for-operator-tests-0123456789';
+const bot = { authorization: `Bearer ${TRIAGE_TOKEN}` };
 
 beforeEach(async () => {
-  t = await createTestContext({ config: { operatorBridge: { secret: TEST_OPERATOR_SECRET } } });
+  t = await createTestContext({
+    config: {
+      operatorBridge: { secret: TEST_OPERATOR_SECRET },
+      triage: { tokenHash: await sha256Hex(TRIAGE_TOKEN) },
+    },
+  });
 });
 afterEach(async () => {
   await t.close();
@@ -300,6 +308,136 @@ describe('operator Not a bug and the bug button (L13)', () => {
     expect(await post(`/tickets/${fromParent.id}/bug-button-on`)).toMatchObject({
       status: 400,
       code: 'not_a_student_ticket',
+    });
+  });
+});
+
+describe('operator undo of a triage outcome (L14)', () => {
+  const DAY = 24 * 60 * 60 * 1000;
+  const fromStudent = (f: Awaited<ReturnType<typeof makeFamily>>) => ({
+    senderRole: 'student' as const,
+    senderAuthUserId: null,
+    studentId: f.studentId,
+  });
+
+  it('reverses a triage Not a bug, so it no longer rests the bug button', async () => {
+    const f = await makeFamily();
+    const rows = [];
+    for (let i = 0; i < 3; i++) {
+      const row = await ticket(f, {
+        ...fromStudent(f),
+        outcome: 'not_a_bug',
+        notABugAt: t.clock.now(),
+        reviewedBy: 'triage',
+        status: 'will_not_fix',
+        closedAt: t.clock.now(),
+      });
+      rows.push(row);
+    }
+    const before = await t.app.request('/v1/student/bug-button', { headers: f.studentHeaders });
+    expect(await before.json()).toMatchObject({ state: 'paused' });
+
+    expect((await post(`/tickets/${rows[0]!.id}/undo-triage`)).data).toEqual({ ok: true });
+    const [saved] = await t.db.select().from(feedback).where(eq(feedback.id, rows[0]!.id));
+    expect(saved).toMatchObject({
+      outcome: null,
+      notABugAt: null,
+      reviewedBy: null,
+      status: 'looking_into_it',
+      closedAt: null,
+    });
+    const after = await t.app.request('/v1/student/bug-button', { headers: f.studentHeaders });
+    expect(await after.json()).toEqual({ state: 'on' });
+    expect(await audits()).toContainEqual(
+      expect.objectContaining({ action: 'ticket.undo_triage', targetId: f.familyId }),
+    );
+  });
+
+  it('lifts a removal that a reversed triage Not a bug caused', async () => {
+    const f = await makeFamily();
+    const strike = async () => {
+      const row = await ticket(f, { ...fromStudent(f) });
+      const res = await t.app.request(
+        `/v1/triage/tickets/${row.id}/not-a-bug`,
+        jsonRequest('POST', { reason: 'Works as designed' }, bot),
+      );
+      expect(res.status).toBe(200);
+      t.clock.advance(DAY);
+      return row.id;
+    };
+    const ids: string[] = [];
+    for (let rest = 0; rest < 3; rest++) {
+      for (let i = 0; i < 3; i++) ids.push(await strike());
+      if (rest < 2) t.clock.advance(7 * DAY);
+    }
+    const state = async () =>
+      (
+        await t.app.request('/v1/student/bug-button', {
+          headers: await t.signInStudent(f.studentId),
+        })
+      ).json();
+    expect(await state()).toEqual({ state: 'removed' });
+
+    expect((await post(`/tickets/${ids[8]!}/undo-triage`)).data).toEqual({ ok: true });
+    expect(await state()).not.toEqual({ state: 'removed' });
+  });
+
+  it('reverses a triage confirm and takes back its reward', async () => {
+    const f = await makeFamily();
+    const row = await ticket(f, {
+      ...fromStudent(f),
+      outcome: 'confirmed',
+      rewardXp: 50,
+      trackStep: true,
+      confirmedAt: t.clock.now(),
+      reviewedBy: 'triage',
+      rewardSeenAt: t.clock.now(),
+    });
+    expect((await post(`/tickets/${row.id}/undo-triage`)).data).toEqual({ ok: true });
+    const [saved] = await t.db.select().from(feedback).where(eq(feedback.id, row.id));
+    expect(saved).toMatchObject({
+      outcome: null,
+      rewardXp: 0,
+      trackStep: false,
+      confirmedAt: null,
+      rewardSeenAt: null,
+    });
+    // A new outcome after the undo is told to the student again.
+    expect((await post(`/tickets/${row.id}/confirm-bug`)).data).toEqual({ ok: true });
+    const res = await t.app.request('/v1/student/feedback/rewards', {
+      headers: await t.signInStudent(f.studentId),
+    });
+    const { rewards } = (await res.json()) as { rewards: { id: string }[] };
+    expect(rewards.map((r) => r.id)).toEqual([row.id]);
+  });
+
+  it('refuses after 7 days, and for an outcome the operator chose', async () => {
+    const f = await makeFamily();
+    const late = await ticket(f, {
+      ...fromStudent(f),
+      outcome: 'confirmed',
+      rewardXp: 50,
+      confirmedAt: t.clock.now(),
+      reviewedBy: 'triage',
+    });
+    const mine = await ticket(f, {
+      outcome: 'confirmed',
+      confirmedAt: t.clock.now(),
+      reviewedBy: 'operator',
+    });
+    const open = await ticket(f);
+    t.clock.advance(7 * DAY + 1);
+    expect(await post(`/tickets/${late.id}/undo-triage`)).toMatchObject({
+      status: 409,
+      code: 'undo_too_late',
+    });
+    expect(await post(`/tickets/${mine.id}/undo-triage`)).toMatchObject({
+      status: 400,
+      code: 'not_triage',
+    });
+    expect(await post(`/tickets/${open.id}/undo-triage`)).toMatchObject({
+      status: 400,
+      code: 'not_triage',
     });
   });
 });

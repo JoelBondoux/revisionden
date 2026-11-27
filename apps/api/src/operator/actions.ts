@@ -29,6 +29,7 @@ import {
   markNotABug,
   setFeedbackStatus,
   switchBugButtonOn,
+  undoTriage,
 } from '../feedback/routes';
 import type { Clock } from '../rate-limit';
 import { isId } from '../validation';
@@ -126,6 +127,13 @@ export function operatorActionRoutes({ db, clock }: OperatorActionDeps) {
   app.post('/tickets/:id/not-a-bug', async (c) => {
     const item = await markNotABug(db, now(), c.req.param('id'));
     await audited(c, 'ticket.not_a_bug', item.familyId);
+    return ok(c, { ok: true });
+  });
+
+  // L14: reverses an outcome the lead's triage chose, within 7 days.
+  app.post('/tickets/:id/undo-triage', async (c) => {
+    const item = await undoTriage(db, now(), c.req.param('id'));
+    await audited(c, 'ticket.undo_triage', item.familyId);
     return ok(c, { ok: true });
   });
 

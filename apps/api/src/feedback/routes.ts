@@ -554,6 +554,7 @@ export async function confirmFeedback(
   now: Date,
   id: string,
   duplicateOf?: string,
+  by: 'operator' | 'triage' = 'operator',
 ): Promise<{ item: typeof feedback.$inferSelect; message: string }> {
   if (!isId(id)) throw notFound('Feedback not found');
   const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
@@ -585,12 +586,73 @@ export async function confirmFeedback(
       trackStep: reward.trackStep,
       confirmedAt: now,
       updatedAt: now,
+      reviewedBy: by,
       ...(row.status === 'new' ? { status: 'looking_into_it' as const } : {}),
     })
     .where(and(eq(feedback.id, id), isNull(feedback.outcome)))
     .returning();
   if (!updated) throw new ApiError(409, 'already_confirmed', 'This report is already confirmed.');
   return { item: updated, message: reward.message };
+}
+
+/** L14: how long the operator can reverse an outcome the lead's triage chose. */
+export const TRIAGE_UNDO_DAYS = 7;
+
+/**
+ * L14: reverses a confirm, duplicate or Not a bug that the lead's triage chose, within
+ * TRIAGE_UNDO_DAYS. The report goes back to "looking into it" with no outcome: any reward is
+ * taken back (XP is summed from these rows) and a reversed Not a bug no longer rests the bug
+ * button. An outcome the operator chose is never undone here.
+ */
+export async function undoTriage(
+  db: Database,
+  now: Date,
+  id: string,
+): Promise<typeof feedback.$inferSelect> {
+  if (!isId(id)) throw notFound('Feedback not found');
+  const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
+  if (!row) throw notFound('Feedback not found');
+  if (!row.outcome || row.reviewedBy !== 'triage') {
+    throw new ApiError(400, 'not_triage', "Only an outcome the lead's triage chose can be undone.");
+  }
+  const decidedAt = row.notABugAt ?? row.confirmedAt;
+  if (!decidedAt || now.getTime() - decidedAt.getTime() > TRIAGE_UNDO_DAYS * 24 * 60 * 60 * 1000) {
+    throw new ApiError(
+      409,
+      'undo_too_late',
+      `A triage outcome can be undone for ${TRIAGE_UNDO_DAYS} days.`,
+    );
+  }
+  const [updated] = await db
+    .update(feedback)
+    .set({
+      outcome: null,
+      duplicateOf: null,
+      rewardXp: 0,
+      trackStep: false,
+      // So the student is told about whatever the report is decided as next.
+      rewardSeenAt: null,
+      confirmedAt: null,
+      notABugAt: null,
+      reviewedBy: null,
+      status: 'looking_into_it',
+      closedAt: null,
+      updatedAt: now,
+    })
+    .where(and(eq(feedback.id, id), eq(feedback.reviewedBy, 'triage')))
+    .returning();
+  if (updated?.studentId && updated.kind === 'bug' && row.outcome === 'not_a_bug') {
+    // A saved removal is checked again from the reports that are left (all within the 90-day
+    // window, well inside the 12-month clean-up), so it is set again only if it still holds.
+    await db
+      .update(students)
+      .set({ bugButtonRemovedAt: null, updatedAt: now })
+      .where(eq(students.id, updated.studentId));
+    await studentBugButton(db, updated.studentId, now);
+  }
+  if (!updated)
+    throw new ApiError(400, 'not_triage', "Only an outcome the lead's triage chose can be undone.");
+  return updated;
 }
 
 /**
@@ -602,6 +664,7 @@ export async function markNotABug(
   db: Database,
   now: Date,
   id: string,
+  by: 'operator' | 'triage' = 'operator',
 ): Promise<typeof feedback.$inferSelect> {
   if (!isId(id)) throw notFound('Feedback not found');
   const [row] = await db.select().from(feedback).where(eq(feedback.id, id));
@@ -614,6 +677,7 @@ export async function markNotABug(
     .set({
       outcome: 'not_a_bug',
       notABugAt: now,
+      reviewedBy: by,
       status: 'will_not_fix',
       closedAt: now,
       updatedAt: now,
