@@ -90,7 +90,8 @@
 }
 
 .flip-card__topic {
-  color: var(--color-primary);
+  /* J17z: the edge colour reads on the card in light and dark (the dark main colours are dim). */
+  color: var(--color-primary-edge);
   font-weight: var(--font-weight-bold);
 }
 

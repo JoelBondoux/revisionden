@@ -24,8 +24,8 @@
 }
 
 .period-toggle__button[aria-pressed='true'] {
-  background: var(--color-primary);
-  color: var(--color-text-on-primary);
+  background: var(--color-selected);
+  color: var(--color-on-selected);
 }
 
 .period-toggle__button:focus-visible,

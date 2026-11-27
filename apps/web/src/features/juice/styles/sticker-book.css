@@ -266,8 +266,10 @@
 }
 
 /* ---------- Home and the next topic (J15c) ---------- */
+/* The card stays pale coral paper in dark mode too, so its words stay in dark ink (J17z). */
 :root[data-effect-style='sticker-book'] .home-next {
   background: #fde4df;
+  color: #2f2a3d;
 }
 
 :root[data-effect-style='sticker-book'] .home-cta {

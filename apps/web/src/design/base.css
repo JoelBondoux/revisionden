@@ -118,6 +118,12 @@ textarea {
   color: inherit;
 }
 
+/* Every select keeps an edge that shows where it is (WCAG 1.4.11), light and dark. */
+select {
+  border: 2px solid var(--color-control-edge);
+  border-radius: var(--radius-sm);
+}
+
 :focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);

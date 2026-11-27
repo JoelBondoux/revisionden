@@ -14,7 +14,7 @@
 .field__input {
   min-height: var(--tap-target);
   padding: 0 var(--space-4);
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-control-edge);
   border-radius: var(--radius-sm);
   font: inherit;
   font-weight: var(--font-weight-bold);
@@ -46,7 +46,7 @@
 .chip {
   min-height: var(--tap-target);
   padding: 0 var(--space-4);
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-control-edge);
   border-radius: var(--radius-pill);
   background: var(--color-surface);
   color: var(--color-text);
@@ -57,9 +57,9 @@
 
 .chip[aria-pressed='true'],
 .chip[aria-checked='true'] {
-  border-color: var(--color-primary);
-  background: var(--color-primary-soft);
-  color: var(--color-primary-edge);
+  border-color: var(--color-selected);
+  background: var(--color-selected);
+  color: var(--color-on-selected);
 }
 
 .chip:focus-visible {

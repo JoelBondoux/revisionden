@@ -123,7 +123,9 @@
 
 .feedback__thanks {
   margin: 0;
-  color: var(--color-success);
+  /* J17z: the look's own text colour, which reads on every page, light and dark (green failed on
+     dark pages, and on Pop Burst's purple). */
+  color: var(--color-text);
   font-weight: var(--font-weight-extrabold);
 }
 

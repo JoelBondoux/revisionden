@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: in every style, the chosen chip, tab and Week/Month button are now clearly filled in, chip, tab and drop-down edges are easy to see, and the flashcard topic, the thanks after sending feedback and "Up next" on Home are easy to read in dark mode.
 - Starting test: screen readers now say "One minute left" when the time is nearly up, and "Time is up" at the end, without reading out the clock every second.
 - Fixed: "Best combo" at the end of a lesson is now easy to read in every style, light and dark.
 - On small phones, the map now opens with "You are here" clear of the bottom bar, so tapping it starts your topic. The RevisionDen title on the welcome page also fits small screens with large text.
@@ -169,6 +170,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- J17z (W21 contrast sweep, tier 1; decision 0012): new shared control colours in `design/themes.css`: `--color-control-edge` (secondary text colour) for chip, tab, avatar option, input and select edges (the old `--color-border` was 1.4 to 2.9:1 in 9 look/mode pairs; plain selects had the browser's grey edge, 2.4:1 on dark Pop Burst); `--color-selected` and `--color-on-selected` for selected chips, avatar tabs and the period toggle (the main colour in light, the light edge colour in dark, where the dark main colours were 1.6 to 2.8:1). Flip card topics use `--color-primary-edge`, the feedback thanks `--color-text`, and Garden Grow and Sticker Book's pale "Up next" card keeps dark ink in dark mode (it was 1.05:1). New `design/controlContrast.test.ts` checks every rule's colours in all 10 looks, light and dark. Touches onboarding, avatar, stats, rewards, flashcards and feedback styles (cross-lane, contrast only).
 - J16c (W18 follow-up): the lesson header's XP count, the warm-up and come-back note and "Comeback!" in the feedback were still arena gold on the look's light page (1.0 to 1.5:1 in every look). They, and the lesson's "+XP", now use `--color-primary-edge` (a deeper main colour in light mode, the light accent in dark), AA in all 10 looks, light and dark, measured by a new painted-page check in `e2e/tests/lesson.spec.ts`. `GAME_FEEL.md` records the rule: page text uses the edge colour, arena-surface text `--arena-glow`. Touches `features/learn/learn.css` (F's lane, as for J14).
 - F14 (found by W's starting-test e2e): the starting test's one-minute warning and time up reach screen readers, through a polite live region (`data-testid="timer-announcer"`) and a status on the results' time-up line; the clock stays `aria-live="off"`. Unit tests in `StartingTestPage.test.tsx`, e2e `starting-test-timer.spec.ts` with a fast-forwarded clock. The WCAG 2.2.1 question (turn off or extend the limit) is open for the owner; the limit is unchanged.
 - F11c: a regression test that "10 more" still starts a new flashcard session when it brings back the same due cards (`FlashcardsPage.limit.test.tsx`). No code change: the page reloads the overview on "10 more", which always mounts a fresh review session.
