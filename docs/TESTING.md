@@ -132,6 +132,7 @@ to. Updated by W, 2026-11-26 (W17).
 | 5-a-day: Home → every item → Lesson complete → Home shows it done                | `daily-and-cards`                                             | phone                          |
 | Flashcards: a whole session, Again, Done for today, 10 more, Deck done           | `daily-and-cards`, `cards`                                    | phone; all (`cards`)           |
 | Starting test: answer, skip, finish, result; 1-minute warning, time up           | `starting-test`                                               | phone                          |
+| Parent settings → child: subjects (map), friends (league), reminders saved       | `parent-settings`, `map`                                      | phone                          |
 | Friends league: add a friend with a code                                         | `league`                                                      | phone                          |
 | Get help (student and parent): Quick exit, filters                               | `help`                                                        | all                            |
 | Looks: every style, light and dark, contrast                                     | `looks`, `tiles`                                              | phone (`looks`); all (`tiles`) |
@@ -139,18 +140,16 @@ to. Updated by W, 2026-11-26 (W17).
 
 ### Gaps to fill next (suggested, in order)
 
-1. **Parent settings that change what a pupil sees**: Subjects (board and tier), Reminders and
-   Friends on `/parent/subjects|reminders|friends/:studentId`, then the pupil's side reflecting
-   the change. Today only the bug-button layout is checked there.
-2. **Second parent**: invite → `/join` → both parents listed, and the removal notice.
-3. **Plan, Papers and Progress as journeys**: `/plan` and `/papers` are only checked for the
+1. **Second parent**: invite → `/join` → both parents listed, and the removal notice.
+2. **Plan, Papers and Progress as journeys**: `/plan` and `/papers` are only checked for the
    bottom nav at 320px/200% (`help`), and `/progress` for layout (`pages`).
-4. **Feedback and complaints**: send feedback from a pupil and read it in `/feedback/family`;
+3. **Feedback and complaints**: send feedback from a pupil and read it in `/feedback/family`;
    the complaints page.
-5. **Sign out and session expiry**: parent sign-out, and a pupil's 12-hour session ending
+4. **Sign out and session expiry**: parent sign-out, and a pupil's 12-hour session ending
    mid-lesson (back to unlock with `returnTo`).
-6. **The parent journey at 320px with 200% text**, as the pupil journey already is (W15).
+5. **The parent journey at 320px with 200% text**, as the pupil journey already is (W15).
 
-These are suggestions only: none is started until the lead or owner says so. Gaps 1 and 2 of the
-W17 list are done: the 5-a-day and a whole flashcard session (W18), and the starting test
-(W19).
+These are suggestions only: none is started until the lead or owner says so. Gaps 1 to 3 of the
+W17 list are done: the 5-a-day and a whole flashcard session (W18), the starting test (W19),
+and parent settings reaching the child (W20; reminders reach a child only as notifications, so
+only the parent's side is checked).

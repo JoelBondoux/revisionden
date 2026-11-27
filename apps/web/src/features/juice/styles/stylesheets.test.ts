@@ -78,7 +78,7 @@ describe('the default style', () => {
 });
 
 // J10a2: styles that turn the lesson surround away from the dark arena keep the question on a
-// plain card, and their surround colours meet AA in light and dark.
+// plain card.
 const SURROUND_STYLES = ['doodle-diary', 'sticker-book'] as const;
 
 describe.each(SURROUND_STYLES)('the %s lesson surround', (id) => {
@@ -92,30 +92,7 @@ describe.each(SURROUND_STYLES)('the %s lesson surround', (id) => {
     const rule = stage.slice(0, stage.indexOf('}'));
     expect(rule).not.toMatch(/rotate|animation|background-image|gradient/);
   });
-
-  it('re-colours the arena readably (AA), in light and in dark', () => {
-    for (const selector of [scope, `${scope}[data-theme='dark']`]) {
-      const start = css.indexOf(`${selector} {`);
-      expect(start, selector).toBeGreaterThanOrEqual(0);
-      const block = css.slice(start, css.indexOf('}', start));
-      const token = (name: string) =>
-        new RegExp(`--${name}:\\s*(#[0-9a-f]{6})`, 'i').exec(block)?.[1];
-      for (const text of ['arena-text', 'arena-text-secondary', 'arena-glow']) {
-        expect(
-          contrastRatio(token(text)!, token('arena-bg')!),
-          `${selector} ${text}`,
-        ).toBeGreaterThanOrEqual(4.5);
-      }
-      expect(contrastRatio(token('arena-text')!, token('arena-raised')!)).toBeGreaterThanOrEqual(
-        4.5,
-      );
-      // An empty progress track stays visible (WCAG 1.4.11, J10f).
-      expect(
-        contrastRatio(token('arena-track')!, token('arena-bg')!),
-        `${selector} arena-track`,
-      ).toBeGreaterThanOrEqual(3);
-    }
-  });
+  // J17x: the surround's colours now come from the look on every arena (looks.test.ts).
 });
 
 // J10d: Doodle Diary letters its headings in Patrick Hand, self-hosted (SIL Open Font Licence) and
