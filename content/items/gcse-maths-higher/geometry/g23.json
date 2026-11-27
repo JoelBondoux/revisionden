@@ -1,0 +1,989 @@
+[
+  {
+    "id": "gcse-maths-h-g23-0101",
+    "topic": "gcse-maths-h-g23",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g23-lp-area-trig",
+    "expected_seconds": 40,
+    "prompt": "A triangle has sides of 8 cm and 11 cm with an angle of 30° between them. Work out its area.",
+    "answer": {
+      "value": "22",
+      "unit": "cm²"
+    },
+    "verify": {
+      "expression": "1/2 * 8 * 11 * sin(pi/6)"
+    },
+    "marks": 1,
+    "explanation": "Area = 1/2 ab sin C = 1/2 × 8 × 11 × sin 30° = 44 × 0.5 = 22 cm².",
+    "hint": "Use the two sides and the angle between them.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:52Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:15Z",
+          "notes": "model answered \"22 cm²\"; expected \"22\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:16Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0102",
+    "topic": "gcse-maths-h-g23",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g23-lp-area-trig",
+    "expected_seconds": 45,
+    "prompt": "A triangle has sides of 6 cm and 9 cm with an angle of 50° between them. Work out its area. Give your answer correct to 2 decimal places.",
+    "answer": {
+      "value": "20.68",
+      "unit": "cm²",
+      "decimal_places": 2
+    },
+    "verify": {
+      "expression": "1/2 * 6 * 9 * sin(50*pi/180)"
+    },
+    "marks": 1,
+    "explanation": "Area = 1/2 × 6 × 9 × sin 50° = 27 × 0.766… = 20.683… ≈ 20.68 cm².",
+    "hint": "Half of the product of the two sides, times the sine of the angle between them.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:52Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:20Z",
+          "notes": "model answered \"20.68 cm²\"; expected \"20.68\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:21Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0103",
+    "topic": "gcse-maths-h-g23",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g23-lp-area-trig",
+    "expected_seconds": 45,
+    "prompt": "A triangle has sides of 12 cm and 7 cm with an angle of 110° between them. Work out its area. Give your answer correct to 2 decimal places.",
+    "answer": {
+      "value": "39.47",
+      "unit": "cm²",
+      "decimal_places": 2
+    },
+    "verify": {
+      "expression": "1/2 * 12 * 7 * sin(110*pi/180)"
+    },
+    "marks": 1,
+    "explanation": "Area = 1/2 × 12 × 7 × sin 110° = 42 × 0.9396… = 39.467… ≈ 39.47 cm².",
+    "hint": "The formula works for obtuse angles too.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:52Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:24Z",
+          "notes": "model answered \"39.47 cm²\"; expected \"39.47\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:25Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0104",
+    "topic": "gcse-maths-h-g23",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g23-lp-area-trig",
+    "expected_seconds": 50,
+    "prompt": "An equilateral triangle has sides of 6 cm. Work out its area. Give your answer correct to 1 decimal place.",
+    "answer": {
+      "value": "15.6",
+      "unit": "cm²",
+      "decimal_places": 1
+    },
+    "verify": {
+      "expression": "1/2 * 6 * 6 * sin(pi/3)"
+    },
+    "marks": 1,
+    "explanation": "Every angle is 60°. Area = 1/2 × 6 × 6 × sin 60° = 18 × √3/2 = 9√3 = 15.588… ≈ 15.6 cm².",
+    "hint": "Every angle of an equilateral triangle is the same. What is it?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      },
+      {
+        "statement": "The angles in a triangle add up to 180°.",
+        "ask": "What do the interior angles of a triangle add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:52Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:28Z",
+          "notes": "model answered \"15.6 cm²\"; expected \"15.6\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:30Z",
+          "notes": "unsupported_claim (hint): The hint states that every angle of an equilateral triangle is the same, but the only quoted source supports calculating area, sides or angles of any triangle and does not specifically support this factual property. Under the stated rules, this new factual claim needs a quoted source.; unsupported_claim (explanation): The explanation states 'Every angle is 60°.' The quoted source supports calculating area, sides or angles of any triangle, but does not specifically provide or support the fact that an equilateral triangle has 60° angles, so this factual claim is unsupported by the cited source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0105",
+    "topic": "gcse-maths-h-g23",
+    "type": "worked_maths",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g23-lp-reverse",
+    "expected_seconds": 100,
+    "prompt": "A triangle has an area of 30 cm². Two of its sides are 10 cm and b cm, with an angle of 30° between them. Work out b.",
+    "answer": {
+      "solutions": ["12"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "(1/2)*10*b*sin(pi/6) = 30",
+      "variable": "b"
+    },
+    "steps": ["(1/2)*10*b*(1/2) = 30", "5*b/2 = 30", "b = 12"],
+    "marks": 2,
+    "mark_scheme": ["M1 for 1/2 × 10 × b × sin 30° = 30", "A1 for b = 12"],
+    "explanation": "Area = 1/2 ab sin C, so 1/2 × 10 × b × 1/2 = 30. That is 2.5b = 30, so b = 12 cm.",
+    "hint": "Put the values into the area formula and solve for b.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      },
+      {
+        "statement": "sin 30° = 1/2",
+        "ask": "What is the exact value of sin 30°?",
+        "engine": {
+          "kind": "trig_value",
+          "function": "sin",
+          "degrees": 30,
+          "value": "1/2"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). Answer backed by the maths engine (answer and every step). Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:52Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:33Z",
+          "notes": "model answered \"12\"; expected \"12\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:35Z",
+          "notes": "unsupported_claim (explanation): The statement \"Area = 1/2 ab sin C\" is a factual formula claim, but the only quoted source given is the specification point \"to calculate the area, sides or angles of any triangle\", which does not explicitly state this formula. Per the instructions, factual claims in the explanation need support from the quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0106",
+    "topic": "gcse-maths-h-g23",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g23-lp-reverse",
+    "expected_seconds": 60,
+    "prompt": "A triangle has sides of 8 cm and 10 cm and an area of 20 cm². The angle C between these sides is acute. Work out C.",
+    "options": ["30°", "150°", "60°", "45°"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "1/2 × 8 × 10 × sin C = 20, so 40 sin C = 20 and sin C = 0.5. C = 30°.",
+    "hint": "Rearrange the area formula to find sin C.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Options checked with SymPy: 30° is sin⁻¹(0.5); distractors 60° is cos⁻¹(0.5), 150° also has sine 0.5 but is not acute. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:15:09Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:35Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:36Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0107",
+    "topic": "gcse-maths-h-g23",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g23-lp-area-trig",
+    "expected_seconds": 25,
+    "prompt": "Which expression gives the area of a triangle with sides a and b and angle C between them?",
+    "options": ["½(a + b) sin C", "½ab cos C", "ab sin C", "½ab sin C"],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "The area of any triangle is ½ab sin C, using two sides and the angle between them.",
+    "hint": "It looks like \"half base times height\" with the height replaced by b sin C.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:15:10Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:38Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:40Z",
+          "notes": "unsupported_claim (explanation): The explanation states the specific formula \"The area of any triangle is ½ab sin C, using two sides and the angle between them.\" The quoted source only says students should be able \"to calculate the area, sides or angles of any triangle\" and does not explicitly support or state this formula. This factual claim is therefore not backed up by the provided source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0108",
+    "topic": "gcse-maths-h-g23",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g23-lp-area-recall",
+    "expected_seconds": 15,
+    "front": "A triangle has sides 4 cm and 5 cm with a right angle between them. What is its area?",
+    "back": "10 cm²",
+    "explanation": "1/2 × 4 × 5 × sin 90° = 10 × 1 = 10 cm².",
+    "hint": "sin 90° = 1.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:53Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:45Z",
+          "notes": "model answered \"10 cm²\"; expected \"10 cm²\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:47Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0109",
+    "topic": "gcse-maths-h-g23",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g23-lp-area-recall",
+    "expected_seconds": 15,
+    "front": "A triangle has sides 2 cm and 6 cm with an angle of 30° between them. What is its area?",
+    "back": "3 cm²",
+    "explanation": "1/2 × 2 × 6 × sin 30° = 6 × 0.5 = 3 cm².",
+    "hint": "sin 30° = 1/2.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:53Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:48Z",
+          "notes": "model answered \"3 cm²\"; expected \"3 cm²\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:52Z",
+          "notes": "unsupported_claim (hint): The hint states \"sin 30° = 1/2.\" This is a factual claim not supported by the quoted source. The source only supports calculating the area, sides or angles of any triangle; it does not provide this trigonometric value.; unsupported_claim (explanation): The explanation uses the formula 1/2 × 2 × 6 × sin 30° for the area of a triangle from two sides and the included angle, but the quoted source does not explicitly support this formula; it only generally states calculating the area, sides or angles of any triangle.; unsupported_claim (explanation): The explanation states sin 30° = 0.5, a factual claim not supported by the quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0110",
+    "topic": "gcse-maths-h-g23",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g23-lp-area-recall",
+    "expected_seconds": 15,
+    "front": "A triangle has sides 10 cm and 10 cm with an angle of 90° between them. What is its area?",
+    "back": "50 cm²",
+    "explanation": "1/2 × 10 × 10 × 1 = 50 cm².",
+    "hint": "sin 90° = 1.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:53Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:54Z",
+          "notes": "model answered \"50 cm²\"; expected \"50 cm²\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:57Z",
+          "notes": "unsupported_claim (hint): The hint states \"sin 90° = 1.\" This is a factual claim not supported by the quoted source. The source only supports calculating the area, sides or angles of any triangle; it does not state trigonometric values.; unsupported_claim (explanation): The explanation uses the formula 1/2 × a × b × sin C, written here as \"1/2 × 10 × 10 × 1 = 50 cm².\" The quoted source supports calculating the area of any triangle, but it does not explicitly provide or support this formula or the trigonometric value used, so these factual claims are unsupported by the quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0111",
+    "topic": "gcse-maths-h-g23",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g23-lp-reverse",
+    "expected_seconds": 60,
+    "prompt": "A triangle has sides of 9 cm and 12 cm and an area of 27 cm². The angle C between these sides is acute. What is angle C?",
+    "options": ["30°", "150°", "60°", "45°"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "1/2 × 9 × 12 × sin C = 27, so 54 sin C = 27 and sin C = 0.5. The acute angle with sine 0.5 is 30° (150° also has sine 0.5 but is obtuse).",
+    "hint": "Rearrange the area formula to find sin C.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:15:11Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:43Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:44Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

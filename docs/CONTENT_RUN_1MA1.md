@@ -126,7 +126,8 @@ When a question asks for rounding ("to 2 decimal places", "to 3 significant figu
 nearest whole number"), set answer.decimal_places or answer.significant_figures (not tolerance)
 and write answer.value to exactly that accuracy. When the answer is the value of a letter or
 function ("make t the subject", "find f^-1(x)"), set answer.subject (e.g. "t" or "f^-1(x)") so
-answers written "t = ..." are accepted.
+answers written "t = ..." are accepted. If a number answer's question names a letter that is not
+the answer (a curve, line or class interval), set answer.no_subject to a short reason instead.
 Short answers need only one written form: spaces, capitals, minus signs, × or *, ÷, superscripts,
 ≤ and √ are matched automatically. Set answer.any_order: true when order does not matter (a
 product, a sum, a list of values, x = 3, y = 2), and answer.units for units the answer may add
@@ -172,6 +173,28 @@ Green before PR: pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm test:
 When a topic set is done, message the lead (session <LEAD>) with: items per topic, any failures
 and why, near matches, and anything the owner must decide.
 ```
+
+## Step 2 progress: S4 Geometry (G1 to G25, 2026-11-27)
+
+270 draft items in `content/items/gcse-maths-higher/geometry/` (g1.json to g25.json): 101 numeric,
+8 worked maths, 60 multiple choice, 30 short answer and 71 flashcards. Shapes are described in
+words or coordinates, so no item needs a diagram. Citations quote the G points on pages 17 and 18
+(PDF pages 29 and 30), including the formula lines that survive the PDF text exactly
+(circumference, area of a circle, Pythagoras' theorem, the start of the sine ratio, the cosine rule).
+
+| Step                 | Result                                                                                                     |
+| -------------------- | ---------------------------------------------------------------------------------------------------------- |
+| 2 Quote check        | 270 pass, all exact                                                                                        |
+| 3 Blind answer       | OpenAI `gpt-5.4-2026-03-05`: 265 pass. 5 fail: the model's arithmetic was wrong in 3, its wording in 2     |
+| 4 Adversarial review | OpenAI: 200 pass. 70 fail, almost all "unsupported claim": a standard fact in a hint or explanation        |
+| 4b Fact check        | Not run (needs Gemini): 101 items list `facts` (angle facts, circle theorems, area formulas, exact values) |
+| 5 Maths engine       | All 109 numeric and worked items pass                                                                      |
+| 6 Schema and links   | Pass                                                                                                       |
+
+81 items set `needs_human_approval` under decision 0008 (definitions of symmetry, quadrilaterals,
+congruence conditions, circle parts, plans and elevations, bearings and units). The maths engine
+has no inverse trigonometric functions, so the six questions that find an angle by sin⁻¹ or cos⁻¹
+are multiple choice, with every option worked out in SymPy.
 
 ## Step 2 progress: S4 Statistics (S1 to S6, 2026-11-27)
 

@@ -333,7 +333,8 @@
     "expected_seconds": 35,
     "prompt": "A line of best fit has equation y = 2x + 10, where x is hours of revision and y is the test score. Use it to predict the score for 15 hours of revision.",
     "answer": {
-      "value": "40"
+      "value": "40",
+      "subject": "y"
     },
     "verify": {
       "expression": "2*15 + 10"
@@ -374,7 +375,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:34Z",
+          "at": "2026-11-27T13:29:35Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -398,15 +399,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:16Z",
-          "notes": "model answered \"40\"; expected \"40\""
+          "at": "2026-11-27T13:30:00Z",
+          "notes": "model answered \"40 marks\"; expected \"40\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:17Z",
+          "at": "2026-11-27T13:30:01Z",
           "notes": "no problems found"
         }
       ]
@@ -421,7 +422,8 @@
     "expected_seconds": 45,
     "prompt": "A line of best fit passes through (0, 50) and (10, 30). Use it to predict y when x = 4.",
     "answer": {
-      "value": "42"
+      "value": "42",
+      "subject": "y"
     },
     "verify": {
       "expression": "50 + (30 - 50)/10 * 4"
@@ -462,7 +464,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:34Z",
+          "at": "2026-11-27T13:29:36Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -486,7 +488,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:18Z",
+          "at": "2026-11-27T13:30:03Z",
           "notes": "model answered \"42\"; expected \"42\""
         },
         {
@@ -494,7 +496,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:19Z",
+          "at": "2026-11-27T13:30:04Z",
           "notes": "no problems found"
         }
       ]
