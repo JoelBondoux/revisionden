@@ -69,8 +69,8 @@ async function answer(route: Route, handlers: RequestHandler[], unknown: string[
   });
 }
 
-/** Seeds the app for a pupil (this device is theirs) or a signed-in parent. */
-export async function seedApp(page: Page, who: 'pupil' | 'parent') {
+/** Seeds the app for a pupil (this device is theirs), a signed-in parent, or a visitor (neither). */
+export async function seedApp(page: Page, who: 'pupil' | 'parent' | 'visitor') {
   const unknown: string[] = [];
   if (who === 'pupil')
     await page.addInitScript(() => localStorage.setItem('revisionden.studentId', 'student-e2e'));

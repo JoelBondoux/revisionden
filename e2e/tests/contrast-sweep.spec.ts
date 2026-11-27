@@ -2,6 +2,7 @@ import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { mockNextRewards } from '../../apps/web/src/features/learn/mocks';
 import { computedContrastFailures } from './support/contrastStyles';
+import { isDecorativeEmoji, paintedTextFindings } from './support/contrastFilter';
 import {
   focusRingFailures,
   paintedTextFailures,
@@ -233,6 +234,22 @@ test('every route in routes.tsx has a row in the contrast sweep', { tag: '@contr
   ).toEqual([]);
 });
 
+test.describe('which painted readings count (decision 0012)', { tag: '@contrast' }, () => {
+  test('text too faint to sample is a failure, not a skip', () => {
+    const faint = '"For:" has too few letter pixels to check';
+    expect(paintedTextFindings([faint, '"Up next" 1.05'])).toEqual([faint, '"Up next" 1.05']);
+  });
+
+  test('only a decorative emoji on its own is left out', () => {
+    expect(isDecorativeEmoji('"🦊" 2.10')).toBe(true);
+    expect(isDecorativeEmoji('"🦊🎉" has too few letter pixels to check')).toBe(true);
+    expect(isDecorativeEmoji('"🦊 Fox" 2.10')).toBe(false);
+    expect(isDecorativeEmoji('"›" 1.80')).toBe(false);
+    expect(isDecorativeEmoji('"#" 1.23')).toBe(false);
+    expect(paintedTextFindings(['"🦊" 2.10', '"Fox 🦊" 2.10'])).toEqual(['"Fox 🦊" 2.10']);
+  });
+});
+
 // ---------------------------------------------------------------------------------------------
 // Tier 1: computed styles, every look, light and dark.
 
@@ -252,8 +269,7 @@ const PAINTED = !!process.env.CONTRAST_SWEEP;
 
 async function open(page: Page, who: Who, mode: (typeof MODES)[number], visit: string) {
   await page.emulateMedia({ colorScheme: mode });
-  if (who !== 'visitor') await seedApp(page, who);
-  else await seedApp(page, 'parent').then(() => undefined);
+  await seedApp(page, who);
   await page.goto(visit);
   await page.locator('h1').first().waitFor();
   // Everything the screen loads has arrived, so late content cannot change what is measured.
@@ -345,43 +361,71 @@ async function paintedSweep(
   looks: readonly string[],
   within?: string,
 ) {
-  /** One painted pass over every look: each finding keyed by look, mode, screen and element. */
-  const pass = async () => {
-    const found: Record<string, string> = {};
-    for (const look of looks) {
-      await page.evaluate((l) => {
-        document.documentElement.dataset.effectStyle = l;
-      }, look);
-      await settle(page);
-      // Text the sampler cannot isolate (clipped or drawn by a mask) is not a finding: tier 1
-      // and the screen's own spec cover it.
-      const text = (await paintedTextFailures(page, { only: within ?? 'body' })).filter(
-        (t) =>
-          !t.endsWith('has too few letter pixels to check') &&
-          // A decorative emoji is not text (decision 0012).
-          !/^"[^\p{L}\p{N}"]*\p{Extended_Pictographic}[^\p{L}\p{N}"]*"/u.test(t),
-      );
-      const ui = await paintedUiFailures(page, within ? { within } : {});
-      const focus = within ? [] : await focusRingFailures(page);
-      for (const line of [...text.map((t) => `text|${t}`), ...ui, ...focus]) {
-        const m = /^(.*?)\s([\d.]+)$/.exec(line);
-        const key = `${as(look)}|${mode}|${name}|${(m ? m[1]! : line).replace(/\d/g, '#')}`;
-        found[key] = m ? m[2]! : line;
-      }
+  const found: Record<string, string> = {};
+  const seen: Record<string, string> = {};
+  const record = (into: Record<string, string>, look: string, lines: string[]) => {
+    for (const line of lines) {
+      const m = /^(.*?)\s([\d.]+)$/.exec(line);
+      const key = `${as(look)}|${mode}|${name}|${(m ? m[1]! : line).replace(/\d/g, '#')}`;
+      into[key] = m ? m[2]! : line;
     }
-    return found;
   };
-  // Two passes, so a reading that comes and goes (a ring mid-animation, say) settles nothing:
-  // a failure counts as found only when both passes find it, and as fixed only when neither does.
-  const [first, second] = [await pass(), await pass()];
-  const found = Object.fromEntries(Object.entries(first).filter(([k]) => k in second));
-  const seen = { ...first, ...second };
+  for (const look of looks) {
+    await page.evaluate((l) => {
+      document.documentElement.dataset.effectStyle = l;
+    }, look);
+    await settle(page);
+    // The whole page, not just the first screen: scroll down a screen at a time (to six) and
+    // measure each, so content below the fold is swept too (Codex on #400).
+    const heights = await page.evaluate(() => ({
+      page: document.documentElement.scrollHeight,
+      view: innerHeight,
+    }));
+    const stops = [0];
+    if (!within)
+      for (
+        let y = heights.view * 0.8;
+        y < heights.page - heights.view * 0.2 && stops.length < 6;
+        y += heights.view * 0.8
+      )
+        stops.push(Math.round(y));
+    const steady: string[] = [];
+    for (const y of stops) {
+      await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
+      await settle(page);
+      // Text too faint to sample counts as a failure, not a skip (decision 0012); decorative
+      // emoji are not text.
+      steady.push(
+        ...paintedTextFindings(await paintedTextFailures(page, { only: within ?? 'body' })).map(
+          (t) => `text|${t}`,
+        ),
+        ...(await paintedUiFailures(page, within ? { within } : {})),
+      );
+    }
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await settle(page);
+    // Text and edges hold still, so one reading is enough. A focus ring can be caught
+    // mid-animation, so it is read twice: found only when both readings fail it, fixed only
+    // when neither does.
+    record(found, look, steady);
+    record(seen, look, steady);
+    if (!within) {
+      const first: Record<string, string> = {};
+      const second: Record<string, string> = {};
+      record(first, look, await focusRingFailures(page));
+      record(second, look, await focusRingFailures(page));
+      for (const k of Object.keys(first)) if (k in second) found[k] = first[k]!;
+      Object.assign(seen, first, second);
+    }
+  }
   const prefix = (k: string) => looks.some((l) => k.startsWith(`${as(l)}|${mode}|${name}|`));
+  // A new list takes every failure either focus reading saw, so one quiet reading cannot leave
+  // a real failure off it; a check then flags as new only what both readings fail.
   if (UPDATE) {
     mkdirSync('test-results/contrast', { recursive: true });
     writeFileSync(
       `test-results/contrast/tier2-${test.info().project.name}-${mode}-${encodeURIComponent(name)}.json`,
-      JSON.stringify(found, null, 2),
+      JSON.stringify(seen, null, 2),
     );
     return;
   }

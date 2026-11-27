@@ -9,7 +9,8 @@
       (`e2e/tests/contrast-sweep.spec.ts`) finds text and UI parts below WCAG AA in some looks and
       modes. Each one is listed in `e2e/tests/contrast-known.json` (tier 1 from computed styles, tier
       2 as painted), grouped in the W21 pull requests. On 2026-11-27 tier 1 was empty (J17z) and
-      tier 2 held 589 rows in 20 groups, sent to J for J17x part 2. The design (looks and tokens) disagrees with
+      tier 2 held 943 rows once the sweep scrolled the whole page and counted text too faint to
+      sample (336 of them) as failing; the list is sent to J for J17x part 2. The design (looks and tokens) disagrees with
       `docs/PRODUCT_RULES.md`'s AA rule. Not settled here: J fixes them (W21 is test-only); each fix
       removes its lines from the JSON, and this box is ticked when the list is empty.
 
