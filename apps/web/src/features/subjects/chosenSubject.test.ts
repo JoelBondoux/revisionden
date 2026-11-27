@@ -64,7 +64,7 @@ describe('the chosen subject (UX-1)', () => {
   });
 
   it("gives the top bar the subject on screen and the student's subjects", () => {
-    const { result } = renderHook(() => useKnownSubjects());
+    const { result } = renderHook(() => useKnownSubjects('s1'));
     expect(result.current).toBeNull();
     act(() => reportMap('s1', mapFor('biology', 'Biology')));
     expect(result.current?.current).toEqual({ subjectId: 'biology', subject: 'Biology' });
@@ -72,7 +72,7 @@ describe('the chosen subject (UX-1)', () => {
   });
 
   it('shows the one subject on screen when the map lists none', () => {
-    const { result } = renderHook(() => useKnownSubjects());
+    const { result } = renderHook(() => useKnownSubjects('s1'));
     act(() => reportMap('s1', { ...topicMap, subjectId: 'maths', subjects: undefined }));
     expect(result.current?.subjects).toEqual([
       { subjectId: 'maths', subject: 'Maths', hasContent: true },

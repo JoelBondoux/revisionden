@@ -58,14 +58,19 @@ export function useChosenSubject(studentId: string | null): string | undefined {
 
 /** What the top bar shows: the subject on screen and the student's subjects. */
 export interface KnownSubjects {
+  /** Whose subjects these are: siblings share devices (Codex on #423). */
+  studentId: string;
   current: { subjectId: string; subject: string };
   subjects: readonly MapSubject[];
 }
 
 let known: KnownSubjects | null = null;
 
-export function useKnownSubjects(): KnownSubjects | null {
-  return useSyncExternalStore(subscribe, () => known);
+/** The top bar's subjects, but only this student's: another student's never show. */
+export function useKnownSubjects(studentId: string | null): KnownSubjects | null {
+  return useSyncExternalStore(subscribe, () =>
+    studentId && known?.studentId === studentId ? known : null,
+  );
 }
 
 /** A remembered subject the student no longer takes falls back to the default. */
@@ -77,15 +82,18 @@ export function stillTaken(chosen: string | undefined, subjects: readonly MapSub
 export function reportMap(studentId: string | null, map: TopicMap): void {
   const subjects = map.subjects ?? [];
   if (!stillTaken(chosenSubject(studentId), subjects)) chooseSubject(studentId, null);
+  if (!studentId) return;
   const subjectId = map.subjectId ?? map.subject;
   if (
-    known?.current.subjectId === subjectId &&
+    known?.studentId === studentId &&
+    known.current.subjectId === subjectId &&
     known.current.subject === map.subject &&
     known.subjects.length === subjects.length &&
     known.subjects.every((s, i) => s.subjectId === subjects[i]?.subjectId)
   )
     return;
   known = {
+    studentId,
     current: { subjectId, subject: map.subject },
     subjects: subjects.length
       ? subjects
