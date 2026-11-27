@@ -741,9 +741,9 @@
     "learning_point": "gcse-maths-h-s4-lp-choose",
     "expected_seconds": 35,
     "prompt": "A data set has one very large value that is much bigger than all the others. Which average is least affected by it?",
-    "options": ["The median", "The mean", "The range", "None of them"],
+    "options": ["The mean", "The median", "The range", "None of them"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "The mean uses every value, so one very large value pulls it up. The median is the middle value, so it hardly changes. The range is not an average.",
@@ -781,7 +781,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:31Z",
+          "at": "2026-11-27T12:09:48Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -797,15 +797,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:26Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:09Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:27Z",
+          "at": "2026-11-27T12:10:10Z",
           "notes": "no problems found"
         }
       ]
@@ -820,13 +820,13 @@
     "expected_seconds": 45,
     "prompt": "Class A has a median mark of 62 and an interquartile range of 10. Class B has a median of 58 and an interquartile range of 20. Which statement is correct?",
     "options": [
-      "Class A did better on average and its marks were more consistent",
       "Class B did better on average",
       "Class A’s marks were more spread out",
-      "The classes have the same spread"
+      "The classes have the same spread",
+      "Class A did better on average and its marks were more consistent"
     ],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "Class A has the higher median (62 > 58), so it did better on average, and the smaller interquartile range (10 < 20), so its marks were more consistent.",
@@ -876,7 +876,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:31Z",
+          "at": "2026-11-27T12:09:49Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -892,16 +892,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:28Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:12Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:32Z",
-          "notes": "unsupported_claim (option 0): The statement 'did better on average' is not backed by the quoted sources. The sources support using measures of central tendency such as the median, but they do not support interpreting a higher median as meaning a class 'did better on average'. That is an extra contextual claim not explicitly supported by the quotations.; unsupported_claim (explanation): The explanation says 'Class A has the higher median (62 > 58), so it did better on average'. The numerical comparison is correct, but the conclusion 'did better on average' is not backed by the quoted sources. The sources support median as a measure of central tendency, not this contextual interpretation.; wording (question): Using 'did better on average' alongside medians is potentially misleading. Students may associate 'average' with the mean, whereas the item is really asking them to compare medians and interquartile ranges."
+          "at": "2026-11-27T12:10:15Z",
+          "notes": "unsupported_claim (question): The statement options and stem use 'did better on average' to refer to comparing medians, but the quoted sources only list measures of central tendency and spread; they do not support the interpretive claim that a higher median means a class 'did better on average'.; unsupported_claim (explanation): The explanation says 'Class A has the higher median (62 > 58), so it did better on average'. The quoted sources support using median as a measure of central tendency, but they do not explicitly support the claim that this means the class 'did better on average'.; unsupported_claim (explanation): The explanation says a smaller interquartile range means the marks were 'more consistent'. The quoted sources support interquartile range as a measure of spread, but do not explicitly support the interpretation 'more consistent'."
         }
       ]
     }
@@ -1126,6 +1126,537 @@
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:32:41Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s4-0114",
+    "topic": "gcse-maths-h-s4",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-s4-lp-choose",
+    "expected_seconds": 30,
+    "prompt": "Which average can be used for data that is not numbers, such as favourite colours?",
+    "options": ["The range", "The mean", "The mode", "The median"],
+    "answer": {
+      "option": 2
+    },
+    "marks": 1,
+    "explanation": "The mode is the most common value, so it works for categories such as colours. The mean and median need numbers, and the range is not an average.",
+    "hint": "Which average only needs you to count?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S4 (page 20; PDF page 32)",
+        "quote": "appropriate measures of central tendency (median, mean, mode and modal class) and spread (range, including consideration of outliers, quartiles and inter-quartile range)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (the definitions of the mean, median, mode and range) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:09:50Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:17Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:18Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s4-0115",
+    "topic": "gcse-maths-h-s4",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-s4-lp-choose",
+    "expected_seconds": 35,
+    "prompt": "A small data set is 2, 3, 3, 4, 50. Which average best represents a typical value?",
+    "options": ["The median", "The range", "The mean", "The largest value"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "The mean is 62 ÷ 5 = 12.4, pulled up by 50. The median is 3, much closer to most of the values.",
+    "hint": "Work out the mean, then compare it with most of the values.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S4 (page 20; PDF page 32)",
+        "quote": "appropriate measures of central tendency (median, mean, mode and modal class) and spread (range, including consideration of outliers, quartiles and inter-quartile range)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (the definitions of the mean, median, mode and range) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:09:51Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:19Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:20Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s4-0116",
+    "topic": "gcse-maths-h-s4",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-s4-lp-compare",
+    "expected_seconds": 40,
+    "prompt": "Team A has a mean score of 15 points and a range of 4. Team B has a mean score of 15 points and a range of 12. Which statement is correct?",
+    "options": [
+      "Team A scored more on average",
+      "Team A’s scores were more consistent",
+      "Team B scored more on average",
+      "Team B’s scores were more consistent"
+    ],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "The means are equal, so neither scored more on average. Team A has the smaller range (4 < 12), so its scores were more consistent.",
+    "hint": "Compare the averages, then the spreads.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S4 (page 20; PDF page 32)",
+        "quote": "appropriate measures of central tendency (median, mean, mode and modal class) and spread (range, including consideration of outliers, quartiles and inter-quartile range)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:09:52Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:22Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:23Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s4-0117",
+    "topic": "gcse-maths-h-s4",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-s4-lp-compare",
+    "expected_seconds": 40,
+    "prompt": "Group X has a median of 30 and an interquartile range of 8. Group Y has a median of 36 and an interquartile range of 8. Which statement is correct?",
+    "options": [
+      "Group X had higher values on average",
+      "Group X was more spread out",
+      "Group Y was more spread out",
+      "Group Y had higher values on average, with a similar spread"
+    ],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "Group Y has the higher median (36 > 30). The interquartile ranges are equal, so the spreads are similar.",
+    "hint": "Compare one average and one measure of spread.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S4",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S4 (page 20; PDF page 32)",
+        "quote": "appropriate measures of central tendency (median, mean, mode and modal class) and spread (range, including consideration of outliers, quartiles and inter-quartile range)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S4 (page 20; PDF page 32)",
+        "quote": "appropriate graphical representation involving discrete, continuous and grouped data, including box plots",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S4). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:09:53Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:24Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:25Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s4-0118",
+    "topic": "gcse-maths-h-s4",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-s4-lp-grouped",
+    "expected_seconds": 60,
+    "prompt": "A grouped table shows 5 values in the class 0 < x ≤ 4 and 15 values in the class 4 < x ≤ 8. Use the midpoints of the classes to estimate the mean.",
+    "answer": {
+      "value": "5"
+    },
+    "verify": {
+      "expression": "(5*2 + 15*6)/20"
+    },
+    "marks": 1,
+    "explanation": "Midpoints are 2 and 6. Estimated total = 5 × 2 + 15 × 6 = 10 + 90 = 100. Mean ≈ 100 ÷ 20 = 5.",
+    "hint": "Use each class midpoint for every value in that class.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S4 (page 20; PDF page 32)",
+        "quote": "appropriate measures of central tendency (median, mean, mode and modal class) and spread (range, including consideration of outliers, quartiles and inter-quartile range)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S4). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (the definitions of the mean, median, mode and range) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:09:54Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:27Z",
+          "notes": "model answered \"6\"; expected \"5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:28Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s4-0119",
+    "topic": "gcse-maths-h-s4",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-s4-lp-spread",
+    "expected_seconds": 30,
+    "prompt": "A box plot has lower quartile 41 and upper quartile 58. Work out the interquartile range.",
+    "answer": {
+      "value": "17"
+    },
+    "verify": {
+      "expression": "58 - 41"
+    },
+    "marks": 1,
+    "explanation": "Interquartile range = 58 - 41 = 17.",
+    "hint": "Use the two ends of the box.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S4 (page 20; PDF page 32)",
+        "quote": "appropriate measures of central tendency (median, mean, mode and modal class) and spread (range, including consideration of outliers, quartiles and inter-quartile range)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S4 (page 20; PDF page 32)",
+        "quote": "appropriate graphical representation involving discrete, continuous and grouped data, including box plots",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The interquartile range is the upper quartile minus the lower quartile.",
+        "ask": "How is the interquartile range worked out?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S4). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:09:54Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:29Z",
+          "notes": "model answered \"17\"; expected \"17\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:30Z",
           "notes": "no problems found"
         }
       ]

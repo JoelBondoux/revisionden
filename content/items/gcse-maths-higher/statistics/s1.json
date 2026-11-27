@@ -91,13 +91,13 @@
     "expected_seconds": 35,
     "prompt": "A survey of people leaving a gym asks how often they exercise. Why might it give a misleading picture of the whole town?",
     "options": [
-      "People at a gym probably exercise more than most people",
-      "The sample is chosen at random from the town",
       "It asks only one question",
-      "The sample is too large"
+      "The sample is too large",
+      "The sample is chosen at random from the town",
+      "People at a gym probably exercise more than most people"
     ],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "People leaving a gym are not typical of the town, so the sample is likely to overestimate how much the town exercises.",
@@ -135,7 +135,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:25Z",
+          "at": "2026-11-27T12:09:35Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -151,15 +151,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:08Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:09Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:09Z",
+          "at": "2026-11-27T12:10:09Z",
           "notes": "no problems found"
         }
       ]
@@ -175,9 +175,9 @@
     "prompt": "Why might a sample of only 10 people give a poor estimate for a whole population?",
     "options": [
       "A small sample can vary a lot by chance",
-      "The sample is too big to analyse",
       "A sample always gives the wrong answer",
-      "A sample includes everyone"
+      "A sample includes everyone",
+      "The sample is too big to analyse"
     ],
     "answer": {
       "option": 0
@@ -218,7 +218,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:25Z",
+          "at": "2026-11-27T12:09:35Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -234,16 +234,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:11Z",
+          "at": "2026-11-27T12:10:11Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:11Z",
-          "notes": "no problems found"
+          "at": "2026-11-27T12:10:12Z",
+          "notes": "unsupported_claim (explanation): The explanation says 'larger random samples tend to give better estimates.' The only quoted source supports knowing the limitations of sampling, but does not specifically state that larger random samples tend to give better estimates, so this claim is not backed by the provided source."
         }
       ]
     }
@@ -257,13 +257,13 @@
     "expected_seconds": 30,
     "prompt": "Which of these is a limitation of using a sample instead of the whole population?",
     "options": [
-      "The sample might not represent the population",
-      "It is quicker",
+      "It needs less data",
       "It costs less",
-      "It needs less data"
+      "The sample might not represent the population",
+      "It is quicker"
     ],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "Quicker, cheaper and less data are advantages. The limitation is that the sample might not represent the whole population.",
@@ -301,7 +301,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:25Z",
+          "at": "2026-11-27T12:09:36Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -317,15 +317,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:13Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:14Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:14Z",
+          "at": "2026-11-27T12:10:15Z",
           "notes": "no problems found"
         }
       ]
@@ -814,6 +814,172 @@
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:34:10Z",
           "notes": "unsupported_claim (explanation): The explanation states \"1/4 × 200 = 50.\" This is a mathematical claim, but the only quoted source is a statistics specification point about inferring properties from a sample; it does not support this arithmetic statement. Per the instructions, any factual claim in the explanation needs a quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s1-0111",
+    "topic": "gcse-maths-h-s1",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-s1-lp-bias",
+    "expected_seconds": 35,
+    "prompt": "A council wants the views of everyone in a town about its park. It asks 50 people who are walking their dogs in the park. Why might this sample be biased?",
+    "options": [
+      "50 people is too many to ask",
+      "Dog walkers in the park may like the park more than most people",
+      "The sample is chosen at random from the town",
+      "The question is about a park"
+    ],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "People already using the park are not typical of the whole town, so their views may not represent everyone.",
+    "hint": "Who is being asked, and are they typical of the town?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S1 (page 20; PDF page 32)",
+        "quote": "infer properties of populations or distributions from a sample, while knowing the limitations of sampling",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S1). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:09:37Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:16Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:18Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s1-0112",
+    "topic": "gcse-maths-h-s1",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-s1-lp-limitations",
+    "expected_seconds": 35,
+    "prompt": "Two random samples of 20 people from the same town give different mean ages. What is the most likely reason?",
+    "options": [
+      "Each random sample can differ from another by chance",
+      "Random samples always give the same mean",
+      "The mean age of the town changed between samples",
+      "One of the samples must have been worked out wrongly"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Different random samples contain different people, so their results vary by chance, especially when the samples are small.",
+    "hint": "Think about which people end up in each sample.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S1",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S1 (page 20; PDF page 32)",
+        "quote": "infer properties of populations or distributions from a sample, while knowing the limitations of sampling",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S1). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:09:38Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:19Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:20Z",
+          "notes": "no problems found"
         }
       ]
     }

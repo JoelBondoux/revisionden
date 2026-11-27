@@ -7,9 +7,9 @@
     "learning_point": "gcse-maths-h-s6-lp-correlation",
     "expected_seconds": 25,
     "prompt": "As the temperature rises, ice-cream sales rise. What type of correlation is this?",
-    "options": ["Positive", "Negative", "None", "Causation"],
+    "options": ["None", "Positive", "Causation", "Negative"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "Both quantities increase together, which is positive correlation.",
@@ -48,7 +48,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:34Z",
+          "at": "2026-11-27T12:09:59Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -64,15 +64,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:06Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:08Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:07Z",
+          "at": "2026-11-27T12:10:09Z",
           "notes": "no problems found"
         }
       ]
@@ -86,9 +86,9 @@
     "learning_point": "gcse-maths-h-s6-lp-correlation",
     "expected_seconds": 25,
     "prompt": "As a car gets older, its value tends to fall. What type of correlation is this?",
-    "options": ["Negative", "Positive", "None", "Causation"],
+    "options": ["None", "Causation", "Negative", "Positive"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "As one quantity increases the other decreases, which is negative correlation.",
@@ -127,7 +127,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:34Z",
+          "at": "2026-11-27T12:10:00Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -143,16 +143,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:09Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:11Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:09Z",
-          "notes": "no problems found"
+          "at": "2026-11-27T12:10:14Z",
+          "notes": "unsupported_claim (question): The prompt states as a factual real-world claim that 'As a car gets older, its value tends to fall.' The cited source only says students should 'recognise correlation and know that it does not indicate causation'; it does not support this specific claim about cars and value.; unsupported_claim (explanation): The explanation states 'As one quantity increases the other decreases,' applying that relationship as a factual claim about the quantities in the question. The quoted source supports recognising negative correlation in scatter graphs, but does not support this specific real-world claim about car age and value."
         }
       ]
     }
@@ -166,13 +166,13 @@
     "expected_seconds": 30,
     "prompt": "Which pair of quantities is likely to show no correlation?",
     "options": [
-      "Shoe size and score in a maths test, for adults",
       "Hours of revision and test score",
-      "Age of a car and its value",
-      "Temperature and ice-cream sales"
+      "Shoe size and score in a maths test, for adults",
+      "Temperature and ice-cream sales",
+      "Age of a car and its value"
     ],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "For adults, shoe size has no link with a maths test score. The other pairs are likely to be correlated.",
@@ -211,7 +211,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:34Z",
+          "at": "2026-11-27T12:10:01Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -227,16 +227,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:33:06Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:15Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:33:09Z",
-          "notes": "ambiguity (question): The stem asks which pair is 'likely to show no correlation'. Several options use everyday contexts without defined populations or conditions, so 'likely' is subjective rather than determined from given data. In particular, 'Hours of revision and test score' need not show correlation in every real situation, so the item relies on general assumptions rather than a clearly testable interpretation of scatter-graph correlation from data.; unsupported_claim (explanation): The explanation states 'The other pairs are likely to be correlated.' The cited specification only supports recognising and interpreting correlation from bivariate data; it does not provide or support these specific real-world claims about revision and scores, car age and value, or temperature and ice-cream sales.; confidence medium"
+          "at": "2026-11-27T12:10:16Z",
+          "notes": "no problems found; confidence medium"
         }
       ]
     }
@@ -251,9 +251,9 @@
     "prompt": "There is strong positive correlation between ice-cream sales and cases of sunburn. Which statement is correct?",
     "options": [
       "The correlation does not show that one causes the other",
-      "Eating ice cream causes sunburn",
       "Sunburn causes ice-cream sales",
-      "There is no relationship"
+      "There is no relationship",
+      "Eating ice cream causes sunburn"
     ],
     "answer": {
       "option": 0
@@ -294,7 +294,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:34Z",
+          "at": "2026-11-27T12:10:02Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -310,7 +310,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:14Z",
+          "at": "2026-11-27T12:10:18Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -318,7 +318,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:14Z",
+          "at": "2026-11-27T12:10:19Z",
           "notes": "no problems found"
         }
       ]
@@ -597,13 +597,13 @@
     "expected_seconds": 35,
     "prompt": "Data on a scatter graph was collected for x from 1 to 10. Using the line of best fit to predict y at x = 30 is …",
     "options": [
+      "impossible",
       "extrapolation, and the prediction may be unreliable",
       "interpolation, and the prediction is reliable",
-      "impossible",
       "always accurate"
     ],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "x = 30 is outside the range of the data, so this is extrapolation. The trend may not continue, so the prediction may be unreliable.",
@@ -642,7 +642,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:34Z",
+          "at": "2026-11-27T12:10:03Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -658,15 +658,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:23Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:20Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:24Z",
+          "at": "2026-11-27T12:10:21Z",
           "notes": "no problems found"
         }
       ]
@@ -680,9 +680,9 @@
     "learning_point": "gcse-maths-h-s6-lp-extrapolate",
     "expected_seconds": 30,
     "prompt": "Using a line of best fit to make a prediction inside the range of the data is called …",
-    "options": ["interpolation", "extrapolation", "correlation", "causation"],
+    "options": ["correlation", "causation", "interpolation", "extrapolation"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "Predicting within the range of the data is interpolation.",
@@ -721,7 +721,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:31:35Z",
+          "at": "2026-11-27T12:10:04Z",
           "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -737,15 +737,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:25Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:10:23Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:32:26Z",
+          "at": "2026-11-27T12:10:24Z",
           "notes": "no problems found"
         }
       ]
@@ -970,6 +970,256 @@
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:32:33Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s6-0113",
+    "topic": "gcse-maths-h-s6",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-s6-lp-causation",
+    "expected_seconds": 35,
+    "prompt": "Towns with more shops tend to have more crimes. Which is the best explanation?",
+    "options": [
+      "Crime causes more shops to open",
+      "There is no correlation",
+      "Shops cause crime",
+      "Bigger towns tend to have more of both, so the correlation need not mean one causes the other"
+    ],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "Correlation does not indicate causation. Both are likely to be linked to a third factor, the size of the town.",
+    "hint": "Is there a third factor that could affect both?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S6",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S6 (page 20; PDF page 32)",
+        "quote": "use and interpret scatter graphs of bivariate data; recognise correlation and know that it does not indicate causation; draw estimated lines of best fit; make predictions; interpolate and extrapolate apparent trends while knowing the dangers of so doing",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S6). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:10:04Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:25Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:26Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s6-0114",
+    "topic": "gcse-maths-h-s6",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-s6-lp-causation",
+    "expected_seconds": 35,
+    "prompt": "A scatter graph of hours of TV watched and reading test scores shows negative correlation. Which statement is justified by the graph?",
+    "options": [
+      "Higher scores cause students to watch less TV",
+      "There is no relationship",
+      "Watching TV causes lower scores",
+      "Students who watched more TV tended to score lower in this data"
+    ],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "Negative correlation means higher values of one go with lower values of the other in this data. It does not show that one causes the other.",
+    "hint": "What does correlation show, and what does it not show?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S6",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S6 (page 20; PDF page 32)",
+        "quote": "use and interpret scatter graphs of bivariate data; recognise correlation and know that it does not indicate causation; draw estimated lines of best fit; make predictions; interpolate and extrapolate apparent trends while knowing the dangers of so doing",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S6). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:10:05Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:28Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:29Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-s6-0115",
+    "topic": "gcse-maths-h-s6",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-s6-lp-extrapolate",
+    "expected_seconds": 35,
+    "prompt": "A line of best fit is drawn for the heights of children aged 5 to 10. Why is it unreliable for predicting someone’s height at age 30?",
+    "options": [
+      "Lines of best fit can never be used for predictions",
+      "Age 30 is far outside the range of the data, so the trend may not continue",
+      "Heights cannot be measured accurately",
+      "The line has a positive gradient"
+    ],
+    "answer": {
+      "option": 1
+    },
+    "marks": 1,
+    "explanation": "Predicting outside the range of the data is extrapolation, and the trend may not continue that far.",
+    "hint": "Is age 30 inside or outside the data?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference S6",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 6. Statistics, content reference S6 (page 20; PDF page 32)",
+        "quote": "use and interpret scatter graphs of bivariate data; recognise correlation and know that it does not indicate causation; draw estimated lines of best fit; make predictions; interpolate and extrapolate apparent trends while knowing the dangers of so doing",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec S6). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (positive correlation (both increase together), negative correlation (one increases as the other decreases), interpolation and extrapolation) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:10:06Z",
+          "notes": "citation 1: found on page 32 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:30Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:10:31Z",
           "notes": "no problems found"
         }
       ]

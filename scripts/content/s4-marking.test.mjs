@@ -81,3 +81,42 @@ test('S4 set answers also accept the braced form', () => {
     .map((i) => i.id);
   assert.deepEqual(bad, []);
 });
+
+/** Items grouped by strand, for rules that apply to a strand as a whole. */
+function byStrand() {
+  const groups = {};
+  for (const strand of STRANDS) {
+    const dir = join(ITEMS, strand);
+    if (!existsSync(dir)) continue;
+    groups[strand] = readdirSync(dir)
+      .filter((f) => f.endsWith('.json'))
+      .flatMap((f) => JSON.parse(readFileSync(join(dir, f), 'utf8')));
+  }
+  return groups;
+}
+
+test('S4 multiple-choice answers are spread over the option positions (Codex on #430)', () => {
+  // Options are served in stored order, so a strand whose answers sit mostly in one position
+  // can be gamed by always picking it.
+  const crowded = [];
+  for (const [strand, items] of Object.entries(byStrand())) {
+    const mc = items.filter((i) => i.type === 'multiple_choice');
+    if (mc.length < 4) continue;
+    const counts = {};
+    for (const i of mc) counts[i.answer.option] = (counts[i.answer.option] ?? 0) + 1;
+    const most = Math.max(...Object.values(counts));
+    if (most > Math.ceil(mc.length / 2))
+      crowded.push(`${strand}: ${most} of ${mc.length} in one position`);
+  }
+  assert.deepEqual(crowded, []);
+});
+
+test('every S4 learning point has at least 3 interchangeable items (Codex on #430)', () => {
+  const thin = [];
+  for (const items of Object.values(byStrand())) {
+    const counts = {};
+    for (const i of items) counts[i.learning_point] = (counts[i.learning_point] ?? 0) + 1;
+    for (const [lp, n] of Object.entries(counts)) if (n < 3) thin.push(`${lp} (${n})`);
+  }
+  assert.deepEqual(thin, []);
+});
