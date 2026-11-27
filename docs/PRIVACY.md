@@ -138,8 +138,9 @@ date per parent sign-in.
   SHA-256 is stored, as the Worker secret `TRIAGE_TOKEN_HASH` (never in the repository or chat).
   It opens only `GET /v1/triage/tickets` (id, kind, sender role, text, item, content id, device
   details, status, outcome, tester flag and time; never names, emails, nicknames or family ids)
-  and confirm, duplicate and Not a bug on a ticket. Every call is audited as `triage-bot` with a
-  required reason (at most 300 characters). Off in production: sending feedback text to the
+  and confirm, duplicate and Not a bug on a ticket. Every call is audited as `triage-bot`: each
+  list read as `tickets.list`, and each change with a required reason (at most 300 characters).
+  The list returns at most 200 tickets a page, newest first, with `nextBefore` for older ones. Off in production: sending feedback text to the
   lead's AI session there needs privacy notice 9.3 and the processors list updated first
   (`project_memory/operations/contradictions.md`).
 - Every operator read of a family and every action is recorded (`operator_audit_log`: operator

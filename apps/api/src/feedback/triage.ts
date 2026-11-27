@@ -7,7 +7,7 @@
  * Off in production until the owner approves it (env.ts). No names, no emails, no family ids.
  */
 import { Hono, type Context } from 'hono';
-import { and, desc, eq, gt, inArray } from 'drizzle-orm';
+import { and, desc, eq, gt, inArray, lt, or } from 'drizzle-orm';
 import { z } from 'zod';
 import { feedback, students, type Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
@@ -26,11 +26,26 @@ export interface TriageDeps {
 
 const TRIAGE_ACTOR = 'triage-bot';
 const MAX_TICKETS = 200;
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 const reason = z.string().trim().min(1).max(300);
 const reasonSchema = z.object({ reason }).strict();
 const duplicateSchema = z.object({ duplicateOf: z.string().uuid(), reason }).strict();
-const listQuery = z.object({ since: z.string().datetime().optional() });
+const listQuery = z
+  .object({
+    since: z.string().datetime().optional(),
+    // `nextBefore` from the previous page: `<time>~<id>`, so tickets that share a time are never
+    // skipped.
+    before: z
+      .string()
+      .refine((v) => {
+        const [at, id] = v.split('~');
+        return !!at && !!id && !Number.isNaN(new Date(at).getTime()) && UUID.test(id);
+      })
+      .optional(),
+    limit: z.coerce.number().int().min(1).max(MAX_TICKETS).default(MAX_TICKETS),
+  })
+  .strict();
 
 /** SHA-256 of a string, as lower-case hex. */
 export async function sha256Hex(value: string): Promise<string> {
@@ -61,7 +76,7 @@ export function triageRoutes({ db, config, clock }: TriageDeps) {
     await next();
   });
 
-  const audited = (c: Context<AppEnv>, action: string, familyId: string, why: string) =>
+  const audited = (c: Context<AppEnv>, action: string, familyId?: string, why?: string) =>
     audit(
       db,
       {
@@ -69,15 +84,30 @@ export function triageRoutes({ db, config, clock }: TriageDeps) {
         role: 'agent',
         requestId: c.req.header('x-request-id') ?? crypto.randomUUID(),
       },
-      { action, targetType: 'family', targetId: familyId, reason: why },
+      familyId ? { action, targetType: 'family', targetId: familyId, reason: why } : { action },
       clock.now(),
     );
 
   // The tickets triage reads: the report itself, never who sent it beyond the role.
   app.get('/tickets', async (c) => {
     const parsed = listQuery.safeParse(c.req.query());
-    if (!parsed.success) throw new ApiError(400, 'invalid_request', 'Use since=<ISO time>');
+    if (!parsed.success) {
+      throw new ApiError(
+        400,
+        'invalid_request',
+        'Use since=<ISO time>, before=<nextBefore>, limit',
+      );
+    }
+    const { limit } = parsed.data;
     const since = parsed.data.since ? new Date(parsed.data.since) : null;
+    const [beforeAt, beforeId] = parsed.data.before?.split('~') ?? [];
+    const before =
+      beforeAt && beforeId
+        ? or(
+            lt(feedback.createdAt, new Date(beforeAt)),
+            and(eq(feedback.createdAt, new Date(beforeAt)), lt(feedback.id, beforeId)),
+          )
+        : undefined;
     const rows = await db
       .select({ row: feedback, tester: students.tester })
       .from(feedback)
@@ -86,12 +116,18 @@ export function triageRoutes({ db, config, clock }: TriageDeps) {
         and(
           inArray(feedback.kind, ['bug', 'idea', 'confusing', 'other']),
           since ? gt(feedback.createdAt, since) : undefined,
+          before,
         ),
       )
-      .orderBy(desc(feedback.createdAt))
-      .limit(MAX_TICKETS);
+      .orderBy(desc(feedback.createdAt), desc(feedback.id))
+      .limit(limit + 1);
+    const page = rows.slice(0, limit);
+    const last = page[page.length - 1]?.row;
+    // Every read of report text is audited too, like each change.
+    await audited(c, 'tickets.list');
     return c.json({
-      tickets: rows.map(({ row, tester }) => ({
+      nextBefore: rows.length > limit && last ? `${last.createdAt.toISOString()}~${last.id}` : null,
+      tickets: page.map(({ row, tester }) => ({
         id: row.id,
         kind: row.kind,
         senderRole: row.senderRole,

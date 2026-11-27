@@ -44,7 +44,9 @@ describe('triage token (L14)', () => {
 
     const res = await t.app.request('/v1/triage/tickets', { headers: bot });
     expect(res.status).toBe(200);
-    const { tickets } = (await res.json()) as { tickets: Record<string, unknown>[] };
+    const body = (await res.json()) as { tickets: Record<string, unknown>[]; nextBefore: unknown };
+    expect(body.nextBefore).toBeNull();
+    const { tickets } = body;
     expect(tickets).toEqual([
       {
         id,
@@ -72,6 +74,36 @@ describe('triage token (L14)', () => {
     const res = await t.app.request(`/v1/triage/tickets?since=${since}`, { headers: bot });
     const { tickets } = (await res.json()) as { tickets: { id: string }[] };
     expect(tickets.map((x) => x.id)).toEqual([later]);
+  });
+
+  it('audits every successful list read as triage-bot', async () => {
+    const { headers } = await t.familyStudent('test_kid');
+    await report(headers);
+    expect((await t.app.request('/v1/triage/tickets', { headers: bot })).status).toBe(200);
+    expect(await triageAudits()).toEqual([
+      expect.objectContaining({ action: 'tickets.list', operatorRole: 'agent', reason: null }),
+    ]);
+  });
+
+  it('pages back through older tickets with nextBefore, never skipping one', async () => {
+    const { headers } = await t.familyStudent('test_kid');
+    const ids: string[] = [];
+    for (let i = 0; i < 5; i++) ids.push(await report(headers));
+    const seen: string[] = [];
+    let url = '/v1/triage/tickets?limit=2';
+    for (;;) {
+      const res = await t.app.request(url, { headers: bot });
+      expect(res.status).toBe(200);
+      const page = (await res.json()) as { tickets: { id: string }[]; nextBefore: string | null };
+      seen.push(...page.tickets.map((x) => x.id));
+      if (!page.nextBefore) break;
+      url = `/v1/triage/tickets?limit=2&before=${encodeURIComponent(page.nextBefore)}`;
+    }
+    expect(seen.sort()).toEqual([...ids].sort());
+    expect(new Set(seen).size).toBe(5);
+    expect((await t.app.request('/v1/triage/tickets?before=nope', { headers: bot })).status).toBe(
+      400,
+    );
   });
 
   it('refuses a missing or wrong token, and every other route', async () => {
