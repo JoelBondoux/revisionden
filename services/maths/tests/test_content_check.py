@@ -55,6 +55,17 @@ def test_an_expression_check_can_require_a_form():
     assert [r["ok"] for r in results] == [True, False]
 
 
+def test_the_blind_check_fallback_finds_equal_expressions_written_differently():
+    # scripts/verify/blind-answer.mjs sends worked answers here when the text differs (S4, #433).
+    results = run_checks(
+        [
+            {"id": "a", "kind": "expression", "expression": "18*v/5", "answer": "3.6v"},
+            {"id": "b", "kind": "expression", "expression": "18*v/5", "answer": "3.5v"},
+        ]
+    )
+    assert [r["ok"] for r in results] == [True, False]
+
+
 def test_a_model_solution_must_be_a_correct_chain_of_working():
     results = run_checks(
         [
