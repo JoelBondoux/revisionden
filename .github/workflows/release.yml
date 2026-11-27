@@ -17,9 +17,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+      # G13: each PR adds changes/unreleased/<branch>.md instead of editing CHANGELOG.md; fold
+      # them under [Unreleased] (and delete them) before that section gets this version's date.
+      - name: Fold changelog fragments into CHANGELOG.md
+        run: pnpm changelog:assemble
       - name: Bump version
         id: bump
         env:
@@ -35,7 +40,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "chore(release): v${{ steps.bump.outputs.version }}"
+          git add -A
+          git commit -m "chore(release): v${{ steps.bump.outputs.version }}"
           git tag "v${{ steps.bump.outputs.version }}"
           git push origin main --follow-tags
       - name: Merge the release back into staging and dev

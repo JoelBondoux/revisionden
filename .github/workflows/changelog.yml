@@ -1,0 +1,33 @@
+name: Changelog
+
+# G13: every pull request into dev adds a changelog fragment, changes/unreleased/<branch>.md,
+# instead of editing CHANGELOG.md (whose shared [Unreleased] block made every open PR conflict
+# after each merge). Exempt: the `no-changelog` label, or a PR that only touches tests or CI.
+# The release workflow folds the fragments into CHANGELOG.md. Re-runs when labels change.
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: changelog-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fragment:
+    name: Changelog fragment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - name: Check this pull request adds a valid fragment
+        env:
+          LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
+        run: node scripts/changelog.mjs check-pr --base "origin/${{ github.base_ref }}" --labels "$LABELS"
