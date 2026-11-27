@@ -515,6 +515,10 @@ Tags: #product #rules #limits #defaults
   sum of products. Binding, tightest first: NOT, AND, XOR, OR, ≡ (our choice; questions bracket
   anything else). Not yet wired into `pnpm content:validate`.
 
+- CS fact proofs (S5, 2026-11-27, decision 0009 (b)): a fact's `engine` may be `cs_arithmetic`,
+  `cs_base`, `cs_signed` or `cs_logic_equivalence` (`services/maths/app/cs/facts.py`). Like the
+  maths proofs, each passes a fact only together with a third provider's blind statement.
+
 ## Reminders
 
 - Web push per device, turned on by the student from Settings (the permission prompt appears
