@@ -280,7 +280,10 @@ Tags: #product #rules #limits #defaults
   unlocks as soon as they're ready." Code: `apps/web/src/map/`, `apps/web/src/pages/MapPage.tsx`;
   e2e `e2e/tests/map.spec.ts` (route readability and 3:1 node contrast in every style).
 - Topic map data (F2, `GET /v1/student/map`): units are the top-level topics of the subject's tree,
-  leaf topics in specification order. Locked = no item may be served yet; mastered at 80%; weak
+  leaf topics in specification order. Locked = a lesson would find no question (UX-3,
+  `lessonReadyItem`: servable, typed working only with the maths engine, never pilot steps alone);
+  tapping it says "<topic> is coming soon"; an empty lesson offers "Try a topic that's ready" (the
+  next mission). The 5-a-day and starting test pick items, so empty topics never appear. Mastered at 80%; weak
   spot = tried and below 60%; otherwise in progress (including not tried). Unit mastery averages
   its open topics. Next mission: weakest weak spot, else first topic not mastered, else review
   the weakest mastered topic (5 minutes). A unit id opens its challenge lesson (all its topics).
