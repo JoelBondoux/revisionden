@@ -1,0 +1,881 @@
+[
+  {
+    "id": "gcse-maths-h-g2-0101",
+    "topic": "gcse-maths-h-g2",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g2-lp-loci",
+    "expected_seconds": 30,
+    "prompt": "Which construction gives all the points that are the same distance from two points A and B?",
+    "options": [
+      "The perpendicular bisector of AB",
+      "The bisector of an angle at A",
+      "A circle with centre A",
+      "A line parallel to AB"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Every point on the perpendicular bisector of AB is the same distance from A as from B.",
+    "hint": "Think about the point exactly halfway between A and B, and lines through it.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use the standard ruler and compass constructions (perpendicular bisector of a line segment, constructing a perpendicular to a given line from/at a given point, bisecting a given angle)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use these to construct given figures and solve loci problems",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (the meaning of a locus and the standard loci: a circle, a perpendicular bisector and an angle bisector) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:43Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:15Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:17Z",
+          "notes": "unsupported_claim (explanation): The explanation states, \"Every point on the perpendicular bisector of AB is the same distance from A as from B.\" The quoted sources support using perpendicular bisectors in constructions and loci problems, but they do not explicitly state this property, so this factual claim is not backed by the provided sources.; confidence medium"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0102",
+    "topic": "gcse-maths-h-g2",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g2-lp-loci",
+    "expected_seconds": 30,
+    "prompt": "What is the locus of points that are 3 cm from a fixed point P?",
+    "options": [
+      "A circle with centre P and radius 3 cm",
+      "A straight line 3 cm long",
+      "A square with sides of 3 cm",
+      "Two parallel lines"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "All the points exactly 3 cm from P form a circle with centre P and radius 3 cm.",
+    "hint": "Imagine a compass set to 3 cm with its point on P.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use the standard ruler and compass constructions (perpendicular bisector of a line segment, constructing a perpendicular to a given line from/at a given point, bisecting a given angle)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use these to construct given figures and solve loci problems",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (the meaning of a locus and the standard loci: a circle, a perpendicular bisector and an angle bisector) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:43Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:20Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:24Z",
+          "notes": "unsupported_claim (question): The item tests the locus 'points that are 3 cm from a fixed point P', but the quoted specification only says students should 'use these to construct given figures and solve loci problems'. It does not explicitly state the locus fact needed here, so the question content is not directly backed by the quoted sources.; unsupported_claim (answer): The marked answer 'A circle with centre P and radius 3 cm' relies on the locus fact that all points a fixed distance from a point form a circle, which is not explicitly supported by the quoted sources provided.; unsupported_claim (explanation): The explanation states 'All the points exactly 3 cm from P form a circle with centre P and radius 3 cm.' This is mathematically correct, but the quoted sources do not explicitly support this factual claim."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0103",
+    "topic": "gcse-maths-h-g2",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g2-lp-loci",
+    "expected_seconds": 35,
+    "prompt": "Two straight lines meet at a point, making an acute angle. Which construction gives the points inside that angle that are the same distance from both lines?",
+    "options": [
+      "The bisector of the angle between them",
+      "The perpendicular bisector of one line",
+      "A circle centred where they meet",
+      "A tangent to one line"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Points on the bisector of the angle between two lines are the same distance from each line.",
+    "hint": "Think about the line that splits the angle exactly in half.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use the standard ruler and compass constructions (perpendicular bisector of a line segment, constructing a perpendicular to a given line from/at a given point, bisecting a given angle)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use these to construct given figures and solve loci problems",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (the meaning of a locus and the standard loci: a circle, a perpendicular bisector and an angle bisector) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:04:59Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:11Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:13Z",
+          "notes": "unsupported_claim (explanation): The explanation states, \"Points on the bisector of the angle between two lines are the same distance from each line.\" The quoted sources only mention bisecting a given angle and using constructions to solve loci problems; they do not explicitly state this locus property, so this factual claim is not backed by the provided sources."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0104",
+    "topic": "gcse-maths-h-g2",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g2-lp-loci",
+    "expected_seconds": 30,
+    "prompt": "A goat is tied to a post by a 4 m rope in a large field. Which region can the goat reach?",
+    "options": [
+      "Inside a circle of radius 4 m centred on the post",
+      "A square 4 m by 4 m",
+      "A line 4 m long",
+      "Outside a circle of radius 4 m"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "The goat can be anywhere up to 4 m from the post, which is the inside of a circle of radius 4 m with the post at its centre.",
+    "hint": "Where can it reach if the rope is pulled tight in every direction?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use the standard ruler and compass constructions (perpendicular bisector of a line segment, constructing a perpendicular to a given line from/at a given point, bisecting a given angle)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use these to construct given figures and solve loci problems",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (the meaning of a locus and the standard loci: a circle, a perpendicular bisector and an angle bisector) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:44Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:33Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:37Z",
+          "notes": "unsupported_claim (question): The item relies on the geometric fact that points a fixed distance from a point define a circle and that points up to that distance are inside the circle, but the quoted sources only mention using constructions to solve loci problems. They do not explicitly support this specific claim about the reachable region of a tied goat.; unsupported_claim (answer): The marked answer states 'Inside a circle of radius 4 m centred on the post', but the quoted sources do not explicitly back this specific locus statement; they only generally mention solving loci problems.; unsupported_claim (explanation): The explanation claims 'The goat can be anywhere up to 4 m from the post, which is the inside of a circle of radius 4 m with the post at its centre.' This is mathematically reasonable, but the quoted sources do not explicitly support this factual claim.; confidence medium"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0105",
+    "topic": "gcse-maths-h-g2",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g2-lp-shortest-distance",
+    "expected_seconds": 30,
+    "prompt": "The point P is (3, 7). Work out the shortest distance from P to the x-axis.",
+    "answer": {
+      "value": "7"
+    },
+    "verify": {
+      "expression": "7 - 0"
+    },
+    "marks": 1,
+    "explanation": "The shortest distance from a point to a line is the perpendicular distance. From (3, 7) straight down to the x-axis is 7 units.",
+    "hint": "Go straight down to the axis, at right angles to it.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "know that the perpendicular distance from a point to a line is the shortest distance to the line",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:44Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:40Z",
+          "notes": "model answered \"7\"; expected \"7\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:41Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0106",
+    "topic": "gcse-maths-h-g2",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g2-lp-shortest-distance",
+    "expected_seconds": 35,
+    "prompt": "The point Q is (5, 2). Work out the shortest distance from Q to the line x = 1.",
+    "answer": {
+      "value": "4"
+    },
+    "verify": {
+      "expression": "5 - 1"
+    },
+    "marks": 1,
+    "explanation": "The line x = 1 is vertical, so the perpendicular from Q is horizontal. The distance is 5 - 1 = 4 units.",
+    "hint": "The shortest route meets the line at right angles. Which direction is that for a vertical line?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "know that the perpendicular distance from a point to a line is the shortest distance to the line",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:44Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:43Z",
+          "notes": "model answered \"4\"; expected \"4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:44Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0107",
+    "topic": "gcse-maths-h-g2",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g2-lp-shortest-distance",
+    "expected_seconds": 40,
+    "prompt": "Work out the shortest distance from the point (6, 8) to the line y = -2.",
+    "answer": {
+      "value": "10"
+    },
+    "verify": {
+      "expression": "8 - (-2)"
+    },
+    "marks": 1,
+    "explanation": "The line y = -2 is horizontal, so the shortest route is straight down: 8 - (-2) = 10 units.",
+    "hint": "The route meets the line at right angles. Compare the y-coordinates.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "know that the perpendicular distance from a point to a line is the shortest distance to the line",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:44Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:47Z",
+          "notes": "model answered \"10\"; expected \"10\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:50Z",
+          "notes": "unsupported_claim (hint): The hint says \"Compare the y-coordinates.\" This introduces a method claim not supported by the quoted source. The only quoted source supports that the perpendicular distance is the shortest distance; it does not support comparing y-coordinates as a valid method.; unsupported_claim (explanation): The explanation says \"The line y = -2 is horizontal\" and then uses vertical distance via y-coordinates. The quoted source only supports that the perpendicular distance from a point to a line is the shortest distance; it does not support the additional factual claim about the form y = constant being a horizontal line."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0108",
+    "topic": "gcse-maths-h-g2",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g2-lp-construction-names",
+    "expected_seconds": 30,
+    "prompt": "What is the name of the construction that cuts a line segment in half at right angles?",
+    "answer": {
+      "accepted": ["perpendicular bisector", "the perpendicular bisector"]
+    },
+    "marks": 1,
+    "explanation": "A perpendicular bisector crosses a line segment at its midpoint (bisects it) and at 90° (perpendicular).",
+    "hint": "\"Bisect\" means cut in half, and the cut is at right angles.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use the standard ruler and compass constructions (perpendicular bisector of a line segment, constructing a perpendicular to a given line from/at a given point, bisecting a given angle)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:44Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:52Z",
+          "notes": "model answered \"Perpendicular bisector\"; expected \"perpendicular bisector | the perpendicular bisector\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:53Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0109",
+    "topic": "gcse-maths-h-g2",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g2-lp-construction-names",
+    "expected_seconds": 30,
+    "prompt": "What is the name of the construction that splits an angle into two equal angles?",
+    "answer": {
+      "accepted": ["angle bisector", "the angle bisector"]
+    },
+    "marks": 1,
+    "explanation": "Bisecting an angle splits it into two equal halves, so the construction is called an angle bisector.",
+    "hint": "\"Bisect\" means cut into two equal parts.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "use the standard ruler and compass constructions (perpendicular bisector of a line segment, constructing a perpendicular to a given line from/at a given point, bisecting a given angle)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:45Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:55Z",
+          "notes": "model answered \"Angle bisector\"; expected \"angle bisector | the angle bisector\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:56Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g2-0110",
+    "topic": "gcse-maths-h-g2",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g2-lp-construction-names",
+    "expected_seconds": 35,
+    "prompt": "A perpendicular is drawn from a point P to a line. Is this the longest or the shortest distance from P to the line?",
+    "answer": {
+      "accepted": ["shortest", "the shortest", "shortest distance", "the shortest distance"]
+    },
+    "marks": 1,
+    "explanation": "The perpendicular distance from a point to a line is the shortest distance to the line.",
+    "hint": "Compare it with a slanted line from P to the same line.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G2 (page 17; PDF page 29)",
+        "quote": "know that the perpendicular distance from a point to a line is the shortest distance to the line",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G2). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:04:59Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:14Z",
+          "notes": "model answered \"Shortest distance\"; expected \"shortest | the shortest | shortest distance | the shortest distance\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:15Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

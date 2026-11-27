@@ -1,0 +1,935 @@
+[
+  {
+    "id": "gcse-maths-h-g19-0101",
+    "topic": "gcse-maths-h-g19",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g19-lp-similar-lengths",
+    "expected_seconds": 40,
+    "prompt": "Two triangles are similar. A side of 4 cm on the small triangle matches a side of 10 cm on the large one. Another side on the small triangle is 6 cm. Work out the matching side on the large triangle.",
+    "answer": {
+      "value": "15",
+      "unit": "cm"
+    },
+    "verify": {
+      "expression": "6 * 10/4"
+    },
+    "marks": 1,
+    "explanation": "The scale factor is 10 ÷ 4 = 2.5. The matching side is 6 × 2.5 = 15 cm.",
+    "hint": "Find the scale factor from the pair of matching sides.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "In similar triangles, matching sides are in the same ratio.",
+        "ask": "Two triangles are similar. How are the lengths of their matching sides related?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)/(k*b) = a/b"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:41Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:15Z",
+          "notes": "model answered \"15 cm\"; expected \"15\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:16Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0102",
+    "topic": "gcse-maths-h-g19",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g19-lp-similar-lengths",
+    "expected_seconds": 50,
+    "prompt": "In triangle ABC, D is on AB and E is on AC, and DE is parallel to BC, so triangle ADE is similar to triangle ABC. AD = 4 cm, AB = 10 cm and DE = 6 cm. Work out BC.",
+    "answer": {
+      "value": "15",
+      "unit": "cm"
+    },
+    "verify": {
+      "expression": "6 * 10/4"
+    },
+    "marks": 1,
+    "explanation": "The scale factor from ADE to ABC is AB ÷ AD = 10 ÷ 4 = 2.5. BC = 6 × 2.5 = 15 cm.",
+    "hint": "Match AD with AB and DE with BC.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "In similar triangles, matching sides are in the same ratio.",
+        "ask": "Two triangles are similar. How are the lengths of their matching sides related?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)/(k*b) = a/b"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:41Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:20Z",
+          "notes": "model answered \"15 cm\"; expected \"15\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:21Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0103",
+    "topic": "gcse-maths-h-g19",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g19-lp-similar-lengths",
+    "expected_seconds": 90,
+    "prompt": "Two similar rectangles have widths 6 cm and 12 cm. The smaller rectangle is 8 cm long and the larger is x cm long. Work out x.",
+    "answer": {
+      "solutions": ["16"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x/8 = 12/6",
+      "variable": "x"
+    },
+    "steps": ["x/8 = 12/6", "x/8 = 2", "x = 16"],
+    "marks": 2,
+    "mark_scheme": ["M1 for x/8 = 12/6", "A1 for x = 16"],
+    "explanation": "Matching sides are in the same ratio: x/8 = 12/6 = 2, so x = 16.",
+    "hint": "Set up equal ratios of matching sides.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "In similar triangles, matching sides are in the same ratio.",
+        "ask": "Two triangles are similar. How are the lengths of their matching sides related?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)/(k*b) = a/b"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). Answer backed by the maths engine (answer and every step). Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:41Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:24Z",
+          "notes": "model answered \"16 cm\"; expected \"16\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:25Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0104",
+    "topic": "gcse-maths-h-g19",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g19-lp-area-volume",
+    "expected_seconds": 50,
+    "prompt": "Two similar shapes have lengths in the ratio 2 : 5. The smaller shape has an area of 12 cm². Work out the area of the larger shape.",
+    "answer": {
+      "value": "75",
+      "unit": "cm²"
+    },
+    "verify": {
+      "expression": "12 * (5/2)^2"
+    },
+    "marks": 1,
+    "explanation": "The length scale factor is 5/2 = 2.5, so the area scale factor is 2.5² = 6.25. Area = 12 × 6.25 = 75 cm².",
+    "hint": "Square the length scale factor for areas.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "If two shapes are similar with lengths in the ratio 1 : k, their areas are in the ratio 1 : k².",
+        "ask": "Two shapes are similar and the lengths of one are k times the lengths of the other. How do their areas compare?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)*(k*b) = k^2*(a*b)"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:42Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:27Z",
+          "notes": "model answered \"75 cm²\"; expected \"75\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:28Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0105",
+    "topic": "gcse-maths-h-g19",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g19-lp-area-volume",
+    "expected_seconds": 60,
+    "prompt": "Two similar bottles have heights 10 cm and 15 cm. The smaller bottle holds 400 ml. How much does the larger bottle hold?",
+    "answer": {
+      "value": "1350",
+      "unit": "ml"
+    },
+    "verify": {
+      "expression": "400 * (15/10)^3"
+    },
+    "marks": 1,
+    "explanation": "Length scale factor = 15 ÷ 10 = 1.5. Volume scale factor = 1.5³ = 3.375. Capacity = 400 × 3.375 = 1350 ml.",
+    "hint": "Cube the length scale factor for volumes.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "If two solids are similar with lengths in the ratio 1 : k, their volumes are in the ratio 1 : k³.",
+        "ask": "Two solids are similar and the lengths of one are k times the lengths of the other. How do their volumes compare?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)*(k*b)*(k*c) = k^3*(a*b*c)"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:42Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:31Z",
+          "notes": "model answered \"1350 ml\"; expected \"1350\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:31Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0106",
+    "topic": "gcse-maths-h-g19",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g19-lp-area-volume",
+    "expected_seconds": 60,
+    "prompt": "Two similar shapes have areas of 9 cm² and 25 cm². A side of the smaller shape is 6 cm. Work out the matching side of the larger shape.",
+    "answer": {
+      "value": "10",
+      "unit": "cm"
+    },
+    "verify": {
+      "expression": "6 * sqrt(25/9)"
+    },
+    "marks": 1,
+    "explanation": "Area scale factor = 25/9, so the length scale factor is √(25/9) = 5/3. Side = 6 × 5/3 = 10 cm.",
+    "hint": "Take the square root of the area scale factor.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "If two shapes are similar with lengths in the ratio 1 : k, their areas are in the ratio 1 : k².",
+        "ask": "Two shapes are similar and the lengths of one are k times the lengths of the other. How do their areas compare?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)*(k*b) = k^2*(a*b)"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:42Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:34Z",
+          "notes": "model answered \"10 cm\"; expected \"10\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0107",
+    "topic": "gcse-maths-h-g19",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g19-lp-congruent-similar",
+    "expected_seconds": 25,
+    "prompt": "Two shapes are congruent. Which statement is true?",
+    "options": [
+      "They are the same shape and the same size",
+      "They are the same shape but different sizes",
+      "They have the same area but different shapes",
+      "They have the same perimeter only"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Congruent shapes are identical in shape and size. Similar shapes are the same shape but can be different sizes.",
+    "hint": "How is congruent different from similar?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (congruent shapes are the same shape and size; similar shapes are the same shape) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:42Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:37Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:38Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0108",
+    "topic": "gcse-maths-h-g19",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g19-lp-sf-recall",
+    "expected_seconds": 10,
+    "front": "The length scale factor is 4. What is the area scale factor?",
+    "back": "16",
+    "explanation": "4² = 16.",
+    "hint": "Square it.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "If two shapes are similar with lengths in the ratio 1 : k, their areas are in the ratio 1 : k².",
+        "ask": "Two shapes are similar and the lengths of one are k times the lengths of the other. How do their areas compare?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)*(k*b) = k^2*(a*b)"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:42Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:39Z",
+          "notes": "model answered \"16\"; expected \"16\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:40Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0109",
+    "topic": "gcse-maths-h-g19",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g19-lp-sf-recall",
+    "expected_seconds": 10,
+    "front": "The volume scale factor is 8. What is the length scale factor?",
+    "back": "2",
+    "explanation": "∛8 = 2.",
+    "hint": "Take the cube root.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "If two solids are similar with lengths in the ratio 1 : k, their volumes are in the ratio 1 : k³.",
+        "ask": "Two solids are similar and the lengths of one are k times the lengths of the other. How do their volumes compare?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)*(k*b)*(k*c) = k^3*(a*b*c)"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:42Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:42Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:43Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g19-0110",
+    "topic": "gcse-maths-h-g19",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g19-lp-sf-recall",
+    "expected_seconds": 10,
+    "front": "The area scale factor is 9. What is the length scale factor?",
+    "back": "3",
+    "explanation": "√9 = 3.",
+    "hint": "Take the square root.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G19",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G19 (page 18; PDF page 30)",
+        "quote": "apply the concepts of congruence and similarity, including the relationships between lengths, areas and volumes in similar figures",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "If two shapes are similar with lengths in the ratio 1 : k, their areas are in the ratio 1 : k².",
+        "ask": "Two shapes are similar and the lengths of one are k times the lengths of the other. How do their areas compare?",
+        "engine": {
+          "kind": "identity",
+          "equation": "(k*a)*(k*b) = k^2*(a*b)"
+        }
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G19). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:43Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:46Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:47Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

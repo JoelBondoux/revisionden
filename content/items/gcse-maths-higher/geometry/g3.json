@@ -1,0 +1,1188 @@
+[
+  {
+    "id": "gcse-maths-h-g3-0101",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g3-lp-angle-facts",
+    "expected_seconds": 25,
+    "prompt": "Two angles on a straight line are 128° and x°. Work out x.",
+    "answer": {
+      "value": "52"
+    },
+    "verify": {
+      "expression": "180 - 128"
+    },
+    "marks": 1,
+    "explanation": "Angles on a straight line add up to 180°, so x = 180 - 128 = 52.",
+    "hint": "What do angles on a straight line add up to?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "apply the properties of angles at a point, angles at a point on a straight line, vertically opposite angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "Angles on a straight line add up to 180°.",
+        "ask": "What do the angles on a straight line add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:57Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:15Z",
+          "notes": "model answered \"52°\"; expected \"52\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:16Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0102",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g3-lp-angle-facts",
+    "expected_seconds": 30,
+    "prompt": "Four angles around a point are 95°, 110°, 70° and x°. Work out x.",
+    "answer": {
+      "value": "85"
+    },
+    "verify": {
+      "expression": "360 - 95 - 110 - 70"
+    },
+    "marks": 1,
+    "explanation": "Angles around a point add up to 360°. 95 + 110 + 70 = 275, so x = 360 - 275 = 85.",
+    "hint": "What do angles around a point add up to?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "apply the properties of angles at a point, angles at a point on a straight line, vertically opposite angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "Angles around a point add up to 360°.",
+        "ask": "What do the angles around a point add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:57Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:19Z",
+          "notes": "model answered \"85°\"; expected \"85\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:20Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0103",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g3-lp-angle-facts",
+    "expected_seconds": 20,
+    "prompt": "Two straight lines cross. One of the angles is 47°. What is the angle vertically opposite it?",
+    "answer": {
+      "value": "47"
+    },
+    "verify": {
+      "expression": "47"
+    },
+    "marks": 1,
+    "explanation": "Vertically opposite angles are equal, so the opposite angle is also 47°.",
+    "hint": "Vertically opposite angles are the ones across the crossing point.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "apply the properties of angles at a point, angles at a point on a straight line, vertically opposite angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "Vertically opposite angles are equal.",
+        "ask": "When two straight lines cross, how are the vertically opposite angles related?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:57Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:22Z",
+          "notes": "model answered \"47°\"; expected \"47\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:23Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0104",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g3-lp-parallel-lines",
+    "expected_seconds": 30,
+    "prompt": "A straight line crosses two parallel lines. One angle it makes is 64°. Work out the alternate angle to it.",
+    "answer": {
+      "value": "64"
+    },
+    "verify": {
+      "expression": "64"
+    },
+    "marks": 1,
+    "explanation": "Alternate angles on parallel lines are equal, so the alternate angle is 64°.",
+    "hint": "Alternate angles make a Z shape between the parallel lines.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "understand and use alternate and corresponding angles on parallel lines",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "Alternate angles on parallel lines are equal.",
+        "ask": "When a straight line crosses two parallel lines, how are the alternate angles related?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:57Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:25Z",
+          "notes": "model answered \"64°\"; expected \"64\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:26Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0105",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g3-lp-parallel-lines",
+    "expected_seconds": 35,
+    "prompt": "A straight line crosses two parallel lines. One of the angles between the parallel lines is 115°. Work out the co-interior angle on the same side of the crossing line.",
+    "answer": {
+      "value": "65"
+    },
+    "verify": {
+      "expression": "180 - 115"
+    },
+    "marks": 1,
+    "explanation": "Co-interior angles on parallel lines add up to 180°, so the angle is 180 - 115 = 65°.",
+    "hint": "Co-interior angles make a C shape between the parallel lines.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "understand and use alternate and corresponding angles on parallel lines",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "Co-interior angles on parallel lines add up to 180°.",
+        "ask": "When a straight line crosses two parallel lines, what do the co-interior angles add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:57Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:28Z",
+          "notes": "model answered \"65°\"; expected \"65\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:31Z",
+          "notes": "unsupported_claim (question): The question asks about a 'co-interior angle' and the explanation uses the fact that co-interior angles on parallel lines add to 180°, but the only quoted source supports 'alternate and corresponding angles on parallel lines'. No quoted source is provided for co-interior angles or their supplementary property.; unsupported_claim (hint): The hint introduces the claim that co-interior angles 'make a C shape between the parallel lines'. This is a factual teaching claim not backed by the quoted source.; unsupported_claim (explanation): The explanation states 'Co-interior angles on parallel lines add up to 180°', but the quoted source provided only mentions alternate and corresponding angles on parallel lines, not co-interior angles or this sum property."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0106",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g3-lp-triangle-polygon",
+    "expected_seconds": 25,
+    "prompt": "A triangle has angles of 48° and 67°. Work out the third angle.",
+    "answer": {
+      "value": "65"
+    },
+    "verify": {
+      "expression": "180 - 48 - 67"
+    },
+    "marks": 1,
+    "explanation": "The angles in a triangle add up to 180°. 48 + 67 = 115, so the third angle is 180 - 115 = 65°.",
+    "hint": "What do the angles in a triangle add up to?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "derive and use the sum of angles in a triangle (e.g. to deduce and use the angle sum in any polygon, and to derive properties of regular polygons)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The angles in a triangle add up to 180°.",
+        "ask": "What do the interior angles of a triangle add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:57Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:33Z",
+          "notes": "model answered \"65°\"; expected \"65\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:34Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0107",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g3-lp-triangle-polygon",
+    "expected_seconds": 35,
+    "prompt": "Work out the sum of the interior angles of a hexagon.",
+    "answer": {
+      "value": "720",
+      "unit": "°"
+    },
+    "verify": {
+      "expression": "(6 - 2) * 180"
+    },
+    "marks": 1,
+    "explanation": "A hexagon has 6 sides. Sum = (6 - 2) × 180 = 4 × 180 = 720°.",
+    "hint": "A polygon can be split into triangles from one corner. How many triangles for 6 sides?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "derive and use the sum of angles in a triangle (e.g. to deduce and use the angle sum in any polygon, and to derive properties of regular polygons)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The interior angles of a polygon with n sides add up to (n − 2) × 180°.",
+        "ask": "What is the sum of the interior angles of a polygon with n sides?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:57Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:37Z",
+          "notes": "model answered \"720°\"; expected \"720\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:38Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0108",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g3-lp-triangle-polygon",
+    "expected_seconds": 45,
+    "prompt": "Work out the size of each interior angle of a regular decagon (10 sides).",
+    "answer": {
+      "value": "144",
+      "unit": "°"
+    },
+    "verify": {
+      "expression": "(10 - 2) * 180 / 10"
+    },
+    "marks": 1,
+    "explanation": "Sum = (10 - 2) × 180 = 1440°. A regular decagon has 10 equal angles: 1440 ÷ 10 = 144°.",
+    "hint": "Find the total of the interior angles, then share it equally.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "derive and use the sum of angles in a triangle (e.g. to deduce and use the angle sum in any polygon, and to derive properties of regular polygons)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The interior angles of a polygon with n sides add up to (n − 2) × 180°.",
+        "ask": "What is the sum of the interior angles of a polygon with n sides?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:58Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:40Z",
+          "notes": "model answered \"144°\"; expected \"144\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:41Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0109",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g3-lp-triangle-polygon",
+    "expected_seconds": 40,
+    "prompt": "Each exterior angle of a regular polygon is 24°. How many sides does the polygon have?",
+    "answer": {
+      "value": "15"
+    },
+    "verify": {
+      "expression": "360 / 24"
+    },
+    "marks": 1,
+    "explanation": "The exterior angles of a polygon add up to 360°. 360 ÷ 24 = 15, so it has 15 sides.",
+    "hint": "What do the exterior angles of a polygon add up to?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "derive and use the sum of angles in a triangle (e.g. to deduce and use the angle sum in any polygon, and to derive properties of regular polygons)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The exterior angles of any convex polygon add up to 360°.",
+        "ask": "What do the exterior angles of a convex polygon add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:58Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:43Z",
+          "notes": "model answered \"15 sides\"; expected \"15\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:44Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0110",
+    "topic": "gcse-maths-h-g3",
+    "type": "worked_maths",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g3-lp-triangle-polygon",
+    "expected_seconds": 90,
+    "prompt": "The angles of a quadrilateral are x°, 2x°, 3x° and 4x°. Work out x.",
+    "answer": {
+      "solutions": ["36"]
+    },
+    "verify": {
+      "method": "solve",
+      "equation": "x + 2*x + 3*x + 4*x = 360",
+      "variable": "x"
+    },
+    "steps": ["x + 2*x + 3*x + 4*x = 360", "10*x = 360", "x = 36"],
+    "marks": 2,
+    "mark_scheme": ["M1 for x + 2x + 3x + 4x = 360", "A1 for x = 36"],
+    "explanation": "The angles in a quadrilateral add up to 360°, so 10x = 360 and x = 36. The angles are 36°, 72°, 108° and 144°.",
+    "hint": "Add the four angles and set the total equal to the angle sum of a quadrilateral.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "derive and use the sum of angles in a triangle (e.g. to deduce and use the angle sum in any polygon, and to derive properties of regular polygons)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The angles in a quadrilateral add up to 360°.",
+        "ask": "What do the interior angles of a quadrilateral add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine (answer and every step). Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:58Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:47Z",
+          "notes": "model answered \"36\"; expected \"36\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:48Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0111",
+    "topic": "gcse-maths-h-g3",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g3-lp-angle-recall",
+    "expected_seconds": 10,
+    "front": "Angles on a straight line add up to how many degrees?",
+    "back": "180°",
+    "explanation": "Angles on a straight line make a half turn: 180°.",
+    "hint": "A straight line is half a full turn.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "apply the properties of angles at a point, angles at a point on a straight line, vertically opposite angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "Angles on a straight line add up to 180°.",
+        "ask": "What do the angles on a straight line add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:58Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:49Z",
+          "notes": "model answered \"180°\"; expected \"180°\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:52Z",
+          "notes": "unsupported_claim (hint): The hint states 'A straight line is half a full turn.' The only quoted source supports applying the property of angles on a straight line, but it does not state or support this 'half a full turn' claim. Under the instructions, this new factual claim needs its own quoted source.; unsupported_claim (explanation): The explanation states 'Angles on a straight line make a half turn: 180°.' The quoted source supports the property of angles on a straight line, but it does not explicitly support the 'half turn' formulation or the value 180° as stated here. Under the instructions, each factual claim in the explanation needs quoted source support."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0112",
+    "topic": "gcse-maths-h-g3",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g3-lp-angle-recall",
+    "expected_seconds": 10,
+    "front": "The exterior angles of any polygon add up to how many degrees?",
+    "back": "360°",
+    "explanation": "Walking round a polygon you make one full turn, so the exterior angles add up to 360°.",
+    "hint": "Think about walking all the way round the shape.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "derive and use the sum of angles in a triangle (e.g. to deduce and use the angle sum in any polygon, and to derive properties of regular polygons)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The exterior angles of any convex polygon add up to 360°.",
+        "ask": "What do the exterior angles of a convex polygon add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:58Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:54Z",
+          "notes": "model answered \"360°\"; expected \"360°\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:57Z",
+          "notes": "unsupported_claim (hint): The hint says 'Think about walking all the way round the shape.' This introduces a factual/method claim about interpreting exterior angles as a full turn when traversing the polygon, but the only quoted source supports deriving and using angle sums in polygons; it does not mention the walking-round/full-turn method.; unsupported_claim (explanation): The explanation says 'Walking round a polygon you make one full turn, so the exterior angles add up to 360°.' The quoted source supports deriving and using polygon angle sums, but it does not support this specific full-turn walking-round justification. This factual claim therefore lacks support from the quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g3-0113",
+    "topic": "gcse-maths-h-g3",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g3-lp-angle-recall",
+    "expected_seconds": 10,
+    "front": "The interior angles of a quadrilateral add up to how many degrees?",
+    "back": "360°",
+    "explanation": "A quadrilateral splits into two triangles: 2 × 180° = 360°.",
+    "hint": "Split it into triangles.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "derive and use the sum of angles in a triangle (e.g. to deduce and use the angle sum in any polygon, and to derive properties of regular polygons)",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The angles in a quadrilateral add up to 360°.",
+        "ask": "What do the interior angles of a quadrilateral add up to?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:58Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:59Z",
+          "notes": "model answered \"360°\"; expected \"360°\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:03:00Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  }
+]

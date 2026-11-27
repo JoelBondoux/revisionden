@@ -1,0 +1,833 @@
+[
+  {
+    "id": "gcse-maths-h-g22-0101",
+    "topic": "gcse-maths-h-g22",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g22-lp-sine-rule",
+    "expected_seconds": 60,
+    "prompt": "In triangle ABC, angle A = 40°, angle B = 65° and a = 8 cm. Use the sine rule to work out b. Give your answer correct to 1 decimal place.",
+    "answer": {
+      "value": "11.3",
+      "unit": "cm",
+      "decimal_places": 1
+    },
+    "verify": {
+      "expression": "8*sin(65*pi/180)/sin(40*pi/180)"
+    },
+    "marks": 1,
+    "explanation": "a/sin A = b/sin B, so b = 8 × sin 65° ÷ sin 40° = 11.279… ≈ 11.3 cm.",
+    "hint": "Write a/sin A = b/sin B and rearrange for b.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "know and apply the sine rule",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "In any triangle ABC, a/sin A = b/sin B = c/sin C.",
+        "ask": "State the sine rule for a triangle ABC with sides a, b, c opposite angles A, B, C."
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:51Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:13Z",
+          "notes": "model answered \"11.0 cm\"; expected \"11.3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:14Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0102",
+    "topic": "gcse-maths-h-g22",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g22-lp-sine-rule",
+    "expected_seconds": 70,
+    "prompt": "In triangle ABC, a = 7 cm, b = 9 cm and angle A = 50°. Angle B is acute. Use the sine rule to work out angle B.",
+    "options": ["80.0°", "36.6°", "10.0°", "59.6°"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "sin B/b = sin A/a, so sin B = 9 × sin 50° ÷ 7 = 0.9849…, and B = sin⁻¹(0.9849…) = 80.035…° ≈ 80.0°.",
+    "hint": "Write sin B/b = sin A/a and rearrange for sin B.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "know and apply the sine rule",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "In any triangle ABC, a/sin A = b/sin B = c/sin C.",
+        "ask": "State the sine rule for a triangle ABC with sides a, b, c opposite angles A, B, C."
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Options checked with SymPy: 80.0° is sin⁻¹(9 sin 50° ÷ 7) to 1 dp; distractors 36.6° is sin⁻¹(7 sin 50° ÷ 9), 10.0° is 90° − 80.0°, 59.6° is a nearby wrong value. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:51Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:16Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:17Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0103",
+    "topic": "gcse-maths-h-g22",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g22-lp-cosine-rule",
+    "expected_seconds": 50,
+    "prompt": "In triangle ABC, b = 5 cm, c = 7 cm and angle A = 60°. Use the cosine rule to work out a. Give your answer correct to 2 decimal places.",
+    "answer": {
+      "value": "6.24",
+      "unit": "cm",
+      "decimal_places": 2
+    },
+    "verify": {
+      "expression": "sqrt(5^2 + 7^2 - 2*5*7*cos(pi/3))"
+    },
+    "marks": 1,
+    "explanation": "a² = 25 + 49 - 2 × 5 × 7 × cos 60° = 74 - 35 = 39, so a = √39 = 6.244… ≈ 6.24 cm.",
+    "hint": "Put the two sides and the angle between them into the cosine rule.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "cosine rule a 2 = b 2 + c 2 – 2 bc cos A , to find unknown lengths and angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:51Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:28Z",
+          "notes": "model answered \"6.24 cm\"; expected \"6.24\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:29Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0104",
+    "topic": "gcse-maths-h-g22",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g22-lp-cosine-rule",
+    "expected_seconds": 60,
+    "prompt": "A triangle has sides of 5 cm, 6 cm and 7 cm. Use the cosine rule to work out the angle opposite the 7 cm side.",
+    "options": ["78.5°", "11.5°", "101.5°", "44.4°"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "cos C = (25 + 36 - 49) ÷ (2 × 5 × 6) = 12/60 = 0.2, so C = cos⁻¹(0.2) = 78.463…° ≈ 78.5°.",
+    "hint": "Rearrange the cosine rule to make cos of the angle the subject.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "cosine rule a 2 = b 2 + c 2 – 2 bc cos A , to find unknown lengths and angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Options checked with SymPy: 78.5° is cos⁻¹(0.2) to 1 dp; distractors 11.5° is sin⁻¹(0.2), 101.5° is cos⁻¹(−0.2), 44.4° is the angle opposite 5 cm.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:51Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:31Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:32Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0105",
+    "topic": "gcse-maths-h-g22",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g22-lp-cosine-rule",
+    "expected_seconds": 60,
+    "prompt": "In triangle ABC, b = 8 cm, c = 11 cm and angle A = 120°. Work out a. Give your answer correct to 2 decimal places.",
+    "answer": {
+      "value": "16.52",
+      "unit": "cm",
+      "decimal_places": 2
+    },
+    "verify": {
+      "expression": "sqrt(8^2 + 11^2 - 2*8*11*cos(2*pi/3))"
+    },
+    "marks": 1,
+    "explanation": "cos 120° = -0.5, so a² = 64 + 121 - 2 × 8 × 11 × (-0.5) = 185 + 88 = 273. a = √273 = 16.522… ≈ 16.52 cm.",
+    "hint": "Be careful: cos of an obtuse angle is negative.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "cosine rule a 2 = b 2 + c 2 – 2 bc cos A , to find unknown lengths and angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:51Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:20Z",
+          "notes": "model answered \"16.46 cm\"; expected \"16.52\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:20Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0106",
+    "topic": "gcse-maths-h-g22",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g22-lp-cosine-rule",
+    "expected_seconds": 60,
+    "prompt": "A triangle has sides of 3 cm, 5 cm and 7 cm. Work out the largest angle.",
+    "options": ["120°", "60°", "30°", "150°"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "The largest angle is opposite the longest side, 7 cm. cos C = (9 + 25 - 49) ÷ 30 = -15/30 = -0.5, so C = 120°.",
+    "hint": "The largest angle is opposite the longest side.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "cosine rule a 2 = b 2 + c 2 – 2 bc cos A , to find unknown lengths and angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Options checked with SymPy: 120° is cos⁻¹(−0.5); distractor 60° is cos⁻¹(0.5).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:51Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:40Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:40Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0107",
+    "topic": "gcse-maths-h-g22",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g22-lp-choose-rule",
+    "expected_seconds": 30,
+    "prompt": "You know two sides of a triangle and the angle between them. Which rule finds the third side?",
+    "options": ["The cosine rule", "The sine rule", "Pythagoras’ theorem only", "SOH CAH TOA only"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "With two sides and the included angle, the cosine rule a² = b² + c² - 2bc cos A gives the third side. The triangle need not be right-angled.",
+    "hint": "Which rule uses two sides and the angle between them?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "cosine rule a 2 = b 2 + c 2 – 2 bc cos A , to find unknown lengths and angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:51Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:42Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:43Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0108",
+    "topic": "gcse-maths-h-g22",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g22-lp-choose-rule",
+    "expected_seconds": 30,
+    "prompt": "You know two angles of a triangle and one side. Which rule finds another side?",
+    "options": [
+      "The sine rule",
+      "The angle sum of a triangle on its own",
+      "Pythagoras’ theorem",
+      "None of these"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "The sine rule links each side with the sine of its opposite angle, so with two angles and a side you can find another side.",
+    "hint": "Which rule pairs each side with its opposite angle?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "know and apply the sine rule",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "In any triangle ABC, a/sin A = b/sin B = c/sin C.",
+        "ask": "State the sine rule for a triangle ABC with sides a, b, c opposite angles A, B, C."
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:05:08Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:11Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:12Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0109",
+    "topic": "gcse-maths-h-g22",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g22-lp-rule-recall",
+    "expected_seconds": 10,
+    "front": "You know all three sides of a triangle and want an angle. Which rule do you use?",
+    "back": "cosine rule",
+    "explanation": "Rearranging the cosine rule gives an angle from three sides.",
+    "hint": "It is the rule with the minus sign.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "cosine rule a 2 = b 2 + c 2 – 2 bc cos A , to find unknown lengths and angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:52Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:51Z",
+          "notes": "model answered \"Cosine rule\"; expected \"cosine rule\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:52Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0110",
+    "topic": "gcse-maths-h-g22",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g22-lp-rule-recall",
+    "expected_seconds": 10,
+    "front": "A triangle has sides b = 3, c = 4 and angle A = 90°. What is a²?",
+    "back": "25",
+    "explanation": "cos 90° = 0, so a² = 9 + 16 - 0 = 25 (Pythagoras).",
+    "hint": "cos 90° is 0.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "cosine rule a 2 = b 2 + c 2 – 2 bc cos A , to find unknown lengths and angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:52Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:54Z",
+          "notes": "model answered \"25\"; expected \"25\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:57Z",
+          "notes": "unsupported_claim (hint): The hint states \"cos 90° is 0.\" This is a new factual claim, and the only quoted source given supports the cosine rule formula but does not support the specific trigonometric fact that cos 90° = 0.; unsupported_claim (explanation): The explanation states \"cos 90° = 0,\" but the quoted source only gives the cosine rule formula and does not support this specific trigonometric value.; unsupported_claim (explanation): The explanation labels the result as \"(Pythagoras).\" The quoted source supports use of the cosine rule, not a claim about Pythagoras or that this step is Pythagoras."
+        }
+      ]
+    }
+  }
+]

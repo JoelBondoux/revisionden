@@ -1,0 +1,769 @@
+[
+  {
+    "id": "gcse-maths-h-g24-0101",
+    "topic": "gcse-maths-h-g24",
+    "type": "short_answer",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g24-lp-describe",
+    "expected_seconds": 30,
+    "prompt": "A shape is moved 4 units right and 3 units down. Write the translation as a vector (x, y), where x is across and y is up.",
+    "answer": {
+      "accepted": ["(4,-3)"]
+    },
+    "marks": 1,
+    "explanation": "Right is positive x and down is negative y, so the vector is (4, -3).",
+    "hint": "Right and up are positive; left and down are negative.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:53Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:15Z",
+          "notes": "model answered \"(4, -3)\"; expected \"(4,-3)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:17Z",
+          "notes": "unsupported_claim (hint): The hint states 'Right and up are positive; left and down are negative.' The only quoted source supports 'describe translations as 2D vectors' and does not explicitly state the sign convention for coordinate directions, so this factual claim is not backed by the provided source.; unsupported_claim (explanation): The explanation states 'Right is positive x and down is negative y'. The provided source only supports describing translations as 2D vectors and does not explicitly give the coordinate sign convention, so this claim is not backed by the quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0102",
+    "topic": "gcse-maths-h-g24",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g24-lp-describe",
+    "expected_seconds": 30,
+    "prompt": "A shape is moved 6 units left and 1 unit up. Write the translation as a vector (x, y), where x is across and y is up.",
+    "answer": {
+      "accepted": ["(-6,1)"]
+    },
+    "marks": 1,
+    "explanation": "Left is negative x and up is positive y: (-6, 1).",
+    "hint": "Which directions are negative?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:53Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:20Z",
+          "notes": "model answered \"(-6, 1)\"; expected \"(-6,1)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:22Z",
+          "notes": "unsupported_claim (hint): The hint 'Which directions are negative?' introduces a factual claim about sign conventions for directions, but the only quoted source supports 'describe translations as 2D vectors' and does not explicitly support which directions are taken as negative.; unsupported_claim (explanation): The explanation states 'Left is negative x and up is positive y', but the quoted source only says 'describe translations as 2D vectors' and does not explicitly support these coordinate sign conventions.; confidence medium"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0103",
+    "topic": "gcse-maths-h-g24",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g24-lp-describe",
+    "expected_seconds": 35,
+    "prompt": "The point A(2, 5) is translated to A′(-1, 7). Write the translation as a vector (x, y).",
+    "answer": {
+      "accepted": ["(-3,2)"]
+    },
+    "marks": 1,
+    "explanation": "Change in x = -1 - 2 = -3. Change in y = 7 - 5 = 2. The vector is (-3, 2).",
+    "hint": "Subtract the starting coordinates from the finishing ones.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:54Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:24Z",
+          "notes": "model answered \"(-3, 2)\"; expected \"(-3,2)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:26Z",
+          "notes": "unsupported_claim (hint): The hint gives a specific method: 'Subtract the starting coordinates from the finishing ones.' The only quoted source says students should 'describe translations as 2D vectors'; it does not support this procedural claim.; unsupported_claim (explanation): The explanation states a specific coordinate method ('Change in x = -1 - 2 = -3. Change in y = 7 - 5 = 2') that is not backed by the quoted source, which only states 'describe translations as 2D vectors'."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0104",
+    "topic": "gcse-maths-h-g24",
+    "type": "short_answer",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g24-lp-apply",
+    "expected_seconds": 30,
+    "prompt": "The point (3, -2) is translated by the vector (-5, 4). Write down the coordinates of its image.",
+    "answer": {
+      "accepted": ["(-2,2)"]
+    },
+    "marks": 1,
+    "explanation": "Add the vector to the coordinates: (3 + (-5), -2 + 4) = (-2, 2).",
+    "hint": "Add the vector to the point.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:54Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:28Z",
+          "notes": "model answered \"(-2, 2)\"; expected \"(-2,2)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:29Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0105",
+    "topic": "gcse-maths-h-g24",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g24-lp-apply",
+    "expected_seconds": 35,
+    "prompt": "After a translation by the vector (3, -2), the image of a point is (7, 4). Write down the coordinates of the original point.",
+    "answer": {
+      "accepted": ["(4,6)"]
+    },
+    "marks": 1,
+    "explanation": "Undo the translation by subtracting the vector: (7 - 3, 4 - (-2)) = (4, 6).",
+    "hint": "Work backwards: do the opposite move.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:54Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:31Z",
+          "notes": "model answered \"(4, 6)\"; expected \"(4,6)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:32Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0106",
+    "topic": "gcse-maths-h-g24",
+    "type": "short_answer",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-g24-lp-apply",
+    "expected_seconds": 35,
+    "prompt": "A translation by the vector (2, 3) is followed by a translation by the vector (4, -1). Write the single translation that has the same effect as a vector (x, y).",
+    "answer": {
+      "accepted": ["(6,2)"]
+    },
+    "marks": 1,
+    "explanation": "Add the vectors: (2 + 4, 3 + (-1)) = (6, 2).",
+    "hint": "Add the two vectors.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:54Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:34Z",
+          "notes": "model answered \"(6, 2)\"; expected \"(6,2)\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0107",
+    "topic": "gcse-maths-h-g24",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g24-lp-describe",
+    "expected_seconds": 20,
+    "prompt": "What does the translation vector (0, -5) do to a shape?",
+    "options": [
+      "Moves it 5 units down",
+      "Moves it 5 units left",
+      "Moves it 5 units up",
+      "Moves it 5 units right"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "The x part is 0, so no move across; the y part is -5, so 5 units down.",
+    "hint": "The second number is the move up or down.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:54Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:37Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:39Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0108",
+    "topic": "gcse-maths-h-g24",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g24-lp-vector-recall",
+    "expected_seconds": 10,
+    "front": "The translation vector (-2, 0) moves a shape 2 units in which direction?",
+    "back": "left",
+    "explanation": "A negative x part means a move to the left.",
+    "hint": "The first number is the move across.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:54Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:41Z",
+          "notes": "model answered \"left\"; expected \"left\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:44Z",
+          "notes": "unsupported_claim (hint): The hint states, \"The first number is the move across.\" The only quoted source supports describing translations as 2D vectors, but it does not state or define that the first component of a translation vector represents the horizontal movement across.; unsupported_claim (explanation): The explanation states, \"A negative x part means a move to the left.\" The quoted source supports describing translations as 2D vectors, but it does not explicitly state that the x-component is horizontal or that a negative x-component means movement to the left."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0109",
+    "topic": "gcse-maths-h-g24",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g24-lp-vector-recall",
+    "expected_seconds": 10,
+    "front": "The translation vector (0, 4) moves a shape 4 units in which direction?",
+    "back": "up",
+    "explanation": "A positive y part means a move up.",
+    "hint": "Look at the sign of the second number.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:00:54Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:46Z",
+          "notes": "model answered \"Up\"; expected \"up\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:02:48Z",
+          "notes": "unsupported_claim (hint): The hint says, \"Look at the sign of the second number.\" This introduces a factual method claim about how to interpret a translation vector, but the only quoted source given is \"describe translations as 2D vectors,\" which does not explicitly support this rule.; unsupported_claim (explanation): The explanation says, \"A positive y part means a move up.\" This is a factual claim about interpreting the components of a translation vector, but the quoted source only says \"describe translations as 2D vectors\" and does not explicitly state this rule."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g24-0110",
+    "topic": "gcse-maths-h-g24",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-g24-lp-vector-recall",
+    "expected_seconds": 10,
+    "front": "A shape is translated by the vector (5, 0). How many units does it move to the right?",
+    "back": "5 units",
+    "explanation": "The x part is 5, so it moves 5 units right.",
+    "hint": "Look at the first number.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G24",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Vectors, content reference G24 (page 18; PDF page 30)",
+        "quote": "describe translations as 2D vectors",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G24). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Vectors are written in the text as (x, y): x is the top number of the column vector (across) and y the bottom (up).",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:05:08Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T16:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:11Z",
+          "notes": "model answered \"5 units\"; expected \"5 units\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:05:13Z",
+          "notes": "unsupported_claim (hint): The hint 'Look at the first number.' introduces a method/factual claim about how to interpret the vector, but the only quoted source is 'describe translations as 2D vectors', which does not support this specific claim.; unsupported_claim (explanation): The explanation 'The x part is 5, so it moves 5 units right.' makes specific factual claims about interpreting the first component of the vector as horizontal movement to the right. The quoted source only says 'describe translations as 2D vectors' and does not explicitly support these claims."
+        }
+      ]
+    }
+  }
+]
