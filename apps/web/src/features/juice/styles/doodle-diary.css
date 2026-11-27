@@ -17,13 +17,6 @@
   --dd-sketch: 255px 12px 225px 12px / 12px 225px 12px 255px;
   --dd-blob: 50% 45% 55% 48%;
   --dd-lift: 4px 5px 0 rgb(0 0 0 / 10%);
-  /* The lesson surround turns to diary paper (J10a2); the question stays on a plain card. */
-  --arena-bg: #f6f2e4;
-  --arena-raised: #fdfbf4;
-  --arena-track: #7f7a90;
-  --arena-text: #2b2a3a;
-  --arena-text-secondary: #57546a;
-  --arena-glow: #2a51bd;
 }
 
 /* In dark mode the diary is night paper, so the screen stays dark. */
@@ -36,12 +29,6 @@
   --dd-hi: #8a7420;
   --dd-hi-soft: #4a4020;
   --dd-lift: 4px 5px 0 rgb(0 0 0 / 35%);
-  --arena-bg: #1e1c2a;
-  --arena-raised: #27243a;
-  --arena-track: #7c7699;
-  --arena-text: #ecebf6;
-  --arena-text-secondary: #c2bed6;
-  --arena-glow: #8fb0ff;
 }
 
 /* ---------- Home ---------- */

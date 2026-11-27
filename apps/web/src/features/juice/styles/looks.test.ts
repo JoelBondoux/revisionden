@@ -7,7 +7,7 @@ import {
   resolveNonTextPairs,
   resolvePairs,
 } from '../../../design/themes';
-import { LOOK_TOKENS, LOOKS, lookCss } from './looks';
+import { ARENA_FROM_PAGE, LOOK_TOKENS, LOOKS, lookCss } from './looks';
 import { EFFECT_STYLE_IDS } from './registry';
 
 // J15s (owner, 2026-11-26): "When I change theme only the Today box on the Map page changes." Each
@@ -230,5 +230,84 @@ describe('the looks follow the approved mockup', () => {
     expect(LOOKS[id].light['--font-heading']).toContain(`'${font}'`);
     const pkg = font.toLowerCase().replace(/ /g, '-');
     expect(read(`${id}.css`)).toContain(`@import '@fontsource/${pkg}`);
+  });
+});
+
+// J17x (owner report: white text on light pages): arena screens (lessons, practice, tests, set
+// complete) sit on the look's own page, so the arena's text, cards and track come from the look's
+// page tokens, by one rule on `.arena` that no setting (pattern, high contrast, tints) can undo.
+describe("the arena on the look's page", () => {
+  const arena = read('../../../design/arena.css');
+  const block = (() => {
+    const at = arena.indexOf('.arena {');
+    expect(at, '.arena {').toBeGreaterThanOrEqual(0);
+    return arena.slice(at, arena.indexOf('}', at));
+  })();
+
+  it('takes every arena page token from the look, on the arena itself', () => {
+    for (const [token, from] of Object.entries(ARENA_FROM_PAGE))
+      expect(block, token).toContain(`${token}: var(${from});`);
+  });
+
+  it('no longer paints its own page behind the look (settings would decide which wins)', () => {
+    expect(arena).not.toMatch(/body:has\(\.arena[^{]*\{[^}]*background/);
+  });
+
+  it('leaves the arena page tokens to the look in every style sheet', () => {
+    for (const id of EFFECT_STYLE_IDS)
+      for (const token of Object.keys(ARENA_FROM_PAGE))
+        expect(read(`${id}.css`), `${id} ${token}`).not.toMatch(new RegExp(`${token}:`));
+  });
+
+  for (const mode of ['light', 'dark'] as const) {
+    it.each(EFFECT_STYLE_IDS)(`reads in %s, ${mode} (AA, and a visible track)`, (id) => {
+      const look = LOOKS[id][mode] as Record<string, string>;
+      const t = (token: keyof typeof ARENA_FROM_PAGE) => look[ARENA_FROM_PAGE[token]]!;
+      for (const [fg, bg] of [
+        ['--arena-text', '--arena-bg'],
+        ['--arena-text', '--arena-raised'],
+        ['--arena-text-secondary', '--arena-bg'],
+        ['--arena-text-secondary', '--arena-raised'],
+        ['--arena-glow', '--arena-bg'],
+      ] as const)
+        expect(contrastRatio(t(fg), t(bg)), `${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
+      expect(contrastRatio(t('--arena-track'), t('--arena-bg'))).toBeGreaterThanOrEqual(3);
+    });
+  }
+
+  it("puts the answer buttons' own text colour on their fills, not the page ink", () => {
+    expect(arena).toMatch(/\.answer-option \{[^}]*color: var\(--arena-on-option\);/);
+    for (const palette of [tokens, { ...tokens, ...colourblindTokens.light }] as Record<
+      string,
+      string
+    >[])
+      for (const fill of [1, 2, 3, 4].map((n) => `--arena-option-${n}`).concat('--arena-correct'))
+        expect(
+          contrastRatio(palette['--arena-on-option']!, palette[fill]!),
+          fill,
+        ).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+// J17x: the mastery fill is pale in every look, a fill only: nothing writes white or the
+// on-primary colour on it (1.1 to 1.3:1).
+describe('the mastery fill', () => {
+  const sheets = [
+    '../../../components/components.css',
+    '../../../pages/pages.css',
+    '../../../map/map.css',
+    '../../../map/wiggly.css',
+    '../../../design/arena.css',
+    '../juice.css',
+    ...EFFECT_STYLE_IDS.map((id) => `${id}.css`),
+  ];
+
+  it('never carries white or on-primary text', () => {
+    for (const sheet of sheets)
+      for (const [, body] of read(sheet).matchAll(/\{([^{}]*)\}/g))
+        if (/background[^;]*--color-mastery-fill/.test(body!))
+          expect(body, sheet).not.toMatch(
+            /(^|[^-])color:\s*(#fff\b|#ffffff\b|white\b|var\(--color-text-on-primary\))/,
+          );
   });
 });

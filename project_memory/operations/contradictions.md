@@ -5,6 +5,16 @@
 
 ## Open
 
+- [ ] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test
+      (`apps/web/src/features/learn/StartingTestPage.tsx`, `timeLimitSeconds` from
+      `apps/api/src/routes/learn.ts`; e2e `e2e/tests/starting-test.spec.ts`) has a 5-minute
+      limit that a pupil cannot turn off, adjust or extend, and its one-minute warning is a colour
+      change and a sound only (the timer is `aria-live="off"`), so screen-reader users get no
+      warning. WCAG 2.2.1 (AA, which the product targets) needs one of those options unless the limit
+      is essential. No ruling on whether it is essential was found in `docs/PRODUCT_RULES.md`,
+      `docs/GAME_FEEL.md` or `project_memory/`. Not settled here: a product decision, routed to owner
+      by lead (W19, 2026-11-26). The silent warning is a bug either way and is routed to F.
+
 - [ ] **Friends league is built, but the policies still say friends are not available.** The
       friends screens (`apps/web/src/features/league/`, FL PR 2) and API (`apps/api/src/routes/friends.ts`)
       exist, while `docs/legal/acceptable-use.md` 4.2 says "Friends are not available yet" and lists only

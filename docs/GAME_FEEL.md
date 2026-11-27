@@ -250,7 +250,7 @@ tab say so to screen readers.
   question sits on a plain white card (dark card in dark mode); a right answer gets a ring and a light
   wash in the success colour (green; blue with colour-blind friendly colours), so it never reads
   as a red "wrong" mark (J10f; red is for wrong only). The combo badge is written in red pen ("+XP" too, except in the lesson,
-  where it takes the look's main colour, J16b), stars are drawn in pen and coloured in, and bursts
+  where it takes the look's edge colour, J16b), stars are drawn in pen and coloured in, and bursts
   and confetti are quick pen strokes. Sounds use U's Doodle Diary pack: `EffectStyleProvider` calls
   `useFeedbackStyle` with the active style.
 - Sticker Book (J10a): wins are stickers slapped onto the page. Each sticker has a white die-cut
@@ -263,9 +263,19 @@ tab say so to screen readers.
 - The lesson surround follows the active style (J10a2, owner rule 2026-11-26: "not a school
   app", "fun around the learning", "calm question screens"). The question and its answers sit on
   `.lesson__stage`, which a style may give a plain, high-contrast card, but never texture,
-  stickers, tilt or motion behind the text. Sticker Book turns the dark arena into warm paper
-  (night paper in dark mode) by re-colouring the `--arena-*` tokens, with the question on a plain
-  white card (a dark card in dark mode); a test checks those colours meet AA.
+  stickers, tilt or motion behind the text. Sticker Book and Doodle Diary put the question on a
+  plain white card (a dark card in dark mode).
+- **Arena screens sit on the look's own page (J17x, owner report: white text on light pages).**
+  Lessons, practice, the 5-a-day, tests, flashcard review and set complete paint no page of their
+  own: the arena's page tokens come from the look (`ARENA_FROM_PAGE` in `looks.ts`): `--arena-bg`
+  is the look's page, `--arena-raised` its surface, `--arena-text` and `--arena-text-secondary`
+  its ink, `--arena-track` its track and `--arena-glow` its edge colour. `design/arena.css` sets
+  them on `.arena` itself, so no setting (background pattern, high contrast, reading tints) and no
+  style sheet can bring back the old dark arena's white text on a light page (before J17x the
+  look's page won only while the pattern was on, so 8 looks showed white words at 1.0 to 1.7:1).
+  The answer buttons keep their own fills with `--arena-on-option` (white) text, and gold stays
+  decoration. Tests: `looks.test.ts` (every look, light and dark) and `e2e/tests/arena-looks.spec.ts`
+  (a lesson in every look with the pattern on and off, high contrast, a reading tint, and dark).
 - Garden Grow (J10c): leafy cream cards with a soft green edge, today's mission as a garden
   patch, mastered topics in bloom (petal edge), petal confetti; wins grow up from their stem.
   Comic Pop (J10c): bold ink outlines and hard offset shadows, today's mission a yellow comic
@@ -275,7 +285,7 @@ tab say so to screen readers.
 - Empty progress tracks (the lesson and flashcard bars, `--arena-track`; other bars,
   `--color-track`) and the outline of a Challenge hex (`--color-challenge-edge`) reach 3:1 against
   what they sit on, in every theme and surround (WCAG 1.4.11, J10f, from the morning walkthrough
-  #185). Tests: `themes.test.ts` (`NON_TEXT_PAIRS`), `tokens.test.ts` and the surround test.
+  #185). Tests: `themes.test.ts` (`NON_TEXT_PAIRS`), `tokens.test.ts` and `looks.test.ts`.
   Since J10g an empty track is an outline (an inset 2px ring in the track colour) with nothing
   inside, so 0% reads as empty rather than a full grey bar; the fill sits inside the ring.
 - "+XP" in a lesson pops just above the feedback, in the gap under the question card, with a short
@@ -372,10 +382,17 @@ in view without scrolling. At 320 px or 200% text the page may scroll up and dow
     Each pose plays once (nod 900 ms, cheer 1200 ms, hmm 1400 ms) and goes back to rest; there is
     no idle motion in a lesson. Reduced motion: no reaction. An answer from before Pip appeared is
     ignored.
-- **"+XP" reads on the lesson page (J16b).** The lesson sits on the look's own page, so "+XP"
-  there uses the look's text-safe main colour (the light accent in dark mode) with no shadow,
-  outranking each look's own "+XP" colour. `e2e/tests/lesson.spec.ts` holds "+XP" and the combo
-  badge still and measures them on what is painted behind them, in every look, light and dark.
+- **Words in a lesson read on what is painted behind them (J16b, J16c).** Pick the colour by the
+  surface, never by the screen's name:
+  - **on the look's page** (the lesson header's XP count, "+XP", the warm-up and come-back note,
+    "Comeback!" in the feedback): `--color-primary-edge`, a deeper main colour in light mode and
+    the light accent in dark. "+XP" also drops its look's shadow and outranks the look's own
+    colour;
+  - **on an arena surface** (a card that paints `--arena-bg`, such as the Lesson complete stat
+    cards, W18): `--arena-glow`;
+  - never `--arena-gold` as text on the page (it is 1.4:1 on a light page).
+    `e2e/tests/lesson.spec.ts` holds each of these still and measures it on what is painted behind
+    it (`paintedTextFailures`), in every look, light and dark.
 - **Answer field reflow:** the typed-answer field fills its row and can shrink, so at 320 px with
   200% text nothing scrolls sideways (it used to push the page 120 px; `e2e/tests/lesson.spec.ts`).
 - **One compact header (J14b).** The lesson shows Pip v3 in its own header row with the way out
@@ -469,7 +486,7 @@ Ported from `docs/mockups/all-themes-pip.html` (`FX`, `burst`, `PRIZE_BOX`, `ope
   mid-range Android phone.
 - `prefers-reduced-motion` turns off particles, shakes, confetti and pulsing (state changes still
   shown with colour and text); screen readers get the result text through a live region.
-- Contrast meets WCAG 2.2 AA on the dark arena background.
+- Contrast meets WCAG 2.2 AA on the look's page behind the arena, in every look, light and dark (J17x).
 
 ## Build status (workstream J)
 
