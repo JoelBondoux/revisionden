@@ -578,6 +578,10 @@ Tags: #product #rules #limits #defaults
 - AI Gateway `revisionden`: authenticated (Cloudflare requires it for new gateways, so the API
   needs `AI_GATEWAY_TOKEN`), logging on but the API sends `cf-aig-collect-log-payload: false` so
   prompts and answers are never stored, cache off, 120 requests a minute.
+- CI checks on pull requests: `ci.yml` (lint, typecheck, unit tests, Python, content) on PRs into
+  `dev`, `staging` and `main`; `e2e.yml` runs the full Playwright + axe suite (phone, tablet,
+  desktop) on PRs into the same three branches (G10), from one shared build in four shards. Its
+  summary check "End-to-end result" is the one to require in branch protection.
 - Deploys: GitHub Actions. Push to `dev` deploys dev, push to `staging` deploys staging, and
   production deploys after the release bump on `main`. Each deploy migrates the database first,
   then (dev and staging only) loads `content/` with `content:sync`, then the API, then the web
