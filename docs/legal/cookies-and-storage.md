@@ -1,6 +1,6 @@
 # Cookies and storage
 
-Version: 1.7
+Version: 1.8
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -9,6 +9,8 @@ Effective date: {{EFFECTIVE_DATE}}
   signed in.
 - There are **no** advertising cookies, **no** analytics and **no** tracking. Nothing is shared
   with other websites.
+- If you follow a link to another website, such as an exam board's, that website's own cookies and
+  privacy rules apply.
 - Because everything is needed for the app to work, the law does not require us to ask for
   permission first, but we still tell you what each one is.
 - If the summary and the full text seem to differ, the full text is the one that counts.
@@ -58,6 +60,9 @@ policies. We do not set or read those.
 No analytics, advertising, social media, fingerprinting or tracking pixels. Fonts and scripts are
 served from our own site, not from other websites.
 
+If you follow a link to another website, such as an exam board's, that website's own cookies and
+privacy rules apply.
+
 ### 5. Removing storage
 
 You can clear the app's cookies and site data in your browser settings at any time. You will then
@@ -65,6 +70,8 @@ need to sign in, or unlink and link the student's device again.
 
 ## Changes
 
+- 1.8: If you follow a link to another website, such as an exam board's, that website's own
+  cookies and privacy rules apply.
 - 1.7: Added the setting that remembers the chosen effect style on this device.
 - 1.6: Added the setting that remembers, for 24 hours, that a parent closed the "We've updated" notice on this device.
 - 1.5: Added the device code that tells a student's devices apart when their passkey is synced.
