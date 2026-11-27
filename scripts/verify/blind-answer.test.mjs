@@ -107,8 +107,13 @@ test('numeric answers given as fractions are compared by value', async () => {
   assert.equal(r.result, 'pass');
 });
 
+// No test needs the real maths engine (CI's script job has no SymPy): this one never matches.
+const noMaths = async (checks) => checks.map((c) => ({ id: c.id, ok: false }));
 const blind = (item, answer) =>
-  runBlindAnswer(item, fakeProvider({ answer, confidence: 'high', reasoning: '' }), { now: AT });
+  runBlindAnswer(item, fakeProvider({ answer, confidence: 'high', reasoning: '' }), {
+    now: AT,
+    maths: noMaths,
+  });
 
 test('a rounded numeric answer must be written to the asked accuracy, not just be close', async () => {
   const item = draftItem('fixture-round', undefined, {
@@ -502,7 +507,7 @@ const workedNumber = draftItem('fixture-worked-number', undefined, {
   verify: { method: 'expression', expression: '150/2' },
 });
 
-test('a worked answer that is a number compares the final value as a number (S4)', async () => {
+test('a worked answer that is a number compares the final value as a number, without the engine (S4)', async () => {
   assert.equal((await runBlindAnswer(workedNumber, said('£75'), { now: AT })).result, 'pass');
   assert.equal(
     (await runBlindAnswer(workedNumber, said('150/2 = 75'), { now: AT })).result,
@@ -530,4 +535,19 @@ test('a worked expression that differs in writing is checked by the maths engine
   assert.match(r.check.notes, /maths engine: same expression/);
   const no = await runBlindAnswer(item, said('3.5v'), { now: AT, maths });
   assert.equal(no.result, 'fail');
+});
+
+test('a maths engine error fails the check with a note instead of stopping the run (S4)', async () => {
+  const item = draftItem('fixture-engine-down', undefined, {
+    type: 'worked_maths',
+    prompt: 'Fixture?',
+    answer: { expression: '18*v/5' },
+    verify: { method: 'expression', expression: 'v*3600/1000' },
+  });
+  const broken = async () => {
+    throw new Error('maths engine exited with code 1');
+  };
+  const r = await runBlindAnswer(item, said('3.6v'), { now: AT, maths: broken });
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /maths engine could not check/);
 });

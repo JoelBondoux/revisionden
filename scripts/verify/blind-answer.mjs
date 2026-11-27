@@ -263,16 +263,21 @@ async function formulaVerdict(item, answer, maths) {
 /** A worked expression answer compared by the maths engine's expression check. { ok, notes }. */
 async function expressionVerdict(item, answer, maths) {
   const given = withoutSubject(String(answer), item.answer.subject).trim();
-  const [result] = await maths([
-    {
-      id: item.id,
-      kind: 'expression',
-      expression: item.answer.expression,
-      answer: given,
-      form: item.answer.form,
-      subject: item.answer.subject,
-    },
-  ]);
+  let result;
+  try {
+    [result] = await maths([
+      {
+        id: item.id,
+        kind: 'expression',
+        expression: item.answer.expression,
+        answer: given,
+        form: item.answer.form,
+        subject: item.answer.subject,
+      },
+    ]);
+  } catch (error) {
+    return { ok: false, notes: [`maths engine could not check: ${error.message.split('\n')[0]}`] };
+  }
   return {
     ok: Boolean(result?.ok),
     notes: [`maths engine: ${result?.ok ? 'same expression' : 'not the same expression'}`],
@@ -321,7 +326,10 @@ export async function runBlindAnswer(
   let matches = formula ? formula.ok : want.matches(output.answer);
   // A worked expression written differently (S4): the maths engine decides ("3.6v" for 18v/5).
   const engine =
-    !matches && item.type === 'worked_maths' && typeof item.answer?.expression === 'string'
+    !matches &&
+    item.type === 'worked_maths' &&
+    typeof item.answer?.expression === 'string' &&
+    !isPlainNumber(item.answer.expression)
       ? await expressionVerdict(item, output.answer, maths)
       : null;
   if (engine) matches = engine.ok;
