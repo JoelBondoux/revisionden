@@ -85,13 +85,13 @@
     "expected_seconds": 40,
     "prompt": "A reflection in the x-axis followed by a reflection in the y-axis is the same as which single transformation?",
     "options": [
-      "A rotation of 180° about the origin",
       "A reflection in the line y = x",
+      "A rotation of 180° about the origin",
       "A translation",
       "A rotation of 90° clockwise about the origin"
     ],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "(x, y) goes to (x, -y) and then to (-x, -y). Changing the sign of both coordinates is a half turn (180°) about the origin.",
@@ -135,7 +135,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:05Z",
+          "at": "2026-11-27T12:15:26Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -144,22 +144,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:20Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:35Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:21Z",
+          "at": "2026-11-27T12:15:36Z",
           "notes": "no problems found"
         }
       ]
@@ -406,9 +406,9 @@
     "prompt": "Which of these stays the same under every rotation, every reflection and every translation?",
     "options": [
       "The lengths of the sides",
+      "The coordinates of every vertex",
       "The position of the shape",
-      "Which way round the shape faces",
-      "The coordinates of every vertex"
+      "Which way round the shape faces"
     ],
     "answer": {
       "option": 0
@@ -455,7 +455,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:05:01Z",
+          "at": "2026-11-27T12:15:27Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -464,14 +464,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:11Z",
+          "at": "2026-11-27T12:15:38Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -479,8 +479,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:12Z",
-          "notes": "unsupported_claim (explanation): The explanation says 'Rotations, reflections and translations move a shape without stretching it, so side lengths (and angles) stay the same.' The cited source only says students should 'describe the changes and invariance achieved by combinations of rotations, reflections and translations'; it does not explicitly support the added claim about stretching or the specific statement that angles stay the same.; confidence medium"
+          "at": "2026-11-27T12:15:40Z",
+          "notes": "unsupported_claim (explanation): The explanation states that rotations, reflections and translations 'move a shape without stretching it' and that 'side lengths (and angles) stay the same'. The quoted source only says students should 'describe the changes and invariance achieved by combinations of rotations, reflections and translations'; it does not explicitly support the specific claims about stretching or angles, so these claims are not backed by the provided source.; unsupported_claim (explanation): The explanation says 'Position can change, and a reflection flips which way it faces.' The provided source does not explicitly state these particular invariances/changes, so this claim is not directly supported by the quoted source."
         }
       ]
     }
@@ -493,9 +493,9 @@
     "learning_point": "gcse-maths-h-g8-lp-invariance",
     "expected_seconds": 35,
     "prompt": "A shape is reflected in the line x = 2. Which points do not move (are invariant)?",
-    "options": ["Points on the line x = 2", "Only the origin", "Points on the y-axis", "No points"],
+    "options": ["Only the origin", "No points", "Points on the y-axis", "Points on the line x = 2"],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "Points on a mirror line are their own reflection, so every point on x = 2 stays where it is.",
@@ -534,7 +534,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:06Z",
+          "at": "2026-11-27T12:15:28Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -543,22 +543,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:38Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:42Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:39Z",
+          "at": "2026-11-27T12:15:43Z",
           "notes": "no problems found"
         }
       ]
@@ -572,7 +572,7 @@
     "learning_point": "gcse-maths-h-g8-lp-invariance",
     "expected_seconds": 35,
     "prompt": "A shape is translated by 3 units right and 1 unit up. Which points are invariant?",
-    "options": ["No points", "The origin only", "Points on the x-axis", "All points"],
+    "options": ["No points", "All points", "The origin only", "Points on the x-axis"],
     "answer": {
       "option": 0
     },
@@ -613,7 +613,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:06Z",
+          "at": "2026-11-27T12:15:29Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -622,23 +622,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:42Z",
+          "at": "2026-11-27T12:15:45Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:43Z",
-          "notes": "no problems found"
+          "at": "2026-11-27T12:15:47Z",
+          "notes": "unsupported_claim (explanation): The explanation states, \"A translation that is not zero moves every point by the same amount, so no point stays where it was.\" While this is mathematically true and relevant, the quoted source only says students should \"describe the changes and invariance achieved by combinations of rotations, reflections and translations\" and does not explicitly state this property of non-zero translations. The instruction says any factual claim in the explanation needs a quoted source."
         }
       ]
     }

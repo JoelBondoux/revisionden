@@ -617,9 +617,9 @@
     "learning_point": "gcse-maths-h-g20-lp-trig",
     "expected_seconds": 50,
     "prompt": "In a right-angled triangle the side opposite angle x is 5 cm and the hypotenuse is 9 cm. Work out x.",
-    "options": ["33.7°", "56.3°", "29.1°", "0.6°"],
+    "options": ["0.6°", "29.1°", "56.3°", "33.7°"],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "sin x = 5/9, so x = sin⁻¹(5/9) = 33.748…° ≈ 33.7°.",
@@ -669,7 +669,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:47Z",
+          "at": "2026-11-27T12:14:56Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -678,22 +678,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:39Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:36Z",
+          "notes": "model answered \"1\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:40Z",
+          "at": "2026-11-27T12:15:37Z",
           "notes": "no problems found"
         }
       ]
@@ -707,9 +707,9 @@
     "learning_point": "gcse-maths-h-g20-lp-trig",
     "expected_seconds": 50,
     "prompt": "In a right-angled triangle the side adjacent to angle y is 7 cm and the hypotenuse is 10 cm. Work out y.",
-    "options": ["45.6°", "44.4°", "35.0°", "0.7°"],
+    "options": ["0.7°", "45.6°", "44.4°", "35.0°"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "cos y = 7/10, so y = cos⁻¹(0.7) = 45.572…° ≈ 45.6°.",
@@ -760,7 +760,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:47Z",
+          "at": "2026-11-27T12:14:57Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -769,22 +769,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:12Z",
-          "notes": "model answered \"2\"; expected \"0\""
+          "at": "2026-11-27T12:15:39Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:13Z",
+          "at": "2026-11-27T12:15:40Z",
           "notes": "no problems found"
         }
       ]
@@ -798,9 +798,9 @@
     "learning_point": "gcse-maths-h-g20-lp-trig",
     "expected_seconds": 20,
     "prompt": "Which trigonometric ratio is opposite ÷ hypotenuse?",
-    "options": ["sin", "cos", "tan", "None of these"],
+    "options": ["cos", "tan", "sin", "None of these"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "sin θ = opposite/hypotenuse.",
@@ -850,7 +850,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:48Z",
+          "at": "2026-11-27T12:14:58Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -859,23 +859,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:14Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:41Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:17Z",
-          "notes": "unsupported_claim (explanation): The explanation states \"sin θ = opposite/hypotenuse.\" The quoted source only gives the truncated statement \"the trigonometric ratios, sin θ = opposite\" and does not explicitly support the full ratio with hypotenuse in the denominator. Since every factual claim in the explanation needs quoted source support, this is unsupported by the provided sources.; unsupported_claim (answer): The marked answer \"sin\" depends on the claim that opposite ÷ hypotenuse corresponds to sine, but the provided source quote only states \"sin θ = opposite\" and does not explicitly include \"/hypotenuse\". On the quoted sources alone, the answer is not fully supported."
+          "at": "2026-11-27T12:15:44Z",
+          "notes": "unsupported_claim (explanation): The explanation states \"sin θ = opposite/hypotenuse.\" The quoted source only supports \"the trigonometric ratios, sin θ = opposite\" and does not quote the full ratio with hypotenuse, so this exact claim is not backed by the provided sources.; unsupported_claim (answer): The marked answer \"sin\" depends on the full ratio opposite ÷ hypotenuse, but the quoted sources as given only support \"sin θ = opposite\" and do not explicitly support the denominator hypotenuse.; confidence medium"
         }
       ]
     }

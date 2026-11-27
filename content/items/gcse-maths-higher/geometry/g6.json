@@ -292,9 +292,9 @@
     "learning_point": "gcse-maths-h-g6-lp-isosceles",
     "expected_seconds": 35,
     "prompt": "A triangle has angles of 30°, 75° and 75°. Which statement is true?",
-    "options": ["It is isosceles", "It is equilateral", "It is right-angled", "It is scalene"],
+    "options": ["It is scalene", "It is equilateral", "It is isosceles", "It is right-angled"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "Two equal angles (75° and 75°) mean the sides opposite them are equal, so the triangle is isosceles. No angle is 90°, and the angles are not all equal.",
@@ -338,7 +338,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:02Z",
+          "at": "2026-11-27T12:15:25Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -347,22 +347,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:28Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:34Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:29Z",
+          "at": "2026-11-27T12:15:35Z",
           "notes": "no problems found"
         }
       ]
@@ -574,13 +574,13 @@
     "expected_seconds": 50,
     "prompt": "To prove that an exterior angle of a triangle equals the sum of the two opposite interior angles, which two facts are used?",
     "options": [
-      "Angles in a triangle add up to 180° and angles on a straight line add up to 180°",
-      "Alternate angles are equal and vertically opposite angles are equal",
       "Base angles of an isosceles triangle are equal and angles at a point add up to 360°",
+      "Alternate angles are equal and vertically opposite angles are equal",
+      "Angles in a triangle add up to 180° and angles on a straight line add up to 180°",
       "Corresponding angles are equal and co-interior angles add up to 180°"
     ],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "If the angles are a, b and c, then a + b + c = 180 (triangle) and the exterior angle e satisfies c + e = 180 (straight line). So e = a + b.",
@@ -632,7 +632,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:02Z",
+          "at": "2026-11-27T12:15:26Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -641,23 +641,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:38Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:37Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:38Z",
-          "notes": "no problems found"
+          "at": "2026-11-27T12:15:41Z",
+          "notes": "unsupported_claim (question): The question asks for the facts used to prove that an exterior angle of a triangle equals the sum of the two opposite interior angles, but the only quoted source is the broad specification point G6. That source supports applying angle facts to derive results, but it does not explicitly state or back up this specific theorem or identify the two facts used in its proof.; unsupported_claim (answer): The marked answer names two specific facts: angles in a triangle add up to 180° and angles on a straight line add up to 180°. The quoted source does not explicitly support these named facts or this exact proof route; it only gives a general statement about applying angle facts.; unsupported_claim (explanation): The explanation states specific angle facts and uses them algebraically: a + b + c = 180 (triangle) and c + e = 180 (straight line). These are factual claims not explicitly backed by the quoted source provided."
         }
       ]
     }

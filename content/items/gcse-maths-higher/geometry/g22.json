@@ -104,7 +104,7 @@
     "learning_point": "gcse-maths-h-g22-lp-sine-rule",
     "expected_seconds": 70,
     "prompt": "In triangle ABC, a = 7 cm, b = 9 cm and angle A = 50°. Angle B is acute. Use the sine rule to work out angle B.",
-    "options": ["80.0°", "36.6°", "10.0°", "59.6°"],
+    "options": ["80.0°", "59.6°", "36.6°", "10.0°"],
     "answer": {
       "option": 0
     },
@@ -150,7 +150,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:51Z",
+          "at": "2026-11-27T12:15:02Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -159,14 +159,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:16Z",
+          "at": "2026-11-27T12:15:35Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -174,7 +174,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:17Z",
+          "at": "2026-11-27T12:15:36Z",
           "notes": "no problems found"
         }
       ]
@@ -279,7 +279,7 @@
     "learning_point": "gcse-maths-h-g22-lp-cosine-rule",
     "expected_seconds": 60,
     "prompt": "A triangle has sides of 5 cm, 6 cm and 7 cm. Use the cosine rule to work out the angle opposite the 7 cm side.",
-    "options": ["78.5°", "11.5°", "101.5°", "44.4°"],
+    "options": ["78.5°", "101.5°", "11.5°", "44.4°"],
     "answer": {
       "option": 0
     },
@@ -319,7 +319,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:51Z",
+          "at": "2026-11-27T12:15:03Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -328,14 +328,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:31Z",
+          "at": "2026-11-27T12:15:39Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -343,7 +343,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:32Z",
+          "at": "2026-11-27T12:15:40Z",
           "notes": "no problems found"
         }
       ]
@@ -448,9 +448,9 @@
     "learning_point": "gcse-maths-h-g22-lp-cosine-rule",
     "expected_seconds": 60,
     "prompt": "A triangle has sides of 3 cm, 5 cm and 7 cm. Work out the largest angle.",
-    "options": ["120°", "60°", "30°", "150°"],
+    "options": ["150°", "30°", "120°", "60°"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "The largest angle is opposite the longest side, 7 cm. cos C = (9 + 25 - 49) ÷ 30 = -15/30 = -0.5, so C = 120°.",
@@ -488,7 +488,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:51Z",
+          "at": "2026-11-27T12:15:04Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -497,22 +497,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:40Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:43Z",
+          "notes": "model answered \"3\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:40Z",
+          "at": "2026-11-27T12:15:44Z",
           "notes": "no problems found"
         }
       ]
@@ -526,7 +526,7 @@
     "learning_point": "gcse-maths-h-g22-lp-choose-rule",
     "expected_seconds": 30,
     "prompt": "You know two sides of a triangle and the angle between them. Which rule finds the third side?",
-    "options": ["The cosine rule", "The sine rule", "Pythagoras’ theorem only", "SOH CAH TOA only"],
+    "options": ["The cosine rule", "Pythagoras’ theorem only", "The sine rule", "SOH CAH TOA only"],
     "answer": {
       "option": 0
     },
@@ -566,7 +566,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:51Z",
+          "at": "2026-11-27T12:15:05Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -575,14 +575,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:42Z",
+          "at": "2026-11-27T12:15:45Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -590,7 +590,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:43Z",
+          "at": "2026-11-27T12:15:46Z",
           "notes": "no problems found"
         }
       ]
@@ -605,13 +605,13 @@
     "expected_seconds": 30,
     "prompt": "You know two angles of a triangle and one side. Which rule finds another side?",
     "options": [
-      "The sine rule",
       "The angle sum of a triangle on its own",
       "Pythagoras’ theorem",
+      "The sine rule",
       "None of these"
     ],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "The sine rule links each side with the sine of its opposite angle, so with two angles and a side you can find another side.",
@@ -655,7 +655,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:05:08Z",
+          "at": "2026-11-27T12:15:06Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -664,23 +664,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:11Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:47Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:12Z",
-          "notes": "no problems found"
+          "at": "2026-11-27T12:15:51Z",
+          "notes": "ambiguity (question): The prompt says 'You know two angles of a triangle and one side. Which rule finds another side?' but if the given side is between the two known angles, you can first use the angle sum of a triangle to find the third angle, then use the sine rule. Because 'one side' is unspecified, some students may wonder whether 'the angle sum of a triangle on its own' is being treated as relevant to the task.; wording (question): 'Which rule finds another side?' is imprecise for GCSE maths. More standard wording would specify 'which rule would you use' or 'which rule is needed', since the angle sum can also be part of the method when two angles are known.; confidence medium"
         }
       ]
     }
@@ -829,6 +829,266 @@
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:02:57Z",
           "notes": "unsupported_claim (hint): The hint states \"cos 90° is 0.\" This is a new factual claim, and the only quoted source given supports the cosine rule formula but does not support the specific trigonometric fact that cos 90° = 0.; unsupported_claim (explanation): The explanation states \"cos 90° = 0,\" but the quoted source only gives the cosine rule formula and does not support this specific trigonometric value.; unsupported_claim (explanation): The explanation labels the result as \"(Pythagoras).\" The quoted source supports use of the cosine rule, not a claim about Pythagoras or that this step is Pythagoras."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0111",
+    "topic": "gcse-maths-h-g22",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g22-lp-choose-rule",
+    "expected_seconds": 30,
+    "prompt": "You know all three sides of a triangle and want to find one of its angles. Which rule do you use?",
+    "options": [
+      "The cosine rule",
+      "The angle sum of a triangle on its own",
+      "The sine rule",
+      "Pythagoras’ theorem"
+    ],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "With three sides and no angles, rearrange the cosine rule to find an angle. The sine rule needs an angle and its opposite side.",
+    "hint": "Which rule links three sides and one angle?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "cosine rule a 2 = b 2 + c 2 – 2 bc cos A , to find unknown lengths and angles",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:15:07Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:52Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:52Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0112",
+    "topic": "gcse-maths-h-g22",
+    "type": "flashcard",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g22-lp-rule-recall",
+    "expected_seconds": 15,
+    "front": "You know two angles of a triangle and the side opposite one of them. Which rule finds the side opposite the other angle?",
+    "back": "sine rule",
+    "explanation": "The sine rule links each side with the sine of the angle opposite it: a/sin A = b/sin B.",
+    "hint": "It pairs each side with its opposite angle.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "know and apply the sine rule",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "In any triangle ABC, a/sin A = b/sin B = c/sin C.",
+        "ask": "State the sine rule for a triangle ABC with sides a, b, c opposite angles A, B, C."
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:15:08Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:54Z",
+          "notes": "model answered \"Sine rule\"; expected \"sine rule\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:56Z",
+          "notes": "unsupported_claim (hint): The hint states a factual method claim, 'It pairs each side with its opposite angle.' The only quoted source is 'know and apply the sine rule' and does not itself support this explanatory claim. Under the stated rules, a new factual claim in the hint needs a quoted source.; unsupported_claim (explanation): The explanation gives the factual claim and formula 'The sine rule links each side with the sine of the angle opposite it: a/sin A = b/sin B.' The quoted source only says 'know and apply the sine rule' and does not explicitly support this statement or formula, so this claim is unsupported by the provided source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g22-0113",
+    "topic": "gcse-maths-h-g22",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g22-lp-sine-rule",
+    "expected_seconds": 60,
+    "prompt": "In triangle ABC, angle A = 30°, angle B = 45° and a = 6 cm. Use the sine rule to work out b. Give your answer correct to 2 decimal places.",
+    "answer": {
+      "value": "8.49",
+      "unit": "cm",
+      "decimal_places": 2,
+      "subject": "b"
+    },
+    "verify": {
+      "expression": "6*sin(pi/4)/sin(pi/6)"
+    },
+    "marks": 1,
+    "explanation": "a/sin A = b/sin B, so b = 6 × sin 45° ÷ sin 30° = 6 × 0.7071… ÷ 0.5 = 8.485… ≈ 8.49 cm.",
+    "hint": "Write a/sin A = b/sin B and rearrange for b.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G22",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G22 (page 18; PDF page 30)",
+        "quote": "know and apply the sine rule",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "In any triangle ABC, a/sin A = b/sin B = c/sin C.",
+        "ask": "State the sine rule for a triangle ABC with sides a, b, c opposite angles A, B, C."
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G22). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:15:08Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:59Z",
+          "notes": "model answered \"4.39 cm\"; expected \"8.49\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:16:00Z",
+          "notes": "no problems found"
         }
       ]
     }

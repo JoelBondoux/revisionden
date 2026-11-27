@@ -7,9 +7,9 @@
     "learning_point": "gcse-maths-h-g9-lp-circle-parts",
     "expected_seconds": 20,
     "prompt": "What is the name of a chord that passes through the centre of a circle?",
-    "options": ["Diameter", "Radius", "Tangent", "Arc"],
+    "options": ["Arc", "Tangent", "Radius", "Diameter"],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "A chord through the centre goes right across the circle: it is a diameter.",
@@ -48,7 +48,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:07Z",
+          "at": "2026-11-27T12:15:30Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -57,23 +57,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:15Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:34Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:16Z",
-          "notes": "no problems found"
+          "at": "2026-11-27T12:15:36Z",
+          "notes": "unsupported_claim (hint): The hint states 'It is the longest chord of the circle.' Although mathematically true, this is a new factual claim about circle properties that is not supported by the quoted source, which only lists circle definitions and properties to identify and apply and does not specifically state that the diameter is the longest chord."
         }
       ]
     }
@@ -86,9 +86,9 @@
     "learning_point": "gcse-maths-h-g9-lp-circle-parts",
     "expected_seconds": 25,
     "prompt": "What is the name of the region between a chord and the arc it cuts off?",
-    "options": ["Segment", "Sector", "Tangent", "Radius"],
+    "options": ["Tangent", "Radius", "Segment", "Sector"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "A chord cuts the circle into two segments; each is the region between the chord and an arc.",
@@ -127,7 +127,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:07Z",
+          "at": "2026-11-27T12:15:31Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -136,22 +136,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:18Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:38Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:19Z",
+          "at": "2026-11-27T12:15:39Z",
           "notes": "no problems found"
         }
       ]
@@ -165,9 +165,9 @@
     "learning_point": "gcse-maths-h-g9-lp-circle-parts",
     "expected_seconds": 25,
     "prompt": "What is the name of the region between two radii and an arc?",
-    "options": ["Sector", "Segment", "Chord", "Diameter"],
+    "options": ["Diameter", "Sector", "Chord", "Segment"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "Two radii and the arc between them make a sector, shaped like a slice of pizza.",
@@ -206,7 +206,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:07Z",
+          "at": "2026-11-27T12:15:31Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -215,22 +215,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:20Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:41Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:21Z",
+          "at": "2026-11-27T12:15:42Z",
           "notes": "no problems found"
         }
       ]

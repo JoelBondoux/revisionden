@@ -1102,5 +1102,219 @@
         }
       ]
     }
+  },
+  {
+    "id": "gcse-maths-h-g10-0113",
+    "topic": "gcse-maths-h-g10",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g10-lp-chords",
+    "expected_seconds": 60,
+    "prompt": "A circle has a radius of 13 cm. A chord is 5 cm from the centre. Work out the length of the chord.",
+    "answer": {
+      "value": "24",
+      "unit": "cm"
+    },
+    "verify": {
+      "expression": "2 * sqrt(13^2 - 5^2)"
+    },
+    "marks": 1,
+    "explanation": "The perpendicular from the centre bisects the chord. Half the chord is √(13² - 5²) = √144 = 12 cm, so the chord is 24 cm.",
+    "hint": "Make a right-angled triangle with the radius as the hypotenuse.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G10 (page 17; PDF page 29)",
+        "quote": "apply and prove the standard circle theorems concerning angles, radii, tangents and chords, and use them to prove related results",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G20 (page 18; PDF page 30)",
+        "quote": "know the formulae for: Pythagoras’ theorem a 2 + b 2 = c 2",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The perpendicular from the centre of a circle to a chord bisects the chord.",
+        "ask": "What does the perpendicular from the centre of a circle to a chord do to the chord?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G10). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:14:31Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:35Z",
+          "notes": "model answered \"24 cm\"; expected \"24\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:36Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g10-0114",
+    "topic": "gcse-maths-h-g10",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g10-lp-chords",
+    "expected_seconds": 60,
+    "prompt": "A chord of length 24 cm is in a circle of radius 15 cm. Work out the distance from the centre of the circle to the chord.",
+    "answer": {
+      "value": "9",
+      "unit": "cm"
+    },
+    "verify": {
+      "expression": "sqrt(15^2 - 12^2)"
+    },
+    "marks": 1,
+    "explanation": "Half the chord is 12 cm. The distance is √(15² - 12²) = √81 = 9 cm.",
+    "hint": "The perpendicular from the centre cuts the chord in half.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G10",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G10 (page 17; PDF page 29)",
+        "quote": "apply and prove the standard circle theorems concerning angles, radii, tangents and chords, and use them to prove related results",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G20 (page 18; PDF page 30)",
+        "quote": "know the formulae for: Pythagoras’ theorem a 2 + b 2 = c 2",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The perpendicular from the centre of a circle to a chord bisects the chord.",
+        "ask": "What does the perpendicular from the centre of a circle to a chord do to the chord?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G10). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:14:32Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:39Z",
+          "notes": "model answered \"9 cm\"; expected \"9\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:42Z",
+          "notes": "unsupported_claim (hint): The hint states 'The perpendicular from the centre cuts the chord in half.' This is a factual circle-theorem claim not shown by the checked arithmetic, so under the stated rules it needs support from the quoted sources. The cited source only broadly mentions circle theorems and does not explicitly quote this result.; unsupported_claim (explanation): The explanation uses the claim that half the chord is 12 cm, which depends on the unstated theorem that a perpendicular from the centre to a chord bisects the chord. Under the stated rules, this factual claim needs support from the quoted sources, but the quotations provided do not explicitly state it.; confidence medium"
+        }
+      ]
+    }
   }
 ]

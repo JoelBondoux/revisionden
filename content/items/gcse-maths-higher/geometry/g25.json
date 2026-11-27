@@ -407,9 +407,9 @@
     "learning_point": "gcse-maths-h-g25-lp-geometry",
     "expected_seconds": 35,
     "prompt": "OA = a and OB = b. Which vector is AB?",
-    "options": ["b - a", "a - b", "a + b", "-a - b"],
+    "options": ["-a - b", "a + b", "a - b", "b - a"],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "To go from A to B, go from A back to O (-a) and then from O to B (b): AB = -a + b = b - a.",
@@ -459,7 +459,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:55Z",
+          "at": "2026-11-27T12:15:13Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -468,22 +468,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:33Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:34Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:34Z",
+          "at": "2026-11-27T12:15:35Z",
           "notes": "no problems found"
         }
       ]
@@ -497,9 +497,9 @@
     "learning_point": "gcse-maths-h-g25-lp-geometry",
     "expected_seconds": 45,
     "prompt": "OA = a and OB = b. M is the midpoint of AB. Which vector is OM?",
-    "options": ["½(a + b)", "½(b - a)", "a + b", "½a + b"],
+    "options": ["½a + b", "½(a + b)", "a + b", "½(b - a)"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "OM = OA + AM = a + ½(b - a) = ½a + ½b = ½(a + b).",
@@ -549,7 +549,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:56Z",
+          "at": "2026-11-27T12:15:14Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -558,22 +558,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:36Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:37Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:37Z",
+          "at": "2026-11-27T12:15:38Z",
           "notes": "no problems found"
         }
       ]
@@ -588,13 +588,13 @@
     "expected_seconds": 35,
     "prompt": "p = (2, 6) and q = (1, 3). Which statement is true?",
     "options": [
-      "p is parallel to q",
       "p is perpendicular to q",
+      "p and q are not related",
       "p = q",
-      "p and q are not related"
+      "p is parallel to q"
     ],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "p = 2q, because (2, 6) = 2 × (1, 3). A vector that is a multiple of another is parallel to it.",
@@ -650,7 +650,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:56Z",
+          "at": "2026-11-27T12:15:15Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -659,22 +659,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:40Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:41Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:41Z",
+          "at": "2026-11-27T12:15:41Z",
           "notes": "no problems found"
         }
       ]

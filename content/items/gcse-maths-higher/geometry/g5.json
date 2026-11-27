@@ -7,9 +7,9 @@
     "learning_point": "gcse-maths-h-g5-lp-criteria",
     "expected_seconds": 30,
     "prompt": "Two triangles have all three pairs of matching sides equal. Which condition shows that they are congruent?",
-    "options": ["SSS", "SAS", "ASA", "RHS"],
+    "options": ["ASA", "SSS", "RHS", "SAS"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "Three pairs of equal sides is the condition SSS (side, side, side).",
@@ -48,7 +48,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:00Z",
+          "at": "2026-11-27T12:15:20Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -57,22 +57,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:15Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:34Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:16Z",
+          "at": "2026-11-27T12:15:35Z",
           "notes": "no problems found"
         }
       ]
@@ -86,9 +86,9 @@
     "learning_point": "gcse-maths-h-g5-lp-criteria",
     "expected_seconds": 30,
     "prompt": "Two right-angled triangles have equal hypotenuses and one other pair of equal sides. Which condition shows that they are congruent?",
-    "options": ["SSS", "SAS", "ASA", "RHS"],
+    "options": ["ASA", "SAS", "RHS", "SSS"],
     "answer": {
-      "option": 3
+      "option": 2
     },
     "marks": 1,
     "explanation": "A right angle, the hypotenuse and one other side is the condition RHS (right angle, hypotenuse, side).",
@@ -127,7 +127,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:00Z",
+          "at": "2026-11-27T12:15:21Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -136,22 +136,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:19Z",
-          "notes": "model answered \"3\"; expected \"3\""
+          "at": "2026-11-27T12:15:38Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:20Z",
+          "at": "2026-11-27T12:15:38Z",
           "notes": "no problems found"
         }
       ]
@@ -165,9 +165,9 @@
     "learning_point": "gcse-maths-h-g5-lp-criteria",
     "expected_seconds": 35,
     "prompt": "Triangles ABC and DEF have AB = DE, angle B = angle E and BC = EF. Which condition shows that they are congruent?",
-    "options": ["SSS", "SAS", "ASA", "RHS"],
+    "options": ["SAS", "SSS", "ASA", "RHS"],
     "answer": {
-      "option": 1
+      "option": 0
     },
     "marks": 1,
     "explanation": "Angle B is between sides AB and BC, and angle E is between DE and EF. Two sides and the angle between them is SAS.",
@@ -206,7 +206,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:00Z",
+          "at": "2026-11-27T12:15:22Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -215,22 +215,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:22Z",
-          "notes": "model answered \"1\"; expected \"1\""
+          "at": "2026-11-27T12:15:40Z",
+          "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:23Z",
+          "at": "2026-11-27T12:15:42Z",
           "notes": "no problems found"
         }
       ]
@@ -244,9 +244,9 @@
     "learning_point": "gcse-maths-h-g5-lp-criteria",
     "expected_seconds": 35,
     "prompt": "Triangles PQR and XYZ have angle P = angle X, angle Q = angle Y and PQ = XY. Which condition shows that they are congruent?",
-    "options": ["SSS", "SAS", "ASA", "RHS"],
+    "options": ["ASA", "RHS", "SSS", "SAS"],
     "answer": {
-      "option": 2
+      "option": 0
     },
     "marks": 1,
     "explanation": "Side PQ lies between angles P and Q, and XY between angles X and Y. Two angles and the side between them is ASA.",
@@ -285,7 +285,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:01Z",
+          "at": "2026-11-27T12:15:22Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -294,22 +294,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:25Z",
-          "notes": "model answered \"2\"; expected \"2\""
+          "at": "2026-11-27T12:15:43Z",
+          "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:26Z",
+          "at": "2026-11-27T12:15:44Z",
           "notes": "no problems found"
         }
       ]
@@ -323,7 +323,7 @@
     "learning_point": "gcse-maths-h-g5-lp-criteria",
     "expected_seconds": 40,
     "prompt": "Which of these is NOT enough to show that two triangles are congruent?",
-    "options": ["All three pairs of angles equal", "SSS", "SAS", "RHS"],
+    "options": ["All three pairs of angles equal", "SAS", "RHS", "SSS"],
     "answer": {
       "option": 0
     },
@@ -364,7 +364,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:01Z",
+          "at": "2026-11-27T12:15:23Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -373,14 +373,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:28Z",
+          "at": "2026-11-27T12:15:45Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -388,8 +388,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:31Z",
-          "notes": "unsupported_claim (question): The question and marked answer rely on the idea that 'all three pairs of angles equal' is not sufficient for congruence, but the only quoted source lists the congruence criteria SSS, SAS, ASA, RHS and does not explicitly state that AAA gives similarity not congruence or that it is 'not enough' to prove congruence.; unsupported_claim (hint): The hint introduces the claim that two triangles can have the same angles but different sizes. That may be mathematically true, but it is not supported by the quoted source.; unsupported_claim (explanation): The explanation states that equal angles alone show triangles are the same shape (similar) and that one can be an enlargement of the other, so they need not be congruent. These claims are not backed by the quoted source provided."
+          "at": "2026-11-27T12:15:48Z",
+          "notes": "unsupported_claim (question): The item asks which condition is 'NOT enough to show that two triangles are congruent' and includes 'All three pairs of angles equal' as the intended answer. The only quoted source lists the basic congruence criteria 'SSS, SAS, ASA, RHS' but does not state that equal angles alone are insufficient, so this negative claim is not directly supported by the provided source.; unsupported_claim (explanation): The explanation states that equal angles alone show the triangles are the same shape (similar) and that one can be an enlargement of the other, so they need not be congruent. These are mathematically true, but the quoted source only lists congruence criteria and does not support claims about similarity or enlargement."
         }
       ]
     }
@@ -403,13 +403,13 @@
     "expected_seconds": 45,
     "prompt": "In triangles ABC and DEF, AB = DE = 5 cm, AC = DF = 7 cm and angle B = angle E = 40°. Is this enough to show the triangles are congruent by SAS?",
     "options": [
+      "Yes, by RHS",
       "No: the equal angle is not between the two equal sides",
-      "Yes, by SAS",
       "Yes, by SSS",
-      "Yes, by RHS"
+      "Yes, by SAS"
     ],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "Angle B is between AB and BC, not between AB and AC. SAS needs the angle between the two given sides, so this information does not prove congruence by SAS.",
@@ -448,7 +448,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:01:01Z",
+          "at": "2026-11-27T12:15:24Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -457,22 +457,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:33Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:50Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:34Z",
+          "at": "2026-11-27T12:15:51Z",
           "notes": "no problems found"
         }
       ]

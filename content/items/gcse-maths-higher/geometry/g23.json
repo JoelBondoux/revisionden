@@ -502,7 +502,7 @@
     "learning_point": "gcse-maths-h-g23-lp-reverse",
     "expected_seconds": 60,
     "prompt": "A triangle has sides of 8 cm and 10 cm and an area of 20 cm². The angle C between these sides is acute. Work out C.",
-    "options": ["30°", "60°", "150°", "45°"],
+    "options": ["30°", "150°", "60°", "45°"],
     "answer": {
       "option": 0
     },
@@ -548,7 +548,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:53Z",
+          "at": "2026-11-27T12:15:09Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -557,14 +557,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:38Z",
+          "at": "2026-11-27T12:15:35Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -572,7 +572,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:38Z",
+          "at": "2026-11-27T12:15:36Z",
           "notes": "no problems found"
         }
       ]
@@ -586,9 +586,9 @@
     "learning_point": "gcse-maths-h-g23-lp-area-trig",
     "expected_seconds": 25,
     "prompt": "Which expression gives the area of a triangle with sides a and b and angle C between them?",
-    "options": ["½ab sin C", "ab sin C", "½ab cos C", "½(a + b) sin C"],
+    "options": ["½(a + b) sin C", "½ab cos C", "ab sin C", "½ab sin C"],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "The area of any triangle is ½ab sin C, using two sides and the angle between them.",
@@ -632,7 +632,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:53Z",
+          "at": "2026-11-27T12:15:10Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -641,23 +641,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:40Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:38Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:43Z",
-          "notes": "unsupported_claim (explanation): The explanation states the specific formula 'The area of any triangle is ½ab sin C, using two sides and the angle between them.' The quoted source only says students should be able 'to calculate the area, sides or angles of any triangle' and does not explicitly support this formula, so this factual claim is not backed by the provided source.; unsupported_claim (hint): The hint introduces the claim that the relevant height can be written as 'b sin C'. The quoted source does not provide this relationship, so this new factual claim is not supported by the provided source."
+          "at": "2026-11-27T12:15:40Z",
+          "notes": "unsupported_claim (explanation): The explanation states the specific formula \"The area of any triangle is ½ab sin C, using two sides and the angle between them.\" The quoted source only says students should be able \"to calculate the area, sides or angles of any triangle\" and does not explicitly support or state this formula. This factual claim is therefore not backed up by the provided source."
         }
       ]
     }
@@ -898,6 +898,90 @@
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:02:57Z",
           "notes": "unsupported_claim (hint): The hint states \"sin 90° = 1.\" This is a factual claim not supported by the quoted source. The source only supports calculating the area, sides or angles of any triangle; it does not state trigonometric values.; unsupported_claim (explanation): The explanation uses the formula 1/2 × a × b × sin C, written here as \"1/2 × 10 × 10 × 1 = 50 cm².\" The quoted source supports calculating the area of any triangle, but it does not explicitly provide or support this formula or the trigonometric value used, so these factual claims are unsupported by the quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-g23-0111",
+    "topic": "gcse-maths-h-g23",
+    "type": "multiple_choice",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-g23-lp-reverse",
+    "expected_seconds": 60,
+    "prompt": "A triangle has sides of 9 cm and 12 cm and an area of 27 cm². The angle C between these sides is acute. What is angle C?",
+    "options": ["30°", "150°", "60°", "45°"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "1/2 × 9 × 12 × sin C = 27, so 54 sin C = 27 and sin C = 0.5. The acute angle with sine 0.5 is 30° (150° also has sine 0.5 but is obtuse).",
+    "hint": "Rearrange the area formula to find sin C.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G23",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Mensuration and calculation, content reference G23 (page 18; PDF page 30)",
+        "quote": "to calculate the area, sides or angles of any triangle",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The area of a triangle with sides a and b and included angle C is ½ab sin C.",
+        "ask": "What is the area of a triangle in terms of two sides a and b and the angle C between them?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G23). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:15:11Z",
+          "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:43Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:44Z",
+          "notes": "no problems found"
         }
       ]
     }

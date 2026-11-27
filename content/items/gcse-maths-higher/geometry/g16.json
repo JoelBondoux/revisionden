@@ -787,9 +787,9 @@
     "learning_point": "gcse-maths-h-g16-lp-area",
     "expected_seconds": 25,
     "prompt": "Which expression gives the area of a trapezium with parallel sides a and b and perpendicular height h?",
-    "options": ["½(a + b)h", "(a + b)h", "½abh", "a + b + h"],
+    "options": ["(a + b)h", "½abh", "½(a + b)h", "a + b + h"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "The area of a trapezium is half the sum of the parallel sides times the height: ½(a + b)h.",
@@ -833,7 +833,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:35Z",
+          "at": "2026-11-27T12:14:43Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -842,22 +842,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:43Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:35Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:44Z",
+          "at": "2026-11-27T12:15:36Z",
           "notes": "no problems found"
         }
       ]

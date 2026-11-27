@@ -7,9 +7,9 @@
     "learning_point": "gcse-maths-h-g4-lp-quad-properties",
     "expected_seconds": 25,
     "prompt": "Which quadrilateral has exactly one pair of parallel sides?",
-    "options": ["Trapezium", "Parallelogram", "Rhombus", "Rectangle"],
+    "options": ["Parallelogram", "Rhombus", "Trapezium", "Rectangle"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "A trapezium has exactly one pair of parallel sides. Parallelograms, rhombuses and rectangles have two pairs.",
@@ -48,7 +48,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:58Z",
+          "at": "2026-11-27T12:15:16Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -57,22 +57,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:15Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:34Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:16Z",
+          "at": "2026-11-27T12:15:36Z",
           "notes": "no problems found"
         }
       ]
@@ -86,7 +86,7 @@
     "learning_point": "gcse-maths-h-g4-lp-quad-properties",
     "expected_seconds": 35,
     "prompt": "Which quadrilateral has four equal sides and diagonals that cross at right angles, but does not have to have right angles at its corners?",
-    "options": ["Rhombus", "Rectangle", "Kite", "Trapezium"],
+    "options": ["Rhombus", "Rectangle", "Trapezium", "Kite"],
     "answer": {
       "option": 0
     },
@@ -127,7 +127,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:59Z",
+          "at": "2026-11-27T12:15:17Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -136,23 +136,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:20Z",
+          "at": "2026-11-27T12:15:39Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
           "name": "adversarial-review",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:21Z",
-          "notes": "no problems found"
+          "at": "2026-11-27T12:15:43Z",
+          "notes": "second_correct_option (option 3): Kite is also a reasonable correct choice from the wording. A kite has diagonals that cross at right angles, and it does not have to have right angles at its corners. The prompt says 'has four equal sides and diagonals that cross at right angles' without saying all four sides are equal in the formal rhombus sense clearly enough to exclude a kite for some students, since a kite can be seen as having equal sides in pairs and also matches the diagonal condition.; unsupported_claim (explanation): The explanation states as facts that 'A rhombus has four equal sides' and 'its diagonals cross at right angles' and that 'a square is a special rhombus', but the only quoted source is the specification line saying students should 'derive and apply the properties and definitions' of these quadrilaterals. That source does not itself state these properties, so these factual claims are not backed up by a quoted source.; confidence medium"
         }
       ]
     }
@@ -165,9 +165,9 @@
     "learning_point": "gcse-maths-h-g4-lp-quad-properties",
     "expected_seconds": 35,
     "prompt": "Which quadrilateral has two pairs of equal adjacent sides and exactly one line of symmetry?",
-    "options": ["Kite", "Rectangle", "Parallelogram", "Trapezium"],
+    "options": ["Trapezium", "Rectangle", "Kite", "Parallelogram"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "A kite has two pairs of equal sides next to each other and one line of symmetry: the diagonal joining the two vertices where the pairs of equal sides meet.",
@@ -206,7 +206,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:46:11Z",
+          "at": "2026-11-27T12:15:18Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -222,16 +222,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:46:14Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:44Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:46:17Z",
-          "notes": "unsupported_claim (question): The question asks for a quadrilateral with 'exactly one line of symmetry'. The cited source supports knowing properties and definitions of special quadrilaterals, but it does not explicitly quote symmetry properties, so this claim is not backed by the provided source.; unsupported_claim (explanation): The explanation claims that a kite has 'one line of symmetry' and identifies it as a particular diagonal. The provided source does not explicitly support symmetry properties or which diagonal is a line of symmetry, so this factual claim is not backed by the quoted source.; confidence medium"
+          "at": "2026-11-27T12:15:46Z",
+          "notes": "unsupported_claim (explanation): The explanation states that a kite has 'one line of symmetry' and specifies it as 'the diagonal joining the two vertices where the pairs of equal sides meet.' The quoted source only says students should know properties and definitions of special quadrilaterals, but it does not itself state this symmetry property, so this factual claim is not backed by the provided source.; confidence medium"
         }
       ]
     }
@@ -245,13 +245,13 @@
     "expected_seconds": 35,
     "prompt": "Which statement is true for every rectangle?",
     "options": [
-      "Its diagonals are equal in length",
-      "All its sides are equal",
       "Its diagonals cross at right angles",
-      "It has 4 lines of symmetry"
+      "It has 4 lines of symmetry",
+      "Its diagonals are equal in length",
+      "All its sides are equal"
     ],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "A rectangle’s diagonals are equal in length. Its sides are not all equal unless it is a square, so the other three statements are not true for every rectangle.",
@@ -290,7 +290,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:59Z",
+          "at": "2026-11-27T12:15:19Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -299,23 +299,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:28Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:47Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:30Z",
-          "notes": "unsupported_claim (explanation): The explanation states specific properties of rectangles and squares ('A rectangle’s diagonals are equal in length' and 'Its sides are not all equal unless it is a square'), but the only quoted source is a broad specification point about deriving and applying properties of quadrilaterals. It does not explicitly back these factual claims.; confidence medium"
+          "at": "2026-11-27T12:15:48Z",
+          "notes": "no problems found"
         }
       ]
     }

@@ -289,9 +289,9 @@
     "learning_point": "gcse-maths-h-g15-lp-bearings",
     "expected_seconds": 25,
     "prompt": "Which is the correct way to write the bearing for due east?",
-    "options": ["090°", "90°", "E90", "009°"],
+    "options": ["90°", "090°", "E90", "009°"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "East is a quarter turn clockwise from north (90°), and bearings are written with three figures: 090°.",
@@ -330,7 +330,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:33Z",
+          "at": "2026-11-27T12:14:42Z",
           "notes": "citation 1: found on page 30 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -339,23 +339,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:27Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:34Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:30Z",
-          "notes": "unsupported_claim (hint): The hint states 'Bearings always use three figures.' The provided source only says students should 'use bearings' and does not explicitly support the formatting rule that bearings are written with three figures.; unsupported_claim (explanation): The explanation states 'East is a quarter turn clockwise from north (90°), and bearings are written with three figures: 090°.' The provided source supports use of bearings but does not explicitly support the specific factual claims about measuring bearings clockwise from north or writing them with three figures."
+          "at": "2026-11-27T12:15:37Z",
+          "notes": "unsupported_claim (hint): The hint states 'Bearings always use three figures.' The only quoted source says students should 'use bearings'; it does not state the convention that bearings are written with three figures, so this claim is not backed by the provided source.; unsupported_claim (explanation): The explanation states 'East is a quarter turn clockwise from north (90°), and bearings are written with three figures: 090°.' The provided source supports use of bearings in general, but does not explicitly support the claims about due east being 90° from north or the three-figure notation convention."
         }
       ]
     }

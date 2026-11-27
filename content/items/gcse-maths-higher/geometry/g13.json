@@ -7,9 +7,9 @@
     "learning_point": "gcse-maths-h-g13-lp-plans",
     "expected_seconds": 25,
     "prompt": "A cylinder stands on one of its circular faces. What shape is its plan (the view from above)?",
-    "options": ["Circle", "Rectangle", "Triangle", "Square"],
+    "options": ["Rectangle", "Square", "Circle", "Triangle"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "Looking down on a standing cylinder you see its circular top, so the plan is a circle.",
@@ -48,7 +48,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:29Z",
+          "at": "2026-11-27T12:14:37Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -57,22 +57,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:15Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:34Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:16Z",
+          "at": "2026-11-27T12:15:35Z",
           "notes": "no problems found"
         }
       ]
@@ -86,9 +86,9 @@
     "learning_point": "gcse-maths-h-g13-lp-plans",
     "expected_seconds": 25,
     "prompt": "A cone stands on its circular base. What shape is its front elevation (the view from the side, at the height of the cone)?",
-    "options": ["Triangle", "Circle", "Rectangle", "Semicircle"],
+    "options": ["Circle", "Rectangle", "Triangle", "Semicircle"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "From the front, a standing cone looks like a triangle: wide at the base and coming to a point.",
@@ -127,7 +127,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:05:04Z",
+          "at": "2026-11-27T12:14:38Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -136,23 +136,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:11Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:37Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:13Z",
-          "notes": "unsupported_claim (explanation): The explanation states as fact that 'From the front, a standing cone looks like a triangle: wide at the base and coming to a point.' The only quoted source supports 'construct and interpret plans and elevations of 3D shapes' and does not specifically state the elevation of a cone, so this factual claim is not backed by the provided source.; wording (prompt): The phrase 'front elevation (the view from the side, at the height of the cone)' is potentially confusing. 'Front elevation' and 'view from the side' are not naturally the same wording, and 'at the height of the cone' is unclear for this age group."
+          "at": "2026-11-27T12:15:40Z",
+          "notes": "unsupported_claim (question): The item requires the specific factual claim that the front elevation of a cone standing on its circular base is a triangle, but the only quoted source says students should 'construct and interpret plans and elevations of 3D shapes'. It does not explicitly support this particular cone-elevation fact, and no additional quoted source is provided.; unsupported_claim (answer): The marked answer 'Triangle' depends on the unsupported factual claim that the front elevation of a cone on its base is triangular. The quoted source does not explicitly back this specific statement.; unsupported_claim (explanation): The explanation states 'From the front, a standing cone looks like a triangle: wide at the base and coming to a point.' This is a factual claim about the elevation of a cone, but no quoted source explicitly supports it.; confidence medium"
         }
       ]
     }
@@ -166,13 +166,13 @@
     "expected_seconds": 30,
     "prompt": "What does the plan view of a square-based pyramid look like?",
     "options": [
-      "A square with both diagonals drawn",
-      "A triangle",
       "A circle",
-      "A rectangle with no lines inside"
+      "A triangle",
+      "A rectangle with no lines inside",
+      "A square with both diagonals drawn"
     ],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "From above you see the square base, with the four sloping edges meeting at the top in the middle. They appear as the diagonals of the square.",
@@ -211,7 +211,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:30Z",
+          "at": "2026-11-27T12:14:39Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -220,23 +220,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
-          "result": "pass",
+          "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:25Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:42Z",
+          "notes": "model answered \"2\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:32Z",
-          "notes": "unsupported_claim (answer): The marked answer states that the plan view of a square-based pyramid is 'A square with both diagonals drawn'. The only cited source says students should 'construct and interpret plans and elevations of 3D shapes' and does not specifically support the claim that the hidden/visible edges in plan should be shown as both diagonals for a square-based pyramid.; unsupported_claim (explanation): The explanation claims that from above, 'the four sloping edges meeting at the top in the middle... appear as the diagonals of the square.' This specific representation is not backed by the quoted specification source, which gives no detail about whether internal lines/hidden edges are included in plan views.; ambiguity (question): The question does not specify whether the plan view should show only the outline or include hidden/internal edges. In school contexts, a 'plan view' can reasonably be interpreted as just the view from above of the visible outline, which would make 'A square' a plausible response, but that is not offered. Because the drawing convention is unstated, students could reasonably be unsure whether option 0 is intended.; wording (option 0): 'A square with both diagonals drawn' is imprecise for this age group because it does not say whether the diagonals represent visible or hidden edges, which matters in plans/elevations questions.; unsupported_claim (hint): The hint assumes a specific convention: that from above the 'top point' appears and the sloping edges are shown in the plan. The quoted source does not support that convention explicitly.; confidence medium"
+          "at": "2026-11-27T12:15:47Z",
+          "notes": "second_correct_option (option 2): For a square-based pyramid viewed from directly above, the plan can reasonably be shown as just the outline of the square base, with hidden edges omitted. So 'A rectangle with no lines inside' is not uniquely wrong if the intended square is treated as a special rectangle and if internal hidden lines are not drawn in a plan view.; ambiguity (question): The prompt does not specify whether hidden/internal edges should be shown in the plan. In school plans/elevations, conventions vary: some drawings show only visible outlines, while others include internal edges. This makes the intended answer not uniquely determined from the wording alone.; unsupported_claim (explanation): The explanation states that the four sloping edges 'appear as the diagonals of the square'. The source only supports constructing and interpreting plans and elevations of 3D shapes; it does not explicitly back this specific claim or drawing convention. Under the stated rules, this factual claim needs quoted source support.; unsupported_claim (hint): The hint says the 'top point' appears from above and the sloping edges 'go' somewhere in the plan. This introduces specific factual claims about how the apex and edges are represented in plan view, but no quoted source supports these claims.; confidence medium"
         }
       ]
     }
@@ -250,13 +250,13 @@
     "expected_seconds": 30,
     "prompt": "A cuboid is 5 cm wide, 3 cm deep and 2 cm high. What is its front elevation?",
     "options": [
-      "A rectangle 5 cm by 2 cm",
       "A rectangle 5 cm by 3 cm",
-      "A rectangle 3 cm by 2 cm",
-      "A square 2 cm by 2 cm"
+      "A rectangle 5 cm by 2 cm",
+      "A square 2 cm by 2 cm",
+      "A rectangle 3 cm by 2 cm"
     ],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "From the front you see the width (5 cm) and the height (2 cm), so the front elevation is a 5 cm by 2 cm rectangle.",
@@ -295,7 +295,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:30Z",
+          "at": "2026-11-27T12:14:40Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -304,22 +304,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:34Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:49Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:35Z",
+          "at": "2026-11-27T12:15:50Z",
           "notes": "no problems found"
         }
       ]
@@ -333,9 +333,9 @@
     "learning_point": "gcse-maths-h-g13-lp-plans",
     "expected_seconds": 20,
     "prompt": "What shape is the plan of a sphere?",
-    "options": ["Circle", "Square", "Oval with corners", "Triangle"],
+    "options": ["Triangle", "Square", "Oval with corners", "Circle"],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "A sphere looks like a circle from every direction, including from above.",
@@ -374,7 +374,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:30Z",
+          "at": "2026-11-27T12:14:41Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -383,23 +383,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:37Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:51Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:39Z",
-          "notes": "unsupported_claim (explanation): The explanation states, \"A sphere looks like a circle from every direction, including from above.\" The quoted source only says students should \"construct and interpret plans and elevations of 3D shapes\" and does not explicitly support the general claim about every direction. This factual claim therefore lacks backing from the provided source.; confidence medium"
+          "at": "2026-11-27T12:15:52Z",
+          "notes": "unsupported_claim (explanation): The explanation says, \"A sphere looks like a circle from every direction, including from above.\" The cited source only states that students should \"construct and interpret plans and elevations of 3D shapes\" and does not explicitly support the broader claim \"from every direction\"."
         }
       ]
     }
@@ -412,9 +412,9 @@
     "learning_point": "gcse-maths-h-g13-lp-plans",
     "expected_seconds": 30,
     "prompt": "A triangular prism lies on one of its rectangular faces. What shape do you see when you look at it straight on from one triangular end?",
-    "options": ["Triangle", "Rectangle", "Circle", "Square"],
+    "options": ["Square", "Triangle", "Rectangle", "Circle"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "Looking at the end of the prism you see its triangular cross-section.",
@@ -453,7 +453,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:05:05Z",
+          "at": "2026-11-27T12:14:41Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -462,22 +462,22 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:15Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:15:54Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:05:16Z",
+          "at": "2026-11-27T12:15:55Z",
           "notes": "no problems found"
         }
       ]

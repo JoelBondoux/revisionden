@@ -1186,5 +1186,99 @@
         }
       ]
     }
+  },
+  {
+    "id": "gcse-maths-h-g3-0114",
+    "topic": "gcse-maths-h-g3",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-g3-lp-parallel-lines",
+    "expected_seconds": 30,
+    "prompt": "A straight line crosses two parallel lines. One angle it makes is 72°. Work out the corresponding angle to it.",
+    "answer": {
+      "value": "72"
+    },
+    "verify": {
+      "expression": "72"
+    },
+    "marks": 1,
+    "explanation": "Corresponding angles on parallel lines are equal, so the corresponding angle is 72°.",
+    "hint": "Corresponding angles make an F shape.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 4. Geometry and measures, Properties and constructions, content reference G3 (page 17; PDF page 29)",
+        "quote": "understand and use alternate and corresponding angles on parallel lines",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "Corresponding angles on parallel lines are equal.",
+        "ask": "When a straight line crosses two parallel lines, how are the corresponding angles related?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec G3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:15:16Z",
+          "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:34Z",
+          "notes": "model answered \"72°\"; expected \"72\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:15:37Z",
+          "notes": "unsupported_claim (hint): The hint says \"Corresponding angles make an F shape.\" The only quoted source supports using corresponding angles on parallel lines, but does not support this pedagogical claim about an \"F shape\" mnemonic.; unsupported_claim (explanation): The explanation states \"Corresponding angles on parallel lines are equal\". The quoted source supports understanding and using corresponding angles on parallel lines, but does not explicitly state this equality claim, so under the instruction that any factual claim in the explanation needs a quoted source, this is unsupported by the provided source.; confidence medium"
+        }
+      ]
+    }
   }
 ]
