@@ -5,6 +5,7 @@ import { server } from '../mocks/server';
 import { renderRoute } from '../test/render';
 import { topicMap } from '../mocks/data';
 import { chooseSubject, chosenSubject } from '../features/subjects';
+import { levelOf } from './MapPage';
 
 describe('Topic map screen', () => {
   it('sends you to choose a student when nobody is chosen yet', async () => {
@@ -262,5 +263,18 @@ describe('the remembered subject (UX-1, Codex on #423)', () => {
     const sheet = await screen.findByRole('dialog', { name: 'Your subjects' });
     await userEvent.click(within(sheet).getByRole('button', { name: 'Add or change subjects' }));
     expect(await screen.findByRole('region', { name: 'Pick a subject' })).toBeInTheDocument();
+  });
+});
+
+describe("the level on the map's subject button", () => {
+  it('drops the GCSE or A-Level word and keeps the tier', () => {
+    expect(levelOf('GCSE Higher')).toBe('Higher');
+    expect(levelOf('GCSE Foundation')).toBe('Foundation');
+    expect(levelOf('A-Level Year 12')).toBe('Year 12');
+  });
+
+  it('shows a qualification with nothing after it whole', () => {
+    expect(levelOf('A-Level')).toBe('A-Level');
+    expect(levelOf('GCSE')).toBe('GCSE');
   });
 });
