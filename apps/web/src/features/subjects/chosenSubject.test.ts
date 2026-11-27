@@ -4,6 +4,7 @@ import { topicMap } from '../../mocks/data';
 import {
   chooseSubject,
   chosenSubject,
+  pickerOrder,
   reportMap,
   resetKnownSubjects,
   stillTaken,
@@ -76,5 +77,31 @@ describe('the chosen subject (UX-1)', () => {
     expect(result.current?.subjects).toEqual([
       { subjectId: 'maths', subject: 'Maths', hasContent: true },
     ]);
+  });
+});
+
+describe('the order subjects are offered in (UX-1)', () => {
+  const four = [
+    { subjectId: 'art', subject: 'Art', hasContent: false },
+    { subjectId: 'biology', subject: 'Biology', hasContent: true },
+    { subjectId: 'chemistry', subject: 'Chemistry', hasContent: false },
+    { subjectId: 'maths', subject: 'Maths', hasContent: true },
+  ];
+  const ids = (list: { subjectId: string }[]) => list.map((s) => s.subjectId);
+
+  it('puts the current subject first, then the others with questions, and folds the rest', () => {
+    const { now, later } = pickerOrder(four, 'maths');
+    expect(ids(now)).toEqual(['maths', 'biology']);
+    expect(ids(later)).toEqual(['art', 'chemistry']);
+  });
+
+  it('keeps a current subject that is coming soon at the top, not folded away', () => {
+    const { now, later } = pickerOrder(four, 'art');
+    expect(ids(now)).toEqual(['art', 'biology', 'maths']);
+    expect(ids(later)).toEqual(['chemistry']);
+  });
+
+  it('works before any subject is current', () => {
+    expect(ids(pickerOrder(four, undefined).now)).toEqual(['biology', 'maths']);
   });
 });

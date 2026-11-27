@@ -95,3 +95,20 @@ export function resetKnownSubjects(): void {
   if (store) for (const key of Object.keys(store)) if (key.startsWith(KEY)) store.removeItem(key);
   notify();
 }
+
+/**
+ * UX-1: the order subjects are offered in. The one on screen first, then the others with
+ * questions to start, each in the order the family added them; subjects still coming soon go in
+ * `later`, for one folded line (not an A–Z grid with the current subject in the middle).
+ */
+export function pickerOrder(
+  subjects: readonly MapSubject[],
+  current: string | undefined,
+): { now: MapSubject[]; later: MapSubject[] } {
+  const mine = subjects.filter((s) => s.subjectId === current);
+  const rest = subjects.filter((s) => s.subjectId !== current);
+  return {
+    now: [...mine, ...rest.filter((s) => s.hasContent)],
+    later: rest.filter((s) => !s.hasContent),
+  };
+}

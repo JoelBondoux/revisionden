@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../api/ApiContext';
 import { Sheet } from '../../components/Sheet';
 import { useStudent } from '../../session/StudentContext';
-import { chooseSubject, reportMap, useChosenSubject, useKnownSubjects } from './chosenSubject';
+import {
+  chooseSubject,
+  pickerOrder,
+  reportMap,
+  useChosenSubject,
+  useKnownSubjects,
+} from './chosenSubject';
 import './subjects.css';
 
 /**
@@ -35,6 +41,8 @@ export function SubjectSwitcher() {
 
   if (!known) return null;
   const current = known.current;
+  const { now, later } = pickerOrder(known.subjects, current.subjectId);
+  const ordered = [...now, ...later];
   return (
     <>
       <button
@@ -48,7 +56,7 @@ export function SubjectSwitcher() {
       </button>
       <Sheet open={open} title="Your subjects" onClose={close}>
         <ul className="subject-switcher__list">
-          {known.subjects.map((s) => (
+          {ordered.map((s) => (
             <li key={s.subjectId}>
               <button
                 type="button"

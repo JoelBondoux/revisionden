@@ -76,3 +76,31 @@ test('the switcher is on Cards too, and its last line opens the subject picker',
   await expect(page).toHaveURL(/\/map$/);
   await expect(page.getByRole('region', { name: 'Pick a subject' })).toBeVisible();
 });
+
+test('the subject picker lists the current subject, then ones you can start, then folds the rest', async ({
+  page,
+}) => {
+  const many = [
+    { subjectId: 'art', subject: 'Art', hasContent: false },
+    { subjectId: 'biology', subject: 'Biology', hasContent: true },
+    { subjectId: 'chemistry', subject: 'Chemistry', hasContent: false },
+    { subjectId: 'maths', subject: 'Maths', hasContent: true },
+  ];
+  await seedApp(page, 'pupil');
+  await page.route('**/v1/student/map**', (route) =>
+    route.fulfill({ json: { ...topicMap, subjectId: 'maths', subject: 'Maths', subjects: many } }),
+  );
+  await page.goto('/map');
+  await page.locator('.map-play').click();
+  const picker = page.getByRole('region', { name: 'Pick a subject' });
+  await expect(picker.locator('.map-subjects-grid').getByRole('button')).toHaveText([
+    /^Maths/,
+    /^Biology/,
+  ]);
+  const later = picker.getByText('2 more subjects coming soon');
+  await expect(later).toBeVisible();
+  await expect(picker.getByRole('button', { name: /^Art/ })).toBeHidden();
+  await later.click();
+  await expect(picker.getByRole('button', { name: 'Art Coming soon' })).toBeVisible();
+  await expect(picker.getByRole('button', { name: 'Chemistry Coming soon' })).toBeVisible();
+});
