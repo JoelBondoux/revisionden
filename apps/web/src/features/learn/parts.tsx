@@ -5,6 +5,7 @@ import { MathText } from '../../components/MathText';
 import { Pill } from '../../components/Pill';
 import { ProgressBar } from '../../components/ProgressBar';
 import { AreaModelStep } from '../interactive';
+import { useOptionOrder } from './shuffle';
 import './learn.css';
 
 /** Shown whenever unverified (draft) content is on screen. Only possible in development. */
@@ -59,6 +60,8 @@ interface ItemInputProps {
   onSelfCheck?: (knewIt: boolean) => void;
   /** After marking (Learn mode only): how each multiple choice option looks, and any effect in it. */
   optionMark?: (index: number) => OptionMark;
+  /** F22: the serve's option order, when the page shares it (with read aloud). */
+  optionOrder?: number[];
 }
 
 export interface OptionMark {
@@ -202,6 +205,56 @@ function TextAnswer({
   );
 }
 
+/**
+ * A multiple choice question. F22: its options show in a fresh order each serve, but every value
+ * here (the draft, the change, the marks) is the option's original position, so marking and the
+ * right-answer highlight go by which option it is, never by where it was shown.
+ */
+function MultipleChoiceInput({
+  item,
+  draft,
+  disabled,
+  onChange,
+  optionMark,
+  optionOrder,
+}: Omit<ItemInputProps, 'item' | 'onSelfCheck'> & {
+  item: Extract<LearnItem, { type: 'multiple_choice' }>;
+}) {
+  const ownOrder = useOptionOrder(item.options);
+  const order = optionOrder?.length === item.options.length ? optionOrder : ownOrder;
+  return (
+    <fieldset className="question">
+      <legend className="question__prompt">
+        <MathText text={item.prompt} subject={item.topicId} />
+      </legend>
+      <div className="answer-grid">
+        {order.map((index) => {
+          const option = item.options[index]!;
+          const mark = optionMark?.(index);
+          return (
+            <label
+              key={option}
+              className={`answer-option${mark?.right ? ' answer-option--right' : ''}`}
+            >
+              <input
+                type="radio"
+                name={item.id}
+                checked={draft === index}
+                disabled={disabled}
+                onChange={() => onChange(index)}
+              />
+              <span>
+                <MathText text={option} subject={item.topicId} />
+              </span>
+              {mark?.extra}
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
 /** The answer area for each item type. */
 export function ItemInput({
   item,
@@ -210,40 +263,21 @@ export function ItemInput({
   onChange,
   onSelfCheck,
   optionMark,
+  optionOrder,
 }: ItemInputProps) {
   const text = typeof draft === 'string' ? draft : '';
   const working = useRef<HTMLTextAreaElement>(null);
   switch (item.type) {
     case 'multiple_choice':
       return (
-        <fieldset className="question">
-          <legend className="question__prompt">
-            <MathText text={item.prompt} subject={item.topicId} />
-          </legend>
-          <div className="answer-grid">
-            {item.options.map((option, index) => {
-              const mark = optionMark?.(index);
-              return (
-                <label
-                  key={option}
-                  className={`answer-option${mark?.right ? ' answer-option--right' : ''}`}
-                >
-                  <input
-                    type="radio"
-                    name={item.id}
-                    checked={draft === index}
-                    disabled={disabled}
-                    onChange={() => onChange(index)}
-                  />
-                  <span>
-                    <MathText text={option} subject={item.topicId} />
-                  </span>
-                  {mark?.extra}
-                </label>
-              );
-            })}
-          </div>
-        </fieldset>
+        <MultipleChoiceInput
+          item={item}
+          draft={draft}
+          disabled={disabled}
+          onChange={onChange}
+          optionMark={optionMark}
+          optionOrder={optionOrder}
+        />
       );
     case 'flashcard':
       return <FlashcardCheck item={item} disabled={disabled} onSelfCheck={onSelfCheck} />;

@@ -50,6 +50,21 @@ describe('reading maths aloud', () => {
     ).toBe('Which is x squared when x equals 3? Option 1: 6. Option 2: 9.');
   });
 
+  it('reads the options in the order they are shown (F22 shuffle)', () => {
+    const item = {
+      id: 'i1',
+      topicId: 't',
+      topicTitle: 'T',
+      draft: false,
+      type: 'multiple_choice' as const,
+      prompt: 'Pick one',
+      options: ['6', '9', '12'],
+    };
+    expect(itemSpeechText(item, [2, 0, 1])).toBe(
+      'Pick one Option 1: 12. Option 2: 6. Option 3: 9.',
+    );
+  });
+
   it('reads the unit of a numeric question and the front of a flashcard', () => {
     const base = { id: 'i1', topicId: 't', topicTitle: 'T', draft: false } as const;
     expect(
