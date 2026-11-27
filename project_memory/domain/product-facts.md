@@ -506,13 +506,26 @@ Tags: #product #rules #limits #defaults
 - Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
-  commuted products and sums, reordered lists and swapped equation sides (never coordinates or
-  inequalities); `answer.units` lists optional units. A multiply sign before a sign is kept
+  reordered lists (each item as written: `HT` is not `TH` in a list, F23) and, for a single
+  answer, commuted products and sums and swapped equation sides (never coordinates or
+  inequalities); outer set braces `{…}` are optional (F23); `answer.units` lists optional units,
+  accepted in any spelling numeric answers accept (F25: `unitSpellings`, now with °/degrees,
+  ml/mL/millilitres, mg, %, days, N/m², m/s², kg/m³, g/cm³, l/min, km/min). `answer.kind: "hex"`
+  (F24, opt-in) ignores case, `0x` and leading zeros. A multiply sign before a sign is kept
   (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
   and `a = x` either way round). Repeated alternatives on a final line count once, and a line
   with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is
   marked wrong, so a long run of `a = x` cannot tie up the engine (#151).
 
+- A-Level Computer Science items (S5, strand 1, 2026-11-27): 119 draft template items for data
+  representation (1.4.1 (b) to (i)), 7 per template, in
+  `content/items/alevel-computer-science/templated/`; built by `build.py --course alevel-cs`.
+  Binary answers keep every bit (the app ignores spaces and case in answers with digits);
+  denary answers are `numeric` items, marked by value (1.1250 is 1.125), with a place-value sum
+  the maths engine re-evaluates; hexadecimal answers also accept a `0x` prefix or a leading 0.
+  Items whose hint or explanation states a rule the specification does not (two's complement
+  place values, normalisation, shift and mask rules) list `facts` and need individual human
+  approval (decision 0009); 70 of the 119.
 - Computer Science engine (S5, 2026-11-27): `services/maths/app/cs/` (`bases`, `floating`,
   `logic`), no AI. Binary answers must show every bit (spaces ignored); hexadecimal is read by
   value. Floating point is a two's complement mantissa and exponent with the binary point after
@@ -521,7 +534,12 @@ Tags: #product #rules #limits #defaults
   it in its own text. Boolean answers are read in OCR's notation and every alternative appendix
   5d accepts; a "simplify" answer must be equivalent and have no more letters than the shortest
   sum of products. Binding, tightest first: NOT, AND, XOR, OR, ≡ (our choice; questions bracket
-  anything else). Not yet wired into `pnpm content:validate`.
+  anything else). Pseudocode interpreter (`app/cs/pseudocode.py`): OCR exam reference
+  pseudocode without files or classes; output, final variables and a trace for trace tables
+  (rows `{line, name, value, cell}` and `{line, output}`; a byRef write names the caller's cell).
+  Where appendix 5d is silent it chooses: `/` gives a whole number when exact, `DIV`/`MOD` round
+  down, booleans print `true`/`false`, `NOT a==b` is `NOT (a==b)`, `-2^2` is -4; items must not
+  depend on these. Not yet wired into `pnpm content:validate`.
 
 ## Reminders
 
@@ -620,6 +638,12 @@ Tags: #product #rules #limits #defaults
   app, then checks `/health` shows the new version. Production content is not synced by deploys.
   A staging deploy first runs the painted contrast sweep (`contrast-painted.yml`) on that commit;
   the app deploy only starts if it passes (G11). The public website deploy is not gated.
+- Changelog (G13): each pull request adds a fragment, `changes/unreleased/<branch>.md`, with
+  `### What's new` / `Added` / `Changed` / `Fixed` bullets, instead of editing `CHANGELOG.md`. The
+  release workflow on `main` folds them under `## [Unreleased]` (`pnpm changelog:assemble`) and
+  deletes them before dating the section; deploys fold them into the build's copy so the About
+  page shows unreleased What's new lines. The **Changelog fragment** check fails a PR into `dev`
+  without one, unless it is labelled `no-changelog` or only touches tests or CI.
 - `GET /health` always answers with the version: `ok` (200) when configured, `misconfigured`
   (503) while a required secret is missing. Dev and staging deploys accept `misconfigured`;
   production does not.

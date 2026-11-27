@@ -41,4 +41,10 @@ first. Set-up and secrets: `docs/ENVIRONMENTS.md`.
   - put `[major]` for the public launch.
 - The workflow also tags the release (`v00.01.001`), dates the changelog section and merges the
   release commit back into `staging` and `dev`.
-- Every PR adds a line under **Unreleased** in `CHANGELOG.md`.
+- Every PR adds a changelog fragment, `changes/unreleased/<your-branch>.md` (format in
+  `changes/README.md`), instead of editing `CHANGELOG.md`: separate files never conflict. The
+  **Changelog fragment** check (`.github/workflows/changelog.yml`) fails a PR into `dev` without
+  one, unless it is labelled `no-changelog` or only touches tests or CI. The release workflow runs
+  `pnpm changelog:assemble` on `main`, which folds the fragments under **Unreleased** and deletes
+  them, before it dates that section. Deploys fold them into the build's copy (not committed) so
+  the About page shows unreleased What's new lines on dev and staging.

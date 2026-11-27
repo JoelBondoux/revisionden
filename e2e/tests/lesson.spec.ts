@@ -189,22 +189,19 @@ const ALL_STYLES = [
   'rainbow-parade',
 ];
 
+// One test per look and mode, so each stays well inside the timeout (lead, train #437).
 for (const scheme of ['light', 'dark'] as const) {
-  test(`"+XP" and the combo read on the lesson arena in every look, ${scheme} mode`, async ({
-    page,
-  }, info) => {
-    test.skip(info.project.name !== 'phone', 'The look checks run on the phone');
-    await page.emulateMedia({ colorScheme: scheme });
-    await page.setViewportSize({ width: 390, height: 844 });
-    await stubLesson(page, true, 3);
-    await page.route('**/v1/student/rewards/effect-styles', (route) =>
-      route.fulfill({ json: { unlocked: ALL_STYLES } }),
-    );
-    const failures: string[] = [];
-    for (const style of ALL_STYLES) {
-      await page
-        .evaluate((s) => localStorage.setItem('revisionden.effectStyle', s), style)
-        .catch(() => undefined);
+  for (const style of ALL_STYLES) {
+    test(`"+XP" and the combo read on the lesson arena in ${style}, ${scheme} mode`, async ({
+      page,
+    }, info) => {
+      test.skip(info.project.name !== 'phone', 'The look checks run on the phone');
+      await page.emulateMedia({ colorScheme: scheme });
+      await page.setViewportSize({ width: 390, height: 844 });
+      await stubLesson(page, true, 3);
+      await page.route('**/v1/student/rewards/effect-styles', (route) =>
+        route.fulfill({ json: { unlocked: ALL_STYLES } }),
+      );
       await page.addInitScript((s) => localStorage.setItem('revisionden.effectStyle', s), style);
       await page.goto('/learn/topic/demo-topic');
       await expect(page.locator('html')).toHaveAttribute('data-effect-style', style);
@@ -217,11 +214,11 @@ for (const scheme of ['light', 'dark'] as const) {
           '.lesson__xp-pop .float-up, .combo-badge { animation: none !important; opacity: 1 !important; transform: none !important; }',
       });
       await settle(page);
-      const found = await paintedTextFailures(page, { only: '.lesson__xp-pop, .combo-badge' });
-      for (const f of found) failures.push(`${style} ${scheme}: ${f}`);
-    }
-    expect(failures).toEqual([]);
-  });
+      expect(await paintedTextFailures(page, { only: '.lesson__xp-pop, .combo-badge' })).toEqual(
+        [],
+      );
+    });
+  }
 }
 
 /**
@@ -230,66 +227,62 @@ for (const scheme of ['light', 'dark'] as const) {
  * A warm-up question is missed, then comes back at the end and is answered right.
  */
 for (const scheme of ['light', 'dark'] as const) {
-  test(`the XP count and come-back notes read in every look, ${scheme} mode`, async ({
-    page,
-  }, info) => {
-    test.skip(info.project.name !== 'phone', 'The look checks run on the phone');
-    await page.emulateMedia({ colorScheme: scheme });
-    await page.setViewportSize({ width: 390, height: 844 });
-    await stubLesson(page, true, 1);
-    await page.route('**/v1/student/learn/lesson**', (route) =>
-      route.fulfill({
-        json: {
-          items: [
-            { ...item, warmUp: true },
-            { ...item, id: `${ITEM_ID.slice(0, -1)}2` },
-          ],
-          draftContent: false,
-        },
-      }),
-    );
-    let attempts = 0;
-    await page.route('**/v1/student/learn/attempts', (route) => {
-      const correct = attempts++ % 3 !== 0;
-      return route.fulfill({
-        json: {
-          id: '00000000-0000-4000-8000-000000000a09',
-          itemId: ITEM_ID,
-          correct,
-          score: correct ? 1 : 0,
-          xpEarned: correct ? 10 : 0,
-          createdAt: '2026-11-26T10:00:00.000Z',
-          feedback: { correctAnswer: 'demo' },
-          progress: {
-            xpToday: 10,
-            totalXp: 10,
-            dailyGoalXp: 50,
-            goalMet: false,
-            streak: { current: 0, best: 0, skipDays: 0 },
+  for (const style of ALL_STYLES) {
+    test(`the XP count and come-back notes read in ${style}, ${scheme} mode`, async ({
+      page,
+    }, info) => {
+      test.skip(info.project.name !== 'phone', 'The look checks run on the phone');
+      await page.emulateMedia({ colorScheme: scheme });
+      await page.setViewportSize({ width: 390, height: 844 });
+      await stubLesson(page, true, 1);
+      await page.route('**/v1/student/learn/lesson**', (route) =>
+        route.fulfill({
+          json: {
+            items: [
+              { ...item, warmUp: true },
+              { ...item, id: `${ITEM_ID.slice(0, -1)}2` },
+            ],
+            draftContent: false,
           },
-          flashcardAdded: false,
-          combo: correct ? 1 : 0,
-          comboBonusXp: 0,
-          newlyEarned: [],
-        },
+        }),
+      );
+      let attempts = 0;
+      await page.route('**/v1/student/learn/attempts', (route) => {
+        const correct = attempts++ % 3 !== 0;
+        return route.fulfill({
+          json: {
+            id: '00000000-0000-4000-8000-000000000a09',
+            itemId: ITEM_ID,
+            correct,
+            score: correct ? 1 : 0,
+            xpEarned: correct ? 10 : 0,
+            createdAt: '2026-11-26T10:00:00.000Z',
+            feedback: { correctAnswer: 'demo' },
+            progress: {
+              xpToday: 10,
+              totalXp: 10,
+              dailyGoalXp: 50,
+              goalMet: false,
+              streak: { current: 0, best: 0, skipDays: 0 },
+            },
+            flashcardAdded: false,
+            combo: correct ? 1 : 0,
+            comboBonusXp: 0,
+            newlyEarned: [],
+          },
+        });
       });
-    });
-    await page.route('**/v1/student/rewards/effect-styles', (route) =>
-      route.fulfill({ json: { unlocked: ALL_STYLES } }),
-    );
-    const still = {
-      content: '* { animation: none !important; transition: none !important; }',
-    };
-    const answer = async () => {
-      await page.getByLabel('Your answer').fill('demo');
-      await page.getByRole('button', { name: 'Check' }).click();
-    };
-    const failures: string[] = [];
-    for (const style of ALL_STYLES) {
-      attempts = 0;
-      await page
-        .evaluate((s) => localStorage.setItem('revisionden.effectStyle', s), style)
-        .catch(() => undefined);
+      await page.route('**/v1/student/rewards/effect-styles', (route) =>
+        route.fulfill({ json: { unlocked: ALL_STYLES } }),
+      );
+      const still = {
+        content: '* { animation: none !important; transition: none !important; }',
+      };
+      const answer = async () => {
+        await page.getByLabel('Your answer').fill('demo');
+        await page.getByRole('button', { name: 'Check' }).click();
+      };
+      const failures: string[] = [];
       await page.addInitScript((s) => localStorage.setItem('revisionden.effectStyle', s), style);
       await page.goto('/learn/topic/demo-topic');
       await expect(page.locator('html')).toHaveAttribute('data-effect-style', style);
@@ -297,7 +290,7 @@ for (const scheme of ['light', 'dark'] as const) {
       await page.addStyleTag(still);
       await settle(page);
       for (const f of await paintedTextFailures(page, { only: '.lesson__xp, .lesson__comeback' }))
-        failures.push(`${style} ${scheme} warm-up: ${f}`);
+        failures.push(`warm-up: ${f}`);
       await answer();
       await page.getByRole('button', { name: 'Continue' }).click();
       await answer();
@@ -309,8 +302,8 @@ for (const scheme of ['light', 'dark'] as const) {
       for (const f of await paintedTextFailures(page, {
         only: '.lesson__xp, .lesson__comeback, .feedback__comeback',
       }))
-        failures.push(`${style} ${scheme} comeback: ${f}`);
-    }
-    expect(failures).toEqual([]);
-  });
+        failures.push(`comeback: ${f}`);
+      expect(failures).toEqual([]);
+    });
+  }
 }

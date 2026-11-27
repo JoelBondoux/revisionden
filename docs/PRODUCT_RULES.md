@@ -319,11 +319,16 @@ Product owner decision, 2026-11-25: **parent view only**.
   unicode minus as `-`, `×`, `·`, `*` (and `x` between two numbers) as one multiply, `÷` as `/`,
   superscripts as `^`, `≤`/`≥` as `<=`/`>=`, `√` as `sqrt`, and "and" or `;` in a list like `,`.
   A multiply sign is kept between two numbers and before a sign (`3n × -2` is not `3n - 2`).
-  When the item sets `answer.any_order`, products and sums may be in any order (signs stay with
-  their terms, and up to 4 letters on their own such as `pq` count as a product), a list of
-  values in any order, and an equation either way round; coordinates and
-  inequalities are never reordered. `answer.units` lists units the answer may end with or leave
-  off. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
+  When the item sets `answer.any_order`, a list's items may be in any order but each item must be
+  exactly as written (F23: in `HH, HT, TH, TT`, `HT` is not `TH`); a single answer may write
+  products and sums in any order (signs stay with their terms, and up to 4 letters on their own
+  such as `pq` count as a product) and an equation either way round; coordinates and
+  inequalities are never reordered. Outer set braces around a whole list are optional
+  (`{4, 5, 6}` is `4, 5, 6`; F23). `answer.units` lists units the answer may end with or leave
+  off, in any of their spellings as numeric answers accept them (F25: `60 degrees` for `°`).
+  `answer.kind: "hex"` (F24, opt-in per item) compares a hexadecimal value: case, a `0x` prefix
+  and leading zeros are ignored (`0x2F`, `2f` and `02F` all match `2F`); ordinary answers are
+  unchanged. Different forms of a value (`√32` and `4√2`, `three` and `3`) still need listing.
 - **Numeric answers** accept a UK thousands separator (`withoutThousands` in
   `packages/core/src/answer-format.ts`): a space (also a thin or non-breaking space) or a comma
   between groups of exactly three digits, the same one throughout, so `38 700` and `38,700` are
@@ -333,7 +338,10 @@ Product owner decision, 2026-11-25: **parent view only**.
   number (`1 1/3` is 4/3, never 11/3; `withoutUnit`, `withMinus` in
   `packages/core/src/answer-format.ts`), and an answer typed with the item's own `answer.unit`:
   the unit as written (with `^2` or `²`), its words and symbols (`m` or `metres`, `£9600` or
-  `9600 pounds` for pounds, `100p` for pence, `4 h` for hours). A different unit (`15 cm` when the
+  `9600 pounds` for pounds, `100p` for pence, `4 h` for hours; F25 adds `°` as degrees or deg,
+  ml (mL, millilitres), mg, `%` (percent, per cent), days, N/m² (N/m^2, newtons per square
+  metre), m/s², kg/m³, g/cm³, litres per minute (l/min) and km per minute (km/min) in words; one
+  list, `unitSpellings`, serves numeric and short answers). A different unit (`15 cm` when the
   unit is m) or a unit on an item without one stays wrong.
 - **Answer form**: when the question asks for the answer in a form, the numeric item sets
   `answer.form` (`inForm` and `indexForm` in `packages/core/src/answer-format.ts`; the maths
