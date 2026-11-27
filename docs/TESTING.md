@@ -17,18 +17,18 @@ that reproduces the bug.
 
 ## 2. Test layers
 
-| Layer                 | Tool                                                              | Where            | Runs                          |
-| --------------------- | ----------------------------------------------------------------- | ---------------- | ----------------------------- |
-| Unit (pure logic)     | Vitest                                                            | `packages/core`  | Every push, every PR          |
-| Unit (scripts)        | `node --test`                                                     | `scripts/`       | Every push, every PR          |
-| Component             | Vitest + Testing Library                                          | `apps/web`       | Every push, every PR          |
-| API integration       | Vitest + Hono `app.request`, Postgres via PGlite or a Neon branch | `apps/api`       | Every push, every PR          |
-| Contract              | Shared Zod schemas used by both web and API                       | `packages/core`  | Every PR                      |
-| Maths engine          | pytest                                                            | `services/maths` | Every push, every PR          |
-| Content validation    | JSON Schema + answer checks (maths answers checked by the engine) | `content/`       | Every PR touching content     |
-| End-to-end            | Playwright (phone, tablet, desktop viewports)                     | `e2e/`           | PRs into `staging` and `main` |
-| Accessibility         | axe-core inside Playwright; WCAG 2.2 AA                           | `e2e/`           | PRs into `staging` and `main` |
-| AI marking evaluation | Golden set of answers with known marks; tolerance ±1 level        | `evals/`         | Weekly and on prompt changes  |
+| Layer                 | Tool                                                              | Where            | Runs                                 |
+| --------------------- | ----------------------------------------------------------------- | ---------------- | ------------------------------------ |
+| Unit (pure logic)     | Vitest                                                            | `packages/core`  | Every push, every PR                 |
+| Unit (scripts)        | `node --test`                                                     | `scripts/`       | Every push, every PR                 |
+| Component             | Vitest + Testing Library                                          | `apps/web`       | Every push, every PR                 |
+| API integration       | Vitest + Hono `app.request`, Postgres via PGlite or a Neon branch | `apps/api`       | Every push, every PR                 |
+| Contract              | Shared Zod schemas used by both web and API                       | `packages/core`  | Every PR                             |
+| Maths engine          | pytest                                                            | `services/maths` | Every push, every PR                 |
+| Content validation    | JSON Schema + answer checks (maths answers checked by the engine) | `content/`       | Every PR touching content            |
+| End-to-end            | Playwright (phone, tablet, desktop viewports)                     | `e2e/`           | PRs into `dev`, `staging` and `main` |
+| Accessibility         | axe-core inside Playwright; WCAG 2.2 AA                           | `e2e/`           | PRs into `dev`, `staging` and `main` |
+| AI marking evaluation | Golden set of answers with known marks; tolerance ±1 level        | `evals/`         | Weekly and on prompt changes         |
 
 ## 3. Coverage gates
 
@@ -88,7 +88,12 @@ student using the app on that device.
 End-to-end tests (`e2e/tests`) run at phone (390×844), tablet (820×1180) and desktop (1280×800)
 in Chromium, fail on any axe WCAG 2.2 A/AA violation or sideways scrolling, and always run with
 `--trace off` (turn traces on only to debug one test). Without `E2E_BASE_URL` they serve the built
-app with `vite preview`. CI: `.github/workflows/e2e.yml`.
+app with `vite preview`. CI: `.github/workflows/e2e.yml` runs the whole suite (every project) on
+pull requests into `dev`, `staging` and `main` (G10). It builds the web app once (job `build`,
+artifact `web-dist`), runs four shards in parallel against that build (about 6 minutes in all), and
+reports one check, **End-to-end result**, that is green only when every shard passed: that is the
+check to require in branch protection. Another check that needs the built app can add a job to
+`e2e.yml` with `needs: build` and download `web-dist` rather than building again.
 Every axe check goes through `axeWhenSettled(page)` (`e2e/tests/support/axe.ts`): it waits for
 finite animations to finish first, because axe measures colours as drawn and a button still fading
 in reads as low contrast. The rules stay WCAG 2.2 A/AA (or what the check passes in `configure`).
