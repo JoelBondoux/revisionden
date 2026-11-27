@@ -60,14 +60,12 @@ const painted = readFileSync(
   'utf8',
 );
 
-test('the painted sweep only reports on pull requests for now; nightly and the staging gate still fail (W21c, decision 0012)', () => {
-  // A caller (the staging gate) can say whether it blocks; it does unless told otherwise.
-  assert.match(painted, /workflow_call:\n\s+inputs:\n\s+blocking:\n(?:.*\n)*?\s+default: true/);
-  // Only a pull request's own run carries on past new rows.
-  assert.match(
-    painted,
-    /continue-on-error: \$\{\{ github\.event_name == 'pull_request' && !inputs\.blocking \}\}/,
-  );
+test('the painted sweep fails a pull request on new or fixed rows again, now the list is made from CI (W21b, decision 0012)', () => {
+  // W21c made pull requests report-only while the list came from a developer's machine; the list
+  // is now made from CI runs, so every run blocks and there is nothing for a caller to switch.
+  assert.doesNotMatch(painted, /continue-on-error/);
+  assert.doesNotMatch(painted, /inputs\.blocking/);
+  assert.match(painted, /workflow_call:\n/);
   // Every run that found something keeps its report and lists the new and fixed rows.
   assert.match(painted, /id: sweep/);
   // A blocking run that fails still writes its summary and keeps its report: without a status
@@ -118,4 +116,17 @@ test('the painted sweep prints what CI found, so the known list is made from CI 
     '.github/workflows/contrast-painted.yml',
   ])
     assert.ok(painted.includes(`- '${path}'`), `runs on changes to ${path}`);
+});
+
+test('every Playwright system install in the painted sweep first drops the runner image Microsoft apt source (G12)', () => {
+  // ubuntu-26.04 images list packages.microsoft.com, whose apt release file is no longer signed,
+  // so `playwright install --with-deps` (apt-get update) can fail on it (shard 11, run 45960273528).
+  assert.ok(painted.includes('playwright install --with-deps'));
+  const steps = painted.split(/\n(?= {6}- )/);
+  steps.forEach((s, i) => {
+    if (!s.includes('playwright install --with-deps')) return;
+    assert.match(steps[i - 1], /- name: Drop the unsigned Microsoft apt source/);
+    assert.match(steps[i - 1], /packages\.microsoft\.com/);
+    assert.match(steps[i - 1], /\/etc\/apt\/sources\.list\.d/);
+  });
 });

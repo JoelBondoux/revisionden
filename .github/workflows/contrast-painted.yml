@@ -4,11 +4,10 @@ name: Contrast sweep (tier 2, painted)
 # gradients and shadows included): text in every box, UI parts' edges and focus rings, in all 10
 # looks, light and dark. Nightly, on demand, on pull requests that change the looks or the design,
 # and as a gate before staging: deploy workflows can call it (workflow_call) and need its job.
-# W21c (lead ruling, 2026-11-27): for now a pull request's own run only reports (its job summary
-# lists new and fixed rows, and the report is kept); it does not fail the pull request, because
-# the known list was made on a machine that draws text a little differently from CI. Nightly and
-# the staging gate still fail on new rows. Temporary, until the list is made from a CI run
-# (decision 0012). Tier 1 (e2e.yml) stays blocking.
+# Every run fails on new or fixed rows, pull requests included. (W21c made pull requests
+# report-only while the known list came from a developer's machine; W21b made the list from CI
+# runs, two clean in a row, and turned blocking back on: decision 0012.) A failing run's job
+# summary lists the new and fixed rows, and its report is kept.
 # W21b (lead ruling): nightly also sweeps the colour-blind palette and each reading tint, on 12
 # shards to finish in about 20 minutes, as does a pull request labelled contrast-variants (to
 # make or check those rows from CI); style pull requests and the staging gate keep the standard
@@ -18,11 +17,6 @@ on:
     - cron: '17 2 * * *'
   workflow_dispatch:
   workflow_call:
-    inputs:
-      blocking:
-        description: Fail on new or fixed rows (the staging gate does)
-        type: boolean
-        default: true
   pull_request:
     branches: [dev, staging, main]
     # labeled: adding contrast-variants runs the full variant sweep on that pull request.
@@ -62,6 +56,10 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # ubuntu-26.04 runner images list packages.microsoft.com, whose apt release file is no longer
+      # signed, so apt-get update inside --with-deps can fail on it (G12). Nothing here needs it.
+      - name: Drop the unsigned Microsoft apt source
+        run: grep -rl packages.microsoft.com /etc/apt/sources.list.d | xargs -r sudo rm -f
       - name: Install Chromium for Playwright
         run: pnpm --filter @revisionden/e2e exec playwright install --with-deps chromium
       - name: Build the web app
@@ -70,7 +68,6 @@ jobs:
         run: pnpm --filter @revisionden/web build
       - name: Run the painted sweep
         id: sweep
-        continue-on-error: ${{ github.event_name == 'pull_request' && !inputs.blocking }}
         shell: bash
         env:
           CONTRAST_SWEEP: '1'

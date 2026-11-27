@@ -194,10 +194,12 @@ sweep does not cover. Data comes from the web app's own mock handlers
   that touch looks or design CSS, and before staging (4 shards). Helpers:
   `paintedTextFailures`, `paintedUiFailures` and `focusRingFailures` in
   `e2e/tests/support/painted.ts`.
-- **Report-only on pull requests, for now** (W21c, decision 0012): a pull request's tier 2 run
-  lists new and fixed rows in its job summary and keeps the report, but does not fail. Nightly
-  and the staging gate (`workflow_call`, `blocking` defaults to true) still fail. This lasts
-  until the known list is made from a CI run.
+- **Blocking everywhere** (decision 0012): every tier 2 run fails on new or fixed rows, pull
+  requests included, and a failing run lists them in its job summary and keeps its report. Pull
+  requests were report-only for a while (W21c) while the list came from a developer's machine;
+  W21b made the list from CI and turned blocking back on after two CI runs in a row matched it.
+  Each install of Playwright's system packages first drops the runner image's unsigned Microsoft
+  apt source (G12).
 - **Steady screens:** anything that changes with every build is held to made-up values, so a
   row's place and key never move with the changelog: `/about` keeps three made-up What's new lines
   and three licences, and the version footer shows a made-up commit (W21c).
