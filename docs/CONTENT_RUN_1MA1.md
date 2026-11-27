@@ -173,6 +173,22 @@ When a topic set is done, message the lead (session <LEAD>) with: items per topi
 and why, near matches, and anything the owner must decide.
 ```
 
+## Step 2 progress: S4 Statistics (S1 to S6, 2026-11-27)
+
+67 draft items in `content/items/gcse-maths-higher/statistics/` (s1.json to s6.json): 32 numeric,
+17 multiple choice and 18 flashcards. Citations quote the S points on page 20 (PDF page 32). Data is
+given in the question (frequency tables, quartiles, cumulative frequencies), so no item needs a
+chart; frequency density is defined in the question.
+
+| Step                 | Result                                                                                         |
+| -------------------- | ---------------------------------------------------------------------------------------------- |
+| 2 Quote check        | 67 pass, all exact                                                                             |
+| 3 Blind answer       | OpenAI: 66 pass. s4-0106 fails on the model's arithmetic (the estimated mean is 110 ÷ 10 = 11) |
+| 4 Adversarial review | OpenAI: 56 pass. 11 fail, mostly "unsupported claim"; s5-0106 is an inference the owner judges |
+| 4b Fact check        | Not run (needs Gemini): 9 items list `facts`                                                   |
+| 5 Maths engine       | All 32 numeric items pass                                                                      |
+| 6 Schema and links   | Pass                                                                                           |
+
 ## Step 2 progress: S4 (Ratio, Geometry, Probability, Statistics)
 
 **Ratio, R1 to R16 (2026-11-27).** 185 draft items in `content/items/gcse-maths-higher/ratio/`
@@ -198,3 +214,12 @@ r12-0110, r13-0110, r14-0110) rest on a standard unit or definition that no allo
 raised to powers are written as fractions in `verify` (`(103/100)^2`), because the engine reads
 `1.03^2` inexactly; worked items whose answer is a sum of money ask for a letter (`£x`), because the
 blind comparison of worked expressions is exact text.
+
+## Step 2 progress: S4 Probability (P1 to P9, 2026-11-27)
+
+95 draft items in `content/items/gcse-maths-higher/probability/` (p1.json to p9.json): 49 numeric,
+2 worked maths, 15 multiple choice, 2 short answer and 27 flashcards. Citations quote the P points on
+page 19 (PDF page 31). Where a term needs a definition (relative frequency), the question states it,
+so the item does not rest on an unsourced definition.
+Flashcard blind answers are compared word for word, so a correct answer with working shown fails;
+p9-0107's blind answer (9/58) is an arithmetic slip by the model (18/117 = 2/13).
