@@ -53,6 +53,9 @@
 
 .flip-card__inner {
   position: relative;
+  /* F20/F21: both faces share one grid cell, so the card is as tall as its taller face and keeps
+     that height when it turns (nothing below it moves). */
+  display: grid;
   min-height: 240px;
   transform-style: preserve-3d;
   transition: transform 0.5s ease;
@@ -63,8 +66,8 @@
 }
 
 .flip-card__face {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -80,6 +83,41 @@
 .flip-card__face--back {
   transform: rotateY(180deg);
   border-color: var(--color-success);
+  /* Room for Explain in the corner (F21). */
+  padding-bottom: calc(var(--space-6) + var(--tap-target));
+}
+
+/* F21: Explain on the turned-over card face, in its bottom corner. A sibling of the card (not
+   inside its turn button), so it is its own control; small to look at, 44px to tap. */
+.flip-card-wrap {
+  position: relative;
+}
+
+.flip-card__explain {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  min-width: var(--tap-target);
+  min-height: var(--tap-target);
+  padding-inline: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+/* F20: a multiple choice card's choices, on its front. */
+.flip-card__choices {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.flip-card__choice {
+  width: 100%;
+  white-space: normal;
+  text-align: center;
+}
+
+.flip-card__verdict {
+  margin: 0;
+  font-weight: var(--font-weight-black);
 }
 
 .flip-card__label {
@@ -88,12 +126,6 @@
   font-weight: var(--font-weight-black);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.flip-card__topic {
-  /* J17z: the edge colour reads on the card in light and dark (the dark main colours are dim). */
-  color: var(--color-primary-edge);
-  font-weight: var(--font-weight-bold);
 }
 
 .flip-card__text {
@@ -193,6 +225,10 @@
 .flip-card {
   cursor: pointer;
   border-radius: var(--radius-lg, 16px);
+}
+
+.flip-card--choice {
+  cursor: default;
 }
 
 .flip-card:focus-visible {

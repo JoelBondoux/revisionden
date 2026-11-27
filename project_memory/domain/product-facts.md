@@ -213,7 +213,10 @@ Tags: #product #rules #limits #defaults
   F7: the card turns both ways by tap, Space or Enter without a new attempt; a new card never
   shows its answer while turning; "Explain" steps come only from verified content (worked steps,
   else inline mark scheme, then `back_formula` and conditions, then the answer, then the verified
-  `explanation` as "Why: …"), hidden when there are none (`learning_point` is never used). On
+  `explanation` as "Why: …"), hidden when there are none (`learning_point` is never used).
+  F21: Explain is on the turned-over card face (bottom corner), so nothing below the card moves on
+  reveal. F20: cards made from multiple choice questions show their options; tapping one answers
+  and sets the rating (right Good, wrong Again); plain cards keep Show answer and self-rating. On
   2026-11-26, 89 of 287 marked items had none of these: 75 of 78 flashcards, 13 short answers and
   1 numeric (`gcse-maths-h-n7-0001`).
 - Flashcard accessibility (F8b): the flip card has no aria-label; its accessible name is the visible face and the turn hint is in `aria-describedby`. Rating buttons are named by their visible text (for example "Good · 1 day"). `e2e/tests/cards.spec.ts` runs axe on both sides of a card at all three sizes (WCAG 2.5.3, Label in Name).

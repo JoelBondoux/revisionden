@@ -52,6 +52,15 @@ function cardText({ card, item }: Loaded): { front: string; back: string } {
   return { front: body.prompt ?? '', back: correctAnswerText(item) };
 }
 
+/** F20: a multiple choice question's options and right answer, so the card can be answered. */
+function choicesOf({ item }: Loaded): { options?: string[]; answerOption?: number } {
+  if (item?.type !== 'multiple_choice') return {};
+  const options = (item.body as ItemBody).options ?? [];
+  const answerOption = ((item.answer ?? {}) as ItemAnswer).key?.option;
+  if (options.length < 2 || typeof answerOption !== 'number') return {};
+  return { options, answerOption };
+}
+
 /** Explain steps from the item's verified content (none for the student's own cards). */
 function explainOf({ item }: Loaded, back: string): { explain?: string[] } {
   if (!item) return {};
@@ -78,6 +87,7 @@ export function toFlashcard(loaded: Loaded, now: Date): Flashcard {
     origin: card.origin,
     ...text,
     ...explainOf(loaded, text.back),
+    ...choicesOf(loaded),
     ...(item?.sourceRef ? { sourceRef: item.sourceRef } : {}),
     ...(item?.contentId ? { contentId: item.contentId } : {}),
     ...(item?.learningPoint ? { learningPoint: item.learningPoint } : {}),

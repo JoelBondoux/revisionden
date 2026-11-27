@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useId, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { useOnScreenContent } from '../feedback/details';
 import {
   EXTRA_CARDS,
@@ -35,57 +35,96 @@ const RATINGS: {
   { rating: 'easy', label: 'Easy', variant: 'primary' },
 ];
 
+/** F20: a card made from a multiple choice question is answered by tapping a choice. */
+const isChoiceCard = (card: Flashcard) =>
+  !!card.options && card.options.length >= 2 && card.answerOption !== undefined;
+
 /**
  * A card that turns over in 3D (no animation when reduced motion is asked for). Tap it, or press
  * Space or Enter, to turn it either way as often as you like (F7). The answer face stays empty
  * until the answer has been revealed, and a new card is a new element that starts on its
  * question, so the next card's answer never shows while the card turns (F7 bug fix).
+ * F20: a multiple choice card shows its choices on the front instead; tapping one is the answer.
+ * F21: Explain sits on the turned-over card face, so nothing below the card moves on reveal.
  */
 function FlipCard({
   card,
   flipped,
   revealed,
+  chosen,
   onTurn,
+  onChoose,
+  onExplain,
 }: {
   card: Flashcard;
   flipped: boolean;
   revealed: boolean;
+  chosen: number | null;
   onTurn: () => void;
+  onChoose: (option: number) => void;
+  /** Opens the Explain steps; left out while they are open. */
+  onExplain?: () => void;
 }) {
   const hintId = useId();
-  return (
-    <>
-      <span id={hintId} className="visually-hidden">
-        {flipped ? 'Turn back to the question' : 'Turn over to see the answer'}
-      </span>
-      <div
-        className={`flip-card${flipped ? ' flip-card--flipped' : ''}`}
-        data-testid="flip-card"
-        role="button"
-        tabIndex={0}
+  const choice = isChoiceCard(card);
+  const turnable = choice
+    ? {}
+    : {
+        role: 'button',
+        tabIndex: 0,
         // The accessible name is the text on the card's showing face (the hidden face is
         // aria-hidden), so it matches what is seen (WCAG 2.5.3); the turn hint is the description.
-        aria-describedby={hintId}
-        onClick={onTurn}
-        onKeyDown={(event) => {
+        'aria-describedby': hintId,
+        onClick: onTurn,
+        onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => {
           if (event.key === ' ' || event.key === 'Enter') {
             event.preventDefault();
             onTurn();
           }
-        }}
+        },
+      };
+  return (
+    <div className="flip-card-wrap" data-testid="flip-card-wrap">
+      {!choice && (
+        <span id={hintId} className="visually-hidden">
+          {flipped ? 'Turn back to the question' : 'Turn over to see the answer'}
+        </span>
+      )}
+      <div
+        className={`flip-card${flipped ? ' flip-card--flipped' : ''}${choice ? ' flip-card--choice' : ''}`}
+        data-testid="flip-card"
+        {...turnable}
       >
         <div className="flip-card__inner">
           <div className="flip-card__face flip-card__face--front" aria-hidden={flipped}>
             <span className="flip-card__label">Question</span>
-            <span className="flip-card__topic">{card.topicTitle}</span>
             <p className="flip-card__text">
               <MathText text={card.front} subject={card.subjectId} />
             </p>
+            {choice && !flipped && (
+              <div role="group" aria-label="Choose an answer" className="flip-card__choices">
+                {card.options!.map((option, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className="btn btn--secondary flip-card__choice"
+                    onClick={() => onChoose(index)}
+                  >
+                    <MathText text={option} subject={card.subjectId} />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <div className="flip-card__face flip-card__face--back" aria-hidden={!flipped}>
             {revealed && (
               <>
                 <span className="flip-card__label">Answer</span>
+                {choice && chosen !== null && (
+                  <p className="flip-card__verdict">
+                    {chosen === card.answerOption ? 'Right!' : 'Not quite. The answer is:'}
+                  </p>
+                )}
                 <p className="flip-card__text">
                   <MathText text={card.back} subject={card.subjectId} />
                 </p>
@@ -95,7 +134,12 @@ function FlipCard({
           </div>
         </div>
       </div>
-    </>
+      {flipped && revealed && card.explain && onExplain && (
+        <Button variant="secondary" className="flip-card__explain" onClick={onExplain}>
+          Explain
+        </Button>
+      )}
+    </div>
   );
 }
 
@@ -153,6 +197,8 @@ function ReviewSession({
   const [flipped, setFlipped] = useState(false);
   /** The answer has been shown for this card: the ratings stay, however often it is turned. */
   const [revealed, setRevealed] = useState(false);
+  /** F20: the choice tapped on a multiple choice card. */
+  const [chosen, setChosen] = useState<number | null>(null);
   const [explaining, setExplaining] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<'start' | 'review' | 'finish' | null>(null);
@@ -251,6 +297,14 @@ function ReviewSession({
     setFlipped((f) => !f);
   }
 
+  /** F20: tapping a choice is the answer: the card turns over and the rating follows from it. */
+  function choose(option: number) {
+    play('cardFlip');
+    setChosen(option);
+    setRevealed(true);
+    setFlipped(true);
+  }
+
   async function rate(rating: FlashcardRating) {
     setBusy(true);
     setError(null);
@@ -267,6 +321,7 @@ function ReviewSession({
       }
       setFlipped(false);
       setRevealed(false);
+      setChosen(null);
       setExplaining(false);
       if (index + 1 >= nextQueue.length) {
         setBusy(false);
@@ -304,21 +359,23 @@ function ReviewSession({
         card={card}
         flipped={flipped}
         revealed={revealed}
+        chosen={chosen}
         onTurn={turn}
+        onChoose={choose}
+        onExplain={explaining ? undefined : () => setExplaining(true)}
       />
       <ReadAloudButton
-        text={flipped ? [card.back, card.sourceRef].filter(Boolean).join('. ') : card.front}
+        text={
+          flipped
+            ? [card.back, card.sourceRef].filter(Boolean).join('. ')
+            : [card.front, ...(card.options ?? [])].join('. ')
+        }
         label="Read the card aloud"
       />
       {error === 'review' && (
         <p role="alert" className="feedback feedback--wrong">
           Couldn&apos;t save that. Please try again.
         </p>
-      )}
-      {flipped && card.explain && !explaining && (
-        <Button variant="secondary" onClick={() => setExplaining(true)}>
-          Explain
-        </Button>
       )}
       {explaining && card.explain && (
         <StepThrough
@@ -336,7 +393,18 @@ function ReviewSession({
           />
         </StepThrough>
       )}
-      {revealed ? (
+      {isChoiceCard(card) ? (
+        // F20: the choice was the answer, so the rating is set from it (right Good, wrong Again).
+        revealed && (
+          <Button
+            block
+            disabled={busy}
+            onClick={() => void rate(chosen === card.answerOption ? 'good' : 'again')}
+          >
+            Next card
+          </Button>
+        )
+      ) : revealed ? (
         <div className="ratings">
           {RATINGS.map(({ rating, label, variant }) => {
             const when = formatReviewDelay(card.nextReviewMs[rating] ?? 0);
