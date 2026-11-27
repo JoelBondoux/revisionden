@@ -82,7 +82,7 @@ jobs:
           --project=phone --project=desktop --grep @contrast-painted --shard=${{ matrix.shard }}/${{ (github.event_name == 'schedule' || contains(github.event.pull_request.labels.*.name, 'contrast-variants')) && 12 || 4 }} --trace off
           2>&1 | tee sweep.log
       - name: List new and fixed rows
-        if: steps.sweep.outcome == 'failure'
+        if: ${{ !cancelled() && steps.sweep.outcome == 'failure' }}
         shell: bash
         run: |
           {
@@ -110,7 +110,7 @@ jobs:
             echo "CONTRAST-END"
           done
       - name: Keep the report when something fails
-        if: steps.sweep.outcome == 'failure'
+        if: ${{ !cancelled() && steps.sweep.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
           name: contrast-tier2-report-${{ matrix.shard }}

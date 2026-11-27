@@ -285,7 +285,10 @@ test(
   async ({ page }, info) => {
     test.skip(info.project.name !== 'desktop', 'one check is enough');
     await open(page, 'pupil', 'light', '/about', VARIANTS[0]!);
-    await expect(page.locator('.version-footer-item').nth(1)).toHaveText('(Staging, abcdef0)');
+    await expect(page.locator('.version-footer-item').nth(1)).toHaveText(
+      // Whatever the build's environment (Staging in CI, Development locally): Codex on #406.
+      /^\([A-Za-z]+, abcdef0\)$/,
+    );
   },
 );
 

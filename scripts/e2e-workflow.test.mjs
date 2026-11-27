@@ -70,7 +70,13 @@ test('the painted sweep only reports on pull requests for now; nightly and the s
   );
   // Every run that found something keeps its report and lists the new and fixed rows.
   assert.match(painted, /id: sweep/);
-  assert.match(painted, /if: steps\.sweep\.outcome == 'failure'/);
+  // A blocking run that fails still writes its summary and keeps its report: without a status
+  // function GitHub adds success(), which would skip both (Codex on train #407).
+  assert.equal(
+    (painted.match(/if: \$\{\{ !cancelled\(\) && steps\.sweep\.outcome == 'failure' \}\}/g) ?? [])
+      .length,
+    2,
+  );
   assert.match(painted, /GITHUB_STEP_SUMMARY/);
 });
 
