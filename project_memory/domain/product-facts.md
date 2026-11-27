@@ -495,8 +495,9 @@ Tags: #product #rules #limits #defaults
 - Typed short answers (F6, `packages/core/src/answer-normalise.ts`; rules in PRODUCT_RULES
   "Learning loop"): spaces, case, minus signs, multiply and divide signs, superscripts, ≤/≥ and √
   are normalised, so content lists one written form. `answer.any_order: true` also accepts
-  commuted products and sums, reordered lists and swapped equation sides (never coordinates or
-  inequalities); `answer.units` lists optional units. A multiply sign before a sign is kept
+  reordered lists (each item as written: `HT` is not `TH` in a list, F23) and, for a single
+  answer, commuted products and sums and swapped equation sides (never coordinates or
+  inequalities); outer set braces `{…}` are optional (F23); `answer.units` lists optional units. A multiply sign before a sign is kept
   (`3n × -2` is not `3n - 2`). The maths engine accepts a solved value in other letters (`x = 2a`,
   and `a = x` either way round). Repeated alternatives on a final line count once, and a line
   with more than 64 ways to read it (`MAX_READINGS` in `services/maths/app/working.py`) is
