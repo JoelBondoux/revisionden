@@ -184,7 +184,12 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
             <li>Browser: {device.browserFamily}</li>
             <li>Screen size: {device.screenSize}</li>
             <li>Connection: {device.online ? 'online' : 'offline'}</li>
-            {device.lastProblem && <li>Last problem: {device.lastProblem}</li>}
+            {device.lastProblem && (
+              <li>
+                {/^RD-/.test(device.lastProblem) ? 'Problem code' : 'Last problem'}:{' '}
+                {device.lastProblem}
+              </li>
+            )}
             {device.contentId && <li>Question or card: {device.contentId}</li>}
             <li>
               Look: {device.look ?? 'default'}, {device.theme}, pattern {device.pattern}
