@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { extractText, htmlToText, isPdf } from './extract.mjs';
+import { HEADING } from './normalise.mjs';
 import { buildPdf } from './test-pdf.mjs';
 
 test('reads the text of each page of a PDF separately', async () => {
@@ -36,6 +37,13 @@ test('treats block elements as line breaks so words do not run together', () => 
     htmlToText('<p>one</p><p>two</p><br>three<li>four</li>').replace(/\s+/g, ' ').trim(),
     'one two three four',
   );
+});
+
+test('marks where each heading starts, so a Part heading can be told from a cross-reference', () => {
+  const text = htmlToText('<h3>Part V Mass</h3><p>See Part III.</p>');
+  assert.equal(text.split(HEADING).length, 2);
+  assert.match(text, new RegExp(`${HEADING}Part V`));
+  assert.doesNotMatch(text, new RegExp(`${HEADING}\\s*See`));
 });
 
 test('an HTML page is one page of text', async () => {

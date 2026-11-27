@@ -31,7 +31,11 @@ different places. Stored with the content (`content/`), never shown to students.
 
 1. Exam board documents: specification, mark schemes, examiner reports, sample assessment
    materials, required practical handbooks, published grade boundaries.
-2. Government and regulator documents: DfE subject content, Ofqual.
+2. Government and regulator documents: DfE subject content, Ofqual, and UK legislation on
+   www.legislation.gov.uk for the definitions of units of measurement (source type
+   `legislation`, for example the Weights and Measures Act 1985, Schedule 1: "Millilitre = 1/1000
+   litre."; lead's ruling, 2026-11-27). A legislation location names its Part ("Schedule 1, Part
+   III"), and the quote must sit under that Part's heading.
 3. Other authoritative sources (for example national scientific bodies, standard reference
    data). Items relying only on these need human approval before release.
 
@@ -245,6 +249,10 @@ location. The location must be checkable:
 - a spreadsheet (`.xlsx`, `.ods`) location is "sheet, row, cell" (for example `sheet
 French_required_words_(F), row 261, cell C261`), and the quote must equal that cell's text
   (decision 0010; not yet implemented in the checker, so such citations fail until it is);
+- a UK Act or regulation page is located by its Part (`Schedule 1, Part III`): the nearest
+  "Part …" heading before the quote must be that Part. Only a heading element on the page counts
+  (text extraction marks where each heading starts; the marks are kept as positions only, so a quote that runs across a heading still matches exactly), never a "See Part III" cross-reference in
+  the running text;
 - a web page has no pages, so its citations need a code; a location with neither a page nor a
   code fails. Anything the checker cannot confirm fails, for a person to fix.
 

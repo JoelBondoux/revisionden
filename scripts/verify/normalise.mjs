@@ -10,6 +10,12 @@ const LIGATURES = {
   '\ufb05': 'st',
   '\ufb06': 'st',
 };
+/**
+ * Marks where a heading starts in a web page's text (extract.mjs), so a "Part III" heading can be
+ * told from a "See Part III" cross-reference (locate.mjs). A private-use character: never in a quote.
+ */
+export const HEADING = '\uE000';
+
 const CHARACTERS = [
   [/[\u2018\u2019\u201a\u201b\u2032]/g, "'"],
   [/[\u201c\u201d\u201e\u201f\u2033]/g, '"'],

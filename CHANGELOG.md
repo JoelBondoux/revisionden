@@ -571,6 +571,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Changed
 
+- Verification (S4, lead's ruling): UK legislation on www.legislation.gov.uk is an official source for unit definitions (citation source type `legislation`); the quote checker may fetch it, and a location such as "Schedule 1, Part III" is confirmed by the nearest Part heading before the quote (a heading element on the page; a "See Part III" cross-reference in the text does not count, Codex on #435).
 - docs(legal): privacy notice 1.11 (9.2) and young people's notice 1.8 list the bug-report content id, last-problem code and display details, and rule out reading comfort and colour choices (L12); the young people's notice's Changes list is whole again (1.5 and 1.7 had been left in the wrong place).
 - CI (G10): the full Playwright end-to-end and accessibility suite now runs on pull requests into `dev` as well as `staging` and `main`. The web app is built once and shared with four parallel shards, and one "End-to-end result" check sums them up for branch protection.
 - Maths templates (T1): the expanding-brackets template (A4, v2) now says "Use the Power key (^) for powers.", matching F9's Power key in answer boxes (#254). Its 5 items were regenerated with the same numbers and re-verified.
