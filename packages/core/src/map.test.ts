@@ -204,12 +204,23 @@ describe('a subject with no questions yet (RD-MBXKTC)', () => {
       topics: [],
       subjects: [
         { subjectId: 'gcse-chemistry', hasContent: false },
-        { subjectId: 'gcse-maths', hasContent: true },
+        { subjectId: 'gcse-maths', hasContent: true, lastPractisedAt: '2026-11-26T09:00:00.000Z' },
       ],
     });
+    // UX-1: when each was last practised (null when never), for the picker's order.
     expect(map.subjects).toEqual([
-      { subjectId: 'gcse-chemistry', subject: 'Chemistry', hasContent: false },
-      { subjectId: 'gcse-maths', subject: 'Maths', hasContent: true },
+      {
+        subjectId: 'gcse-chemistry',
+        subject: 'Chemistry',
+        hasContent: false,
+        lastPractisedAt: null,
+      },
+      {
+        subjectId: 'gcse-maths',
+        subject: 'Maths',
+        hasContent: true,
+        lastPractisedAt: '2026-11-26T09:00:00.000Z',
+      },
     ]);
   });
 });

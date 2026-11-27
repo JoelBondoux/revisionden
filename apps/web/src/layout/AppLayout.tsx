@@ -14,6 +14,10 @@ import { useStudent } from '../session/StudentContext';
 import { PublicHeader } from './PublicHeader';
 import { VersionFooter } from './VersionFooter';
 import { MyAvatarProvider, useMyAvatar } from '../features/me';
+import { SubjectSwitcher } from '../features/subjects';
+
+/** UX-1: the screens whose top bar shows the current subject. */
+const showsSubject = (pathname: string) => /^\/(home|map|cards)\/?$/.test(pathname);
 
 /** Flashcards due for the chosen student; zero while loading, on error or with nobody chosen. */
 function useCardsDue(): number {
@@ -59,6 +63,7 @@ function AppPages() {
 }
 
 function StudentLayout() {
+  const { pathname } = useLocation();
   const cardsDue = useCardsDue();
   const avatarCode = useMyAvatarCode();
   const mainClass = useMainClass('app-main');
@@ -74,6 +79,7 @@ function StudentLayout() {
         <header className="sound-header">
           {/* Pip, the Home button, top left on every student screen (J15b). */}
           <PipHomeButton subjectId={pipSubject} />
+          {showsSubject(pathname) && <SubjectSwitcher />}
           <MuteButton />
           {/* In the top row, not floating, so it never covers the page (docs/PRODUCT_RULES.md). */}
           <BugButton />

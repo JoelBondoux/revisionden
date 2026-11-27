@@ -534,3 +534,20 @@
     transform: translateY(-3px);
   }
 }
+
+/* UX-1: subjects still coming soon fold into one line under the ones you can start. */
+.map-subjects-later {
+  margin-top: var(--space-3);
+}
+
+.map-subjects-later > summary {
+  min-height: var(--tap-target);
+  display: flex;
+  align-items: center;
+  font-weight: var(--font-weight-extrabold);
+  cursor: pointer;
+}
+
+.map-subjects-ask {
+  margin: var(--space-4) 0 0;
+}

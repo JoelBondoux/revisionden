@@ -200,6 +200,16 @@ const OVERLAYS: Overlay[] = [
     },
   },
   {
+    // UX-1: the top bar's subject switcher.
+    name: 'Your subjects',
+    visit: '/home',
+    within: '.sheet',
+    open: async (page) => {
+      await page.getByRole('button', { name: /, change subject$/ }).click();
+      await page.getByRole('dialog', { name: 'Your subjects' }).waitFor();
+    },
+  },
+  {
     name: 'Leave this lesson?',
     visit: '/learn/topic/demo',
     within: 'dialog[open]',

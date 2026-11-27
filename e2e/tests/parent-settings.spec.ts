@@ -246,6 +246,8 @@ test("a parent's subject changes reach the child's map", async ({ browser }) => 
   await expect(child.page.getByText('GCSE Foundation')).toBeVisible();
   await child.page.getByRole('button', { name: /^Your subject Maths Change$/ }).click();
   const pick = child.page.getByRole('region', { name: 'Pick a subject' });
+  // UX-1: Physics has no questions yet, so it sits in the folded coming-soon line.
+  await pick.getByText(/more subjects? coming soon$/).click();
   await expect(pick.getByText('Physics')).toBeVisible();
   await expectAccessible(child.page, 'Subject selection');
 

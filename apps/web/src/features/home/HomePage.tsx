@@ -14,6 +14,7 @@ import { CountUp } from '../stats/countUp';
 import { useStatsApi } from '../stats/statsApi';
 import '../../map/map.css';
 import { LeagueChip } from '../league';
+import { loadSubjectMap, reportMap, useChosenSubject } from '../subjects';
 import './home.css';
 
 /**
@@ -107,7 +108,14 @@ export function HomePage() {
   const daily = useDailyApi();
   const { studentId } = useStudent();
   const never = () => new Promise<never>(() => {});
-  const map = useApiResource(() => (studentId ? api.getTopicMap() : never()), [api, studentId]);
+  const subjectId = useChosenSubject(studentId);
+  const map = useApiResource(
+    () => (studentId ? loadSubjectMap((id) => api.getTopicMap(id), studentId, subjectId) : never()),
+    [api, studentId, subjectId],
+  );
+  useEffect(() => {
+    if (map.status === 'ready') reportMap(studentId, map.data);
+  }, [map, studentId]);
   const week = useApiResource(
     () => (studentId ? stats.getMyStats('week') : never()),
     [stats, studentId],

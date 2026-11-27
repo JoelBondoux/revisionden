@@ -1257,8 +1257,8 @@ Requested by the product owner on 2026-11-25.
 - Pages: `/help` (students, also signed out) and `/parent/help` (parent area; adds a "Worried about a
   child?" card with the NSPCC Helpline). Links: for students, a prominent Get help tile at the top
   of Settings (above everything else), reached from the **Me** item, the last item in the main
-  nav (owner, 2026-11-26, W7). The student main nav is now five items: Map, Cards, Plan, Papers
-  and Me; Progress moved onto the Me page as "My progress", right after Get help, and Me is marked
+  nav (owner, 2026-11-26, W7). The student main nav is now Home, Learn (the map), Cards and Me
+  (UX-1, 2026-11-27; Plan and Papers leave it while they are coming soon); Progress moved onto the Me page as "My progress", right after Get help, and Me is marked
   current on `/settings` and `/progress` (and their sub-pages); signed out, the public header; parents, parent home. History: W3
   added a header chip and a map tile, W5 removed the map tile, and W7 removed the student header
   chip and the footer heart link (the owner chose "Settings only" over keeping the footer heart).

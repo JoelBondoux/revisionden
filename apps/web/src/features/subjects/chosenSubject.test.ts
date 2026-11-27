@@ -1,0 +1,155 @@
+import { act, renderHook } from '@testing-library/react';
+import type { TopicMap } from '@revisionden/core';
+import { topicMap } from '../../mocks/data';
+import {
+  chooseSubject,
+  chosenSubject,
+  pickerOrder,
+  reportMap,
+  resetKnownSubjects,
+  stillTaken,
+  useChosenSubject,
+  useKnownSubjects,
+} from './chosenSubject';
+
+const subjects = [
+  { subjectId: 'maths', subject: 'Maths', hasContent: true },
+  { subjectId: 'biology', subject: 'Biology', hasContent: false },
+];
+const mapFor = (subjectId: string, subject: string): TopicMap => ({
+  ...topicMap,
+  subjectId,
+  subject,
+  subjects,
+});
+
+afterEach(() => {
+  localStorage.clear();
+  resetKnownSubjects();
+});
+
+describe('the chosen subject (UX-1)', () => {
+  it('is remembered for each student on this device, and forgotten on request', () => {
+    expect(chosenSubject('s1')).toBeUndefined();
+    chooseSubject('s1', 'biology');
+    expect(chosenSubject('s1')).toBe('biology');
+    expect(chosenSubject('s2')).toBeUndefined();
+    chooseSubject('s1', null);
+    expect(chosenSubject('s1')).toBeUndefined();
+  });
+
+  it('is nothing without a student', () => {
+    chooseSubject(null, 'biology');
+    expect(chosenSubject(null)).toBeUndefined();
+  });
+
+  it('tells every screen when it changes', () => {
+    const { result } = renderHook(() => useChosenSubject('s1'));
+    expect(result.current).toBeUndefined();
+    act(() => chooseSubject('s1', 'maths'));
+    expect(result.current).toBe('maths');
+  });
+
+  it('counts as still taken unless the subjects are known and it is not among them', () => {
+    expect(stillTaken(undefined, subjects)).toBe(true);
+    expect(stillTaken('maths', subjects)).toBe(true);
+    expect(stillTaken('maths', [])).toBe(true);
+    expect(stillTaken('chemistry', subjects)).toBe(false);
+  });
+
+  it('falls back to the default when a loaded map shows the subject was dropped', () => {
+    chooseSubject('s1', 'chemistry');
+    reportMap('s1', mapFor('maths', 'Maths'));
+    expect(chosenSubject('s1')).toBeUndefined();
+  });
+
+  it("gives the top bar the subject on screen and the student's subjects", () => {
+    const { result } = renderHook(() => useKnownSubjects('s1'));
+    expect(result.current).toBeNull();
+    act(() => reportMap('s1', mapFor('biology', 'Biology')));
+    expect(result.current?.current).toEqual({ subjectId: 'biology', subject: 'Biology' });
+    expect(result.current?.subjects.map((s) => s.subject)).toEqual(['Maths', 'Biology']);
+  });
+
+  // Codex on #438: practising updates lastPractisedAt, so the sheet's order must follow it.
+  it('takes in new practice times, so the sheet re-orders after practice', () => {
+    const { result } = renderHook(() => useKnownSubjects('s1'));
+    act(() => reportMap('s1', mapFor('maths', 'Maths')));
+    const practised = subjects.map((s) =>
+      s.subjectId === 'biology' ? { ...s, lastPractisedAt: '2026-11-27T10:00:00.000Z' } : s,
+    );
+    act(() => reportMap('s1', { ...mapFor('maths', 'Maths'), subjects: practised }));
+    expect(result.current?.subjects.find((s) => s.subjectId === 'biology')?.lastPractisedAt).toBe(
+      '2026-11-27T10:00:00.000Z',
+    );
+  });
+
+  it('shows the one subject on screen when the map lists none', () => {
+    const { result } = renderHook(() => useKnownSubjects('s1'));
+    act(() => reportMap('s1', { ...topicMap, subjectId: 'maths', subjects: undefined }));
+    expect(result.current?.subjects).toEqual([
+      { subjectId: 'maths', subject: 'Maths', hasContent: true },
+    ]);
+  });
+});
+
+describe('the order subjects are offered in (UX-1, lead ruling)', () => {
+  const four = [
+    { subjectId: 'art', subject: 'Art', hasContent: false, lastPractisedAt: null },
+    {
+      subjectId: 'biology',
+      subject: 'Biology',
+      hasContent: true,
+      lastPractisedAt: '2026-11-20T10:00:00.000Z',
+    },
+    { subjectId: 'chemistry', subject: 'Chemistry', hasContent: true, lastPractisedAt: null },
+    { subjectId: 'drama', subject: 'Drama', hasContent: false, lastPractisedAt: null },
+    {
+      subjectId: 'maths',
+      subject: 'Maths',
+      hasContent: true,
+      lastPractisedAt: '2026-11-26T10:00:00.000Z',
+    },
+  ];
+  const ids = (list: { subjectId: string }[]) => list.map((s) => s.subjectId);
+
+  it('lists started subjects most recent first, then ones to start, and folds the rest', () => {
+    const { now, later } = pickerOrder(four, 'biology');
+    expect(ids(now)).toEqual(['maths', 'biology', 'chemistry']);
+    expect(ids(later)).toEqual(['art', 'drama']);
+  });
+
+  it("keeps the family's order among subjects not started yet", () => {
+    const fresh = four.map((s) => ({ ...s, lastPractisedAt: null }));
+    expect(ids(pickerOrder(fresh, undefined).now)).toEqual(['biology', 'chemistry', 'maths']);
+  });
+
+  it('keeps a current subject that is coming soon at the top, not folded away', () => {
+    const { now, later } = pickerOrder(four, 'art');
+    expect(ids(now)).toEqual(['art', 'maths', 'biology', 'chemistry']);
+    expect(ids(later)).toEqual(['drama']);
+  });
+
+  it('works with maps that do not say when subjects were practised', () => {
+    const old = four.map((s) => ({
+      subjectId: s.subjectId,
+      subject: s.subject,
+      hasContent: s.hasContent,
+    }));
+    expect(ids(pickerOrder(old, undefined).now)).toEqual(['biology', 'chemistry', 'maths']);
+  });
+});
+
+describe('when the device refuses storage (Codex on #423)', () => {
+  it('still switches subject for as long as the page is open', () => {
+    const setItem = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('blocked');
+    });
+    try {
+      chooseSubject('s1', 'biology');
+      expect(chosenSubject('s1')).toBe('biology');
+    } finally {
+      setItem.mockRestore();
+    }
+  });
+});

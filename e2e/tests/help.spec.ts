@@ -206,14 +206,14 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
     // on several student pages, not just Settings. (On phones, anything wider than the screen
     // widens the page and the fixed nav with it; K fixed /progress's period toggle in #235.)
     for (const path of ['/map', '/cards', '/plan', '/papers', '/progress', '/settings']) {
-      test(`${path}: the five nav items fit and nothing scrolls sideways`, async ({ page }) => {
+      test(`${path}: the four nav items fit and nothing scrolls sideways`, async ({ page }) => {
         await asStudent(page);
         await page.goto(path);
         const nav = page.getByRole('navigation', { name: 'Main' });
         await expect(nav).toBeVisible();
         await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
         const links = nav.getByRole('link');
-        await expect(links).toHaveCount(5);
+        await expect(links).toHaveCount(4);
         const sizes = await nav.evaluate((el) => {
           const list = el.querySelector('ul')!;
           return {
@@ -248,7 +248,7 @@ test.describe('students find Get help on Settings, through Me (owner, 2026-11-26
       await asStudent(page);
       await page.goto('/map');
       const links = page.getByRole('navigation', { name: 'Main' }).getByRole('link');
-      await expect(links).toHaveCount(5);
+      await expect(links).toHaveCount(4);
       const me = links.last();
       await expect(me).toHaveAccessibleName('Me, settings and personalisation');
       await expect(me).toBeInViewport({ ratio: 1 });

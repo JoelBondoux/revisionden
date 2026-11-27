@@ -76,6 +76,27 @@ describe('topic map (F2)', () => {
     expect(body.nextMission).toMatchObject({ kind: 'weak-spot', lessonId: 'test-topic-a' });
   });
 
+  it('says when each subject was last practised, for the subject picker (UX-1)', async () => {
+    const { headers } = await t.familyStudent('map_recent_kid', [TEST_SUBJECT]);
+    expect((await map(headers)).subjects).toEqual([
+      expect.objectContaining({ subjectId: TEST_SUBJECT, lastPractisedAt: null }),
+    ]);
+    const lesson = LessonResponseSchema.parse(
+      await (await get('/v1/student/learn/lesson?topicId=test-topic-a&count=20', headers)).json(),
+    );
+    const mc = lesson.items.find((i) => 'prompt' in i && i.prompt === 'Test question 1')!;
+    await t.app.request(
+      '/v1/student/learn/attempts',
+      jsonRequest('POST', { itemId: mc.id, answer: 1, timeMs: 1, mode: 'learn' }, headers),
+    );
+    expect((await map(headers)).subjects).toEqual([
+      expect.objectContaining({
+        subjectId: TEST_SUBJECT,
+        lastPractisedAt: t.clock.now().toISOString(),
+      }),
+    ]);
+  });
+
   it('can show a named subject, and says so when there is none', async () => {
     const { headers } = await t.familyStudent('map_named_kid');
     expect((await map(headers, `?subjectId=${TEST_SUBJECT}`)).units).toHaveLength(1);

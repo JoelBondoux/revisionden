@@ -1,0 +1,63 @@
+/* UX-1: the subject switcher sits beside Pip, so Pip's push to the left moves to it. */
+.app-shell .sound-header:has(.subject-switcher) .pip-home {
+  margin-right: 0;
+}
+
+/* A long name ("Computer Science") at 320px with text at 200% shrinks and wraps inside the
+   button rather than pushing Pip off the left of the right-aligned row (Codex on #423). */
+.subject-switcher {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  margin: 14px auto 0 0;
+  min-height: var(--tap-target);
+  padding: 0 var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-extrabold);
+  cursor: pointer;
+}
+
+.subject-switcher__list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.subject-switcher__subject {
+  width: 100%;
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-3);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-weight: var(--font-weight-extrabold);
+  text-align: left;
+  cursor: pointer;
+}
+
+/* The chosen subject is filled in, like a chosen chip (J17x: plain enough in every look). */
+.subject-switcher__subject[aria-pressed='true'] {
+  border-color: var(--color-selected);
+  background: var(--color-selected);
+  color: var(--color-on-selected);
+}
+
+.subject-switcher__subject[aria-pressed='true'] small {
+  color: inherit;
+}
+
+.subject-switcher__subject small {
+  color: var(--color-text-secondary);
+  font-weight: normal;
+}
+
+.subject-switcher__more {
+  width: 100%;
+}
