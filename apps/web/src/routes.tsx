@@ -17,6 +17,7 @@ import { WelcomePage } from './pages/WelcomePage';
 import { BatchReviewPage } from './features/review/BatchReviewPage';
 import { ReviewQueuePage } from './features/review/ReviewQueuePage';
 import { FlashcardsPage } from './features/flashcards/FlashcardsPage';
+import { PastPapersPage } from './features/past-papers';
 import {
   CommandWordsPage,
   SubjectPage,
@@ -111,6 +112,8 @@ const screens: RouteObject[] = [
       { path: '/map', element: <MapPage /> },
       { path: '/learn', element: <Navigate to="/home" replace /> },
       { path: '/learn/subject/:subjectId', element: <SubjectPage /> },
+      // Past papers (Q7): links to each exam board's own past-paper finder.
+      { path: '/learn/subject/:subjectId/past-papers', element: <PastPapersPage /> },
       { path: '/cards', element: <FlashcardsPage /> },
       { path: '/rewards', element: <RewardsPage /> },
       { path: '/league', element: <LeaguePage /> },

@@ -57,3 +57,4 @@ export * from './interactive';
 export * from './powers';
 export * from './league';
 export * from './league-schemas';
+export * from './past-papers';

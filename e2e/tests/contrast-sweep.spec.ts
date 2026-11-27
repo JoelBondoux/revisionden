@@ -110,6 +110,11 @@ const SCREENS: Screen[] = [
   { route: '/home', who: 'pupil', visit: '/home' },
   { route: '/map', who: 'pupil', visit: '/map' },
   { route: '/learn/subject/:subjectId', who: 'pupil', visit: '/learn/subject/gcse-maths' },
+  {
+    route: '/learn/subject/:subjectId/past-papers',
+    who: 'pupil',
+    visit: '/learn/subject/gcse-maths/past-papers',
+  },
   { route: '/cards', who: 'pupil', visit: '/cards' },
   { route: '/rewards', who: 'pupil', visit: '/rewards' },
   { route: '/league', who: 'pupil', visit: '/league' },

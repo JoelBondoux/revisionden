@@ -1273,6 +1273,19 @@ Tags: #product #rules #limits #defaults
   Maths topics with items (n4, n7, a4, a6, a17, a18, r9, g9, g17), URLs found by web search only.
   Superseded on 2026-11-26 by Q6 (above): every link re-read and match-checked, Bitesize added
   once the provider hosts were allowed in the build environment.
+- Past papers (Q7, owner request 2026-11-27, cut-down X5: links only): page
+  `/learn/subject/:subjectId/past-papers`, from a "Past papers" button on the subject's Learn page
+  (not a nav tab). The student's board first (from `GET /v1/student/subjects`), then the other
+  boards offering the subject; all boards when the board is Not sure. Links open in a new tab, to
+  each board's public finder only (no PDFs, no teacher-only deep links), recorded with status 200,
+  page title and date in `PAST_PAPER_PAGES` (`packages/core/src/past-papers.ts`), checked
+  2026-11-27: AQA www.aqa.org.uk/find-past-papers-and-mark-schemes, Pearson
+  qualifications.pearson.com/en/support/support-topics/exams/past-papers.html, OCR
+  www.ocr.org.uk/qualifications/past-paper-finder/, Eduqas
+  www.eduqas.co.uk/home/past-papers-and-mark-schemes/. Pearson keeps the last 12 months for
+  teachers; OCR's past paper policy keeps five years public. Wording checked by L (2026-11-27):
+  a visible "leaving RevisionDen" note above the links, no referrer sent (`referrerPolicy="no-referrer"`),
+  board names only (no logos).
 - Learn it first, in-house goal (owner direction 2026-11-26, not yet built): RevisionDen should
   eventually write its own verified teaching content (topic notes, explanations per learning
   point, worked examples, code-drawn diagrams) under `docs/VERIFICATION.md`, and retire each
