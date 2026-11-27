@@ -107,7 +107,7 @@
 
 .home-goals {
   display: grid;
-  gap: var(--space-2);
+  gap: var(--space-1);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -141,8 +141,8 @@
 
 .home-goals__cards {
   display: grid;
-  width: 52px;
-  height: 52px;
+  width: 40px;
+  height: 40px;
   place-items: center;
   /* Icon-only: an edge that reaches 3:1 on every page (J17x part 2, WCAG 1.4.11). */
   border: 2px solid var(--color-control-edge);
@@ -152,8 +152,8 @@
 }
 
 .home-goals__cards-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 /* The one big call to action, on a slanted colour field. */
@@ -281,6 +281,21 @@ h2.home-row-title {
   flex: 0 1 auto;
   min-width: 0;
   max-width: 100%;
+}
+
+.home-fix__name {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.home-fix__all {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-target);
+  font-weight: var(--font-weight-extrabold);
 }
 
 .home-fix__none {

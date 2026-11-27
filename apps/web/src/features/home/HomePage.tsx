@@ -97,11 +97,15 @@ const WEEKDAYS: Record<string, string> = {
 };
 
 function weakSpots(map: TopicMap) {
-  return map.units
-    .flatMap((u) => u.topics)
-    .filter((t) => t.status === 'weak')
-    .slice(0, 6);
+  return map.units.flatMap((u) => u.topics).filter((t) => t.status === 'weak');
 }
+
+/**
+ * UX-1 (lead's ruling): Home shows the weakest few as wrapping chips of at most two lines, then
+ * "See all N" on the map, so Home still fits one phone screen. Three did not fit at 390 × 844
+ * with long real topic names (home.spec), so two.
+ */
+const FIX_SHOWN = 2;
 
 export function HomePage() {
   const api = useApi();
@@ -198,8 +202,8 @@ function HomeBody({
                     ? `Goal smashed: ${map.xpToday} XP, goal ${map.dailyGoalXp} XP`
                     : `${map.xpToday} of ${map.dailyGoalXp} XP`
                 }
-                size={52}
-                stroke={7}
+                size={40}
+                stroke={6}
                 tone="var(--color-gold)"
               >
                 <StarIcon />
@@ -218,8 +222,8 @@ function HomeBody({
                   value={fiveADay.answered}
                   max={fiveADay.total}
                   valueText={`${fiveADay.answered} of ${fiveADay.total} done`}
-                  size={52}
-                  stroke={7}
+                  size={40}
+                  stroke={6}
                   tone="#3cb4ff"
                 >
                   <b>5</b>
@@ -291,15 +295,25 @@ function HomeBody({
         <LeagueChip />
       </div>
       {weak.length > 0 ? (
-        <ul className="home-fix" aria-labelledby="home-fix">
-          {weak.map((t) => (
-            <li key={t.id}>
-              <Link to={`/learn/topic/${t.lessonId}`} className="home-fix__chip">
-                {t.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul className="home-fix" aria-labelledby="home-fix">
+            {weak.slice(0, FIX_SHOWN).map((t) => (
+              <li key={t.id}>
+                {/* Clamped to two lines on screen; the whole name stays its name and title. */}
+                <Link to={`/learn/topic/${t.lessonId}`} className="home-fix__chip" title={t.title}>
+                  <span className="home-fix__name">{t.title}</span>
+                </Link>
+              </li>
+            ))}
+            {weak.length > FIX_SHOWN && (
+              <li>
+                <TextLink to="/map" className="home-fix__all">
+                  See all {weak.length}
+                </TextLink>
+              </li>
+            )}
+          </ul>
+        </>
       ) : (
         <p className="home-fix__none">Nothing to fix. Nice!</p>
       )}

@@ -21,7 +21,9 @@ const weak = (id: string, title: string) => ({
 test.describe('at 320px wide', () => {
   test.use({ viewport: { width: 320, height: 640 } });
 
-  test('the "Fix these" topics wrap onto new lines, all on screen', async ({ page }) => {
+  // Lead's ruling (UX-1): the weakest few as wrapping chips, each at most two lines with its full
+  // name kept for screen readers, then "See all N" on the map; Home still fits one screen.
+  test('the "Fix these" topics wrap, each at most two lines, then "See all"', async ({ page }) => {
     await seedApp(page, 'pupil');
     const unit = topicMap.units[0]!;
     await page.route('**/v1/student/map**', (route) =>
@@ -32,10 +34,11 @@ test.describe('at 320px wide', () => {
             {
               ...unit,
               topics: [
-                weak('w1', 'Simultaneous equations'),
+                weak('w1', 'Calculating with roots and integer and fractional indices'),
                 weak('w2', 'Rearranging formulae'),
                 weak('w3', 'Bearings and scale drawings'),
                 weak('w4', 'Circle theorems'),
+                weak('w5', 'Expressions, equations, formulae, identities and inequalities'),
               ],
             },
           ],
@@ -43,17 +46,34 @@ test.describe('at 320px wide', () => {
       }),
     );
     await page.goto('/home');
-    const chips = page.getByRole('list', { name: 'Fix these' }).getByRole('link');
-    await expect(chips).toHaveCount(4);
+    const fix = page.getByRole('list', { name: 'Fix these' });
+    const chips = fix.getByRole('link').filter({ hasNotText: /^See all/ });
+    await expect(chips.first()).toBeVisible();
+    const shown = await chips.count();
+    expect(shown).toBeGreaterThanOrEqual(2);
+    expect(shown).toBeLessThanOrEqual(3);
+    await expect(chips.first()).toHaveAccessibleName(
+      'Calculating with roots and integer and fractional indices',
+    );
+    await expect(chips.first()).toHaveAttribute(
+      'title',
+      'Calculating with roots and integer and fractional indices',
+    );
     const boxes = await chips.evaluateAll((els) =>
       els.map((el) => {
         const r = el.getBoundingClientRect();
-        return { top: r.top, right: r.right };
+        const lineHeight = parseFloat(getComputedStyle(el.firstElementChild ?? el).lineHeight);
+        return {
+          right: r.right,
+          lines: Math.round((el.firstElementChild ?? el).clientHeight / lineHeight),
+        };
       }),
     );
     const width = await page.evaluate(() => document.documentElement.clientWidth);
     expect(boxes.every((b) => b.right <= width + 0.5)).toBe(true);
-    expect(new Set(boxes.map((b) => Math.round(b.top))).size).toBeGreaterThan(1);
+    expect(boxes.every((b) => b.lines <= 2)).toBe(true);
+    const all = page.getByRole('link', { name: 'See all 5' });
+    await expect(all).toHaveAttribute('href', '/map');
   });
 });
 
