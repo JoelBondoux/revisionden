@@ -40,6 +40,8 @@ const feedbackSchema = z.object({
 const triageSchema = feedbackSchema.extend({
   device: z.record(z.string(), z.unknown()).nullable(),
   duplicateOf: z.string().nullable().default(null),
+  // L13: sent from a tester account (no rewards, the bug button never rests).
+  tester: z.boolean().default(false),
 });
 const rewardSchema = z.object({
   id: z.string(),

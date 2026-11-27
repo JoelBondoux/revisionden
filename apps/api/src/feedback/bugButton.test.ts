@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { eq } from 'drizzle-orm';
-import { authUsers, feedback } from '@revisionden/db';
+import { authUsers, feedback, students } from '@revisionden/db';
 import { createTestContext, jsonRequest, type TestContext } from '../test/helpers';
 
 const DAY = 24 * 60 * 60 * 1000;
@@ -160,5 +160,47 @@ describe('the bug button rest (L13)', () => {
       jsonRequest('POST', {}, other.headers),
     );
     expect(on.status).toBe(404);
+  });
+});
+
+describe('tester accounts (L13)', () => {
+  const makeTester = (studentId: string) =>
+    t.db.update(students).set({ tester: true }).where(eq(students.id, studentId));
+
+  it('confirms a tester report as normal, with no XP and no Bug Hunter step', async () => {
+    const { studentId } = await t.familyStudent('test_kid');
+    await makeTester(studentId);
+    const id = await report(await kid(studentId));
+    const op = await operator();
+    const res = await t.app.request(
+      `/v1/admin/feedback/${id}/confirm`,
+      jsonRequest('POST', {}, op),
+    );
+    expect(await res.json()).toMatchObject({
+      item: { outcome: 'confirmed', rewardXp: 0, tester: true },
+      message: 'Thanks, tester! This bug is confirmed (tester accounts earn no rewards).',
+    });
+    const [row] = await t.db.select().from(feedback).where(eq(feedback.id, id));
+    expect(row!.trackStep).toBe(false);
+  });
+
+  it('never rests a tester bug button, however many reports are not bugs', async () => {
+    const { studentId } = await t.familyStudent('test_kid');
+    await makeTester(studentId);
+    await strikes(studentId, await operator(), 3);
+    const headers = await kid(studentId);
+    expect(await buttonState(headers)).toEqual({ state: 'on' });
+    expect((await send(headers, 'bug')).status).toBe(201);
+  });
+
+  it('shows the operator which reports came from a tester account', async () => {
+    const tester = await t.familyStudent('test_kid');
+    await makeTester(tester.studentId);
+    const other = await t.familyStudent('other_kid');
+    await report(await kid(tester.studentId));
+    await report(await kid(other.studentId));
+    const res = await t.app.request('/v1/admin/feedback', { headers: await operator() });
+    const list = ((await res.json()) as { feedback: { tester: boolean }[] }).feedback;
+    expect(list.map((f) => f.tester).sort()).toEqual([false, true]);
   });
 });

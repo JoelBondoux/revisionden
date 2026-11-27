@@ -231,6 +231,7 @@ function TriageRow({
         <span className="secondary-text">
           {item.senderRole} · {date(item.createdAt)}
         </span>
+        {item.tester && <Pill>Tester</Pill>}
         {item.outcome && <Pill tone="success">{OUTCOME_LABELS[item.outcome]}</Pill>}
         {item.rewardXp > 0 && <span className="secondary-text">+{item.rewardXp} XP</span>}
       </div>

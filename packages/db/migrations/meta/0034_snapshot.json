@@ -1,5 +1,5 @@
 {
-  "id": "7acc1ba5-1805-4827-93bd-28f3f1681c0c",
+  "id": "fd0685c8-17b9-4baf-88e9-dfb298d7977f",
   "prevId": "51207e6d-c877-4742-b97e-f57657f76d66",
   "version": "7",
   "dialect": "postgresql",
@@ -6174,6 +6174,13 @@
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
+        },
+        "tester": {
+          "name": "tester",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
         },
         "created_at": {
           "name": "created_at",

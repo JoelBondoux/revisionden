@@ -810,6 +810,11 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   on. Parents see a note on Parent home and can switch it back on (`POST
 /v1/students/:id/bug-button/on`); so can the operator from the ticket (AppDeck, audited). Get
   help, Ask a parent and every safeguarding route are never hidden by this.
+- **Tester accounts (L13, owner 2026-11-27):** an operator-console flag on a student (`tester`,
+  default off, audited `student.tester`; never hard-coded). A tester's bug reports are fixed as
+  normal, but Confirm and Duplicate give no XP and no Bug Hunter step (the outcome is still
+  recorded), and their Not-a-bug outcomes never rest or remove the bug button. `/admin/feedback`
+  tags their reports "Tester".
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.) Also, from the interactive lesson

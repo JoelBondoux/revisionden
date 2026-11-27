@@ -12,6 +12,7 @@ import { AdminFeedbackPage, FeedbackListPage, snippet } from './lists';
 const base = {
   createdAt: '2026-11-24T10:00:00.000Z',
   updatedAt: '2026-11-25T10:00:00.000Z',
+  tester: false,
 };
 const items: TriageFeedback[] = [
   {
@@ -214,6 +215,13 @@ describe('operator triage of bugs', () => {
     expect(await within(row).findByText('Not a bug')).toBeInTheDocument();
     expect(within(row).queryByRole('button', { name: 'Confirm bug' })).not.toBeInTheDocument();
     expect(within(row).getByRole('combobox', { name: 'Status' })).toHaveValue('will_not_fix');
+  });
+
+  it('tags reports from a tester account (L13)', async () => {
+    showBugs({ listAll: vi.fn(async () => bugs.map((b, i) => ({ ...b, tester: i === 2 }))) });
+    const rows = await screen.findAllByRole('listitem');
+    expect(within(rows[2]!).getByText('Tester')).toBeInTheDocument();
+    expect(within(rows[1]!).queryByText('Tester')).not.toBeInTheDocument();
   });
 
   it('offers only earlier confirmed reports as the original of a duplicate', async () => {

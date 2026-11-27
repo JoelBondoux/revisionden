@@ -218,7 +218,8 @@ Requested by the product owner on 2026-11-25. Rewards students who help make the
   earn a smaller "Thanks for confirming" (+10 XP, no track step). At most 3 confirmed-bug rewards a
   week. Parents' reports are thanked but do not earn student rewards. The operator's decision is
   final; nothing is automatic. A report the operator marks **Not a bug** earns nothing; several
-  in a short time rest the student's bug button (L13, `docs/PRODUCT_RULES.md`).
+  in a short time rest the student's bug button (L13, `docs/PRODUCT_RULES.md`). Tester accounts
+  (operator-console flag) earn no Bug Hunter XP or steps.
 - Built (L7): the confirm flow, XP and caps (`packages/core/src/bug-hunter.ts`). The catalogue reads
   the number of confirmed bugs that earned a step from `confirmedBugCount` in
   `apps/api/src/feedback/bugHunter.ts` (or `GET /v1/student/bug-hunter`). Feedback rows are deleted

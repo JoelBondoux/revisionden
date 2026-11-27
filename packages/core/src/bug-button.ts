@@ -20,6 +20,8 @@ export interface BugButtonInput {
   notABugAt: readonly Date[];
   /** When a parent or the operator last switched the button back on; earlier outcomes don't count. */
   resetAt?: Date | null;
+  /** A tester account (operator console): Not-a-bug outcomes never rest its button. */
+  tester?: boolean;
   now: Date;
 }
 
@@ -29,7 +31,13 @@ export interface BugButtonInput {
  * pause don't count again. The BUG_BUTTON_PAUSES_BEFORE_REMOVAL-th pause within
  * BUG_BUTTON_REMOVAL_WINDOW_DAYS of the first of them removes the button.
  */
-export function bugButtonState({ notABugAt, resetAt, now }: BugButtonInput): BugButtonState {
+export function bugButtonState({
+  notABugAt,
+  resetAt,
+  tester = false,
+  now,
+}: BugButtonInput): BugButtonState {
+  if (tester) return { state: 'on' };
   const after = resetAt?.getTime() ?? Number.NEGATIVE_INFINITY;
   const times = notABugAt
     .map((d) => d.getTime())

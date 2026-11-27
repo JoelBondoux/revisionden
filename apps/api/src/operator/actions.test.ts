@@ -5,7 +5,7 @@ import {
   OperatorTicketDetailSchema,
   OperatorTicketListSchema,
 } from '@revisionden/core';
-import { feedback, operatorAuditLog, parents } from '@revisionden/db';
+import { feedback, operatorAuditLog, parents, students } from '@revisionden/db';
 import { createTestContext, type TestContext } from '../test/helpers';
 import { signedOperatorRequest, TEST_OPERATOR_SECRET } from '../test/operator';
 
@@ -301,6 +301,33 @@ describe('operator Not a bug and the bug button (L13)', () => {
       status: 400,
       code: 'not_a_student_ticket',
     });
+  });
+});
+
+describe('operator tester flag (L13)', () => {
+  it("sets and clears a student's tester flag, audited", async () => {
+    const f = await makeFamily();
+    const path = `/families/${f.familyId}/students/${f.studentId}/tester`;
+    expect((await post(path, { tester: true })).data).toEqual({ ok: true });
+    const [on] = await t.db.select().from(students).where(eq(students.id, f.studentId));
+    expect(on!.tester).toBe(true);
+    expect((await post(path, { tester: false })).data).toEqual({ ok: true });
+    const [off] = await t.db.select().from(students).where(eq(students.id, f.studentId));
+    expect(off!.tester).toBe(false);
+    expect((await audits()).filter((a) => a.action === 'student.tester')).toHaveLength(2);
+  });
+
+  it("refuses a student from another family, and a body that isn't a yes or no", async () => {
+    const f = await makeFamily();
+    const g = await makeFamily();
+    expect(
+      (await post(`/families/${f.familyId}/students/${g.studentId}/tester`, { tester: true }))
+        .status,
+    ).toBe(404);
+    expect(
+      (await post(`/families/${f.familyId}/students/${f.studentId}/tester`, { tester: 'yes' }))
+        .status,
+    ).toBe(400);
   });
 });
 

@@ -120,6 +120,7 @@
     "POST /operator/appdeck/families/:id/free-place/end",
     "POST /operator/appdeck/families/:id/free-place/grant",
     "POST /operator/appdeck/families/:id/notes",
+    "POST /operator/appdeck/families/:id/students/:studentId/tester",
     "POST /operator/appdeck/families/:id/tags",
     "POST /operator/appdeck/families/:id/tags/:tagId/remove",
     "POST /operator/appdeck/families/:id/trial/extend",

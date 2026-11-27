@@ -1001,6 +1001,9 @@ Tags: #product #rules #limits #defaults
   closed). 3 within 14 days rest the bug button for 7 days; the 3rd rest within 90 days removes
   it until a parent (Parent home) or the operator switches it back on. Server-enforced; numbers in
   `packages/core/src/bug-button.ts`. Never hides Get help or Ask a parent.
+- Tester accounts (L13, owner 2026-11-27): the operator console can flag a student as a tester
+  (the adults testing on dev share one pupil test account). Their confirmed bugs earn no XP or Bug
+  Hunter step, and their Not-a-bug outcomes never rest the button. Reports show a "Tester" tag.
 - Built (L7): the bug button and confirm flow; rules in `packages/core/src/bug-hunter.ts`
   (`bugReward`). The week is Monday to Sunday, UK time, and the 3-a-week cap counts full and
   duplicate rewards; past the cap the student is thanked with no XP and no track step. Bug XP is

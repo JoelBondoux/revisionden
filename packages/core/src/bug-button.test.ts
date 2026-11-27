@@ -97,4 +97,9 @@ describe('bugButtonState', () => {
       state: 'on',
     });
   });
+
+  it('never rests the button of a tester account (L13)', () => {
+    const notABugAt = [0, 1, 2, 30, 31, 32, 60, 61, 62].map((d) => at(d));
+    expect(bugButtonState({ notABugAt, tester: true, now: at(62) })).toEqual({ state: 'on' });
+  });
 });

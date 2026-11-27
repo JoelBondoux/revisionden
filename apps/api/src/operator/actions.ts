@@ -5,15 +5,23 @@
  * rest follow the same rules.
  */
 import { Hono, type Context } from 'hono';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import type { z } from 'zod';
 import {
   OperatorDuplicateBodySchema,
   OperatorNoteBodySchema,
   OperatorReplyBodySchema,
+  OperatorTesterBodySchema,
   OperatorTicketStatusBodySchema,
 } from '@revisionden/core';
-import { families, feedback, feedbackReplies, operatorNotes, type Database } from '@revisionden/db';
+import {
+  families,
+  feedback,
+  feedbackReplies,
+  operatorNotes,
+  students,
+  type Database,
+} from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { ApiError, notFound } from '../errors';
 import {
@@ -71,6 +79,22 @@ export function operatorActionRoutes({ db, clock }: OperatorActionDeps) {
       .insert(operatorNotes)
       .values({ familyId: id, authorEmail: c.var.operator.email, text, createdAt: now() });
     await audited(c, 'note.add', id);
+    return ok(c, { ok: true });
+  });
+
+  // L13: a tester account (an adult testing the app): its bug reports earn no rewards and never
+  // rest its bug button. Only set here, in the operator console; nothing is hard-coded.
+  app.post('/families/:id/students/:studentId/tester', async (c) => {
+    const { id, studentId } = c.req.param();
+    const { tester } = await body(c, OperatorTesterBodySchema);
+    if (!isId(id) || !isId(studentId)) throw notFound('Student not found');
+    const [row] = await db
+      .update(students)
+      .set({ tester, updatedAt: now() })
+      .where(and(eq(students.id, studentId), eq(students.familyId, id)))
+      .returning({ id: students.id });
+    if (!row) throw notFound('Student not found');
+    await audited(c, 'student.tester', id);
     return ok(c, { ok: true });
   });
 

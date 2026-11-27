@@ -150,11 +150,23 @@ function toFeedback(row: typeof feedback.$inferSelect) {
   };
 }
 
-const toAdminFeedback = (row: typeof feedback.$inferSelect) => ({
+const toAdminFeedback = (row: typeof feedback.$inferSelect, tester = false) => ({
   ...toFeedback(row),
   device: row.device,
   duplicateOf: row.duplicateOf ?? null,
+  // L13: sent from a tester account (operator console), so it earns nothing and never rests.
+  tester,
 });
+
+/** L13: whether a student is a tester account (set only in the operator console). */
+async function isTester(db: Database, studentId: string | null): Promise<boolean> {
+  if (!studentId) return false;
+  const [row] = await db
+    .select({ tester: students.tester })
+    .from(students)
+    .where(eq(students.id, studentId));
+  return row?.tester ?? false;
+}
 
 /** The thank-you the sender sees for a confirmed report (packages/core bugReward). */
 function rewardMessage(row: typeof feedback.$inferSelect): string {
@@ -179,7 +191,7 @@ export async function studentBugButton(
   now: Date,
 ): Promise<BugButtonState> {
   const [student] = await db
-    .select({ resetAt: students.bugButtonResetAt })
+    .select({ resetAt: students.bugButtonResetAt, tester: students.tester })
     .from(students)
     .where(eq(students.id, studentId));
   const rows = await db
@@ -196,6 +208,7 @@ export async function studentBugButton(
   return bugButtonState({
     notABugAt: rows.flatMap((r) => (r.at ? [r.at] : [])),
     resetAt: student?.resetAt ?? null,
+    tester: student?.tester ?? false,
     now,
   });
 }
@@ -482,8 +495,12 @@ export function adminFeedbackRoutes({ db, config, clock }: FeedbackDeps) {
   });
 
   app.get('/feedback', async (c) => {
-    const rows = await db.select().from(feedback).orderBy(desc(feedback.createdAt));
-    return c.json({ feedback: rows.map(toAdminFeedback) });
+    const rows = await db
+      .select({ row: feedback, tester: students.tester })
+      .from(feedback)
+      .leftJoin(students, eq(students.id, feedback.studentId))
+      .orderBy(desc(feedback.createdAt));
+    return c.json({ feedback: rows.map((r) => toAdminFeedback(r.row, r.tester ?? false)) });
   });
 
   // Confirm a bug report, or mark it a duplicate of an earlier confirmed one, and reward the
@@ -496,19 +513,19 @@ export function adminFeedbackRoutes({ db, config, clock }: FeedbackDeps) {
       c.req.param('id'),
       duplicateOf,
     );
-    return c.json({ item: toAdminFeedback(item), message });
+    return c.json({ item: toAdminFeedback(item, await isTester(db, item.studentId)), message });
   });
 
   // L13: a bug report that is not a bug. Closes it; three in 14 days rest the bug button.
   app.post('/feedback/:id/not-a-bug', async (c) => {
     const item = await markNotABug(db, clock.now(), c.req.param('id'));
-    return c.json({ item: toAdminFeedback(item) });
+    return c.json({ item: toAdminFeedback(item, await isTester(db, item.studentId)) });
   });
 
   app.patch('/feedback/:id', async (c) => {
     const { status } = await readJson(c, statusSchema);
     const row = await setFeedbackStatus(db, clock.now(), c.req.param('id'), status);
-    return c.json(toAdminFeedback(row));
+    return c.json(toAdminFeedback(row, await isTester(db, row.studentId)));
   });
 
   return app;
@@ -544,6 +561,7 @@ export async function confirmFeedback(
     senderRole: row.senderRole,
     duplicate: duplicateOf !== undefined,
     rewardsThisWeek: row.studentId ? await bugRewardsThisWeek(db, row.studentId, now) : 0,
+    tester: await isTester(db, row.studentId),
   });
   const [updated] = await db
     .update(feedback)
