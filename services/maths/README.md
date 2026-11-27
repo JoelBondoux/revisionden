@@ -86,7 +86,8 @@ answers by code, with no AI:
 
 - `tracers.py`: every intermediate state of bubble, insertion, merge and quick sort, linear and
   binary search, array stacks and queues (linear or circular, with overflow, underflow, full
-  and empty recorded), binary search tree traversals and search paths, Dijkstra and A*. The
+  and empty recorded), binary search tree traversals and search paths, Dijkstra and A* (A* refuses a heuristic that
+  is not consistent, or a goal whose heuristic is not 0). The
   conventions the specification does not fix (first-item pivot, `mid = (low + high) DIV 2`,
   alphabetical tie-breaks and so on) are listed in the module; a question that depends on one
   states it.

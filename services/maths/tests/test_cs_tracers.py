@@ -159,3 +159,23 @@ def test_a_star_with_no_route():
 def test_ties_are_broken_alphabetically():
     run = tracers.dijkstra({("S", "B"): 1, ("S", "A"): 1}, "S")
     assert run.order == ["S", "A", "B"]
+
+
+# Codex review on #431: with an inconsistent heuristic, a closed node can later get a cheaper route
+# and the cost would not reach its successors (S,B,A,G reported as 5 when it costs 4). Exam A*
+# questions use consistent heuristics, so the tracer refuses any other kind rather than answer.
+def test_a_star_refuses_a_heuristic_that_is_not_consistent():
+    edges = {("S", "A"): 3, ("S", "B"): 1, ("B", "A"): 1, ("A", "G"): 2}
+    with pytest.raises(ValueError, match="consistent"):
+        tracers.a_star(edges, "S", "G", {"S": 0, "A": 0, "B": 3, "G": 0}, directed=True)
+
+
+def test_a_star_refuses_a_goal_with_a_nonzero_heuristic():
+    with pytest.raises(ValueError, match="goal"):
+        tracers.a_star({("A", "B"): 1}, "A", "B", {"A": 0, "B": 1})
+
+
+def test_a_star_with_a_consistent_heuristic_finds_the_cheapest_route():
+    edges = {("S", "A"): 3, ("S", "B"): 1, ("B", "A"): 1, ("A", "G"): 2}
+    run = tracers.a_star(edges, "S", "G", {"S": 3, "A": 2, "B": 3, "G": 0}, directed=True)
+    assert (run.path, run.cost) == (["S", "B", "A", "G"], 4)

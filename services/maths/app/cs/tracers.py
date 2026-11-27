@@ -316,8 +316,19 @@ class AStarRun:
 
 
 def a_star(edges: dict, start, goal, heuristic: dict, directed: bool = False) -> AStarRun:
-    """Expands the open node with the lowest f = g + h (ties alphabetically) until the goal."""
+    """Expands the open node with the lowest f = g + h (ties alphabetically) until the goal.
+
+    The heuristic must be consistent (h(goal) = 0 and h(u) <= w(u, v) + h(v) on every edge), as in
+    exam questions. Otherwise a closed node could later get a cheaper route and the answer would
+    contradict itself, so any other heuristic is refused (Codex review on #431).
+    """
     graph = _adjacency(edges, directed)
+    if heuristic[goal] != 0:
+        raise ValueError(f"the goal {goal} must have heuristic 0")
+    for u, neighbours in graph.items():
+        for v, weight in neighbours.items():
+            if heuristic[u] > weight + heuristic[v]:
+                raise ValueError(f"the heuristic is not consistent on {u}-{v}")
     g, previous = {start: 0}, {start: None}
     waiting, done, order = [(heuristic[start], start)], set(), []
     while waiting:

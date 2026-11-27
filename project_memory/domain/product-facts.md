@@ -538,7 +538,8 @@ Tags: #product #rules #limits #defaults
   depend on these. Tracers (`app/cs/tracers.py`): sorts, searches, stacks, queues, binary
   search trees, Dijkstra and A*, with chosen conventions (bubble sort stops after a pass with
   no swaps; quick sort pivots on the first item; merge sort splits at `len // 2`; binary search
-  `mid = (low + high) DIV 2`; ties alphabetical) that questions state when they matter. LMC
+  `mid = (low + high) DIV 2`; ties alphabetical) that questions state when they matter; A*
+  accepts only a consistent heuristic with h(goal) = 0 and refuses any other. LMC
   (`app/cs/lmc.py`): OCR mnemonics and accepted alternatives; BRP branches on zero or more; a
   value outside -999 to 999 is an error. Not yet wired into `pnpm content:validate`.
 
