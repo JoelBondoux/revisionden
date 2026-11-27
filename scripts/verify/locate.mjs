@@ -31,19 +31,27 @@ export function parseLocation(location) {
 function joinPages(pages, joinHyphens) {
   const starts = [];
   const headings = [];
-  let text = '';
+  const chunks = [];
+  let length = 0;
+  let endsWithSpace = false;
   for (const page of pages) {
-    starts.push(text.length);
-    for (const ch of `${normaliseText(page, { joinHyphens })} `) {
-      if (ch !== HEADING) {
-        // A mark between two spaces leaves one space, as if it had never been there.
-        if (!(ch === ' ' && text.endsWith(' ') && headings.at(-1) === text.length)) text += ch;
-        continue;
-      }
-      headings.push(text.length);
-    }
+    starts.push(length);
+    // Split at the marks instead of walking the growing text, so joining stays linear (Codex on #435).
+    normaliseText(page, { joinHyphens })
+      .concat(' ')
+      .split(HEADING)
+      .forEach((piece, i) => {
+        if (i > 0) {
+          headings.push(length);
+          // A mark between two spaces leaves one space, as if it had never been there.
+          if (endsWithSpace && piece.startsWith(' ')) piece = piece.slice(1);
+        }
+        chunks.push(piece);
+        length += piece.length;
+        if (piece) endsWithSpace = piece.endsWith(' ');
+      });
   }
-  return { text, starts, headings };
+  return { text: chunks.join(''), starts, headings };
 }
 
 const isSection = (code) => /^\d/.test(code);

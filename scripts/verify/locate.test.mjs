@@ -344,3 +344,11 @@ test('a quote that runs across a heading is still an exact match (Codex on #435)
   assert.equal(r.match, 'exact');
   assert.equal(r.locationConfirmed, true);
 });
+
+test('a long source is joined in linear time (Codex on #435)', () => {
+  const page = [`${'some test words '.repeat(12500)}N7 calculate with roots`];
+  const started = Date.now();
+  const r = locateQuote({ quote: 'calculate with roots', location: 'N7' }, page, { paged: false });
+  assert.equal(r.match, 'exact');
+  assert.ok(Date.now() - started < 500, `took ${Date.now() - started} ms`);
+});
