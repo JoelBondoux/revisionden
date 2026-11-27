@@ -849,5 +849,181 @@
         }
       ]
     }
+  },
+  {
+    "id": "gcse-maths-h-p1-0111",
+    "topic": "gcse-maths-h-p1",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p1-lp-frequency-table",
+    "expected_seconds": 35,
+    "prompt": "A spinner is spun 50 times. It lands on red 12 times, on blue 20 times and on green the rest of the time. How many times does it land on green?",
+    "answer": {
+      "value": "18"
+    },
+    "verify": {
+      "expression": "50 - 12 - 20"
+    },
+    "marks": 1,
+    "explanation": "The frequencies add up to 50: 50 - 12 - 20 = 18 greens.",
+    "hint": "The three frequencies make the total number of spins.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P1 (page 19; PDF page 31)",
+        "quote": "record, describe and analyse the frequency of outcomes of probability experiments using tables and frequency trees",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:05Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:32Z",
+          "notes": "model answered \"18 times\"; expected \"18\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:33Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p1-0112",
+    "topic": "gcse-maths-h-p1",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p1-lp-frequency-table",
+    "expected_seconds": 40,
+    "prompt": "A dice is rolled 40 times. The frequencies of 1 to 5 are 8, 6, 5, 7 and 9. How many times did it land on 6?",
+    "answer": {
+      "value": "5"
+    },
+    "verify": {
+      "expression": "40 - (8 + 6 + 5 + 7 + 9)"
+    },
+    "marks": 1,
+    "explanation": "8 + 6 + 5 + 7 + 9 = 35, so 6 came up 40 - 35 = 5 times.",
+    "hint": "All six frequencies add up to the number of rolls.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P1",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P1 (page 19; PDF page 31)",
+        "quote": "record, describe and analyse the frequency of outcomes of probability experiments using tables and frequency trees",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P1). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:05Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:35Z",
+          "notes": "model answered \"5 times\"; expected \"5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:36Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
   }
 ]

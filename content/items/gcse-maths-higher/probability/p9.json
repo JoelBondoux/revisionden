@@ -634,13 +634,13 @@
     "expected_seconds": 30,
     "prompt": "What does P(A | B) mean?",
     "options": [
-      "The probability of A, given that B has happened",
+      "The probability of B, given that A has happened",
       "P(A) × P(B)",
-      "The probability of A or B",
-      "The probability of B, given that A has happened"
+      "The probability of A, given that B has happened",
+      "The probability of A or B"
     ],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "The bar means \"given\". P(A | B) is the probability of A when we know B has happened.",
@@ -679,7 +679,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:32Z",
+          "at": "2026-11-27T12:12:24Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -695,16 +695,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:29Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:12:32Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:35Z",
-          "notes": "unsupported_claim (question): The item asks for the meaning of the notation P(A | B), but the only quoted source says students should 'calculate and interpret conditional probabilities through representation using expected frequencies with two-way tables, tree diagrams and Venn diagrams'. It does not explicitly define or mention the notation P(A | B), so the source quoted does not directly support this notation-based question.; unsupported_claim (answer): The marked answer gives the meaning of the notation P(A | B), but the quoted source does not explicitly define this notation; it only refers generally to calculating and interpreting conditional probabilities.; unsupported_claim (option 1): This distractor uses the notation P(A) × P(B). The quoted source does not mention this notation or multiplication of probabilities, so this option is not directly supported by the provided source.; unsupported_claim (option 2): This distractor states 'The probability of A or B', but the quoted source does not mention the meaning of 'or' probabilities or this notation.; unsupported_claim (option 3): This distractor gives the meaning of P(B | A), but the quoted source does not explicitly define conditional probability notation, so this option is not directly supported by the provided source.; unsupported_claim (explanation): The explanation states 'The bar means \"given\". P(A | B) is the probability of A when we know B has happened.' The quoted source does not explicitly define the vertical bar notation or the wording 'given', so this factual claim is not backed up by the provided source."
+          "at": "2026-11-27T12:12:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -926,6 +926,612 @@
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:19:42Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p9-0112",
+    "topic": "gcse-maths-h-p9",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p9-lp-expected-frequency",
+    "expected_seconds": 45,
+    "prompt": "In a group of 500 people, 20% have a dog. Of the people with a dog, 30% also have a cat. Using expected frequencies, how many people have both a dog and a cat?",
+    "answer": {
+      "value": "30"
+    },
+    "verify": {
+      "expression": "500 * 20/100 * 30/100"
+    },
+    "marks": 1,
+    "explanation": "20% of 500 = 100 people have a dog. 30% of those 100 = 30 have a cat as well.",
+    "hint": "Find how many have a dog first.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P9 (page 19; PDF page 31)",
+        "quote": "calculate and interpret conditional probabilities through representation using expected frequencies with two-way tables, tree diagrams and Venn diagrams",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P9). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:25Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:34Z",
+          "notes": "model answered \"30 people\"; expected \"30\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:35Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p9-0113",
+    "topic": "gcse-maths-h-p9",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p9-lp-notation",
+    "expected_seconds": 25,
+    "prompt": "In P(rain | cloudy), what are we told has happened?",
+    "options": ["It is cloudy", "It is not cloudy", "Nothing", "It rains"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "The bar means \"given\", so P(rain | cloudy) is the probability of rain given that it is cloudy.",
+    "hint": "Read the bar as \"given\".",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P9",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P9 (page 19; PDF page 31)",
+        "quote": "calculate and interpret conditional probabilities through representation using expected frequencies with two-way tables, tree diagrams and Venn diagrams",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P9). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (P(A | B) means the probability of A given B) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:25Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:36Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:37Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p9-0114",
+    "topic": "gcse-maths-h-p9",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p9-lp-notation",
+    "expected_seconds": 30,
+    "prompt": "Which is the probability that a student plays football, given that they play tennis?",
+    "options": [
+      "P(tennis | football)",
+      "P(football or tennis)",
+      "P(football and tennis)",
+      "P(football | tennis)"
+    ],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "What we are told comes after the bar, so \"football given tennis\" is P(football | tennis).",
+    "hint": "What we already know goes after the bar.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P9",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P9 (page 19; PDF page 31)",
+        "quote": "calculate and interpret conditional probabilities through representation using expected frequencies with two-way tables, tree diagrams and Venn diagrams",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P9). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (P(A | B) means the probability of A given B) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:26Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:39Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:41Z",
+          "notes": "unsupported_claim (hint): The hint states a rule for conditional probability notation: \"What we already know goes after the bar.\" The only quoted source supports calculating and interpreting conditional probabilities using representations, but does not explicitly support this notation rule. Under the instruction that new factual claims need a quoted source, this is unsupported by the provided source.; unsupported_claim (explanation): The explanation states a notation rule: \"What we are told comes after the bar, so 'football given tennis' is P(football | tennis).\" The provided source does not explicitly state this rule about notation, so this factual claim is not backed by the quoted source."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p9-0115",
+    "topic": "gcse-maths-h-p9",
+    "type": "numeric",
+    "difficulty": 4,
+    "learning_point": "gcse-maths-h-p9-lp-tree",
+    "expected_seconds": 50,
+    "prompt": "P(A) = 0.4. If A happens, the probability of B is 0.5. If A does not happen, the probability of B is 0.25. Work out P(B).",
+    "answer": {
+      "value": "0.35"
+    },
+    "verify": {
+      "expression": "4/10*5/10 + 6/10*25/100"
+    },
+    "marks": 1,
+    "explanation": "B can happen after A or after not A: 0.4 × 0.5 + 0.6 × 0.25 = 0.2 + 0.15 = 0.35.",
+    "hint": "Add the two branches of the tree that end in B.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P9 (page 19; PDF page 31)",
+        "quote": "calculate and interpret conditional probabilities through representation using expected frequencies with two-way tables, tree diagrams and Venn diagrams",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P9). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:27Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:43Z",
+          "notes": "model answered \"0.35\"; expected \"0.35\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:44Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p9-0116",
+    "topic": "gcse-maths-h-p9",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p9-lp-two-way",
+    "expected_seconds": 40,
+    "prompt": "In a survey, 30 adults and 20 children were asked a question. 18 adults and 15 children said yes. A child is chosen at random. Work out the probability that they said yes. Give your answer in its simplest form.",
+    "answer": {
+      "value": "3/4",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "15/20"
+    },
+    "marks": 1,
+    "explanation": "Given it is a child, look only at the 20 children: 15 said yes, so 15/20 = 3/4.",
+    "hint": "Only look at the children.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P9 (page 19; PDF page 31)",
+        "quote": "calculate and interpret conditional probabilities through representation using expected frequencies with two-way tables, tree diagrams and Venn diagrams",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P9). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:28Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:45Z",
+          "notes": "model answered \"3/4\"; expected \"3/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:46Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p9-0117",
+    "topic": "gcse-maths-h-p9",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p9-lp-venn",
+    "expected_seconds": 45,
+    "prompt": "Of 50 students, 30 study French, 25 study Spanish and 10 study both. A student who studies Spanish is chosen at random. Work out the probability that they also study French. Give your answer in its simplest form.",
+    "answer": {
+      "value": "2/5",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "10/25"
+    },
+    "marks": 1,
+    "explanation": "Given they study Spanish, look only at the 25 Spanish students. 10 of them also study French: 10/25 = 2/5.",
+    "hint": "Which group are you choosing from?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P9 (page 19; PDF page 31)",
+        "quote": "calculate and interpret conditional probabilities through representation using expected frequencies with two-way tables, tree diagrams and Venn diagrams",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P9). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:29Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:47Z",
+          "notes": "model answered \"2/5\"; expected \"2/5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:48Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p9-0118",
+    "topic": "gcse-maths-h-p9",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p9-lp-venn",
+    "expected_seconds": 45,
+    "prompt": "Of 50 students, 30 study French, 25 study Spanish and 10 study both. A student who studies French is chosen at random. Work out the probability that they do not study Spanish. Give your answer in its simplest form.",
+    "answer": {
+      "value": "2/3",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "(30 - 10)/30"
+    },
+    "marks": 1,
+    "explanation": "Given they study French, look only at the 30 French students. 30 - 10 = 20 do not study Spanish: 20/30 = 2/3.",
+    "hint": "Only look at the French students, then take away those who study both.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P9",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P9 (page 19; PDF page 31)",
+        "quote": "calculate and interpret conditional probabilities through representation using expected frequencies with two-way tables, tree diagrams and Venn diagrams",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P9). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:30Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:50Z",
+          "notes": "model answered \"2/3\"; expected \"2/3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:51Z",
           "notes": "no problems found"
         }
       ]

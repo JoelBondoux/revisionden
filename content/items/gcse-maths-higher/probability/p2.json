@@ -466,13 +466,13 @@
     "expected_seconds": 40,
     "prompt": "A dice is rolled 120 times and lands on 6 exactly 21 times. Which statement is best?",
     "options": [
-      "The results are consistent with a fair dice",
-      "The dice is definitely biased",
       "The dice is definitely fair",
-      "The next roll cannot be a 6"
+      "The next roll cannot be a 6",
+      "The dice is definitely biased",
+      "The results are consistent with a fair dice"
     ],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "For a fair dice you would expect about 120 ÷ 6 = 20 sixes. 21 is close to 20, so the results are consistent with a fair dice, but they cannot prove it is fair.",
@@ -522,7 +522,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:22Z",
+          "at": "2026-11-27T12:12:06Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -538,16 +538,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:20Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:12:32Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
-          "result": "fail",
+          "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:24Z",
-          "notes": "wording (prompt): The prompt says 'A dice is rolled'. For this age group and in standard mathematical English, 'die' is singular and 'dice' is plural. This is awkward wording and may reduce clarity.; unsupported_claim (answer): The marked statement 'The results are consistent with a fair dice' is a statistical judgement, but the sources only support using expected outcomes and that empirical results tend towards theoretical probabilities as sample size increases. They do not provide a criterion for when observed results are 'consistent with' fairness, so this conclusion is not directly backed by the quoted sources.; unsupported_claim (explanation): The claim '21 is close to 20, so the results are consistent with a fair dice' is not supported by the quoted sources. The sources support calculating an expected number and understanding tendency towards theoretical distributions, but not deciding consistency from 'close' without any stated criterion."
+          "at": "2026-11-27T12:12:33Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -562,9 +562,9 @@
     "prompt": "A fair spinner has 5 equal sections numbered 1 to 5. Which statement is true?",
     "options": [
       "Each number is equally likely",
-      "1 is the most likely",
+      "The numbers are not equally likely",
       "5 is the most likely",
-      "The numbers are not equally likely"
+      "1 is the most likely"
     ],
     "answer": {
       "option": 0
@@ -605,7 +605,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:22Z",
+          "at": "2026-11-27T12:12:07Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -621,7 +621,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:26Z",
+          "at": "2026-11-27T12:12:35Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -629,7 +629,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:27Z",
+          "at": "2026-11-27T12:12:36Z",
           "notes": "no problems found"
         }
       ]
@@ -865,6 +865,101 @@
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:19:34Z",
           "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p2-0111",
+    "topic": "gcse-maths-h-p2",
+    "type": "multiple_choice",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p2-lp-fairness",
+    "expected_seconds": 40,
+    "prompt": "A coin is flipped 200 times and lands on heads 160 times. Which statement is best?",
+    "options": [
+      "The next flip must be tails",
+      "The coin is definitely fair",
+      "160 heads is about what a fair coin would give",
+      "The coin is probably biased towards heads"
+    ],
+    "answer": {
+      "option": 3
+    },
+    "marks": 1,
+    "explanation": "A fair coin would give about 200 ÷ 2 = 100 heads. 160 is far more than that in a large number of flips, so the coin is probably biased.",
+    "hint": "Work out the expected number of heads for a fair coin and compare.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P2",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P2 (page 19; PDF page 31)",
+        "quote": "apply ideas of randomness, fairness and equally likely events to calculate expected outcomes of multiple future experiments",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P5 (page 19; PDF page 31)",
+        "quote": "understand that empirical unbiased samples tend towards theoretical probability distributions, with increasing sample size",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P2). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:08Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:38Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:42Z",
+          "notes": "unsupported_claim (answer): The marked answer says the coin is 'probably biased towards heads'. The cited sources support using fairness and expected outcomes, and that empirical results tend towards theoretical distributions as sample size increases, but they do not support making an inferential claim that this specific coin is probably biased from one observed sample.; unsupported_claim (explanation): The statement '160 is far more than that in a large number of flips, so the coin is probably biased' goes beyond the quoted specification. The sources support comparing empirical results with theoretical expectations, but do not support the conclusion that the coin is probably biased from this data.; ambiguity (question): The phrase 'Which statement is best?' is subjective here. From the quoted sources students can justify that 160 heads is very different from the expected 100 for a fair coin, but the stronger claim 'probably biased' is not explicitly licensed by the sources, so students may be unsure whether to choose the strongest real-world inference or the statement most closely tied to the specification."
         }
       ]
     }

@@ -539,9 +539,9 @@
     "learning_point": "gcse-maths-h-p4-lp-sum-to-one",
     "expected_seconds": 30,
     "prompt": "A spinner has three colours. Which set of probabilities could be correct?",
-    "options": ["0.2, 0.3, 0.5", "0.2, 0.3, 0.6", "0.5, 0.5, 0.5", "0.1, 0.1, 0.1"],
+    "options": ["0.1, 0.1, 0.1", "0.2, 0.3, 0.5", "0.2, 0.3, 0.6", "0.5, 0.5, 0.5"],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "The probabilities of all the outcomes must add up to 1. Only 0.2 + 0.3 + 0.5 = 1; the others add up to 1.1, 1.5 and 0.3.",
@@ -579,7 +579,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:25Z",
+          "at": "2026-11-27T12:12:11Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -595,15 +595,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:24Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:12:32Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:24Z",
+          "at": "2026-11-27T12:12:33Z",
           "notes": "no problems found"
         }
       ]
@@ -826,6 +826,182 @@
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:19:32Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p4-0111",
+    "topic": "gcse-maths-h-p4",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p4-lp-complement",
+    "expected_seconds": 25,
+    "prompt": "The probability that a bus is late is 0.12. Work out the probability that the bus is not late.",
+    "answer": {
+      "value": "0.88"
+    },
+    "verify": {
+      "expression": "1 - 12/100"
+    },
+    "marks": 1,
+    "explanation": "The bus is late or not late, so P(not late) = 1 - 0.12 = 0.88.",
+    "hint": "Subtract from 1.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P4 (page 19; PDF page 31)",
+        "quote": "apply the property that the probabilities of an exhaustive set of outcomes sum to one; apply the property that the probabilities of an exhaustive set of mutually exclusive events sum to one",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P4). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:12Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:34Z",
+          "notes": "model answered \"0.88\"; expected \"0.88\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:36Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p4-0112",
+    "topic": "gcse-maths-h-p4",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p4-lp-complement",
+    "expected_seconds": 25,
+    "prompt": "P(B) = 4/9. Work out the probability that B does not happen.",
+    "answer": {
+      "value": "5/9"
+    },
+    "verify": {
+      "expression": "1 - 4/9"
+    },
+    "marks": 1,
+    "explanation": "P(not B) = 1 - 4/9 = 5/9.",
+    "hint": "Subtract from 1.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P4",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P4 (page 19; PDF page 31)",
+        "quote": "apply the property that the probabilities of an exhaustive set of outcomes sum to one; apply the property that the probabilities of an exhaustive set of mutually exclusive events sum to one",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P4). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:13Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:37Z",
+          "notes": "model answered \"5/9\"; expected \"5/9\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:38Z",
           "notes": "no problems found"
         }
       ]

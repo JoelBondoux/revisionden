@@ -7,9 +7,9 @@
     "learning_point": "gcse-maths-h-p5-lp-sample-size",
     "expected_seconds": 30,
     "prompt": "A fair coin is flipped. After which number of flips is the relative frequency of heads most likely to be closest to 0.5?",
-    "options": ["1000", "10", "50", "100"],
+    "options": ["100", "50", "1000", "10"],
     "answer": {
-      "option": 0
+      "option": 2
     },
     "marks": 1,
     "explanation": "Relative frequencies tend to get closer to the theoretical probability as the number of trials increases, so 1000 flips is most likely to be closest.",
@@ -47,7 +47,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:25Z",
+          "at": "2026-11-27T12:12:14Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -63,15 +63,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:09Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:12:32Z",
+          "notes": "model answered \"2\"; expected \"2\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:10Z",
+          "at": "2026-11-27T12:12:33Z",
           "notes": "no problems found"
         }
       ]
@@ -86,13 +86,13 @@
     "expected_seconds": 35,
     "prompt": "Two students estimate the probability that a drawing pin lands point up. One drops it 20 times, the other 500 times. Whose estimate is more reliable?",
     "options": [
+      "They are equally reliable",
       "The one who dropped it 500 times",
       "The one who dropped it 20 times",
-      "They are equally reliable",
       "Neither can be used"
     ],
     "answer": {
-      "option": 0
+      "option": 1
     },
     "marks": 1,
     "explanation": "Larger samples tend to give relative frequencies closer to the true probability, so 500 drops is more reliable.",
@@ -130,7 +130,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:25Z",
+          "at": "2026-11-27T12:12:14Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -146,15 +146,15 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:12Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:12:35Z",
+          "notes": "model answered \"1\"; expected \"1\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:13Z",
+          "at": "2026-11-27T12:12:36Z",
           "notes": "no problems found"
         }
       ]
@@ -169,13 +169,13 @@
     "expected_seconds": 40,
     "prompt": "A fair dice is rolled 12 times and lands on 6 four times. Which statement is best?",
     "options": [
-      "This can happen with a fair dice; more rolls are needed",
-      "The dice must be biased",
       "The probability of a 6 is 1/3",
-      "The next roll cannot be a 6"
+      "The dice must be biased",
+      "The next roll cannot be a 6",
+      "This can happen with a fair dice; more rolls are needed"
     ],
     "answer": {
-      "option": 0
+      "option": 3
     },
     "marks": 1,
     "explanation": "With only 12 rolls, results can vary a lot from the expected 2 sixes. More rolls would give a better estimate.",
@@ -213,7 +213,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:18:25Z",
+          "at": "2026-11-27T12:12:15Z",
           "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -229,16 +229,16 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:15Z",
-          "notes": "model answered \"0\"; expected \"0\""
+          "at": "2026-11-27T12:12:38Z",
+          "notes": "model answered \"3\"; expected \"3\""
         },
         {
           "name": "adversarial-review",
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:19:18Z",
-          "notes": "wording (prompt): Uses 'dice' for a single die ('A fair dice is rolled 12 times'). This is grammatically incorrect and may be confusing for students; it should be 'die'.; unsupported_claim (explanation): The explanation states 'results can vary a lot from the expected 2 sixes.' The cited source only supports that empirical results tend towards theoretical probabilities as sample size increases; it does not specifically support the claim about an 'expected 2 sixes' or quantify variation.; unsupported_claim (explanation): The explanation states 'More rolls would give a better estimate.' The source supports that empirical samples tend towards theoretical probability distributions with increasing sample size, but does not specifically mention 'estimate'. This wording goes beyond the quoted source."
+          "at": "2026-11-27T12:12:41Z",
+          "notes": "unsupported_claim (explanation): The explanation states 'With only 12 rolls, results can vary a lot from the expected 2 sixes.' The quoted source supports that empirical results tend towards theoretical probabilities as sample size increases, but it does not explicitly support the specific claim that 12 rolls is 'only' a small sample or that results 'can vary a lot' for 12 rolls.; unsupported_claim (explanation): The explanation states 'More rolls would give a better estimate.' The source says empirical unbiased samples tend towards theoretical probability distributions with increasing sample size, but it does not explicitly mention estimation or 'better estimate'.; confidence medium"
         }
       ]
     }
@@ -714,6 +714,94 @@
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
           "at": "2026-11-27T11:21:26Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p5-0110",
+    "topic": "gcse-maths-h-p5",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p5-lp-combine-results",
+    "expected_seconds": 45,
+    "prompt": "Three groups spin the same spinner. Group 1 gets 9 reds in 30 spins, group 2 gets 14 reds in 40 spins and group 3 gets 12 reds in 30 spins. Using all the results, work out the relative frequency of red (the relative frequency is the number of times it happened divided by the number of trials).",
+    "answer": {
+      "value": "0.35"
+    },
+    "verify": {
+      "expression": "(9 + 14 + 12)/(30 + 40 + 30)"
+    },
+    "marks": 1,
+    "explanation": "Altogether there are 9 + 14 + 12 = 35 reds in 30 + 40 + 30 = 100 spins: 35 ÷ 100 = 0.35.",
+    "hint": "Add the reds and add the spins before dividing.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P5",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P5 (page 19; PDF page 31)",
+        "quote": "understand that empirical unbiased samples tend towards theoretical probability distributions, with increasing sample size",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P5). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T12:12:16Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:43Z",
+          "notes": "model answered \"0.35\"; expected \"0.35\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T12:12:44Z",
           "notes": "no problems found"
         }
       ]
