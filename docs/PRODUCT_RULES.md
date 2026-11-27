@@ -1381,6 +1381,26 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   All 90 Oak links (84 lessons) were switched and re-read on 2026-11-26; every lesson had a pupil
   page, so none is marked `no_pupil_page`.
 
+### Past papers
+
+- **Past papers** (owner request, 2026-11-27: "the list of links to get past exam papers from
+  various boards"; a cut-down X5, links only, no self-marking yet): a "Past papers" button on
+  each subject's Learn page opens a page of links to the exam boards' own past-paper finders. It
+  is not a nav tab.
+- The student's board for that subject comes first ("Your exam board"), then the other boards that
+  offer the subject ("Other boards"). If the board is not known yet ("Not sure"), or the
+  subjects cannot be loaded, every board that offers the subject is listed ("Exam boards").
+- Links only, each to the board's own public past-paper or finder page, opened in a new tab
+  under the line "Papers and mark schemes are on the exam board's website." Nothing is copied or
+  embedded, nothing is loaded from the boards until a link is tapped, and taps are not recorded.
+- No deep links to papers a board keeps for teachers: we link to the public finder, which shows
+  what students may see. Pearson keeps the last 12 months' papers for teachers; OCR's past paper
+  policy (read 2026-11-27) keeps five years of papers on its site. The page says the newest
+  papers are sometimes for teachers only.
+- Each page was fetched (200) and read, and its title and the date recorded, in
+  `packages/core/src/past-papers.ts`. A test checks that every subject and board we support has a
+  page or an explicit `'none'`.
+
 ### Read aloud and reading comfort
 
 - **Read aloud** button on questions, answers, explanations and flashcards, using the device's own
