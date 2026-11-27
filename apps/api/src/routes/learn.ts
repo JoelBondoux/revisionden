@@ -53,6 +53,7 @@ import {
   explanationOf,
   helpSteps,
   markItem,
+  lessonReadyItem,
   selectableItem,
   servableItem,
   toLearnItem,
@@ -143,6 +144,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
   const servable = servableItem(config.serveDraftContent);
   // What is picked for students: without the maths engine, no typed working (F12).
   const selectable = selectableItem(config.serveDraftContent, mathsEngine !== undefined);
+  const lessonReady = lessonReadyItem(config.serveDraftContent, mathsEngine !== undefined);
 
   /** Servable items with their topic titles, in a stable order. */
   async function loadItems(where: SQL, limit?: number) {
@@ -260,7 +262,7 @@ export function learnRoutes({ db, clock, config, mathsEngine }: LearnDeps) {
       .select({ topicId: topics.id, title: topics.title, items: sql<number>`count(*)::int` })
       .from(items)
       .innerJoin(topics, eq(topics.id, items.topicId))
-      .where(and(servable, eq(topics.subjectId, subjectId)))
+      .where(and(lessonReady, eq(topics.subjectId, subjectId)))
       .groupBy(topics.id, topics.title)
       .orderBy(asc(topics.id));
     const levels = await masteryByTopic(studentId);
