@@ -1,5 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readdirSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { blindAnswerPrompt, runBlindAnswer, writerProviderOf } from './blind-answer.mjs';
 import { draftItem } from './test-content.mjs';
 
@@ -107,8 +110,13 @@ test('numeric answers given as fractions are compared by value', async () => {
   assert.equal(r.result, 'pass');
 });
 
+// No test needs the real maths engine (CI's script job has no SymPy): this one never matches.
+const noMaths = async (checks) => checks.map((c) => ({ id: c.id, ok: false }));
 const blind = (item, answer) =>
-  runBlindAnswer(item, fakeProvider({ answer, confidence: 'high', reasoning: '' }), { now: AT });
+  runBlindAnswer(item, fakeProvider({ answer, confidence: 'high', reasoning: '' }), {
+    now: AT,
+    maths: noMaths,
+  });
 
 test('a rounded numeric answer must be written to the asked accuracy, not just be close', async () => {
   const item = draftItem('fixture-round', undefined, {
@@ -459,4 +467,205 @@ test('the writer provider is read from the grounded-writing check, defaulting to
     },
   };
   assert.equal(writerProviderOf(byGemini), 'gemini');
+});
+
+const card = (back) =>
+  draftItem('fixture-number-card', undefined, {
+    type: 'flashcard',
+    front: 'Fixture number front',
+    back,
+    prompt: undefined,
+    answer: undefined,
+    marks: undefined,
+  });
+const said = (answer) => fakeProvider({ answer, confidence: 'high', reasoning: '' });
+
+test('a number flashcard compares the final value of the answer as a number (S4)', async () => {
+  const pass = await runBlindAnswer(card('0.1'), said('3/30 = 0.1'), { now: AT });
+  assert.equal(pass.result, 'pass');
+  const fraction = await runBlindAnswer(card('1/4'), said('5/20 = 1/4'), { now: AT });
+  assert.equal(fraction.result, 'pass');
+  const wrong = await runBlindAnswer(card('0.1'), said('3/30 = 0.2'), { now: AT });
+  assert.equal(wrong.result, 'fail');
+});
+
+test('a number flashcard with a unit compares the number, so "20" matches "20 heads" (S4)', async () => {
+  assert.equal((await runBlindAnswer(card('20 heads'), said('20'), { now: AT })).result, 'pass');
+  assert.equal(
+    (await runBlindAnswer(card('£121'), said('121 pounds'), { now: AT })).result,
+    'pass',
+  );
+  assert.equal((await runBlindAnswer(card('20 heads'), said('21'), { now: AT })).result, 'fail');
+});
+
+test('a word flashcard is still compared word for word', async () => {
+  const r = await runBlindAnswer(card('chord'), said('secant'), { now: AT });
+  assert.equal(r.result, 'fail');
+});
+
+const workedNumber = draftItem('fixture-worked-number', undefined, {
+  type: 'worked_maths',
+  prompt: 'Fixture?',
+  answer: { expression: '75' },
+  verify: { method: 'expression', expression: '150/2' },
+});
+
+test('a worked answer that is a number compares the final value as a number, without the engine (S4)', async () => {
+  assert.equal((await runBlindAnswer(workedNumber, said('£75'), { now: AT })).result, 'pass');
+  assert.equal(
+    (await runBlindAnswer(workedNumber, said('150/2 = 75'), { now: AT })).result,
+    'pass',
+  );
+  assert.equal((await runBlindAnswer(workedNumber, said('£76'), { now: AT })).result, 'fail');
+});
+
+test('a worked expression that differs in writing is checked by the maths engine (S4)', async () => {
+  const item = draftItem('fixture-worked-expr', undefined, {
+    type: 'worked_maths',
+    prompt: 'Fixture?',
+    answer: { expression: '18*v/5' },
+    verify: { method: 'expression', expression: 'v*3600/1000' },
+  });
+  const calls = [];
+  const maths = async (checks) => {
+    calls.push(...checks);
+    return checks.map((c) => ({ id: c.id, ok: c.answer === '3.6v' }));
+  };
+  const r = await runBlindAnswer(item, said('3.6v'), { now: AT, maths });
+  assert.equal(r.result, 'pass');
+  assert.equal(calls[0].kind, 'expression');
+  assert.equal(calls[0].expression, '18*v/5');
+  assert.match(r.check.notes, /maths engine: same expression/);
+  const no = await runBlindAnswer(item, said('3.5v'), { now: AT, maths });
+  assert.equal(no.result, 'fail');
+});
+
+test('a maths engine error fails the check with a note instead of stopping the run (S4)', async () => {
+  const item = draftItem('fixture-engine-down', undefined, {
+    type: 'worked_maths',
+    prompt: 'Fixture?',
+    answer: { expression: '18*v/5' },
+    verify: { method: 'expression', expression: 'v*3600/1000' },
+  });
+  const broken = async () => {
+    throw new Error('maths engine exited with code 1');
+  };
+  const r = await runBlindAnswer(item, said('3.6v'), { now: AT, maths: broken });
+  assert.equal(r.result, 'fail');
+  assert.match(r.check.notes, /maths engine unavailable, so the answer is not accepted/);
+});
+
+test('a number answer must be a whole number value, not an expression or a choice (Codex on #433)', async () => {
+  for (const bad of ['75*2', '75^2', '75 or 76', '75, 76']) {
+    assert.equal(
+      (await runBlindAnswer(workedNumber, said(bad), { now: AT, maths: noMaths })).result,
+      'fail',
+      bad,
+    );
+  }
+  assert.equal(
+    (await runBlindAnswer(workedNumber, said('75 pounds'), { now: AT, maths: noMaths })).result,
+    'pass',
+  );
+  assert.equal(
+    (await runBlindAnswer(card('20 heads'), said('20 or 21'), { now: AT })).result,
+    'fail',
+  );
+  assert.equal((await runBlindAnswer(card('0.1'), said('0.1 + 0.2'), { now: AT })).result, 'fail');
+});
+
+test('the engine fallback keeps the form the item requires in verify.form (Codex on #433)', async () => {
+  const item = draftItem('fixture-factorise', undefined, {
+    type: 'worked_maths',
+    prompt: 'Factorise 6x^2 + 9x.',
+    answer: { expression: '3x(2x + 3)' },
+    verify: { method: 'expression', expression: '6x^2 + 9x', form: 'factorised' },
+  });
+  const calls = [];
+  const maths = async (checks) => {
+    calls.push(...checks);
+    return checks.map((c) => ({ id: c.id, ok: false }));
+  };
+  await runBlindAnswer(item, said('6x^2 + 9x'), { now: AT, maths });
+  assert.equal(calls[0].form, 'factorised');
+});
+
+// Codex on #433: the number compare must not accept a wrong answer. Real items from the bank.
+const BANK = join(dirname(fileURLToPath(import.meta.url)), '../../content/items');
+const bankItems = readdirSync(BANK, { recursive: true })
+  .filter((f) => f.endsWith('.json'))
+  .flatMap((f) => {
+    const data = JSON.parse(readFileSync(join(BANK, f), 'utf8'));
+    return Array.isArray(data) ? data : [];
+  });
+const bankItem = (id) => bankItems.find((i) => i.id === id);
+
+test('a flashcard back with a variable is not a number with a unit (a25-0108, Codex on #433)', async () => {
+  const item = bankItem('gcse-maths-h-a25-0108');
+  assert.equal(item.back, '2n');
+  assert.equal((await blind(item, '2')).result, 'fail');
+  assert.equal((await blind(item, '2n')).result, 'pass');
+  const y = { ...item, id: 'fixture-35y', back: '35y' };
+  assert.equal((await blind(y, '35')).result, 'fail');
+});
+
+test('a flashcard answer still matches a back with a real unit or a counted noun', async () => {
+  const card = (back) =>
+    draftItem('fixture-unit-card', undefined, { type: 'flashcard', front: 'F?', back });
+  assert.equal((await blind(card('180°'), '180')).result, 'pass');
+  assert.equal((await blind(card('12 cm²'), '12')).result, 'pass');
+  assert.equal((await blind(card('20 people'), '20')).result, 'pass');
+  assert.equal((await blind(card('20'), '20n')).result, 'fail');
+});
+
+test('a numeric worked answer must be in the asked form (n2-0003, Codex on #433)', async () => {
+  const item = bankItem('gcse-maths-h-n2-0003');
+  assert.equal(item.answer.form, 'improper_fraction');
+  assert.equal((await blind(item, '2.4')).result, 'fail');
+  assert.equal((await blind(item, '2 2/5')).result, 'fail');
+  assert.equal((await blind(item, '12/5')).result, 'pass');
+});
+
+// Every item in the bank: its own key passes, and the key with its letter or its form dropped
+// does not (lead's ruling on #433).
+// Short unit symbols ("100 cm" may be answered "100"); any other 1 to 3 letters are algebra.
+const SHORT_UNITS = new Set(['mm', 'cm', 'km', 'kg', 'mg', 'ml']);
+const lettersDropped = (text) => {
+  const m = /^\s*(-?\d+(?:\.\d+)?)\s*([a-z]{1,3})\s*$/.exec(String(text));
+  return m && !SHORT_UNITS.has(m[2]) ? m[1] : null;
+};
+const asDecimal = (fraction) => {
+  const m = /^(-?\d+)\/(\d+)$/.exec(String(fraction).replace(/\s+/g, ''));
+  if (!m) return null;
+  const d = Number(m[1]) / Number(m[2]);
+  return Number.isFinite(d) && String(d).length < 12 ? String(d) : null;
+};
+
+test('every bank item passes with its own key, and fails with its letter or form dropped', async () => {
+  const wrong = [];
+  const own = [];
+  for (const item of bankItems) {
+    if (item.type === 'flashcard' && !item.back_formula) {
+      if ((await blind(item, item.back)).result !== 'pass') own.push(item.id);
+      const dropped = lettersDropped(item.back);
+      if (dropped && (await blind(item, dropped)).result === 'pass')
+        wrong.push(`${item.id} "${dropped}"`);
+    }
+    if (item.type === 'worked_maths' && typeof item.answer.expression === 'string') {
+      if ((await blind(item, item.answer.expression)).result !== 'pass') own.push(item.id);
+      const form = item.answer.form ?? item.verify?.form;
+      const decimal = form && /fraction/.test(form) ? asDecimal(item.answer.expression) : null;
+      if (decimal && (await blind(item, decimal)).result === 'pass')
+        wrong.push(`${item.id} "${decimal}"`);
+    }
+    if (item.type === 'numeric') {
+      if ((await blind(item, item.answer.value)).result !== 'pass') own.push(item.id);
+      const decimal =
+        item.answer.form && /fraction/.test(item.answer.form) ? asDecimal(item.answer.value) : null;
+      if (decimal && (await blind(item, decimal)).result === 'pass')
+        wrong.push(`${item.id} "${decimal}"`);
+    }
+  }
+  assert.deepEqual(own, []);
+  assert.deepEqual(wrong, []);
 });
