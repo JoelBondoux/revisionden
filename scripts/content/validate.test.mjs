@@ -344,6 +344,14 @@ test('an item cited only by other authoritative sources needs human approval', a
   assert.deepEqual(await check([{ ...other, needs_human_approval: true }]), []);
 });
 
+test('UK legislation is an official source type for unit definitions (S4)', async () => {
+  const cited = {
+    ...numericItem,
+    citations: [citation(), citation({ source_type: 'legislation', publisher: 'UK Parliament' })],
+  };
+  assert.deepEqual(await check([cited]), []);
+});
+
 test('a distractor citation must point at a wrong option', async () => {
   const ok = { ...mc, citations: [citation({ supports: ['question', 'distractor:0'] })] };
   assert.deepEqual(await check([ok]), []);

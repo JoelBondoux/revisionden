@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { parseLocation, locateQuote } from './locate.mjs';
+import { htmlToText } from './extract.mjs';
 
 test('reads page numbers from a location', () => {
   assert.deepEqual(parseLocation('page 12').pages, [12]);
@@ -238,4 +239,116 @@ test('words scattered far apart are not a match', () => {
   const pages = [`N7 calculate ${filler} with roots ${filler} and indices`];
   const r = locateQuote({ quote: 'calculate with roots and indices', location: 'N7' }, pages);
   assert.equal(r.found, false);
+});
+
+// UK legislation pages (legislation.gov.uk, lead's ruling for S4) have no pages or spec codes;
+// a "Part III" location must be the nearest Part heading before the quote. Part headings are
+// heading elements on the page, as on legislation.gov.uk (<h3 class="LegSchedulePart">).
+const partHeading = (no, title) =>
+  `<h3 class="LegSchedulePart"><span class="LegPartNo">Part ${no}<span>U.K.</span></span>` +
+  `<span class="LegPartTitle">${title}</span></h3>`;
+const act = [
+  htmlToText(
+    `<h2>Schedule 1</h2>${partHeading('I', 'Measurement of Length')}<p>Metric units</p>` +
+      '<p>Kilometre = 1000 metres.</p><p>Centimetre = 1/100 metre.</p>' +
+      `${partHeading('III', 'Measurement of Volume')}<p>Metric units</p>` +
+      '<p>Cubic centimetre = 1/1000 cubic decimetre.</p><p>LITRE = a cubic decimetre.</p>' +
+      `<p>Millilitre = 1/1000 litre.</p>${partHeading('V', 'Measurement of Mass')}` +
+      '<p>Gram = 1/1000 kilogram.</p>',
+  ),
+];
+
+test('reads a legislation Part from a location', () => {
+  assert.deepEqual(parseLocation('Schedule 1, Part III (Measurement of Volume)').parts, ['III']);
+  assert.deepEqual(parseLocation('page 4').parts, []);
+});
+
+test('a legislation quote passes under the Part heading that comes before it', () => {
+  const r = locateQuote(
+    {
+      quote: 'Millilitre = 1/1000 litre.',
+      location: 'Schedule 1, Part III (Measurement of Volume)',
+    },
+    act,
+    { paged: false },
+  );
+  assert.equal(r.found, true);
+  assert.equal(r.locationConfirmed, true);
+});
+
+test('a legislation quote fails under the wrong Part', () => {
+  const r = locateQuote(
+    { quote: 'Gram = 1/1000 kilogram.', location: 'Schedule 1, Part III' },
+    act,
+    {
+      paged: false,
+    },
+  );
+  assert.equal(r.locationConfirmed, false);
+  assert.match(r.reason, /Part V, not Part III/);
+});
+
+test('a Part heading far before the quote still counts (Codex on #435)', () => {
+  const long = [
+    htmlToText(
+      `${partHeading('III', 'Measurement of Volume')}<p>${'Some intervening text. '.repeat(120)}</p>` +
+        '<p>Millilitre = 1/1000 litre.</p>',
+    ),
+  ];
+  const r = locateQuote(
+    { quote: 'Millilitre = 1/1000 litre.', location: 'Schedule 1, Part III' },
+    long,
+    { paged: false },
+  );
+  assert.equal(r.locationConfirmed, true);
+});
+
+test('a "See Part III" cross-reference in the text is not a Part heading (Codex on #435)', () => {
+  const page = [
+    htmlToText(
+      `${partHeading('V', 'Measurement of Mass')}<p>See Part III for volume units.</p>` +
+        '<p>Gram = 1/1000 kilogram.</p>',
+    ),
+  ];
+  const right = locateQuote(
+    { quote: 'Gram = 1/1000 kilogram.', location: 'Schedule 1, Part V' },
+    page,
+    { paged: false },
+  );
+  assert.equal(right.locationConfirmed, true);
+  const wrong = locateQuote(
+    { quote: 'Gram = 1/1000 kilogram.', location: 'Schedule 1, Part III' },
+    page,
+    { paged: false },
+  );
+  assert.equal(wrong.locationConfirmed, false);
+  assert.match(wrong.reason, /Part V, not Part III/);
+});
+
+test('a Part named only in running text, with no heading, does not confirm a Part', () => {
+  const r = locateQuote(
+    { quote: 'Gram = 1/1000 kilogram.', location: 'Schedule 1, Part III' },
+    ['See Part III for volume units. Gram = 1/1000 kilogram.'],
+    { paged: false },
+  );
+  assert.equal(r.locationConfirmed, false);
+  assert.match(r.reason, /no Part heading before the quote/);
+});
+
+test('a quote that runs across a heading is still an exact match (Codex on #435)', () => {
+  const page = [htmlToText('<h2>N7</h2><p>Calculate with</p><h3>roots and indices</h3>')];
+  const r = locateQuote({ quote: 'Calculate with roots and indices', location: 'N7' }, page, {
+    paged: false,
+  });
+  assert.equal(r.found, true);
+  assert.equal(r.match, 'exact');
+  assert.equal(r.locationConfirmed, true);
+});
+
+test('a long source is joined in linear time (Codex on #435)', () => {
+  const page = [`${'some test words '.repeat(12500)}N7 calculate with roots`];
+  const started = Date.now();
+  const r = locateQuote({ quote: 'calculate with roots', location: 'N7' }, page, { paged: false });
+  assert.equal(r.match, 'exact');
+  assert.ok(Date.now() - started < 500, `took ${Date.now() - started} ms`);
 });

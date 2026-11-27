@@ -1,7 +1,13 @@
 // Finds a citation's quote in a source's pages and confirms it sits at the stated location.
-import { normaliseText } from './normalise.mjs';
+import { HEADING, normaliseText } from './normalise.mjs';
 
 const PAGE_PHRASE = /\b(?:pages?|pp?\.?)\s*(\d+)(?:\s*[-\u2013\u2014]\s*(\d+))?/gi;
+// A Part of a UK Act or regulation (legislation.gov.uk pages): "Schedule 1, Part III".
+const PART = /\bPart\s+([IVXLC]+)\b/gi;
+// A Part heading on the page itself (a heading element, marked by extract.mjs), not a "See Part
+// III" cross-reference in the text (Codex on #435). legislation.gov.uk runs the extent straight
+// on ("Part IIIU.K."), so the numeral ends at any letter that is not a numeral.
+const PART_HEADING = /^\s*Part\s+([IVXLC]+)(?![IVXLCa-z])/;
 const CODE = /(?<![A-Za-z0-9.])([A-Z]{1,3}\d+[a-z]?|\d+(?:\.\d+)+[a-z]?)(?![A-Za-z0-9]|\.\d)/g;
 
 /** Page numbers and specification codes (N7, A17, 4.2.1a) named in a citation location. */
@@ -13,17 +19,39 @@ export function parseLocation(location) {
   }
   const rest = location.replace(PAGE_PHRASE, ' ');
   const codes = [...rest.matchAll(CODE)].map((m) => m[1]);
-  return { pages, codes };
+  const parts = [...rest.matchAll(PART)].map((m) => m[1].toUpperCase());
+  return { pages, codes, parts };
 }
 
+/**
+ * The pages as one normalised text, the offset where each page starts, and the offset where each
+ * heading starts. The HEADING marks are taken out of the text (Codex on #435), so a quote that
+ * runs across a heading still matches exactly; only their positions are kept, for Part checks.
+ */
 function joinPages(pages, joinHyphens) {
   const starts = [];
-  let text = '';
+  const headings = [];
+  const chunks = [];
+  let length = 0;
+  let endsWithSpace = false;
   for (const page of pages) {
-    starts.push(text.length);
-    text += `${normaliseText(page, { joinHyphens })} `;
+    starts.push(length);
+    // Split at the marks instead of walking the growing text, so joining stays linear (Codex on #435).
+    normaliseText(page, { joinHyphens })
+      .concat(' ')
+      .split(HEADING)
+      .forEach((piece, i) => {
+        if (i > 0) {
+          headings.push(length);
+          // A mark between two spaces leaves one space, as if it had never been there.
+          if (endsWithSpace && piece.startsWith(' ')) piece = piece.slice(1);
+        }
+        chunks.push(piece);
+        length += piece.length;
+        if (piece) endsWithSpace = piece.endsWith(' ');
+      });
   }
-  return { text, starts };
+  return { text: chunks.join(''), starts, headings };
 }
 
 const isSection = (code) => /^\d/.test(code);
@@ -57,9 +85,16 @@ const pageAt = (starts, at) => starts.findLastIndex((s) => s <= at) + 1;
 function exactMatches(pages, needle) {
   const found = [];
   for (const joinHyphens of [true, false]) {
-    const { text, starts } = joinPages(pages, joinHyphens);
+    const { text, starts, headings } = joinPages(pages, joinHyphens);
     for (let at = text.indexOf(needle); at >= 0; at = text.indexOf(needle, at + 1)) {
-      found.push({ text, at, length: needle.length, page: pageAt(starts, at), confidence: 1 });
+      found.push({
+        text,
+        headings,
+        at,
+        length: needle.length,
+        page: pageAt(starts, at),
+        confidence: 1,
+      });
     }
   }
   return found;
@@ -73,7 +108,7 @@ const LETTER = /[\p{L}\p{N}]/u;
  * ("position-toterm"). The letters must still match, in order.
  */
 function letterMatches(pages, needle) {
-  const { text, starts } = joinPages(pages, false);
+  const { text, starts, headings } = joinPages(pages, false);
   const kept = [];
   let letters = '';
   for (let i = 0; i < text.length; i += 1) {
@@ -88,7 +123,7 @@ function letterMatches(pages, needle) {
   for (let at = letters.indexOf(want); at >= 0; at = letters.indexOf(want, at + 1)) {
     const start = kept[at];
     const length = kept[at + want.length - 1] + 1 - start;
-    found.push({ text, at: start, length, page: pageAt(starts, start), confidence: 1 });
+    found.push({ text, headings, at: start, length, page: pageAt(starts, start), confidence: 1 });
   }
   return found;
 }
@@ -125,7 +160,7 @@ export const MIN_WORD_CONFIDENCE = 0.5;
  * appear in the same order.
  */
 function wordMatches(pages, needle) {
-  const { text, starts } = joinPages(pages, false);
+  const { text, starts, headings } = joinPages(pages, false);
   const tokens = [...text.matchAll(/[\p{L}\p{N}]+/gu)].map((m) => ({
     word: m[0],
     at: m.index,
@@ -158,6 +193,7 @@ function wordMatches(pages, needle) {
       const at = best.first.at;
       found.push({
         text,
+        headings,
         at,
         length: best.last.end - at,
         page: pageAt(starts, at),
@@ -168,7 +204,11 @@ function wordMatches(pages, needle) {
   return found;
 }
 
-function locationProblems({ text, at, page, length }, loc, { paged, window, labels }) {
+function locationProblems(
+  { text, headings = [], at, page, length },
+  loc,
+  { paged, window, labels },
+) {
   const problems = [];
   if (loc.pages.length && !paged) {
     problems.push('a web page has no page numbers; give a section or specification code');
@@ -187,7 +227,23 @@ function locationProblems({ text, at, page, length }, loc, { paged, window, labe
     const problem = codeProblem(code, before, quoted);
     if (problem) problems.push(problem);
   }
-  if (!loc.pages.length && !loc.codes.length) {
+  // A Part heading can be far above the quote, so look at all the text before it, not only the
+  // specification-code window (Codex on #435).
+  for (const part of loc.parts ?? []) {
+    const nearest = headings
+      .filter((h) => h < at)
+      .map((h) => PART_HEADING.exec(text.slice(h, h + 40))?.[1])
+      .filter(Boolean)
+      .at(-1);
+    if (nearest !== part) {
+      problems.push(
+        nearest
+          ? `the nearest Part heading before the quote is Part ${nearest}, not Part ${part}`
+          : `there is no Part heading before the quote (Part ${part} stated)`,
+      );
+    }
+  }
+  if (!loc.pages.length && !loc.codes.length && !loc.parts?.length) {
     problems.push('the location has no page number or specification code to check');
   }
   return problems;
