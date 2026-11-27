@@ -270,6 +270,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:07Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:03Z",
+          "notes": "model answered \"0\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:15Z",
+          "notes": "wrong_answer (answer): The marked answer (option 2) is not equivalent to the Karnaugh map. Option 2 is (¬A ∧ B) ∨ (¬C ∧ D) ∨ (¬B ∧ ¬D). Taking A=0, B=0, C=1, D=1 gives map value 0 (row AB=00, column CD=11), but option 2 evaluates to 1 because ¬A ∧ B = 0, ¬C ∧ D = 0, and ¬B ∧ ¬D = 0, sorry correction: choose A=0, B=0, C=0, D=1 gives map value 1 and option 2 = 1, so not a counterexample. A correct counterexample is A=1, B=1, C=0, D=1 (row 11, column 01), where the map value is 1 and option 2 evaluates to 1, so still not a counterexample. The actual issue is that the map simplifies to B¬A ∨ ¬B¬D ∨ ¬A¬C, whereas option 2 uses ¬C ∧ D instead of ¬A ∧ ¬C; for example A=1, B=0, C=0, D=1 (row 10, column 01) has map value 1, but option 2 gives 1 for the wrong reason, and A=1, B=1, C=0, D=0 (row 11, column 00) has map value 0 while option 2 gives 0. More decisively, A=1, B=0, C=0, D=0 (row 10, column 00) is 1 on the map, and any cover using ¬C ∧ D cannot account for the 1s at D=0 in the leftmost column; the intended third implicant should be ¬A ∧ ¬C, not ¬C ∧ D.; wrong_answer (option 1): Option 1, (¬A ∧ B) ∨ (¬C ∧ D), is not equivalent to the map, but neither is the marked option 2. Since the correct simplified SOP is not present among the options, the multiple-choice item has no correct answer.; wrong_answer (question): From the given K-map, the simplest sum-of-products is (¬A ∧ B) ∨ (¬B ∧ ¬D) ∨ (¬A ∧ ¬C). This comes from three size-4 groups: all cells with A=0,C=0; all cells with B=0,D=0; and the whole row A=0,B=1. None of the listed options matches this, so the question as posed has no correct option.; factual_error (explanation): The explanation states that '(¬A ∧ B) ∨ (¬C ∧ D) ∨ (¬B ∧ ¬D) is 1 in exactly the cells that hold 1'. This is false. For A=0, B=0, C=1, D=0 (row 00, column 10), the map has 1 and the expression gives 1 via ¬B ∧ ¬D = 1; but for the essential 4-cell group covering rows 00 and 01 with columns 00 and 01, the constant literals are ¬A and ¬C, not ¬C and D. Thus the stated expression does not arise from the largest valid groups in the map.; unsupported_claim (explanation): The claim 'and no sum of products with fewer letters is' is not supported by the quoted source. The specification supports using Karnaugh maps to simplify expressions, but does not provide this specific optimality claim for this particular expression; moreover the claim is moot because the stated expression is not the correct simplification."
         }
       ]
     }
@@ -351,6 +367,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:08Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:17Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:26Z",
+          "notes": "wrong_answer (answer): The marked answer (option 0) is not correct for the given Karnaugh map. Option 0 makes Q=1 for A=1, B=0, C=0, D=1 because (A ∧ ¬C)=1 there, but the map entry at AB=10, CD=01 is 1, so that cell matches; however option 0 also makes Q=1 for A=1, B=1, C=0, D=1 and A=1, B=0, C=0, D=1 etc. Checking systematically shows the actual 1-cells group to the simplified SOP (A ∧ ¬C) ∨ (B ∧ ¬D) ∨ (¬A ∧ ¬C ∧ ¬D). Option 0 incorrectly uses (¬C ∧ ¬D), which would also make the cell AB=10, CD=00 true; that cell is already true, but the issue is that it omits the need to exclude AB=10, CD=01? More directly, K-map grouping gives a 2-cell group on row AB=00/01 and column CD=00, requiring ¬A ∧ ¬C ∧ ¬D, not ¬C ∧ ¬D.; second_correct_option (options): None of the listed options matches the actual simplest sum of products for the map. The correct simplified SOP is (A ∧ ¬C) ∨ (B ∧ ¬D) ∨ (¬A ∧ ¬C ∧ ¬D), so there is no correct option among the four choices.; factual_error (explanation): The explanation states that '(A ∧ ¬C) ∨ (B ∧ ¬D) ∨ (¬C ∧ ¬D) is 1 in exactly the cells that hold 1'. This is false. For example, at A=1, B=0, C=0, D=1 the map has 1 and the expression is 1, but the key issue is the term (¬C ∧ ¬D) covers all four cells with C=0, D=0, including AB=10,CD=00 and AB=11,CD=00, while the isolated top-left pair only supports ¬A ∧ ¬C ∧ ¬D. So the explanation's claimed exact match and simplification claim are incorrect."
         }
       ]
     }
@@ -432,6 +464,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:09Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:29Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:36Z",
+          "notes": "wrong_answer (answer): The marked answer is option 1, but evaluating the Karnaugh map gives the simplified sum of products (B ∧ ¬C) ∨ (¬A ∧ B) ∨ (¬A ∧ ¬C ∧ ¬D), which is option 2. In particular, the isolated 1 at AB=00, CD=10 corresponds to ¬A ∧ ¬B ∧ C ∧ ¬D and can be grouped vertically with AB=01, CD=10 to give ¬A ∧ C ∧ ¬D, not ¬A ∧ ¬C ∧ ¬D; however the term ¬A ∧ C ∧ ¬D together with the other two terms misses the 1 at AB=00, CD=10? Checking all cells shows option 1 makes Q=1 at AB=00, CD=11, where the map has 0, so option 1 is not correct. Option 2 matches the map exactly.; factual_error (explanation): The explanation states that '(B ∧ ¬C) ∨ (¬A ∧ B) ∨ (¬A ∧ C ∧ ¬D) is 1 in exactly the cells that hold 1'. This is false. For A=0, B=0, C=1, D=1 (cell AB=00, CD=11), the third term ¬A ∧ C ∧ ¬D is 0, so check instead A=0, B=0, C=1, D=0 (cell AB=00, CD=10): the expression is 1 there, which is fine; but for A=0, B=0, C=1, D=1 it is 0. More importantly, the actually correct simplified term from grouping the leftmost and rightmost cells in row AB=01 with the wraparound pair at column CD=10 is ¬A ∧ C ∧ ¬D only if chosen from that pair, while the listed overall expression does not give the same full map as claimed; the claim of exact match is incorrect.; factual_error (explanation): The explanation claims 'each other option gives a different map.' This is false because the correct map match is option 2, not the marked option 1. So at least one 'other option' does not give a different map; it gives the intended map exactly."
         }
       ]
     }
@@ -508,6 +556,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:09Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:39Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:47Z",
+          "notes": "wrong_answer (answer): The marked answer (option 2) is not the simplest sum of products. The 1s occur exactly when D = 0 and not(B = 1 and A = 0), which simplifies on the Karnaugh map to ¬D ∨ (A ∧ ¬B). Option 0 simplifies by absorption to just ¬D, which is incorrect for cells with D = 0 in row AB = 01. Option 2 gives the correct map, but it is not simplest because (A ∧ ¬D) ∨ (¬B ∧ ¬D) = ¬D ∧ (A ∨ ¬B) = ¬D ∨? No: the proper simplification is from K-map grouping to ¬D ∧ (A ∨ ¬B), equivalently (A ∧ ¬D) ∨ (¬B ∧ ¬D), but this still uses 4 literals, whereas ¬D ∨ (A ∧ ¬B) is not equivalent. So the issue is specifically that option 2 is not uniquely simplest among the listed forms if simplicity is not defined.; ambiguity (question): \"Simplest sum of products\" is ambiguous here. The correct minimal SOP from the Karnaugh map is (A ∧ ¬D) ∨ (¬B ∧ ¬D), but option 3, (A ∧ ¬D) ∨ ¬D, simplifies to ¬D and is not a sum-of-products simplification in the intended sense. Since the options mix unsimplified and non-SOP-equivalent-looking forms, the criterion for 'simplest' is not clearly defined for students.; unsupported_claim (explanation): The explanation states \"no sum of products with fewer letters is\" without support from the quoted source. The source supports use of Karnaugh maps to simplify Boolean expressions, but does not provide this specific minimisation claim for this exact map. Since the explanation's factual claims must be backed by a quoted source, this is unsupported.; confidence medium"
         }
       ]
     }
@@ -589,6 +653,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:10Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:49Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:26:58Z",
+          "notes": "factual_error (answer): The marked answer (option 3) is not equivalent to the Karnaugh map. Option 3 is (A ∧ B) ∨ (¬B ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C). For AB=00 it gives 1 at CD=11 and 10, matching that row; for AB=11 it gives 1 in all columns, matching that row; but for AB=10 it gives 1 only at CD=11, whereas the map row AB=10 is 0 0 1 0, so that part matches. However, the map also has all four 1s in row AB=11, which forces the implicant A ∧ B, and a remaining 1 at AB=10, CD=11 can be grouped with AB=11, CD=11 to give A ∧ C ∧ D; together with the top-row pair AB=00, CD=11 and 10 giving ¬A ∧ ¬B ∧ C, the simplest SOP is (A ∧ B) ∨ (A ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C). The marked option instead uses ¬B ∧ C ∧ D, which also makes Q=1 at AB=00, CD=11 and AB=10, CD=11, but misses that the required grouping for the extra 1 below the AB=11 row gives A ∧ C ∧ D, not ¬B ∧ C ∧ D.; second_correct_option (options): Option 1, (A ∧ ¬B) ∨ (¬B ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C), also does not match the map, but none of the four options equals the simplest SOP obtained from the Karnaugh map, so the question has no correct option among those given.; wrong_answer (question): There is no correct option listed. Simplifying the map gives (A ∧ B) ∨ (A ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C), which is not among the options.; factual_error (explanation): The explanation says '(A ∧ B) ∨ (¬B ∧ C ∧ D) ∨ (¬A ∧ ¬B ∧ C) is 1 in exactly the cells that hold 1'. That is false. Evaluating the expression literally on the map cells shows it does not arise from the largest valid grouping for the extra 1 at AB=10, CD=11; the correct grouping with the adjacent 1 at AB=11, CD=11 gives A ∧ C ∧ D, not ¬B ∧ C ∧ D. So the explanation's claimed simplified expression is not the correct simplest SOP for the given map."
         }
       ]
     }

@@ -63,6 +63,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:17Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:27:48Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:27:49Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -131,6 +147,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:18Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:27:51Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:01Z",
+          "notes": "wrong_answer (answer): The marked answer is option 3, but the expression simplifies as follows: (¬A ∧ C) ∨ (¬A ∧ ¬C) = ¬A ∧ (C ∨ ¬C) = ¬A, so the whole expression is ¬A ∨ (¬B ∧ C), which is option 0? No: option 3 is exactly ¬A ∨ (¬B ∧ C), so with options numbered from 0 the marked answer should be option 3 only if numbering is 0-based. However the item states answer.option = 3 and correct_option_text = '¬A ∨ (¬B ∧ C)', which are consistent. The actual issue is that option 1, ¬A ∨ ¬B, is not equivalent, and option 0, ¬A ∨ C, is not equivalent, so no wrong answer here.; second_correct_option (options): Option 0, ¬A ∨ C, is also equivalent to the given expression? Check: original simplifies to ¬A ∨ (¬B ∧ C). This is not equivalent to ¬A ∨ C in general, e.g. A=true, B=true, C=true gives both true; A=true, B=false, C=false gives original false and option 0 false; A=true, B=false, C=true gives both true; A=false, B=true, C=false gives both true. Need a counterexample: A=true, B=true, C=false gives both false. No counterexample arises because ¬A ∨ (¬B ∧ C) does not imply C when A is true and B false, but then C must be true anyway. In fact ¬A ∨ (¬B ∧ C) is not equivalent to ¬A ∨ C? Counterexample A=true, B=true, C=true gives both true; A=true, B=false, C=false gives both false. Still none found. Using absorption/distribution does not convert them, and A=true, B=true, C=false gives false/false. A=false gives both true. So when A=true, expression becomes ¬B ∧ C, while option 0 becomes C; with B=true and C=true both true, with B=true and C=false both false, with B=false and C=true both true, with B=false and C=false both false: they match because ¬B ∧ C is not equal to C, but under A=true the original after simplification is (false∧C)∨(false∧¬C)∨(¬B∧C)=¬B∧C, while option 0 is C, so A=true,B=true,C=true gives original false? No, original gives (0∧1)∨(0∧0)∨(0∧1)=0, while option 0 gives 1. Therefore option 0 is not equivalent. This reported issue does not stand.; factual_error (explanation): The explanation claims only that the marked option has the same truth table, but a direct simplification is available and should agree: (¬A ∧ C) ∨ (¬A ∧ ¬C) = ¬A, so the expression becomes ¬A ∨ (¬B ∧ C). The statement in the explanation is correct, but it is unverified by shown rows. However this is not itself an error.; confidence low"
         }
       ]
     }
@@ -199,6 +231,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:19Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:03Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:04Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -267,6 +315,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:20Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:06Z",
+          "notes": "model answered \"2\"; expected \"2\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:07Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -335,6 +399,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:21Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:09Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:10Z",
+          "notes": "no problems found"
         }
       ]
     }
@@ -403,6 +483,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:22Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:12Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:13Z",
+          "notes": "unsupported_claim (explanation): The explanation claims that \"B ∨ (¬A ∧ ¬C) has the same truth table as ... on all 8 rows; each other option differs on at least one row.\" This is a factual claim about truth-table equivalence, but no quoted source supports that claim, and the instruction says any factual claim in the explanation needs a quoted source."
         }
       ]
     }
@@ -471,6 +567,22 @@
           "tool_version": "1.0.0",
           "at": "2026-11-27T15:25:23Z",
           "notes": "citation 1: found on page 15 (sha256 8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44)"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:15Z",
+          "notes": "model answered \"3\"; expected \"3\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T15:28:17Z",
+          "notes": "unsupported_claim (explanation): The explanation claims that \"A ∨ (¬B ∧ ¬C) has the same truth table as (A ∧ B) ∨ (A ∧ ¬B) ∨ (¬B ∧ ¬C) on all 8 rows; each other option differs on at least one row.\" The source only supports manipulating/simplifying Boolean expressions; it does not quote or support this specific truth-table claim. Per the instructions, any factual claim in the explanation needs a quoted source."
         }
       ]
     }

@@ -77,8 +77,25 @@ committed (public repository); the quote checker caches it outside the repo.
   distribution and double negation say (the specification names them in 1.4.3 (c) but does not
   state them), how a full adder's outputs follow from its inputs, and how a D type flip-flop
   responds to the clock. All 63 items need individual human approval.
-- Model checks (OpenAI `gpt-5.4-2026-03-05`, blind answer and adversarial review) on every item:
-  see the PR for results.
+- Model checks on every item, 2026-11-27 (OpenAI `gpt-5.4-2026-03-05`, blind answer and
+  adversarial review, while Gemini is capped). Blind answer passed 53 of 63 and adversarial review
+  31 of 63. Every failure was checked by hand or by code, and none found a wrong item:
+  - Blind answer failed on 5 truth tables, 3 flip-flop change counts and 2 Karnaugh maps
+    because the model's own working was wrong: it gave 00110000 for (A ⊕ B) ∧ C, whose column is 00010100. These go to individual review and are not re-run to get a pass (lead ruling
+    2026-11-27). The CS engine wrote each answer; the template's recheck (its own `ast`
+    evaluator) and the tests' separate evaluator agree.
+  - On 13 of the 14 Karnaugh map items the review claimed a simpler or different answer. An
+    exhaustive search over every set of implicants confirms each marked answer is a minimal sum of
+    products (fewest terms, then fewest letters), and the tests prove it is the only option that
+    matches the map. The review's alternatives covered cells that hold 0 (for example
+    ¬B ∧ ¬D, which needs the 0s at AB = 10, CD = 00 and 10).
+  - On a truth table (row 101) and a simplify item, the review contradicted its own working.
+  - The rest flag claims that no quote supports (OCR's notation, the adder and flip-flop
+    behaviour, truth-table results). Those rules are listed in `facts` for the fact-check stage;
+    computed results are backed by the CS engine, not by a citation.
+  - Review fixes made from these results: Karnaugh questions now ask for the simplest sum of
+    products (a factored form can have fewer letters), and every item that uses OCR's symbols
+    lists their meaning as a fact.
 
 ## Still open
 
