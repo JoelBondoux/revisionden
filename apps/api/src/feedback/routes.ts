@@ -191,9 +191,16 @@ export async function studentBugButton(
   now: Date,
 ): Promise<BugButtonState> {
   const [student] = await db
-    .select({ resetAt: students.bugButtonResetAt, tester: students.tester })
+    .select({
+      resetAt: students.bugButtonResetAt,
+      removedAt: students.bugButtonRemovedAt,
+      tester: students.tester,
+    })
     .from(students)
     .where(eq(students.id, studentId));
+  if (student?.tester) return { state: 'on' };
+  // A removal is kept on the student, so deleting old reports (12 months) never undoes it.
+  if (student?.removedAt) return { state: 'removed' };
   const rows = await db
     .select({ at: feedback.notABugAt })
     .from(feedback)
@@ -205,19 +212,25 @@ export async function studentBugButton(
         isNotNull(feedback.notABugAt),
       ),
     );
-  return bugButtonState({
+  const state = bugButtonState({
     notABugAt: rows.flatMap((r) => (r.at ? [r.at] : [])),
     resetAt: student?.resetAt ?? null,
-    tester: student?.tester ?? false,
     now,
   });
+  if (state.state === 'removed') {
+    await db
+      .update(students)
+      .set({ bugButtonRemovedAt: now, updatedAt: now })
+      .where(eq(students.id, studentId));
+  }
+  return state;
 }
 
 /** Switches a student's bug button back on (a parent or the operator): older outcomes stop counting. */
 export async function switchBugButtonOn(db: Database, studentId: string, now: Date) {
   await db
     .update(students)
-    .set({ bugButtonResetAt: now, updatedAt: now })
+    .set({ bugButtonResetAt: now, bugButtonRemovedAt: null, updatedAt: now })
     .where(eq(students.id, studentId));
   return studentBugButton(db, studentId, now);
 }
@@ -608,6 +621,8 @@ export async function markNotABug(
     .where(and(eq(feedback.id, id), isNull(feedback.outcome)))
     .returning();
   if (!updated) throw new ApiError(409, 'already_reviewed', 'This report is already reviewed.');
+  // Records a removal on the student now, before the 12-month clean-up can delete the reports.
+  if (updated.studentId) await studentBugButton(db, updated.studentId, now);
   return updated;
 }
 

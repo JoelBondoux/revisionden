@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
+import { Link, MemoryRouter } from 'react-router-dom';
 import { StudentProvider } from '../../session/StudentContext';
 import { BugButton } from './BugButton';
 import { BugButtonProvider } from './bugButtonContext';
@@ -41,6 +41,71 @@ function showStudent(api: FeedbackApi, studentId: string | null = 'student-1') {
     </StudentProvider>,
   );
 }
+
+/** Inside a router, as in AppLayout, with a link to move between student pages. */
+function showStudentInRouter(api: FeedbackApi) {
+  render(
+    <StudentProvider storage={{ getItem: () => 'student-1', setItem: () => {} }}>
+      <FeedbackApiProvider value={api}>
+        <MemoryRouter>
+          <BugButtonProvider storage={storage}>
+            <Link to="/settings">Settings</Link>
+            <BugButton />
+          </BugButtonProvider>
+        </MemoryRouter>
+      </FeedbackApiProvider>
+    </StudentProvider>,
+  );
+}
+
+const hidden = () =>
+  vi.waitFor(() =>
+    expect(screen.queryByRole('button', { name: 'Report a bug' })).not.toBeInTheDocument(),
+  );
+
+describe('bug button rest stays up to date while the app is open (L13)', () => {
+  it('comes back without a reload when a parent switches it on and the app is focused again', async () => {
+    const api = fakeApi({ state: 'removed' });
+    showStudentInRouter(api);
+    await hidden();
+
+    vi.mocked(api.bugButton).mockResolvedValue({ state: 'on' });
+    act(() => {
+      window.dispatchEvent(new Event('focus'));
+    });
+    expect(await screen.findByRole('button', { name: 'Report a bug' })).toBeInTheDocument();
+  });
+
+  it('asks again when the student moves to another page', async () => {
+    const user = userEvent.setup();
+    const api = fakeApi({ state: 'removed' });
+    showStudentInRouter(api);
+    await hidden();
+    vi.mocked(api.bugButton).mockResolvedValue({ state: 'on' });
+    await user.click(screen.getByRole('link', { name: 'Settings' }));
+    expect(await screen.findByRole('button', { name: 'Report a bug' })).toBeInTheDocument();
+  });
+
+  it('asks again when the page becomes visible', async () => {
+    const api = fakeApi({ state: 'removed' });
+    showStudentInRouter(api);
+    await hidden();
+    vi.mocked(api.bugButton).mockResolvedValue({ state: 'on' });
+    fireEvent(document, new Event('visibilitychange'));
+    expect(await screen.findByRole('button', { name: 'Report a bug' })).toBeInTheDocument();
+  });
+
+  it('ends a rest on time, with no reload', async () => {
+    const until = new Date(Date.now() + 200).toISOString();
+    const api = fakeApi({ state: 'paused', until });
+    showStudentInRouter(api);
+    await hidden();
+    vi.mocked(api.bugButton).mockResolvedValue({ state: 'on' });
+    expect(
+      await screen.findByRole('button', { name: 'Report a bug' }, { timeout: 3000 }),
+    ).toBeInTheDocument();
+  });
+});
 
 describe('bug button rest on the student device (L13)', () => {
   it('shows the bug button when it is on, and no note', async () => {

@@ -213,6 +213,9 @@ export const students = pgTable(
     // Bug button rest (L13, packages/core bugButtonState): when a parent or the operator last
     // switched the bug button back on. Not-a-bug outcomes before it no longer count.
     bugButtonResetAt: timestamp('bug_button_reset_at', { withTimezone: true }),
+    // L13: when the bug button was removed (the third rest in 90 days). Kept on the student, so
+    // the 12-month feedback clean-up never brings it back; only a switch-on after it counts.
+    bugButtonRemovedAt: timestamp('bug_button_removed_at', { withTimezone: true }),
     // L13: a tester account (an adult testing the app), set only in the operator console. Its bug
     // reports earn no XP or Bug Hunter steps, and Not-a-bug outcomes never rest its bug button.
     tester: boolean('tester').notNull().default(false),
