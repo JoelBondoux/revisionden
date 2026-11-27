@@ -523,6 +523,12 @@ def _check_mask(p, item):
 
 # ---- the templates ----
 
+ENGINE_NOTE = ("Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and "
+               "the template's recheck read the question text back and recomputed the answer by "
+               "a second method (place values, Python's own conversions, digit tables or bit "
+               "weights); the two agreed.")
+
+
 def _fact(statement: str, ask: str) -> dict:
     return {"statement": statement, "ask": ask}
 
@@ -576,7 +582,8 @@ def _t(slug, letter, write, recheck, params, rules=(), difficulty=1, seconds=60,
         id=f"{topic}-{slug}", version=1, topic=topic, learning_point=f"{topic}-lp-{slug}",
         type="short_answer", difficulty=difficulty, expected_seconds=seconds, marks=marks,
         source_ref=f"OCR H446 specification 1.4.1({letter})", citations=(_leaf_citation(topic),),
-        params=tuple(params), rules=tuple(rules), write=write, recheck=recheck)
+        params=tuple(params), rules=tuple(rules), write=write, recheck=recheck,
+        engine_tool="revisionden-cs-engine", engine_note=ENGINE_NOTE)
 
 
 _N8 = IntParam("n", 1, 255)

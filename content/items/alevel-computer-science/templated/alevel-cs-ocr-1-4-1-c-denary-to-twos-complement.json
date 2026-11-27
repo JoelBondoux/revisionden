@@ -7,7 +7,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-twos-complement",
     "expected_seconds": 90,
     "prompt": "Write the denary number -10 as an 8-bit two's complement binary number.",
-    "answer": { "accepted": ["11110110", "1111 0110"] },
+    "answer": {
+      "accepted": ["11110110", "1111 0110"]
+    },
     "marks": 1,
     "hint": "Write the positive number in 8 bits, flip every bit, then add 1.",
     "explanation": "10 in 8 bits is 00001010. Flip every bit: 11110101. Add 1: 11110110. Check: the first bit is worth -128, and -128 + 118 = -10.",
@@ -58,10 +60,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -98,7 +100,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-twos-complement",
     "expected_seconds": 90,
     "prompt": "Write the denary number -110 as an 8-bit two's complement binary number.",
-    "answer": { "accepted": ["10010010", "1001 0010"] },
+    "answer": {
+      "accepted": ["10010010", "1001 0010"]
+    },
     "marks": 1,
     "hint": "Write the positive number in 8 bits, flip every bit, then add 1.",
     "explanation": "110 in 8 bits is 01101110. Flip every bit: 10010001. Add 1: 10010010. Check: the first bit is worth -128, and -128 + 18 = -110.",
@@ -149,10 +153,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -173,7 +177,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-twos-complement",
     "expected_seconds": 90,
     "prompt": "Write the denary number -91 as an 8-bit two's complement binary number.",
-    "answer": { "accepted": ["10100101", "1010 0101"] },
+    "answer": {
+      "accepted": ["10100101", "1010 0101"]
+    },
     "marks": 1,
     "hint": "Write the positive number in 8 bits, flip every bit, then add 1.",
     "explanation": "91 in 8 bits is 01011011. Flip every bit: 10100100. Add 1: 10100101. Check: the first bit is worth -128, and -128 + 37 = -91.",
@@ -224,10 +230,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -248,7 +254,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-twos-complement",
     "expected_seconds": 90,
     "prompt": "Write the denary number -22 as an 8-bit two's complement binary number.",
-    "answer": { "accepted": ["11101010", "1110 1010"] },
+    "answer": {
+      "accepted": ["11101010", "1110 1010"]
+    },
     "marks": 1,
     "hint": "Write the positive number in 8 bits, flip every bit, then add 1.",
     "explanation": "22 in 8 bits is 00010110. Flip every bit: 11101001. Add 1: 11101010. Check: the first bit is worth -128, and -128 + 106 = -22.",
@@ -299,10 +307,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -323,7 +331,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-twos-complement",
     "expected_seconds": 90,
     "prompt": "Write the denary number -38 as an 8-bit two's complement binary number.",
-    "answer": { "accepted": ["11011010", "1101 1010"] },
+    "answer": {
+      "accepted": ["11011010", "1101 1010"]
+    },
     "marks": 1,
     "hint": "Write the positive number in 8 bits, flip every bit, then add 1.",
     "explanation": "38 in 8 bits is 00100110. Flip every bit: 11011001. Add 1: 11011010. Check: the first bit is worth -128, and -128 + 90 = -38.",
@@ -374,10 +384,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -398,7 +408,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-twos-complement",
     "expected_seconds": 90,
     "prompt": "Write the denary number -42 as an 8-bit two's complement binary number.",
-    "answer": { "accepted": ["11010110", "1101 0110"] },
+    "answer": {
+      "accepted": ["11010110", "1101 0110"]
+    },
     "marks": 1,
     "hint": "Write the positive number in 8 bits, flip every bit, then add 1.",
     "explanation": "42 in 8 bits is 00101010. Flip every bit: 11010101. Add 1: 11010110. Check: the first bit is worth -128, and -128 + 86 = -42.",
@@ -449,10 +461,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -473,7 +485,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-twos-complement",
     "expected_seconds": 90,
     "prompt": "Write the denary number -117 as an 8-bit two's complement binary number.",
-    "answer": { "accepted": ["10001011", "1000 1011"] },
+    "answer": {
+      "accepted": ["10001011", "1000 1011"]
+    },
     "marks": 1,
     "hint": "Write the positive number in 8 bits, flip every bit, then add 1.",
     "explanation": "117 in 8 bits is 01110101. Flip every bit: 10001010. Add 1: 10001011. Check: the first bit is worth -128, and -128 + 11 = -117.",
@@ -524,10 +538,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",

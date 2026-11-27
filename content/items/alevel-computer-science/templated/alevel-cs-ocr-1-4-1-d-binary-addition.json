@@ -49,10 +49,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T12:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -131,10 +131,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T12:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -197,10 +197,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T12:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -263,10 +263,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T12:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -329,10 +329,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T12:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -395,10 +395,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T12:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -461,10 +461,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T12:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",

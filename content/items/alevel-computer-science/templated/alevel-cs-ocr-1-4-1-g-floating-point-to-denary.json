@@ -7,7 +7,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
     "expected_seconds": 180,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 01001000 with exponent 0001 represent?",
-    "answer": { "accepted": ["1.125"] },
+    "answer": {
+      "accepted": ["1.125"]
+    },
     "marks": 2,
     "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
     "explanation": "The exponent 0001 is 1. The mantissa 01001000 is 0.5625 (its first bit is 0, so it is positive). 0.5625 × 2^1 = 1.125.",
@@ -34,7 +36,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 1 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary",
+      "version": 1,
+      "seed": 1
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -50,10 +56,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -90,7 +96,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
     "expected_seconds": 180,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 01011000 with exponent 0100 represent?",
-    "answer": { "accepted": ["11"] },
+    "answer": {
+      "accepted": ["11"]
+    },
     "marks": 2,
     "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
     "explanation": "The exponent 0100 is 4. The mantissa 01011000 is 0.6875 (its first bit is 0, so it is positive). 0.6875 × 2^4 = 11.",
@@ -117,7 +125,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 2 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary",
+      "version": 1,
+      "seed": 2
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -133,10 +145,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -157,7 +169,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
     "expected_seconds": 180,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 10001010 with exponent 0101 represent?",
-    "answer": { "accepted": ["-29.5"] },
+    "answer": {
+      "accepted": ["-29.5"]
+    },
     "marks": 2,
     "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
     "explanation": "The exponent 0101 is 5. The mantissa 10001010 is -0.921875 (its first bit is 1, worth -1). -0.921875 × 2^5 = -29.5.",
@@ -184,7 +198,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 3 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary",
+      "version": 1,
+      "seed": 3
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -200,10 +218,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -224,7 +242,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
     "expected_seconds": 180,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 01010000 with exponent 0110 represent?",
-    "answer": { "accepted": ["40"] },
+    "answer": {
+      "accepted": ["40"]
+    },
     "marks": 2,
     "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
     "explanation": "The exponent 0110 is 6. The mantissa 01010000 is 0.625 (its first bit is 0, so it is positive). 0.625 × 2^6 = 40.",
@@ -251,7 +271,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 4 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary",
+      "version": 1,
+      "seed": 4
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -267,10 +291,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -291,7 +315,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
     "expected_seconds": 180,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 10101010 with exponent 0110 represent?",
-    "answer": { "accepted": ["-43"] },
+    "answer": {
+      "accepted": ["-43"]
+    },
     "marks": 2,
     "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
     "explanation": "The exponent 0110 is 6. The mantissa 10101010 is -0.671875 (its first bit is 1, worth -1). -0.671875 × 2^6 = -43.",
@@ -318,7 +344,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 5 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary",
+      "version": 1,
+      "seed": 5
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -334,10 +364,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -358,7 +388,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
     "expected_seconds": 180,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 10110010 with exponent 0101 represent?",
-    "answer": { "accepted": ["-19.5"] },
+    "answer": {
+      "accepted": ["-19.5"]
+    },
     "marks": 2,
     "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
     "explanation": "The exponent 0101 is 5. The mantissa 10110010 is -0.609375 (its first bit is 1, worth -1). -0.609375 × 2^5 = -19.5.",
@@ -385,7 +417,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 6 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary",
+      "version": 1,
+      "seed": 6
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -401,10 +437,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -425,7 +461,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-floating-point-to-denary",
     "expected_seconds": 180,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. What denary number does the mantissa 01101100 with exponent 0110 represent?",
-    "answer": { "accepted": ["54"] },
+    "answer": {
+      "accepted": ["54"]
+    },
     "marks": 2,
     "hint": "Work out the exponent first. Then move the binary point in the mantissa that many places (right if positive, left if negative).",
     "explanation": "The exponent 0110 is 6. The mantissa 01101100 is 0.84375 (its first bit is 0, so it is positive). 0.84375 × 2^6 = 54.",
@@ -452,7 +490,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary", "version": 1, "seed": 7 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-floating-point-to-denary",
+      "version": 1,
+      "seed": 7
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -468,10 +510,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",

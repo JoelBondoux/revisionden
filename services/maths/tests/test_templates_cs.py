@@ -163,3 +163,20 @@ def test_the_mantissa_sign_bit_is_described_by_its_actual_value():
             assert "worth -1" not in item["explanation"], item["id"]
         else:
             assert "worth -1" in item["explanation"], item["id"]
+
+
+# Lead ruling 2026-11-27: floating point blind-answer failures go to individual review, and the
+# reviewer must see that the CS engine and an independent recheck confirmed each answer.
+def test_the_engine_check_says_how_a_cs_answer_was_confirmed():
+    for template in TEMPLATES:
+        item = make_item(template, 1, NOW)
+        [engine] = [c for c in item["verification"]["checks"] if c["name"] == "maths-engine"]
+        assert "CS engine" in engine["notes"] and "second method" in engine["notes"], template.id
+        assert engine["tool"] == "revisionden-cs-engine"
+
+
+def test_committed_cs_items_record_how_each_answer_was_confirmed():
+    for path in (REPO / build.COURSES["alevel-cs"].out_dir).glob("*.json"):
+        for item in json.loads(path.read_text()):
+            [engine] = [c for c in item["verification"]["checks"] if c["name"] == "maths-engine"]
+            assert "CS engine" in engine["notes"], item["id"]

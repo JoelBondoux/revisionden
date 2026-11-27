@@ -58,6 +58,12 @@ committed (public repository); the quote checker caches it outside the repo.
   rule, shift fill rules, and AND/OR/XOR. These 70 items need individual human approval.
 - Model checks on a sample of 17 (one per template; OpenAI `gpt-5.4-2026-03-05` for blind answer
   and adversarial review, while Gemini is capped): see the PR for results.
+- Floating point blind-answer failures (lead ruling 2026-11-27): the four sampled floating point
+  items failed blind answer because the model's own arithmetic was wrong (it gave 9, then 4.5,
+  for an item whose answer is 1.125). They go to individual review and are not re-run to get a
+  pass. Each item's `maths-engine` check records that the CS engine wrote the answer and the
+  template's independent recheck agreed; every floating point item is also hand-checkable in
+  `docs/TEMPLATE_PREVIEW_CS.md`.
 
 ## Still open
 

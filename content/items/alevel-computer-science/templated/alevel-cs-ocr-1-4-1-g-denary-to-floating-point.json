@@ -7,7 +7,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-denary-to-floating-point",
     "expected_seconds": 240,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Write the denary number -39.5 as a normalised floating point number. Give the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["10110001 0110", "10110001, 0110"] },
+    "answer": {
+      "accepted": ["10110001 0110", "10110001, 0110"]
+    },
     "marks": 2,
     "hint": "Write the number in binary, then move the point until the mantissa starts 01 (positive) or 10 (negative). The exponent counts how far the point moved.",
     "explanation": "A normalised mantissa starts 01 or 10. -39.5 = -0.6171875 × 2^6, so the mantissa is 10110001 and the exponent is 6, which is 0110 in 4-bit two's complement.",
@@ -38,7 +40,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point", "version": 1, "seed": 1 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point",
+      "version": 1,
+      "seed": 1
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -54,10 +60,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -94,7 +100,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-denary-to-floating-point",
     "expected_seconds": 240,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Write the denary number 15.75 as a normalised floating point number. Give the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01111110 0100", "01111110, 0100"] },
+    "answer": {
+      "accepted": ["01111110 0100", "01111110, 0100"]
+    },
     "marks": 2,
     "hint": "Write the number in binary, then move the point until the mantissa starts 01 (positive) or 10 (negative). The exponent counts how far the point moved.",
     "explanation": "A normalised mantissa starts 01 or 10. 15.75 = 0.984375 × 2^4, so the mantissa is 01111110 and the exponent is 4, which is 0100 in 4-bit two's complement.",
@@ -125,7 +133,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point", "version": 1, "seed": 2 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point",
+      "version": 1,
+      "seed": 2
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -141,10 +153,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -165,7 +177,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-denary-to-floating-point",
     "expected_seconds": 240,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Write the denary number -30.5 as a normalised floating point number. Give the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["10000110 0101", "10000110, 0101"] },
+    "answer": {
+      "accepted": ["10000110 0101", "10000110, 0101"]
+    },
     "marks": 2,
     "hint": "Write the number in binary, then move the point until the mantissa starts 01 (positive) or 10 (negative). The exponent counts how far the point moved.",
     "explanation": "A normalised mantissa starts 01 or 10. -30.5 = -0.953125 × 2^5, so the mantissa is 10000110 and the exponent is 5, which is 0101 in 4-bit two's complement.",
@@ -196,7 +210,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point", "version": 1, "seed": 3 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point",
+      "version": 1,
+      "seed": 3
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -212,10 +230,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -236,7 +254,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-denary-to-floating-point",
     "expected_seconds": 240,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Write the denary number 59.5 as a normalised floating point number. Give the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01110111 0110", "01110111, 0110"] },
+    "answer": {
+      "accepted": ["01110111 0110", "01110111, 0110"]
+    },
     "marks": 2,
     "hint": "Write the number in binary, then move the point until the mantissa starts 01 (positive) or 10 (negative). The exponent counts how far the point moved.",
     "explanation": "A normalised mantissa starts 01 or 10. 59.5 = 0.9296875 × 2^6, so the mantissa is 01110111 and the exponent is 6, which is 0110 in 4-bit two's complement.",
@@ -267,7 +287,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point", "version": 1, "seed": 4 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point",
+      "version": 1,
+      "seed": 4
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -283,10 +307,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -307,7 +331,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-denary-to-floating-point",
     "expected_seconds": 240,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Write the denary number 5.0625 as a normalised floating point number. Give the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01010001 0011", "01010001, 0011"] },
+    "answer": {
+      "accepted": ["01010001 0011", "01010001, 0011"]
+    },
     "marks": 2,
     "hint": "Write the number in binary, then move the point until the mantissa starts 01 (positive) or 10 (negative). The exponent counts how far the point moved.",
     "explanation": "A normalised mantissa starts 01 or 10. 5.0625 = 0.6328125 × 2^3, so the mantissa is 01010001 and the exponent is 3, which is 0011 in 4-bit two's complement.",
@@ -338,7 +364,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point", "version": 1, "seed": 5 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point",
+      "version": 1,
+      "seed": 5
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -354,10 +384,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -378,7 +408,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-denary-to-floating-point",
     "expected_seconds": 240,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Write the denary number 29 as a normalised floating point number. Give the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01110100 0101", "01110100, 0101"] },
+    "answer": {
+      "accepted": ["01110100 0101", "01110100, 0101"]
+    },
     "marks": 2,
     "hint": "Write the number in binary, then move the point until the mantissa starts 01 (positive) or 10 (negative). The exponent counts how far the point moved.",
     "explanation": "A normalised mantissa starts 01 or 10. 29 = 0.90625 × 2^5, so the mantissa is 01110100 and the exponent is 5, which is 0101 in 4-bit two's complement.",
@@ -409,7 +441,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point", "version": 1, "seed": 6 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point",
+      "version": 1,
+      "seed": 6
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -425,10 +461,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -449,7 +485,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-g-lp-denary-to-floating-point",
     "expected_seconds": 240,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Write the denary number -41.5 as a normalised floating point number. Give the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["10101101 0110", "10101101, 0110"] },
+    "answer": {
+      "accepted": ["10101101 0110", "10101101, 0110"]
+    },
     "marks": 2,
     "hint": "Write the number in binary, then move the point until the mantissa starts 01 (positive) or 10 (negative). The exponent counts how far the point moved.",
     "explanation": "A normalised mantissa starts 01 or 10. -41.5 = -0.6484375 × 2^6, so the mantissa is 10101101 and the exponent is 6, which is 0110 in 4-bit two's complement.",
@@ -480,7 +518,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point", "version": 1, "seed": 7 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-g-denary-to-floating-point",
+      "version": 1,
+      "seed": 7
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -496,10 +538,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",

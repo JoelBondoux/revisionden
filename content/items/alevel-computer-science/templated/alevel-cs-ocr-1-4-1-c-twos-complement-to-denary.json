@@ -7,7 +7,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-twos-complement-to-denary",
     "expected_seconds": 90,
     "prompt": "The 8-bit two's complement binary number 10001100 represents which denary number?",
-    "answer": { "accepted": ["-116"] },
+    "answer": {
+      "accepted": ["-116"]
+    },
     "marks": 1,
     "hint": "In 8-bit two's complement the first bit is worth -128; the others keep their usual place values.",
     "explanation": "The first bit is 1, worth -128. The other bits 0001100 are worth 12. -128 + 12 = -116.",
@@ -54,10 +56,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -94,7 +96,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-twos-complement-to-denary",
     "expected_seconds": 90,
     "prompt": "The 8-bit two's complement binary number 11101010 represents which denary number?",
-    "answer": { "accepted": ["-22"] },
+    "answer": {
+      "accepted": ["-22"]
+    },
     "marks": 1,
     "hint": "In 8-bit two's complement the first bit is worth -128; the others keep their usual place values.",
     "explanation": "The first bit is 1, worth -128. The other bits 1101010 are worth 106. -128 + 106 = -22.",
@@ -141,10 +145,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -165,7 +169,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-twos-complement-to-denary",
     "expected_seconds": 90,
     "prompt": "The 8-bit two's complement binary number 11110110 represents which denary number?",
-    "answer": { "accepted": ["-10"] },
+    "answer": {
+      "accepted": ["-10"]
+    },
     "marks": 1,
     "hint": "In 8-bit two's complement the first bit is worth -128; the others keep their usual place values.",
     "explanation": "The first bit is 1, worth -128. The other bits 1110110 are worth 118. -128 + 118 = -10.",
@@ -212,10 +218,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -236,7 +242,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-twos-complement-to-denary",
     "expected_seconds": 90,
     "prompt": "The 8-bit two's complement binary number 11000010 represents which denary number?",
-    "answer": { "accepted": ["-62"] },
+    "answer": {
+      "accepted": ["-62"]
+    },
     "marks": 1,
     "hint": "In 8-bit two's complement the first bit is worth -128; the others keep their usual place values.",
     "explanation": "The first bit is 1, worth -128. The other bits 1000010 are worth 66. -128 + 66 = -62.",
@@ -283,10 +291,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -307,7 +315,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-twos-complement-to-denary",
     "expected_seconds": 90,
     "prompt": "The 8-bit two's complement binary number 11001111 represents which denary number?",
-    "answer": { "accepted": ["-49"] },
+    "answer": {
+      "accepted": ["-49"]
+    },
     "marks": 1,
     "hint": "In 8-bit two's complement the first bit is worth -128; the others keep their usual place values.",
     "explanation": "The first bit is 1, worth -128. The other bits 1001111 are worth 79. -128 + 79 = -49.",
@@ -354,10 +364,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -378,7 +388,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-twos-complement-to-denary",
     "expected_seconds": 90,
     "prompt": "The 8-bit two's complement binary number 10011010 represents which denary number?",
-    "answer": { "accepted": ["-102"] },
+    "answer": {
+      "accepted": ["-102"]
+    },
     "marks": 1,
     "hint": "In 8-bit two's complement the first bit is worth -128; the others keep their usual place values.",
     "explanation": "The first bit is 1, worth -128. The other bits 0011010 are worth 26. -128 + 26 = -102.",
@@ -425,10 +437,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -449,7 +461,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-twos-complement-to-denary",
     "expected_seconds": 90,
     "prompt": "The 8-bit two's complement binary number 10001010 represents which denary number?",
-    "answer": { "accepted": ["-118"] },
+    "answer": {
+      "accepted": ["-118"]
+    },
     "marks": 1,
     "hint": "In 8-bit two's complement the first bit is worth -128; the others keep their usual place values.",
     "explanation": "The first bit is 1, worth -128. The other bits 0001010 are worth 10. -128 + 10 = -118.",
@@ -496,10 +510,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",

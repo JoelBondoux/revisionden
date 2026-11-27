@@ -7,7 +7,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
     "expected_seconds": 300,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01011000, exponent 0100 and mantissa 10101110, exponent 0011. Give the normalised answer: the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01011110 0011", "01011110, 0011"] },
+    "answer": {
+      "accepted": ["01011110 0011", "01011110, 0011"]
+    },
     "marks": 3,
     "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
     "explanation": "The first number is 11 and the second is -5.125. Their sum is 5.875. Normalised, that is mantissa 01011110 and exponent 0011.",
@@ -38,7 +40,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 1 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition",
+      "version": 1,
+      "seed": 1
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -54,10 +60,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -94,7 +100,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
     "expected_seconds": 300,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 10011110, exponent 0100 and mantissa 01011000, exponent 0001. Give the normalised answer: the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["10101001 0100", "10101001, 0100"] },
+    "answer": {
+      "accepted": ["10101001 0100", "10101001, 0100"]
+    },
     "marks": 3,
     "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
     "explanation": "The first number is -12.25 and the second is 1.375. Their sum is -10.875. Normalised, that is mantissa 10101001 and exponent 0100.",
@@ -125,7 +133,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 2 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition",
+      "version": 1,
+      "seed": 2
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -141,10 +153,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -165,7 +177,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
     "expected_seconds": 300,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01011110, exponent 0000 and mantissa 01110000, exponent 0000. Give the normalised answer: the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01100111 0001", "01100111, 0001"] },
+    "answer": {
+      "accepted": ["01100111 0001", "01100111, 0001"]
+    },
     "marks": 3,
     "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
     "explanation": "The first number is 0.734375 and the second is 0.875. Their sum is 1.609375. Normalised, that is mantissa 01100111 and exponent 0001.",
@@ -196,7 +210,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 3 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition",
+      "version": 1,
+      "seed": 3
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -212,10 +230,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -236,7 +254,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
     "expected_seconds": 300,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 10011010, exponent 0001 and mantissa 10110100, exponent 0000. Give the normalised answer: the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["10111010 0010", "10111010, 0010"] },
+    "answer": {
+      "accepted": ["10111010 0010", "10111010, 0010"]
+    },
     "marks": 3,
     "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
     "explanation": "The first number is -1.59375 and the second is -0.59375. Their sum is -2.1875. Normalised, that is mantissa 10111010 and exponent 0010.",
@@ -267,7 +287,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 4 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition",
+      "version": 1,
+      "seed": 4
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -283,10 +307,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -307,7 +331,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
     "expected_seconds": 300,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01000110, exponent 0011 and mantissa 01000100, exponent 0100. Give the normalised answer: the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01100111 0100", "01100111, 0100"] },
+    "answer": {
+      "accepted": ["01100111 0100", "01100111, 0100"]
+    },
     "marks": 3,
     "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
     "explanation": "The first number is 4.375 and the second is 8.5. Their sum is 12.875. Normalised, that is mantissa 01100111 and exponent 0100.",
@@ -338,7 +364,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 5 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition",
+      "version": 1,
+      "seed": 5
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -354,10 +384,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -378,7 +408,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
     "expected_seconds": 300,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01010000, exponent 0100 and mantissa 10011100, exponent 0011. Give the normalised answer: the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01111000 0010", "01111000, 0010"] },
+    "answer": {
+      "accepted": ["01111000 0010", "01111000, 0010"]
+    },
     "marks": 3,
     "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
     "explanation": "The first number is 10 and the second is -6.25. Their sum is 3.75. Normalised, that is mantissa 01111000 and exponent 0010.",
@@ -409,7 +441,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 6 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition",
+      "version": 1,
+      "seed": 6
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -425,10 +461,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -449,7 +485,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-h-lp-floating-point-addition",
     "expected_seconds": 300,
     "prompt": "In this floating point format the mantissa is 8 bits and the exponent is 4 bits, both in two's complement, with the binary point after the first bit of the mantissa. Add the floating point numbers with mantissa 01100110, exponent 0100 and mantissa 01001000, exponent 0100. Give the normalised answer: the mantissa, then a space, then the exponent.",
-    "answer": { "accepted": ["01010111 0101", "01010111, 0101"] },
+    "answer": {
+      "accepted": ["01010111 0101", "01010111, 0101"]
+    },
     "marks": 3,
     "hint": "Make the exponents the same (or convert both to denary), add, then normalise the result.",
     "explanation": "The first number is 12.75 and the second is 9. Their sum is 21.75. Normalised, that is mantissa 01010111 and exponent 0101.",
@@ -480,7 +518,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition", "version": 1, "seed": 7 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-h-floating-point-addition",
+      "version": 1,
+      "seed": 7
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -496,10 +538,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",

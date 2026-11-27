@@ -7,7 +7,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-d-lp-twos-complement-subtraction",
     "expected_seconds": 180,
     "prompt": "Using 8-bit two's complement, subtract 11001010 from 00011101. Give the answer as 8 bits.",
-    "answer": { "accepted": ["01010011", "0101 0011"] },
+    "answer": {
+      "accepted": ["01010011", "0101 0011"]
+    },
     "marks": 2,
     "hint": "To subtract, make the second number negative (flip the bits and add 1), then add. Ignore any carry out of the 8th bit.",
     "explanation": "Negate 11001010: 00110110. Add 00011101 + 00110110 = 01010011, ignoring any carry out of the 8th bit. Check in denary: 29 - (-54) = 83.",
@@ -54,10 +56,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -94,7 +96,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-d-lp-twos-complement-subtraction",
     "expected_seconds": 180,
     "prompt": "Using 8-bit two's complement, subtract 00110111 from 11010111. Give the answer as 8 bits.",
-    "answer": { "accepted": ["10100000", "1010 0000"] },
+    "answer": {
+      "accepted": ["10100000", "1010 0000"]
+    },
     "marks": 2,
     "hint": "To subtract, make the second number negative (flip the bits and add 1), then add. Ignore any carry out of the 8th bit.",
     "explanation": "Negate 00110111: 11001001. Add 11010111 + 11001001 = 10100000, ignoring any carry out of the 8th bit. Check in denary: -41 - 55 = -96.",
@@ -141,10 +145,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -165,7 +169,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-d-lp-twos-complement-subtraction",
     "expected_seconds": 180,
     "prompt": "Using 8-bit two's complement, subtract 00101110 from 00001100. Give the answer as 8 bits.",
-    "answer": { "accepted": ["11011110", "1101 1110"] },
+    "answer": {
+      "accepted": ["11011110", "1101 1110"]
+    },
     "marks": 2,
     "hint": "To subtract, make the second number negative (flip the bits and add 1), then add. Ignore any carry out of the 8th bit.",
     "explanation": "Negate 00101110: 11010010. Add 00001100 + 11010010 = 11011110, ignoring any carry out of the 8th bit. Check in denary: 12 - 46 = -34.",
@@ -212,10 +218,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -236,7 +242,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-d-lp-twos-complement-subtraction",
     "expected_seconds": 180,
     "prompt": "Using 8-bit two's complement, subtract 11001010 from 11110001. Give the answer as 8 bits.",
-    "answer": { "accepted": ["00100111", "0010 0111"] },
+    "answer": {
+      "accepted": ["00100111", "0010 0111"]
+    },
     "marks": 2,
     "hint": "To subtract, make the second number negative (flip the bits and add 1), then add. Ignore any carry out of the 8th bit.",
     "explanation": "Negate 11001010: 00110110. Add 11110001 + 00110110 = 00100111, ignoring any carry out of the 8th bit. Check in denary: -15 - (-54) = 39.",
@@ -283,10 +291,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -307,7 +315,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-d-lp-twos-complement-subtraction",
     "expected_seconds": 180,
     "prompt": "Using 8-bit two's complement, subtract 11000111 from 00011110. Give the answer as 8 bits.",
-    "answer": { "accepted": ["01010111", "0101 0111"] },
+    "answer": {
+      "accepted": ["01010111", "0101 0111"]
+    },
     "marks": 2,
     "hint": "To subtract, make the second number negative (flip the bits and add 1), then add. Ignore any carry out of the 8th bit.",
     "explanation": "Negate 11000111: 00111001. Add 00011110 + 00111001 = 01010111, ignoring any carry out of the 8th bit. Check in denary: 30 - (-57) = 87.",
@@ -354,10 +364,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -378,7 +388,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-d-lp-twos-complement-subtraction",
     "expected_seconds": 180,
     "prompt": "Using 8-bit two's complement, subtract 11100010 from 00000100. Give the answer as 8 bits.",
-    "answer": { "accepted": ["00100010", "0010 0010"] },
+    "answer": {
+      "accepted": ["00100010", "0010 0010"]
+    },
     "marks": 2,
     "hint": "To subtract, make the second number negative (flip the bits and add 1), then add. Ignore any carry out of the 8th bit.",
     "explanation": "Negate 11100010: 00011110. Add 00000100 + 00011110 = 00100010, ignoring any carry out of the 8th bit. Check in denary: 4 - (-30) = 34.",
@@ -425,10 +437,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -449,7 +461,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-d-lp-twos-complement-subtraction",
     "expected_seconds": 180,
     "prompt": "Using 8-bit two's complement, subtract 00010010 from 00100110. Give the answer as 8 bits.",
-    "answer": { "accepted": ["00010100", "0001 0100"] },
+    "answer": {
+      "accepted": ["00010100", "0001 0100"]
+    },
     "marks": 2,
     "hint": "To subtract, make the second number negative (flip the bits and add 1), then add. Ignore any carry out of the 8th bit.",
     "explanation": "Negate 00010010: 11101110. Add 00100110 + 11101110 = 00010100, ignoring any carry out of the 8th bit. Check in denary: 38 - 18 = 20.",
@@ -496,10 +510,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",

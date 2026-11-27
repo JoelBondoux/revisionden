@@ -7,7 +7,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
     "expected_seconds": 60,
     "prompt": "Write the denary number -40 in 8-bit sign and magnitude binary.",
-    "answer": { "accepted": ["10101000", "1010 1000"] },
+    "answer": {
+      "accepted": ["10101000", "1010 1000"]
+    },
     "marks": 1,
     "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
     "explanation": "The number is negative, so the sign bit is 1. 40 in 7 bits is 0101000. Together: 10101000.",
@@ -34,7 +36,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude", "version": 1, "seed": 1 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 1
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -50,10 +56,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -90,7 +96,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
     "expected_seconds": 60,
     "prompt": "Write the denary number -67 in 8-bit sign and magnitude binary.",
-    "answer": { "accepted": ["11000011", "1100 0011"] },
+    "answer": {
+      "accepted": ["11000011", "1100 0011"]
+    },
     "marks": 1,
     "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
     "explanation": "The number is negative, so the sign bit is 1. 67 in 7 bits is 1000011. Together: 11000011.",
@@ -117,7 +125,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude", "version": 1, "seed": 2 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 2
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -133,10 +145,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -157,7 +169,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
     "expected_seconds": 60,
     "prompt": "Write the denary number -47 in 8-bit sign and magnitude binary.",
-    "answer": { "accepted": ["10101111", "1010 1111"] },
+    "answer": {
+      "accepted": ["10101111", "1010 1111"]
+    },
     "marks": 1,
     "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
     "explanation": "The number is negative, so the sign bit is 1. 47 in 7 bits is 0101111. Together: 10101111.",
@@ -184,7 +198,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude", "version": 1, "seed": 3 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 3
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -200,10 +218,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -224,7 +242,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
     "expected_seconds": 60,
     "prompt": "Write the denary number -84 in 8-bit sign and magnitude binary.",
-    "answer": { "accepted": ["11010100", "1101 0100"] },
+    "answer": {
+      "accepted": ["11010100", "1101 0100"]
+    },
     "marks": 1,
     "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
     "explanation": "The number is negative, so the sign bit is 1. 84 in 7 bits is 1010100. Together: 11010100.",
@@ -251,7 +271,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude", "version": 1, "seed": 4 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 4
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -267,10 +291,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -291,7 +315,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
     "expected_seconds": 60,
     "prompt": "Write the denary number -33 in 8-bit sign and magnitude binary.",
-    "answer": { "accepted": ["10100001", "1010 0001"] },
+    "answer": {
+      "accepted": ["10100001", "1010 0001"]
+    },
     "marks": 1,
     "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
     "explanation": "The number is negative, so the sign bit is 1. 33 in 7 bits is 0100001. Together: 10100001.",
@@ -318,7 +344,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude", "version": 1, "seed": 5 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 5
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -334,10 +364,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -358,7 +388,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
     "expected_seconds": 60,
     "prompt": "Write the denary number -74 in 8-bit sign and magnitude binary.",
-    "answer": { "accepted": ["11001010", "1100 1010"] },
+    "answer": {
+      "accepted": ["11001010", "1100 1010"]
+    },
     "marks": 1,
     "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
     "explanation": "The number is negative, so the sign bit is 1. 74 in 7 bits is 1001010. Together: 11001010.",
@@ -385,7 +417,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude", "version": 1, "seed": 6 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 6
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -401,10 +437,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
@@ -425,7 +461,9 @@
     "learning_point": "alevel-cs-ocr-1-4-1-c-lp-denary-to-sign-magnitude",
     "expected_seconds": 60,
     "prompt": "Write the denary number -46 in 8-bit sign and magnitude binary.",
-    "answer": { "accepted": ["10101110", "1010 1110"] },
+    "answer": {
+      "accepted": ["10101110", "1010 1110"]
+    },
     "marks": 1,
     "hint": "The first bit is the sign (1 for negative); the other 7 bits are the size of the number.",
     "explanation": "The number is negative, so the sign bit is 1. 46 in 7 bits is 0101110. Together: 10101110.",
@@ -452,7 +490,11 @@
         "sha256": "8551bc2636fa4d8718d97901b462b0642b4bb6148e06407f662c507750764a44"
       }
     ],
-    "template": { "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude", "version": 1, "seed": 7 },
+    "template": {
+      "id": "alevel-cs-ocr-1-4-1-c-denary-to-sign-magnitude",
+      "version": 1,
+      "seed": 7
+    },
     "verification": {
       "status": "draft",
       "version": 1,
@@ -468,10 +510,10 @@
         {
           "name": "maths-engine",
           "result": "pass",
-          "tool": "revisionden-maths-engine",
+          "tool": "revisionden-cs-engine",
           "tool_version": "sympy 1.13.3",
           "at": "2026-11-27T13:00:00Z",
-          "notes": "Template cross-check: the content checks re-verified the answer and every step, and the question text was read back and the answer recomputed by a second method."
+          "notes": "Template cross-check: the CS engine (services/maths/app/cs) wrote the answer, and the template's recheck read the question text back and recomputed the answer by a second method (place values, Python's own conversions, digit tables or bit weights); the two agreed."
         },
         {
           "name": "quote-check",
