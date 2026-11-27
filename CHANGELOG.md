@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- A-Level Computer Science is on its way: the topic map for OCR's specification (H446) is in place, with every topic checked word for word against OCR's own document. Questions come next.
 - If several bug reports from a student turn out not to be bugs, their bug button takes a rest for a week (and after repeated rests, switches off until a parent turns it back on from Parent home). Get help and "Ask a parent" always stay.
 - Starting test: if you need longer, a "More time" button appears in the last minute and adds 2 minutes. You can use it up to 10 times.
 - Fixed: "You earned a reward!" in the prize box is readable again in light mode, the RevisionDen title reads in dark mode, and in every style the keyboard focus ring, tick boxes, round choice buttons, the bug button, map arrows and the current flashcard tab are now easy to see.
