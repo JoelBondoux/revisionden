@@ -8,7 +8,8 @@
     "expected_seconds": 25,
     "prompt": "Two angles on a straight line are 128° and x°. Work out x.",
     "answer": {
-      "value": "52"
+      "value": "52",
+      "subject": "x"
     },
     "verify": {
       "expression": "180 - 128"
@@ -55,7 +56,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:57Z",
+          "at": "2026-11-27T11:46:09Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -64,7 +65,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -72,14 +73,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:15Z",
+          "at": "2026-11-27T11:46:15Z",
           "notes": "model answered \"52°\"; expected \"52\""
         },
         {
@@ -87,7 +88,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:16Z",
+          "at": "2026-11-27T11:46:16Z",
           "notes": "no problems found"
         }
       ]
@@ -102,7 +103,8 @@
     "expected_seconds": 30,
     "prompt": "Four angles around a point are 95°, 110°, 70° and x°. Work out x.",
     "answer": {
-      "value": "85"
+      "value": "85",
+      "subject": "x"
     },
     "verify": {
       "expression": "360 - 95 - 110 - 70"
@@ -149,7 +151,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:57Z",
+          "at": "2026-11-27T11:46:10Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -158,7 +160,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -166,14 +168,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:19Z",
+          "at": "2026-11-27T11:46:17Z",
           "notes": "model answered \"85°\"; expected \"85\""
         },
         {
@@ -181,7 +183,7 @@
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:20Z",
+          "at": "2026-11-27T11:46:18Z",
           "notes": "no problems found"
         }
       ]

@@ -170,7 +170,7 @@
       "option": 0
     },
     "marks": 1,
-    "explanation": "A kite has two pairs of equal sides next to each other and one line of symmetry along its long diagonal.",
+    "explanation": "A kite has two pairs of equal sides next to each other and one line of symmetry: the diagonal joining the two vertices where the pairs of equal sides meet.",
     "hint": "Think of the shape of a toy that flies on a string.",
     "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference G4",
     "checked_by": ["author"],
@@ -206,7 +206,7 @@
           "result": "pass",
           "tool": "revisionden-quote-check",
           "tool_version": "1.0.0",
-          "at": "2026-11-27T11:00:59Z",
+          "at": "2026-11-27T11:46:11Z",
           "notes": "citation 1: found on page 29 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
@@ -215,14 +215,14 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T16:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "blind-answer",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:22Z",
+          "at": "2026-11-27T11:46:14Z",
           "notes": "model answered \"0\"; expected \"0\""
         },
         {
@@ -230,8 +230,8 @@
           "result": "fail",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T11:02:25Z",
-          "notes": "unsupported_claim (explanation): The explanation states that 'A kite has two pairs of equal sides next to each other and one line of symmetry along its long diagonal.' While the specification source supports using properties and definitions of a kite, it does not quote or supply this specific property about having one line of symmetry along its long diagonal. Under the given rules, this factual claim needs quoted source support.; confidence medium"
+          "at": "2026-11-27T11:46:17Z",
+          "notes": "unsupported_claim (question): The question asks for a quadrilateral with 'exactly one line of symmetry'. The cited source supports knowing properties and definitions of special quadrilaterals, but it does not explicitly quote symmetry properties, so this claim is not backed by the provided source.; unsupported_claim (explanation): The explanation claims that a kite has 'one line of symmetry' and identifies it as a particular diagonal. The provided source does not explicitly support symmetry properties or which diagonal is a line of symmetry, so this factual claim is not backed by the quoted source.; confidence medium"
         }
       ]
     }
