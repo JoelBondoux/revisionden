@@ -136,11 +136,13 @@ date per parent sign-in.
   parent acts on it, with the student, or after 90 days; in the family export.
 - The lead's triage token (L14): a scoped machine credential, not a person's sign-in. Only its
   SHA-256 is stored, as the Worker secret `TRIAGE_TOKEN_HASH` (never in the repository or chat).
-  It opens only `GET /v1/triage/tickets` (id, kind, sender role, text, item, content id, device
+  It opens only `GET /v1/triage/tickets` and `GET /v1/triage/tickets/{id}` (id, kind, sender role, text, item, content id, device
   details, status, outcome, tester flag and time; never names, emails, nicknames or family ids)
   and confirm, duplicate and Not a bug on a ticket. Every call is audited as `triage-bot`: each
-  list read as `tickets.list`, and each change with a required reason (at most 300 characters).
-  The list returns at most 200 tickets a page, newest first, with `nextBefore` for older ones. Off in production: sending feedback text to the
+  list read as `tickets.list` (how many came back and what was asked, never ticket text), each
+  ticket read as `ticket.read` against its family, and each change with a required reason (at
+  most 300 characters). The list returns at most 200 tickets a page, newest first, with
+  `nextBefore` for older ones; `status=unreviewed` leaves out reviewed tickets. Off in production: sending feedback text to the
   lead's AI session there needs privacy notice 9.3 and the processors list updated first
   (`project_memory/operations/contradictions.md`).
 - Every operator read of a family and every action is recorded (`operator_audit_log`: operator

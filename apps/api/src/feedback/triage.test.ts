@@ -81,8 +81,12 @@ describe('triage token (L14)', () => {
     await report(headers);
     expect((await t.app.request('/v1/triage/tickets', { headers: bot })).status).toBe(200);
     expect(await triageAudits()).toEqual([
-      expect.objectContaining({ action: 'tickets.list', operatorRole: 'agent', reason: null }),
+      expect.objectContaining({ action: 'tickets.list', operatorRole: 'agent', reason: 'count=1' }),
     ]);
+    await t.app.request('/v1/triage/tickets?status=unreviewed&limit=5', { headers: bot });
+    const [, second] = await triageAudits();
+    expect(second?.reason).toBe('count=1 status=unreviewed limit=5');
+    expect(JSON.stringify(await triageAudits())).not.toContain('It broke');
   });
 
   it('pages back through older tickets with nextBefore, never skipping one', async () => {
@@ -103,6 +107,32 @@ describe('triage token (L14)', () => {
     expect(new Set(seen).size).toBe(5);
     expect((await t.app.request('/v1/triage/tickets?before=nope', { headers: bot })).status).toBe(
       400,
+    );
+  });
+
+  it('lists only unreviewed tickets when asked', async () => {
+    const { headers } = await t.familyStudent('test_kid');
+    const done = await report(headers);
+    await post(`/tickets/${done}/not-a-bug`, { reason: 'Works as designed' });
+    t.clock.advance(1000);
+    const open = await report(headers);
+    const res = await t.app.request('/v1/triage/tickets?status=unreviewed', { headers: bot });
+    const { tickets } = (await res.json()) as { tickets: { id: string }[] };
+    expect(tickets.map((x) => x.id)).toEqual([open]);
+  });
+
+  it('reads one ticket, audited against its family, and 404 for an unknown one', async () => {
+    const { headers } = await t.familyStudent('test_kid');
+    const id = await report(headers);
+    const res = await t.app.request(`/v1/triage/tickets/${id}`, { headers: bot });
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({ ticket: { id, kind: 'bug', text: 'It broke' } });
+    expect(await triageAudits()).toEqual([
+      expect.objectContaining({ action: 'ticket.read', targetType: 'family' }),
+    ]);
+    const missing = '00000000-0000-4000-8000-000000000000';
+    expect((await t.app.request(`/v1/triage/tickets/${missing}`, { headers: bot })).status).toBe(
+      404,
     );
   });
 

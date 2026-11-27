@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '../../components/Button';
 import { useBugButton } from './bugButtonContext';
 import { useFeedbackApi, type BugButtonInfo } from './feedbackApi';
@@ -44,10 +44,16 @@ export function ChildBugButtonNote({
   const [switchedOn, setSwitchedOn] = useState(false);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);
+  // The child on screen now: a switch-on that finishes after the parent picks another child is
+  // dropped, never shown for the new one.
+  const current = useRef(studentId);
+  current.current = studentId;
 
   useEffect(() => {
     let live = true;
     setSwitchedOn(false);
+    setBusy(false);
+    setFailed(false);
     api.childBugButton(studentId).then(
       (next) => live && setInfo(next),
       () => undefined,
@@ -61,15 +67,18 @@ export function ChildBugButtonNote({
   if (!info || info.state === 'on') return null;
 
   const switchOn = async () => {
+    const forStudent = studentId;
     setBusy(true);
     setFailed(false);
     try {
-      setInfo(await api.switchChildBugButtonOn(studentId));
+      const next = await api.switchChildBugButtonOn(forStudent);
+      if (current.current !== forStudent) return;
+      setInfo(next);
       setSwitchedOn(true);
     } catch {
-      setFailed(true);
+      if (current.current === forStudent) setFailed(true);
     } finally {
-      setBusy(false);
+      if (current.current === forStudent) setBusy(false);
     }
   };
 

@@ -7,7 +7,7 @@
  * Off in production until the owner approves it (env.ts). No names, no emails, no family ids.
  */
 import { Hono, type Context } from 'hono';
-import { and, desc, eq, gt, inArray, lt, or } from 'drizzle-orm';
+import { and, desc, eq, gt, inArray, isNull, lt, or } from 'drizzle-orm';
 import { z } from 'zod';
 import { feedback, students, type Database } from '@revisionden/db';
 import type { AppEnv } from '../context';
@@ -43,7 +43,9 @@ const listQuery = z
         return !!at && !!id && !Number.isNaN(new Date(at).getTime()) && UUID.test(id);
       })
       .optional(),
-    limit: z.coerce.number().int().min(1).max(MAX_TICKETS).default(MAX_TICKETS),
+    limit: z.coerce.number().int().min(1).max(MAX_TICKETS).optional(),
+    // Only tickets with no outcome yet, so reviewed ones drop out.
+    status: z.literal('unreviewed').optional(),
   })
   .strict();
 
@@ -63,6 +65,23 @@ function sameHex(a: string, b: string): boolean {
 
 const unauthorised = () =>
   new ApiError(401, 'unauthorised', 'A valid triage token is needed for this request.');
+
+/** A ticket as triage sees it: the report itself, never who sent it beyond the role. */
+function toTicket(row: typeof feedback.$inferSelect, tester: boolean | null) {
+  return {
+    id: row.id,
+    kind: row.kind,
+    senderRole: row.senderRole,
+    text: row.text,
+    itemId: row.itemId ?? null,
+    contentId: row.device?.contentId ?? null,
+    device: row.device,
+    status: row.status,
+    outcome: row.outcome ?? null,
+    tester: tester ?? false,
+    createdAt: row.createdAt.toISOString(),
+  };
+}
 
 export function triageRoutes({ db, config, clock }: TriageDeps) {
   const app = new Hono<AppEnv>();
@@ -84,7 +103,9 @@ export function triageRoutes({ db, config, clock }: TriageDeps) {
         role: 'agent',
         requestId: c.req.header('x-request-id') ?? crypto.randomUUID(),
       },
-      familyId ? { action, targetType: 'family', targetId: familyId, reason: why } : { action },
+      familyId
+        ? { action, targetType: 'family', targetId: familyId, reason: why }
+        : { action, reason: why },
       clock.now(),
     );
 
@@ -98,7 +119,7 @@ export function triageRoutes({ db, config, clock }: TriageDeps) {
         'Use since=<ISO time>, before=<nextBefore>, limit',
       );
     }
-    const { limit } = parsed.data;
+    const limit = parsed.data.limit ?? MAX_TICKETS;
     const since = parsed.data.since ? new Date(parsed.data.since) : null;
     const [beforeAt, beforeId] = parsed.data.before?.split('~') ?? [];
     const before =
@@ -117,30 +138,39 @@ export function triageRoutes({ db, config, clock }: TriageDeps) {
           inArray(feedback.kind, ['bug', 'idea', 'confusing', 'other']),
           since ? gt(feedback.createdAt, since) : undefined,
           before,
+          parsed.data.status === 'unreviewed' ? isNull(feedback.outcome) : undefined,
         ),
       )
       .orderBy(desc(feedback.createdAt), desc(feedback.id))
       .limit(limit + 1);
     const page = rows.slice(0, limit);
     const last = page[page.length - 1]?.row;
-    // Every read of report text is audited too, like each change.
-    await audited(c, 'tickets.list');
+    // Every read of report text is audited too: what was asked and how many came back, never
+    // the text itself.
+    const { since: s1, before: b1, status, limit: l1 } = parsed.data;
+    const asked = Object.entries({ since: s1, before: b1, status, limit: l1 })
+      .filter(([, v]) => v !== undefined)
+      .map(([k, v]) => `${k}=${String(v)}`);
+    await audited(c, 'tickets.list', undefined, [`count=${page.length}`, ...asked].join(' '));
     return c.json({
       nextBefore: rows.length > limit && last ? `${last.createdAt.toISOString()}~${last.id}` : null,
-      tickets: page.map(({ row, tester }) => ({
-        id: row.id,
-        kind: row.kind,
-        senderRole: row.senderRole,
-        text: row.text,
-        itemId: row.itemId ?? null,
-        contentId: row.device?.contentId ?? null,
-        device: row.device,
-        status: row.status,
-        outcome: row.outcome ?? null,
-        tester: tester ?? false,
-        createdAt: row.createdAt.toISOString(),
-      })),
+      tickets: page.map(({ row, tester }) => toTicket(row, tester)),
     });
+  });
+
+  app.get('/tickets/:id', async (c) => {
+    const id = c.req.param('id');
+    if (!UUID.test(id)) throw notFound('Ticket not found');
+    const [found] = await db
+      .select({ row: feedback, tester: students.tester })
+      .from(feedback)
+      .leftJoin(students, eq(students.id, feedback.studentId))
+      .where(
+        and(eq(feedback.id, id), inArray(feedback.kind, ['bug', 'idea', 'confusing', 'other'])),
+      );
+    if (!found) throw notFound('Ticket not found');
+    await audited(c, 'ticket.read', found.row.familyId);
+    return c.json({ ticket: toTicket(found.row, found.tester) });
   });
 
   app.post('/tickets/:id/confirm-bug', async (c) => {

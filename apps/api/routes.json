@@ -103,6 +103,7 @@
     "GET /v1/students/:id/target-grades",
     "GET /v1/students/:id/worth-a-look",
     "GET /v1/triage/tickets",
+    "GET /v1/triage/tickets/:id",
     "PATCH /v1/admin/feedback/:id",
     "PATCH /v1/student/subjects/:subjectId",
     "PATCH /v1/students/:id",
