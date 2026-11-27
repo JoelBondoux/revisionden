@@ -513,7 +513,17 @@ Tags: #product #rules #limits #defaults
   it in its own text. Boolean answers are read in OCR's notation and every alternative appendix
   5d accepts; a "simplify" answer must be equivalent and have no more letters than the shortest
   sum of products. Binding, tightest first: NOT, AND, XOR, OR, ≡ (our choice; questions bracket
-  anything else). Not yet wired into `pnpm content:validate`.
+  anything else). Pseudocode interpreter (`app/cs/pseudocode.py`): OCR exam reference
+  pseudocode without files or classes; output, final variables and a trace for trace tables
+  (rows `{line, name, value, cell}` and `{line, output}`; a byRef write names the caller's cell).
+  Where appendix 5d is silent it chooses: `/` gives a whole number when exact, `DIV`/`MOD` round
+  down, booleans print `true`/`false`, `NOT a==b` is `NOT (a==b)`, `-2^2` is -4; items must not
+  depend on these. Tracers (`app/cs/tracers.py`): sorts, searches, stacks, queues, binary
+  search trees, Dijkstra and A*, with chosen conventions (bubble sort stops after a pass with
+  no swaps; quick sort pivots on the first item; merge sort splits at `len // 2`; binary search
+  `mid = (low + high) DIV 2`; ties alphabetical) that questions state when they matter. LMC
+  (`app/cs/lmc.py`): OCR mnemonics and accepted alternatives; BRP branches on zero or more; a
+  value outside -999 to 999 is an error. Not yet wired into `pnpm content:validate`.
 
 ## Reminders
 
