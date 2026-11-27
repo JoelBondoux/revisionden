@@ -62,6 +62,12 @@ export async function paintedTextFailures(
       if (!el || !n.textContent?.trim() || el.closest('.visually-hidden')) continue;
       // Text in a control that is switched off is exempt (WCAG 1.4.3, inactive UI; W21).
       if (el.closest(':disabled, [aria-disabled="true"]')) continue;
+      // Text in a closed <details> (outside its summary) has boxes but is not drawn (/help's
+      // "More about …", J's report on the CI list); it is measured when the section is open.
+      let folded = false;
+      for (let d = el.closest('details'); d; d = d.parentElement?.closest('details') ?? null)
+        if (!d.open && !el.closest('summary')?.parentElement?.isSameNode(d)) folded = true;
+      if (folded) continue;
       if (only) {
         // Chosen elements (the lesson's +XP and combo, J16b) are measured on whatever is behind
         // them, the arena included.
@@ -103,12 +109,14 @@ export async function paintedTextFailures(
         if (!hit || !(el.contains(hit) || hit.contains(el))) continue;
         if (r.right < 0 || r.left > innerWidth) continue;
         const size = parseFloat(cs.fontSize);
+        // SVG text's colour is its fill, when that is a plain colour.
+        const svgInk = el instanceof SVGElement && /^rgb/.test(cs.fill) ? cs.fill : null;
         out.push({
           x: r.left,
           y: r.top,
           w: r.width,
           h: r.height,
-          color: cs.color,
+          color: svgInk ?? cs.color,
           large: size >= 24 || (size >= 18.66 && Number(cs.fontWeight) >= 700),
           text: (n.textContent ?? '').trim().slice(0, 30),
         });
@@ -123,8 +131,10 @@ export async function paintedTextFailures(
     await tag.evaluate((el) => (el as HTMLElement).remove());
     return shot;
   };
+  // SVG text (chart labels) is painted by `fill`, not `color`, so it is inked the same way (J's
+  // report on the CI list: those labels were "too few letter pixels").
   const fill = (c: string) =>
-    `*, *::before, *::after { color: ${c} !important; -webkit-text-fill-color: ${c} !important; transition: none !important; }`;
+    `*, *::before, *::after { color: ${c} !important; -webkit-text-fill-color: ${c} !important; transition: none !important; } svg text, svg tspan, svg textPath { fill: ${c} !important; stroke: none !important; }`;
   const without = await shotWith(fill('transparent'));
   const black = await shotWith(fill('#000'));
   const white = await shotWith(fill('#fff'));

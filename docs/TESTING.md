@@ -190,6 +190,8 @@ sweep does not cover. Data comes from the web app's own mock handlers
   and the first three focus rings, measured on screenshots. At each scroll stop only what is
   fully on show is measured: a line cut by the edge of the screen, or a part under the bottom nav
   or a header, waits for a stop where it shows in full (stops overlap by a fifth of a screen).
+  Text inside a closed `<details>` (outside its summary) is not drawn, so it is not measured until
+  the section is open; SVG text (chart labels) is inked by `fill` and judged on its own fill colour.
   Each row records the stop it was read at (`@ 640`). Before measuring, it waits for animations and for
   fonts: a look's font loads the first time the look is shown. Focus rings are read twice (a ring counts as failing only when
   both readings fail it, so one caught mid-animation cannot flake the run). When the focused
