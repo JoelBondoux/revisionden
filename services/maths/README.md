@@ -75,8 +75,17 @@ answers by code, with no AI:
   against our own truth-table evaluator), `is_simplest` for marking, Karnaugh maps in Gray code
   order, and half and full adders.
 
-Not yet: the pseudocode interpreter and algorithm tracers (next S5 step), and a content-check
-kind so `pnpm content:validate` re-runs CS answers.
+- `pseudocode.py`: an interpreter for OCR's exam reference pseudocode (appendix 5d): variables
+  and `global`, casting, `print`, `input` from a supplied list, `for`/`next` (with `step`),
+  `while`, `do`/`until`, `if`/`elseif`/`else`, `switch`/`case`, arithmetic (`MOD`, `DIV`, `^`),
+  comparison and logical operators, `.length`, `.substring`, functions and procedures with
+  `byVal`/`byRef`, recursion and arrays of any dimension. `run` gives the output, the final
+  variables and a trace for trace tables: `{line, name, value, cell}` per assignment (`cell` is
+  the storage written, the caller's for a byRef parameter) and `{line, output}` per print. No
+  Python `eval`; a step limit stops runaway loops. Not yet: files and classes.
+
+Not yet: algorithm tracers (next S5 step), and a content-check kind so `pnpm content:validate`
+re-runs CS answers.
 
 ## Run and test
 
