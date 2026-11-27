@@ -7,6 +7,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### What's new
 
+- Fixed: on a phone, the Bug, Idea, Something confusing and Other choices on the bug report form are easy to tap again.
 - No more empty lessons: topics whose questions aren't ready yet show as "coming soon" on the map, and if a lesson ever has nothing to show, it offers a topic that's ready.
 - Bug reports: if the app showed you a problem code (like RD-7K2M9Q) in the last 15 minutes, a parent's report now includes it (you can remove it), and a student can tick "Include it" to add it.
 - The privacy notices now say that a bug report can carry the code of a problem the app showed you in the last 15 minutes (just the short code, such as RD-7K2M9Q). Parents can remove it; students choose to add it. Signing out forgets it.
@@ -184,6 +185,7 @@ Every push to `main` bumps the version automatically; add entries under **Unrele
 
 ### Fixed
 
+- F26 (Codex on train #454, fix forward from #418): `.feedback__kind` is back in the shared rule with `.feedback__toggle` (44px `--tap-target` height, bold), and `.feedback__problem` has its own rule; a stray selector had given the type options the problem-code layout. New e2e: each type option is at least 44px tall at 390px.
 - F19 (UX-3, owner-approved UX report): no dead-end lessons. The map and the subject's topic list count only questions a lesson would serve (`lessonReadyItem`: typed working only with the maths engine, never interactive pilot steps alone), so a topic that is open never opens "No questions are ready here yet". A locked topic now says "<topic> is coming soon: its questions are still being checked." (it said "Finish the topics before…", but locked only ever meant no questions). An empty topic lesson offers "Try a topic that's ready" (the map's next mission) above Back. The 5-a-day and starting test already pick items, so they never show empty topics. Tests: `ready-topics.test.ts` (API), `LessonPlayer.test.tsx`, `MapPage.test.tsx`.
 - S4: `scripts/content/s4-marking.test.mjs` gains the guards from the Ratio fix for Codex on #442 (a numeric answer typed with the unit the question asks in is marked right; a subscripted unknown needs `answer.subject`). This strand already passes them.
 - S4 (Ratio, Codex on #442): r14-0104 now accepts "-4 °C per minute" (`answer.unit`) and r16-0107 accepts "x_3 = 5.5" (`answer.subject`); r1-0101 and r11-0106 now ask in ml and N/m², the units the marker strips. `scripts/content/s4-marking.test.mjs` gains two guards over all four S4 strands: a numeric answer typed with the unit the question asks in must be marked right, and a subscripted unknown (x_3, u₅) needs `answer.subject`. The changed items passed the quote check, blind answer and review again.

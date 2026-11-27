@@ -44,3 +44,31 @@ test('a reference code on screen goes into the next bug report', async ({ page }
   await expect.poll(() => sent.length).toBe(1);
   expect(sent[0]?.device).toEqual({ lastProblem: REF });
 });
+
+test('each feedback type is a full-size tap target on a phone', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() =>
+    localStorage.setItem('revisionden.studentId', '00000000-0000-4000-8000-0000000000f1'),
+  );
+  await page.route('**/v1/**', (route) =>
+    route.fulfill({
+      status: 500,
+      json: { error: { code: 'internal', message: 'Something went wrong', ref: REF } },
+    }),
+  );
+  await page.route('**/v1/client-errors', (route) => route.fulfill({ status: 204 }));
+  await page.goto('/map');
+  await expect(page.getByText(REF).first()).toBeVisible();
+  await page.getByRole('button', { name: 'Report a bug' }).click();
+
+  // The whole label is the target (the radio is 20px): at least 44px tall (docs/ACCESSIBILITY).
+  const radios = page.getByRole('radio');
+  await expect(radios.first()).toBeVisible();
+  const count = await radios.count();
+  expect(count).toBeGreaterThan(1);
+  for (let i = 0; i < count; i++) {
+    const label = radios.nth(i).locator('xpath=ancestor::label[1]');
+    const box = await label.boundingBox();
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
+  }
+});

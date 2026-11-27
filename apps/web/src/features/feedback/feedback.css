@@ -14,22 +14,6 @@
 }
 
 .feedback__kind,
-/* F18b: the problem code, sent on its own by default, with a way to remove it. */
-.feedback__problem {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  margin-bottom: var(--space-3);
-}
-
-.feedback__problem p {
-  margin: 0;
-  font-weight: var(--font-weight-bold);
-  overflow-wrap: anywhere;
-}
-
 .feedback__toggle {
   display: flex;
   align-items: center;
@@ -55,6 +39,22 @@
   width: 20px;
   height: 20px;
   accent-color: var(--color-primary);
+}
+
+/* F18b: the problem code, sent on its own by default, with a way to remove it. */
+.feedback__problem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.feedback__problem p {
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+  overflow-wrap: anywhere;
 }
 
 .feedback__text {
