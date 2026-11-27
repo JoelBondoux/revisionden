@@ -821,6 +821,11 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   operator sees and triages it at `/admin/feedback` (operator role from configuration, not from
   an email in code). Status: new, looking into it, fixed, will not fix; the sender sees status
   changes.
+- Device details never include reading comfort or colour choices (reading tint, dyslexia-friendly
+  font, colour-blind friendly colours): they could hint at a health condition or a learning
+  difference (L12 ruling, 2026-11-26; solicitor to confirm). Display details that are allowed:
+  the active look name, light or dark mode, page and pinch zoom, pixel density, high contrast on or off and background
+  pattern on or off (privacy notice 9.2, version 1.11).
 - Never sent automatically to GitHub (the repository is public). The operator may copy a report
   into an issue by hand, without any text that could identify the family.
 - Rate limit 5 in any 24 hours per sender (each student, each parent sign-in). Deleted 12 months
