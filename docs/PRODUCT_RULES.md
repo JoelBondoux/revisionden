@@ -963,8 +963,9 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   The Settings section has a "Play a sample" button and Common, Rare, Epic and Legend reward
   samples (each tap plays another variation). The starting test timer turns orange at
   1 minute left, alongside the warning sound. Screen readers hear it too (F14): a polite live
-  region says "One minute left." once and "Time is up." at the end, and the results' "Time is
-  up" line is a status. The visible clock stays `aria-live="off"`, so it never reads every
+  region says "One minute left." once and "Time is up." at the end. It belongs to the whole page
+  (F14b), so it stays mounted from the test to the results and is still read when the results
+  come back at once. The visible clock stays `aria-live="off"`, so it never reads every
   second. Whether the 5-minute limit can be turned off or extended (WCAG 2.2.1) is an owner
   decision still to be made; the limit is unchanged.
 - Implemented: `apps/web/src/features/sound/**` (`SoundProvider`, `useSound().play(event, { mode })`,
@@ -1366,6 +1367,22 @@ From `docs/research/competitors-2026-11.md`. Workstream Q.
   forced colours. Get help follows the theme too (light, dark, colour-blind), with its own calm,
   high-contrast colours (owner, 2026-11-25, W3). The sales site follows the
   device's theme only.
+
+## Accessibility: contrast (owner request, 2026-11-26)
+
+- Every screen in every look, light and dark (plus colour-blind and reading tints), meets WCAG 2.2 AA:
+  text 4.5:1, large text (24 px, or 18.66 px bold) 3:1, and 3:1 against what is behind them for
+  anything that shows state (selected chips and tabs, checked boxes, toggles, focus rings), input
+  boundaries and icon-only buttons. A text button whose label passes needs no 3:1 fill or border. A control's spoken name contains its visible words.
+- Contrast is measured against the pixels actually behind the text (page art, gradients, the lesson
+  arena, a button's fill), not a theme colour token. Text too faint to measure fails.
+- Text on the page uses the text colours or `--color-primary-edge`; text on the lesson arena uses
+  `--arena-glow`; gold is never text on the page; white text only on a fill measured to pass.
+- Enforced by the CI contrast sweep (W21, being added; every route and its main dialogs, all looks,
+  light and dark): a fast check on every pull request, and the full painted sweep nightly, on style
+  changes and before promotion to staging. A new look, route or dialog is not done until it passes.
+- If a look's colour cannot pass, the colour changes or that surface stays plain in that mode.
+- Decision: `project_memory/decisions/0012-contrast-policy.md`.
 
 ## Screen layout
 

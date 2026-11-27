@@ -145,7 +145,14 @@ test('the big subject box opens Subject selection', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openMap(page);
   await page.getByRole('button', { name: /^Your subject Maths Change$/ }).click();
-  await expect(page.getByRole('region', { name: 'Pick a subject' })).toBeVisible();
+  const pick = page.getByRole('region', { name: 'Pick a subject' });
+  await expect(pick).toBeVisible();
+  // Screenshots for docs/design/w20 (W20_SHOT=path); not part of the check.
+  if (process.env.W20_SHOT) await pick.screenshot({ path: process.env.W20_SHOT });
+  // W20: each subject is named by the words it shows (WCAG 2.5.3), a "coming soon" one too.
+  await expect(pick.getByRole('button', { name: 'Physics Coming soon' })).toBeVisible();
+  const results = await axeWhenSettled(page);
+  expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   await page.getByRole('button', { name: 'Back to the map' }).click();
   await expect(page.getByRole('group', { name: 'Units' })).toBeVisible();
 });

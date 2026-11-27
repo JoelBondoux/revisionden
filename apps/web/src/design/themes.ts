@@ -92,7 +92,7 @@ export const THEME_PAIRS: PairSpec[] = [
   ['secondary text on locked hex', '--color-text-secondary', '--color-locked-soft'],
   ['gold on challenge hex', '--color-gold', '--color-challenge'],
   ['white on challenge hex', '--color-text-on-primary', '--color-challenge'],
-  ['white on right answer (arena)', '--arena-text', '--arena-correct'],
+  ['white on right answer (arena)', '--arena-on-option', '--arena-correct'],
 ];
 
 /** Shapes that carry meaning, and what they sit on: these need 3:1 (WCAG 1.4.11, J10f). */

@@ -578,6 +578,10 @@ Tags: #product #rules #limits #defaults
 - AI Gateway `revisionden`: authenticated (Cloudflare requires it for new gateways, so the API
   needs `AI_GATEWAY_TOKEN`), logging on but the API sends `cf-aig-collect-log-payload: false` so
   prompts and answers are never stored, cache off, 120 requests a minute.
+- CI checks on pull requests: `ci.yml` (lint, typecheck, unit tests, Python, content) on PRs into
+  `dev`, `staging` and `main`; `e2e.yml` runs the full Playwright + axe suite (phone, tablet,
+  desktop) on PRs into the same three branches (G10), from one shared build in four shards. Its
+  summary check "End-to-end result" is the one to require in branch protection.
 - Deploys: GitHub Actions. Push to `dev` deploys dev, push to `staging` deploys staging, and
   production deploys after the release bump on `main`. Each deploy migrates the database first,
   then (dev and staging only) loads `content/` with `content:sync`, then the API, then the web
@@ -869,6 +873,12 @@ Tags: #product #rules #limits #defaults
   capped at 40 pieces. The combo badge shows from 2 in a row. The CTA pulse takes 1.6 s (well under 3
   flashes a second). Reduced motion removes particles, confetti, float-ups, shakes and pulsing; combo,
   stars and XP still show as text. Arena colours live in `apps/web/src/design/tokens.ts` (`--arena-*`).
+- Settled in J17x (owner report: white text on light pages): arena screens sit on the look's own page in light
+  and dark. The arena's page tokens (`--arena-bg`, `--arena-raised`, `--arena-text`, `--arena-text-secondary`,
+  `--arena-track`, `--arena-glow`) come from the look (`ARENA_FROM_PAGE` in `features/juice/styles/looks.ts`),
+  set on `.arena` itself so the background pattern, high contrast and reading tints never change them; the
+  answer buttons keep their own fills with `--arena-on-option` (white) text. `--color-mastery-fill` is a
+  pale fill only: never white or on-primary text on it (tested).
 - Settled in J17 (owner-approved mockup `docs/mockups/all-themes-pip.html`): each effect style has its
   own particles (`apps/web/src/features/juice/particles/plan.ts`, `FLAVOURS`), at most 30 a burst and
   90 on screen; none with reduced motion. Burst sizes: right answer 18 (8 + 2 × combo from 4 in a
