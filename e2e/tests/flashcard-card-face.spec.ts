@@ -175,3 +175,39 @@ test('a long answer does not make the card grow when it is revealed (Codex on #4
   expect(Math.round(after.height)).toBe(Math.round(card.height));
   expect(Math.round(await pageY(/^Again/))).toBe(Math.round(show));
 });
+
+// The lead's cases: a student's own card with a long answer, on a 412px phone and on a 320px
+// phone with text at 200%.
+for (const { width, height, bigText } of [
+  { width: 412, height: 915, bigText: false },
+  { width: 320, height: 640, bigText: true },
+]) {
+  test(`a long own-card answer keeps the card height at ${width}px${bigText ? ' with 200% text' : ''}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height });
+    const own = {
+      ...plain,
+      origin: 'own',
+      back: `Demo own answer ${'with lots of made-up words '.repeat(12)}end.`,
+      explain: undefined,
+    };
+    await stub(page, [own]);
+    await page.goto('/cards');
+    if (bigText) await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+    await expect(page.getByText('Demo front 1')).toBeVisible();
+    const pageY = (name: string | RegExp) =>
+      page.getByRole('button', { name }).evaluate((el) => el.getBoundingClientRect().top + scrollY);
+    const card = await box(page, '[data-testid="flip-card"]');
+    const show = await pageY('Show answer');
+    await page.getByRole('button', { name: 'Show answer' }).click();
+    await expect(page.getByText(/Demo own answer/)).toBeVisible();
+    await page.waitForTimeout(600); // the turn
+    const after = await box(page, '[data-testid="flip-card"]');
+    expect(Math.round(after.height)).toBe(Math.round(card.height));
+    expect(Math.round(await pageY(/^Again/))).toBe(Math.round(show));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      width,
+    );
+  });
+}
