@@ -798,6 +798,23 @@ On a phone the panel scrolls into view above the bottom bar when it opens and on
   student sees the thank-you once (a toast on their next visit). Bug XP counts towards total XP,
   not the daily goal or streak. The button's on/off setting is per device
   (`revisionden.bugButton`). Built in L7.
+- **Bug button rest (L13, owner request 2026-11-27):** operator triage also has **Not a bug** for
+  bug reports (outcome `not_a_bug`, closed as will not fix, no reward). Only reports sent as a bug
+  and marked Not a bug count; ideas, "confusing", content reports and unreviewed reports never
+  do. 3 Not-a-bug outcomes within a rolling 14 days rest the student's bug button for 7 days from
+  the third; the 3rd rest within 90 days removes it. The outcomes behind a rest don't count
+  again. Rules and numbers: `packages/core/src/bug-button.ts`. The server enforces it
+  (`GET /v1/student/bug-button`; `POST /v1/student/feedback` with kind `bug` answers 403
+  `bug_button_resting`; other kinds still work). The app hides the icon and Settings shows a kind
+  note ("The bug button is taking a rest until …"); Settings can't switch a removed button back
+  on. Parents see a note on Parent home and can switch it back on (`POST
+/v1/students/:id/bug-button/on`); so can the operator from the ticket (AppDeck, audited). Get
+  help, Ask a parent and every safeguarding route are never hidden by this.
+- **Tester accounts (L13, owner 2026-11-27):** an operator-console flag on a student (`tester`,
+  default off, audited `student.tester`; never hard-coded). A tester's bug reports are fixed as
+  normal, but Confirm and Duplicate give no XP and no Bug Hunter step (the outcome is still
+  recorded), and their Not-a-bug outcomes never rest or remove the bug button. `/admin/feedback`
+  tags their reports "Tester".
 
 - Kinds: **bug**, **idea**, **something confusing**, **other**. (Mistakes in a question keep
   using "Report a problem" on the item, which quarantines it.) Also, from the interactive lesson

@@ -1,6 +1,6 @@
 # Privacy notice
 
-Version: 1.11
+Version: 1.12
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -312,6 +312,14 @@ contacts with feedback.
 to any other service. If we copy a report into our own issue tracker, we remove anything that
 could identify your family. Feedback is deleted 12 months after we close it.
 
+9.5 We read every bug report. If three of a student's bug reports within 14 days turn out not
+to be bugs, the bug button on their device takes a rest for 7 days. If that happens three times
+within 90 days, the button is switched off until a parent switches it back on from Parent home.
+Parents are told there. The student can still send ideas and other feedback, and Get help and
+"Ask a parent" are never affected. For this we keep, with each report, when it was marked not a
+bug (deleted with the report), and with the student's profile, when the button was last switched
+back on.
+
 9.4 When something goes wrong, the app shows a short reference code (like RD-7K2M9Q) and a
 "Send error report" button. A report is sent only if you tap it, and it is anonymous: the
 reference code, the screen and the part of our service that failed (with every id removed), the
@@ -382,6 +390,7 @@ in the app on your next visit and ask you to confirm, and students see a plain-E
 
 ## Changes
 
+- 1.12: New 9.5: if several of a student's bug reports turn out not to be bugs, the bug button takes a rest for a week, or is switched off until a parent switches it back on. Get help and "Ask a parent" are never affected.
 - 1.11: Bug reports with device details on can name the question or card you were looking at (its id only), give a short code for the last problem the screen showed, and say how the app looked (its look, light or dark mode, zoom, screen sharpness, high contrast and background pattern). They never include reading comfort or colour choices.
 - 1.10: A parent can link a student's device with a one-time link they send, as well as the QR code.
 - 1.9: A passkey synced to the student's other devices works there too, as a separate device the parent can see and unlink. Each device keeps a random device code (we store only its hash), and both parents are told when a passkey is used on a new device.

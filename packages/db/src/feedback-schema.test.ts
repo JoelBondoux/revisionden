@@ -123,4 +123,21 @@ describe('policy acceptances table (workstream L)', () => {
       ),
     ).rejects.toThrow(/feedback_outcome_values/);
   });
+
+  it('records a Not-a-bug outcome with its time, and the student bug button reset time (L13)', async () => {
+    const family = await newFamily();
+    const student = await client.query<{ id: string; bug_button_reset_at: string | null }>(
+      `insert into students (family_id, nickname, avatar_code, year_group)
+       values ($1, 'Tester', 'a1', 10) returning id, bug_button_reset_at`,
+      [family],
+    );
+    expect(student.rows[0]!.bug_button_reset_at).toBeNull();
+    const { rows } = await client.query<{ outcome: string; not_a_bug_at: string | null }>(
+      `insert into feedback (family_id, sender_role, student_id, kind, outcome, not_a_bug_at)
+       values ($1, 'student', $2, 'bug', 'not_a_bug', now()) returning outcome, not_a_bug_at`,
+      [family, student.rows[0]!.id],
+    );
+    expect(rows[0]!.outcome).toBe('not_a_bug');
+    expect(rows[0]!.not_a_bug_at).not.toBeNull();
+  });
 });

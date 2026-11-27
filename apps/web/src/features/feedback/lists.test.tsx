@@ -12,6 +12,7 @@ import { AdminFeedbackPage, FeedbackListPage, snippet } from './lists';
 const base = {
   createdAt: '2026-11-24T10:00:00.000Z',
   updatedAt: '2026-11-25T10:00:00.000Z',
+  tester: false,
 };
 const items: TriageFeedback[] = [
   {
@@ -77,6 +78,10 @@ function fakeApi(overrides: Partial<FeedbackApi> = {}): FeedbackApi {
     })),
     listRewards: vi.fn(async () => []),
     markRewardsSeen: vi.fn(async () => {}),
+    bugButton: vi.fn(async () => ({ state: 'on' as const })),
+    markNotABug: vi.fn(),
+    childBugButton: vi.fn(async () => ({ state: 'on' as const })),
+    switchChildBugButtonOn: vi.fn(async () => ({ state: 'on' as const })),
     errorReports: vi.fn(async () => ({
       since: '2026-11-24T08:00:00.000Z',
       total: 2,
@@ -194,6 +199,29 @@ describe('operator triage of bugs', () => {
     expect(await within(row).findByRole('status')).toHaveTextContent('Confirmed. +50 XP');
     expect(within(row).getByText('Confirmed')).toBeInTheDocument();
     expect(within(row).queryByRole('button', { name: 'Confirm bug' })).not.toBeInTheDocument();
+  });
+
+  it('marks a bug report Not a bug, closed as will not fix (L13)', async () => {
+    const api = showBugs({
+      markNotABug: vi.fn(async (id: string) => ({
+        ...bugs.find((i) => i.id === id)!,
+        outcome: 'not_a_bug' as const,
+        status: 'will_not_fix' as const,
+      })),
+    });
+    const row = (await screen.findAllByRole('listitem'))[2]!;
+    await userEvent.click(within(row).getByRole('button', { name: 'Not a bug' }));
+    expect(api.markNotABug).toHaveBeenCalledWith('b3');
+    expect(await within(row).findByText('Not a bug')).toBeInTheDocument();
+    expect(within(row).queryByRole('button', { name: 'Confirm bug' })).not.toBeInTheDocument();
+    expect(within(row).getByRole('combobox', { name: 'Status' })).toHaveValue('will_not_fix');
+  });
+
+  it('tags reports from a tester account (L13)', async () => {
+    showBugs({ listAll: vi.fn(async () => bugs.map((b, i) => ({ ...b, tester: i === 2 }))) });
+    const rows = await screen.findAllByRole('listitem');
+    expect(within(rows[2]!).getByText('Tester')).toBeInTheDocument();
+    expect(within(rows[1]!).queryByText('Tester')).not.toBeInTheDocument();
   });
 
   it('offers only earlier confirmed reports as the original of a duplicate', async () => {

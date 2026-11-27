@@ -1,21 +1,35 @@
 /**
  * O3: operator actions from AppDeck (`docs/OPERATOR_CONSOLE.md`), on AppDeck's paths. Every
- * change is audited and answers `{ ok: true }`. Bug confirming and status changes reuse the
- * feedback code (workstream L), so the Bug Hunter rewards follow the same rules.
+ * change is audited and answers `{ ok: true }`. Bug confirming, Not a bug (L13) and status
+ * changes reuse the feedback code (workstream L), so the Bug Hunter rewards and the bug button
+ * rest follow the same rules.
  */
 import { Hono, type Context } from 'hono';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import type { z } from 'zod';
 import {
   OperatorDuplicateBodySchema,
   OperatorNoteBodySchema,
   OperatorReplyBodySchema,
+  OperatorTesterBodySchema,
   OperatorTicketStatusBodySchema,
 } from '@revisionden/core';
-import { families, feedback, feedbackReplies, operatorNotes, type Database } from '@revisionden/db';
+import {
+  families,
+  feedback,
+  feedbackReplies,
+  operatorNotes,
+  students,
+  type Database,
+} from '@revisionden/db';
 import type { AppEnv } from '../context';
 import { ApiError, notFound } from '../errors';
-import { confirmFeedback, setFeedbackStatus } from '../feedback/routes';
+import {
+  confirmFeedback,
+  markNotABug,
+  setFeedbackStatus,
+  switchBugButtonOn,
+} from '../feedback/routes';
 import type { Clock } from '../rate-limit';
 import { isId } from '../validation';
 import { audit, ok } from './bridge';
@@ -68,6 +82,22 @@ export function operatorActionRoutes({ db, clock }: OperatorActionDeps) {
     return ok(c, { ok: true });
   });
 
+  // L13: a tester account (an adult testing the app): its bug reports earn no rewards and never
+  // rest its bug button. Only set here, in the operator console; nothing is hard-coded.
+  app.post('/families/:id/students/:studentId/tester', async (c) => {
+    const { id, studentId } = c.req.param();
+    const { tester } = await body(c, OperatorTesterBodySchema);
+    if (!isId(id) || !isId(studentId)) throw notFound('Student not found');
+    const [row] = await db
+      .update(students)
+      .set({ tester, updatedAt: now() })
+      .where(and(eq(students.id, studentId), eq(students.familyId, id)))
+      .returning({ id: students.id });
+    if (!row) throw notFound('Student not found');
+    await audited(c, 'student.tester', id);
+    return ok(c, { ok: true });
+  });
+
   app.post('/tickets/:id/reply', async (c) => {
     const id = c.req.param('id');
     const { text } = await body(c, OperatorReplyBodySchema);
@@ -89,6 +119,34 @@ export function operatorActionRoutes({ db, clock }: OperatorActionDeps) {
   app.post('/tickets/:id/confirm-bug', async (c) => {
     const { item } = await confirmFeedback(db, now(), c.req.param('id'));
     await audited(c, 'ticket.confirm_bug', item.familyId);
+    return ok(c, { ok: true });
+  });
+
+  // L13: a bug report that is not a bug; three in 14 days rest the student's bug button.
+  app.post('/tickets/:id/not-a-bug', async (c) => {
+    const item = await markNotABug(db, now(), c.req.param('id'));
+    await audited(c, 'ticket.not_a_bug', item.familyId);
+    return ok(c, { ok: true });
+  });
+
+  // L13: switches the ticket sender's bug button back on (a rest or a removal).
+  app.post('/tickets/:id/bug-button-on', async (c) => {
+    const id = c.req.param('id');
+    if (!isId(id)) throw notFound('Ticket not found');
+    const [row] = await db
+      .select({ familyId: feedback.familyId, studentId: feedback.studentId })
+      .from(feedback)
+      .where(eq(feedback.id, id));
+    if (!row) throw notFound('Ticket not found');
+    if (!row.studentId) {
+      throw new ApiError(
+        400,
+        'not_a_student_ticket',
+        'Only a student has a bug button to switch on.',
+      );
+    }
+    await switchBugButtonOn(db, row.studentId, now());
+    await audited(c, 'ticket.bug_button_on', row.familyId);
     return ok(c, { ok: true });
   });
 

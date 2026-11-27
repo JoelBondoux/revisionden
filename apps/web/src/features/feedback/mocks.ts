@@ -44,6 +44,11 @@ export const feedbackHandlers: RequestHandler[] = [
   // The demo parent is not an operator: triage answers 404, as the real API does.
   http.get('*/v1/admin/feedback', notOperator),
   http.post('*/v1/admin/feedback/:id/confirm', notOperator),
+  http.post('*/v1/admin/feedback/:id/not-a-bug', notOperator),
+  // L13: the demo bug button is always on.
+  http.get('*/v1/student/bug-button', () => HttpResponse.json({ state: 'on' })),
+  http.get('*/v1/students/:id/bug-button', () => HttpResponse.json({ state: 'on' })),
+  http.post('*/v1/students/:id/bug-button/on', () => HttpResponse.json({ state: 'on' })),
   // Bug Hunter (L7): nothing new to tell the demo student; seen always works.
   http.get('*/v1/student/feedback/rewards', () => HttpResponse.json({ rewards: [] })),
   http.post('*/v1/student/feedback/rewards/seen', () => new HttpResponse(null, { status: 204 })),

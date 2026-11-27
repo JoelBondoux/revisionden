@@ -35,7 +35,10 @@
       off privacy notice 1.11 and young people's 1.8, and the parent re-prompt, on 2026-11-27 (via
       lead), with the exclusions above. If the
       solicitor says high contrast is also too revealing, F drops it and the notice changes again.
-      Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.12 and 1.9
+      The owner also signed off privacy notice 1.12 (9.5, the bug button rest) and young people's
+      1.9, the parent re-prompt and the rest numbers (3 in 14 days, 7-day rest, removal at the 3rd
+      rest in 90 days) on 2026-11-27 (via lead), for L13 (#409).
+      Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.13 and 1.10
       when it lands.
 
 - [x] **Starting test time limit vs WCAG 2.2.1 Timing Adjustable.** The starting test
