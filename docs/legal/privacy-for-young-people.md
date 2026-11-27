@@ -1,6 +1,6 @@
 # Privacy notice for young people
 
-Version: 1.9
+Version: 1.10
 Effective date: {{EFFECTIVE_DATE}}
 
 ## In plain English
@@ -74,7 +74,8 @@ checks it and only tells us "yes, it's them".
   off for you, and you see them before you send), we also get things like the app version, the
   screen you were on, the question or card you were looking at (just its code, never the words)
   and how the app looked (your look, light or dark, zoom, high contrast). Never your reading tint, font or
-  colour choices. If several of your bug reports turn out not to be bugs, the bug button takes a
+  colour choices. If the app showed you a problem code in the last 15 minutes (like RD-7K2M9Q),
+  you can tap to add it to a bug report. It is left out unless you do. If several of your bug reports turn out not to be bugs, the bug button takes a
   rest for a week; if it keeps happening, it switches off until your parent turns it back on. You
   can always still send ideas, use Get help and ask a parent.
 - **"Ask a parent" notes:** if you ask a parent to raise something for you, the topic you
@@ -253,6 +254,7 @@ If we change how we use your information, we'll show you a short note in the app
 
 ## Changes
 
+- 1.10: You can tap to add the short code of a problem the app showed you in the last 15 minutes to a bug report. It is left out unless you do.
 - 1.9: If several of your bug reports turn out not to be bugs, the bug button takes a rest for a while. Get help and asking a parent always still work.
 - 1.8: If you include device details in a bug report, they can now show the question or card you were looking at (just its code) and how the app looked. Never your reading tint, font or colour choices.
 - 1.7: Your device can also be linked with a link your parent sends you, not just a QR code.

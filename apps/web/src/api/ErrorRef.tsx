@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UNSAFE_LocationContext } from 'react-router-dom';
 import { maskIdsInPath, type ErrorReport } from '@revisionden/core';
 import { Button } from '../components/Button';
-import { browserFamily } from '../features/feedback/details';
+import { browserFamily, rememberLastProblem } from '../features/feedback/details';
 import { CURRENT_BUILD } from '../pwa/updates';
 import { defaultBaseUrl } from './ApiContext';
 
@@ -55,6 +55,12 @@ export function ErrorRef({ code }: { code: ErrorDetails | string | undefined }) 
   const routed = useContext(UNSAFE_LocationContext) as { location?: { pathname: string } } | null;
   const pathname = routed?.location?.pathname ?? window.location.pathname;
   const [state, setState] = useState<SendState>('idle');
+  const ref = typeof code === 'string' ? code : code?.ref;
+  // F18: the code on screen goes into the next bug report (as its "Problem code"), and stays
+  // for 15 minutes after the error is gone, so dismissing it first does not lose it.
+  useEffect(() => {
+    if (ref) rememberLastProblem(ref);
+  }, [ref]);
   if (!code) return null;
   const details = typeof code === 'string' ? { ref: code } : code;
 
