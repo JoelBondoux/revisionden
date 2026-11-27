@@ -203,12 +203,13 @@ sweep does not cover. Data comes from the web app's own mock handlers
 - **Known failures:** `e2e/tests/contrast-known.json`. A test fails on anything new and on a
   listed failure that is now fixed, so a fix removes its lines in the same change. To refresh the
   list after a fix: run the sweep with `CONTRAST_UPDATE=1` (add `CONTRAST_SWEEP=1` for tier 2),
-  then `node e2e/scripts/contrast-known.mjs`. **Tier 2's list is made from CI, not locally**:
-  a developer's machine draws text a little differently. Every CI run prints what each test
-  found (`CONTRAST_RECORD=1`) between `CONTRAST-RESULT` and `CONTRAST-END` in its job log; save
-  each shard's log, then `node e2e/scripts/contrast-from-log.mjs shard1.log …` and
-  `node e2e/scripts/contrast-known.mjs`. Tier 1 reads styles, not pixels, so it can be refreshed
-  locally.
+  then `node e2e/scripts/contrast-known.mjs`. **Tier 2's list follows CI, not a developer's machine**,
+  which draws text a little differently. Every CI run prints, for each test that differs from
+  the list (`CONTRAST_RECORD=1`), the rows it found that are not listed and the listed rows it no
+  longer finds, between `CONTRAST-RESULT` and `CONTRAST-END` in its job log. Refresh the list
+  locally first (so the differences are few), push, save each shard's log, then
+  `node e2e/scripts/contrast-from-log.mjs shard1.log …` applies them. Tier 1 reads styles, not
+  pixels, so it can be refreshed locally.
 
 ```bash
 pnpm --filter @revisionden/e2e exec playwright test tests/contrast-sweep.spec.ts --project=phone --project=desktop --grep @contrast --grep-invert @contrast-painted

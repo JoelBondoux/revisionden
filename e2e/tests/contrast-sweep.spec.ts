@@ -342,9 +342,9 @@ const knownFile = new URL('./contrast-known.json', import.meta.url);
 const known: Known = JSON.parse(readFileSync(knownFile, 'utf8')) as Known;
 const UPDATE = !!process.env.CONTRAST_UPDATE;
 /**
- * Also write what each test found, as an update run does, but still check it (CI, W21b): the
- * painted workflow prints these files into its log, so the known list can be made from what CI
- * draws rather than from a developer's machine (e2e/scripts/contrast-from-log.mjs).
+ * Also write where each tier 2 test differs from the known list, and still check it (CI, W21b):
+ * the painted workflow prints these files into its log, so the known list can follow what CI
+ * draws rather than a developer's machine (e2e/scripts/contrast-from-log.mjs).
  */
 const RECORD = !!process.env.CONTRAST_RECORD;
 
@@ -425,11 +425,11 @@ async function sweep(
   const prefix = (k: string) =>
     looks.some((l) => k.startsWith(`${as(l, variant)}|${mode}|${name}|`));
   const listed = Object.keys(known.tier1).filter(prefix);
-  if (UPDATE || RECORD) {
+  if (UPDATE) {
     mkdirSync('test-results/contrast', { recursive: true });
     writeFileSync(resultFile('tier1', mode, variant, name), JSON.stringify(found, null, 2));
+    return;
   }
-  if (UPDATE) return;
   const fresh = Object.keys(found).filter((k) => !(k in known.tier1));
   const fixed = listed.filter((k) => !(k in found));
   expect(
@@ -562,15 +562,29 @@ async function paintedSweep(
     looks.some((l) => k.startsWith(`${as(l, variant)}|${mode}|${name}|`));
   // A new list takes every failure either focus reading saw, so one quiet reading cannot leave
   // a real failure off it; a check then flags as new only what both readings fail.
-  if (UPDATE || RECORD) {
+  if (UPDATE) {
     mkdirSync('test-results/contrast', { recursive: true });
     writeFileSync(resultFile('tier2', mode, variant, name), JSON.stringify(seen, null, 2));
+    return;
   }
-  if (UPDATE) return;
   const fresh = Object.keys(found).filter((k) => !(k in known.tier2));
   const fixed = Object.keys(known.tier2)
     .filter(prefix)
     .filter((k) => !(k in seen));
+  // CI (CONTRAST_RECORD=1) writes only where it differs from the list, for its log: the rows it
+  // finds that are not listed, and the listed rows it no longer finds. Small enough to read back
+  // (e2e/scripts/contrast-from-log.mjs), so the list follows what CI draws.
+  if (RECORD && (fresh.length || fixed.length)) {
+    mkdirSync('test-results/contrast', { recursive: true });
+    writeFileSync(
+      resultFile('diff-tier2', mode, variant, name),
+      JSON.stringify(
+        { new: Object.fromEntries(fresh.map((k) => [k, seen[k]!])), fixed },
+        null,
+        2,
+      ),
+    );
+  }
   expect(
     fresh.map((k) => `${k} (${found[k]})`),
     'new painted contrast failures',

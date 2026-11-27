@@ -106,6 +106,10 @@ test('the painted sweep prints what CI found, so the known list is made from CI 
   assert.match(painted, /CONTRAST_RECORD: '1'/);
   assert.match(painted, /echo "CONTRAST-RESULT \$\(basename "\$f"\)"/);
   assert.match(painted, /echo "CONTRAST-END"/);
+  assert.ok(
+    painted.includes('e2e/test-results/contrast/diff-tier2-*.json'),
+    'only the differences',
+  );
   // A change to the sweep itself runs it too.
   for (const path of [
     'e2e/tests/contrast-sweep.spec.ts',
