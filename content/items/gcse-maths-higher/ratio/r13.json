@@ -100,7 +100,8 @@
     "expected_seconds": 60,
     "prompt": "y is directly proportional to x². When x = 3, y = 36. Work out y when x = 5.",
     "answer": {
-      "value": "100"
+      "value": "100",
+      "subject": "y"
     },
     "verify": {
       "expression": "36/3^2 * 5^2"
@@ -138,12 +139,12 @@
           "at": "2026-11-27T12:00:00Z"
         },
         {
-          "name": "blind-answer",
+          "name": "quote-check",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:22Z",
-          "notes": "model answered \"100\"; expected \"100\""
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:32Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "maths-engine",
@@ -151,7 +152,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -159,23 +160,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:37Z",
+          "notes": "model answered \"100\"; expected \"100\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:22Z",
+          "at": "2026-11-27T11:44:38Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-27T10:27:38Z",
-          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -189,7 +190,8 @@
     "expected_seconds": 60,
     "prompt": "d is directly proportional to the square root of h. When h = 16, d = 10. Work out d when h = 64.",
     "answer": {
-      "value": "20"
+      "value": "20",
+      "subject": "d"
     },
     "verify": {
       "expression": "10/sqrt(16) * sqrt(64)"
@@ -227,12 +229,12 @@
           "at": "2026-11-27T12:00:00Z"
         },
         {
-          "name": "blind-answer",
+          "name": "quote-check",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:25Z",
-          "notes": "model answered \"20\"; expected \"20\""
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:33Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "maths-engine",
@@ -240,7 +242,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -248,23 +250,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:40Z",
+          "notes": "model answered \"20\"; expected \"20\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:25Z",
+          "at": "2026-11-27T11:44:41Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-27T10:27:38Z",
-          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -278,7 +280,8 @@
     "expected_seconds": 50,
     "prompt": "y is inversely proportional to x. When x = 4, y = 9. Work out y when x = 6.",
     "answer": {
-      "value": "6"
+      "value": "6",
+      "subject": "y"
     },
     "verify": {
       "expression": "4*9/6"
@@ -327,12 +330,12 @@
           "at": "2026-11-27T12:00:00Z"
         },
         {
-          "name": "blind-answer",
+          "name": "quote-check",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:28Z",
-          "notes": "model answered \"6\"; expected \"6\""
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:34Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "maths-engine",
@@ -340,7 +343,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -348,23 +351,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:43Z",
+          "notes": "model answered \"6\"; expected \"6\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:29Z",
+          "at": "2026-11-27T11:44:43Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-27T10:27:38Z",
-          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -378,7 +381,8 @@
     "expected_seconds": 60,
     "prompt": "F is inversely proportional to d². When d = 2, F = 45. Work out F when d = 3.",
     "answer": {
-      "value": "20"
+      "value": "20",
+      "subject": "F"
     },
     "verify": {
       "expression": "45*2^2/3^2"
@@ -428,12 +432,12 @@
           "at": "2026-11-27T12:00:00Z"
         },
         {
-          "name": "blind-answer",
+          "name": "quote-check",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:31Z",
-          "notes": "model answered \"20\"; expected \"20\""
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:35Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "maths-engine",
@@ -441,7 +445,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -449,23 +453,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:45Z",
+          "notes": "model answered \"20\"; expected \"20\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:32Z",
+          "at": "2026-11-27T11:44:46Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-27T10:27:38Z",
-          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }

@@ -472,7 +472,8 @@
     "expected_seconds": 35,
     "prompt": "The ratio 8 : 20 can be written in the form 1 : n. Work out n.",
     "answer": {
-      "value": "2.5"
+      "value": "2.5",
+      "subject": "n"
     },
     "verify": {
       "expression": "20/8"
@@ -509,12 +510,12 @@
           "at": "2026-11-27T12:00:00Z"
         },
         {
-          "name": "blind-answer",
+          "name": "quote-check",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:35Z",
-          "notes": "model answered \"2.5\"; expected \"2.5\""
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:22Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "maths-engine",
@@ -522,7 +523,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -530,23 +531,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:37Z",
+          "notes": "model answered \"2.5\"; expected \"2.5\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:36Z",
+          "at": "2026-11-27T11:44:38Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-27T10:27:48Z",
-          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -560,7 +561,8 @@
     "expected_seconds": 35,
     "prompt": "The ratio 5 : 12 can be written in the form 1 : n. Work out n.",
     "answer": {
-      "value": "2.4"
+      "value": "2.4",
+      "subject": "n"
     },
     "verify": {
       "expression": "12/5"
@@ -597,12 +599,12 @@
           "at": "2026-11-27T12:00:00Z"
         },
         {
-          "name": "blind-answer",
+          "name": "quote-check",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:37Z",
-          "notes": "model answered \"2.4\"; expected \"2.4\""
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:23Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "maths-engine",
@@ -610,7 +612,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -618,23 +620,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:40Z",
+          "notes": "model answered \"2.4\"; expected \"2.4\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:38Z",
+          "at": "2026-11-27T11:44:41Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-27T10:27:49Z",
-          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
@@ -648,7 +650,8 @@
     "expected_seconds": 40,
     "prompt": "The ratio 6 : 15 can be written in the form n : 1. Work out n.",
     "answer": {
-      "value": "0.4"
+      "value": "0.4",
+      "subject": "n"
     },
     "verify": {
       "expression": "6/15"
@@ -685,12 +688,12 @@
           "at": "2026-11-27T12:00:00Z"
         },
         {
-          "name": "blind-answer",
+          "name": "quote-check",
           "result": "pass",
-          "tool": "openai:gpt-5.4-2026-03-05",
-          "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:40Z",
-          "notes": "model answered \"0.4\"; expected \"0.4\""
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:44:24Z",
+          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         },
         {
           "name": "maths-engine",
@@ -698,7 +701,7 @@
           "tool": "revisionden-maths-engine",
           "tool_version": "sympy 1.13.3",
           "notes": "pnpm content:validate: answer and every step checked",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
         },
         {
           "name": "schema",
@@ -706,23 +709,23 @@
           "tool": "revisionden-content-validate",
           "tool_version": "00.01.002",
           "notes": "pnpm content:validate: schema, ids and links valid",
-          "at": "2026-11-27T15:00:00Z"
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:44:43Z",
+          "notes": "model answered \"0.4\"; expected \"0.4\""
         },
         {
           "name": "adversarial-review",
           "result": "pass",
           "tool": "openai:gpt-5.4-2026-03-05",
           "tool_version": "gpt-5.4-2026-03-05",
-          "at": "2026-11-27T10:23:41Z",
+          "at": "2026-11-27T11:44:43Z",
           "notes": "no problems found"
-        },
-        {
-          "name": "quote-check",
-          "result": "pass",
-          "tool": "revisionden-quote-check",
-          "tool_version": "1.0.0",
-          "at": "2026-11-27T10:27:49Z",
-          "notes": "citation 1: found on page 28 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
         }
       ]
     }
