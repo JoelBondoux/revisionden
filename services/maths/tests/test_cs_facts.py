@@ -153,3 +153,21 @@ def test_zero_converts_to_zero():
     assert ok({"kind": "cs_base", "value": "0", "from_base": 10, "to_base": 2, "result": "0"})["ok"]
     assert ok({"kind": "cs_base", "value": "00", "from_base": 16, "to_base": 10,
                "result": "0"})["ok"]
+
+
+# Codex review on #440: the rule is proved by trying every pattern, so the width is capped at 16
+# bits (A-Level questions use 4 to 16); 32 or 64 would never finish.
+@pytest.mark.parametrize("width", [1, 17, 32, 64, "8"])
+def test_a_rule_width_outside_2_to_16_is_refused_at_once(width):
+    import time
+    start = time.monotonic()
+    result = ok({"kind": "cs_signed", "representation": "twos_complement", "width": width})
+    assert result["ok"] is False and "width" in result["error"]
+    assert time.monotonic() - start < 1
+
+
+def test_the_largest_allowed_width_is_proved_quickly():
+    import time
+    start = time.monotonic()
+    assert ok({"kind": "cs_signed", "representation": "twos_complement", "width": 16})["ok"]
+    assert time.monotonic() - start < 10

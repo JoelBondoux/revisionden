@@ -9,7 +9,7 @@ block really captures the fact, and a third provider's blind statement is still 
   checked two ways (Python's own conversion and repeated division).
 - ``cs_signed``: with ``bits`` and ``value``, the bits mean that value in ``representation``
   (``twos_complement`` or ``sign_magnitude``). With ``width`` only, the general rule is proved
-  for every pattern of that width: in two's complement the leftmost bit is worth -2^(n-1) and the
+  for every pattern of that width (2 to 16 bits): in two's complement the leftmost bit is worth -2^(n-1) and the
   rest their usual place values, and inverting every bit then adding 1 negates; in sign and
   magnitude the leftmost bit is the sign and the rest the size.
 - ``cs_logic_equivalence``: ``left`` and ``right`` are (or, with ``equivalent: false``, are not)
@@ -21,6 +21,7 @@ from app.cs import bases, logic
 
 _TOKEN = re.compile(r"\s*(\d+|DIV|MOD|[-+*^()])")
 _DIGITS = {2: "01", 10: "0123456789", 16: "0123456789ABCDEF"}
+MAX_WIDTH = 16
 
 
 def _tokens(text: str) -> list[str]:
@@ -176,7 +177,11 @@ def _signed(check: dict) -> str | None:
         return f"unknown representation {representation!r}"
     rule, read = rules[representation]
     if "bits" not in check:
-        return rule(int(check["width"]))
+        width = check.get("width")
+        # Every pattern is tried, so the width is capped (A-Level questions use 4 to 16 bits).
+        if not isinstance(width, int) or isinstance(width, bool) or not 2 <= width <= MAX_WIDTH:
+            return f"width {width!r} must be a whole number from 2 to {MAX_WIDTH}"
+        return rule(width)
     value = read(check["bits"])
     if value != check["value"]:
         return f"{check['bits']} in {representation} is {value}, not {check['value']}"
