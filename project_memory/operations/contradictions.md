@@ -22,8 +22,9 @@
       GDPR), and they add little to fixing touch and contrast faults, so they are left out.
       High contrast (on or off) and the background pattern stay, as common display choices that
       the contrast bugs need, named in 9.2 and shown to the sender before sending. Not settled:
-      this is a judgement, not legal advice; the solicitor should confirm it, and the product owner
-      should sign off the re-prompt that the 1.11 privacy notice causes for every parent. If the
+      this is a judgement, not legal advice; the solicitor should confirm it. The product owner signed
+      off privacy notice 1.11 and young people's 1.8, and the parent re-prompt, on 2026-11-27 (via
+      lead), with the exclusions above. If the
       solicitor says high contrast is also too revealing, F drops it and the notice changes again.
       Also: held PR #292 used privacy notice 1.11 and young people's 1.8; it becomes 1.12 and 1.9
       when it lands.
