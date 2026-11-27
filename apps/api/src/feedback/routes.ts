@@ -37,6 +37,8 @@ const DAY_MS = 24 * 60 * 60 * 1000;
 const CLOSED_STATUSES = new Set(['fixed', 'will_not_fix']);
 
 // TODO(workstream C): move these request schemas into packages/core.
+/** A display setting name such as "doodle-diary" or "dark" (F16). */
+const setting = z.string().regex(/^[a-z0-9-]{1,40}$/);
 const deviceSchema = z
   .object({
     appVersion: z.string().max(20),
@@ -48,6 +50,19 @@ const deviceSchema = z
     lastProblem: z.string().regex(/^[A-Za-z0-9_:-]{1,80}$/),
     /** F16: the content id of the question or deck card on screen; an id only, never text. */
     contentId: z.string().regex(/^[A-Za-z0-9_-]{1,80}$/),
+    // F16: how the screen looked (settings and sizes only, never free text).
+    look: setting,
+    theme: setting,
+    palette: setting,
+    pattern: setting,
+    readingFont: setting,
+    readingSize: setting,
+    readingSpacing: setting,
+    readingTint: setting,
+    pixelRatio: z.number().min(0.1).max(10),
+    zoom: z.number().min(0.1).max(10),
+    textScale: z.number().min(0.1).max(10),
+    reducedMotion: z.boolean(),
   })
   .partial()
   .strict();

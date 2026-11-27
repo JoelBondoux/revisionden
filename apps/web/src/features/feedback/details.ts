@@ -15,6 +15,93 @@ export interface DeviceDetails {
    * student's own card.
    */
   contentId?: string;
+  /**
+   * F16: how the screen looked, so a layout or touch bug can be reproduced. Settings and sizes
+   * only, never personal: the look (effect style), light or dark, colours, background pattern,
+   * reading settings, the screen's pixel ratio, pinch zoom, the text size against 16px and
+   * reduced motion.
+   */
+  look?: string;
+  theme?: string;
+  palette?: string;
+  pattern?: string;
+  readingFont?: string;
+  readingSize?: string;
+  readingSpacing?: string;
+  readingTint?: string;
+  pixelRatio?: number;
+  zoom?: number;
+  textScale?: number;
+  reducedMotion?: boolean;
+}
+
+export type DisplayDetails = Pick<
+  DeviceDetails,
+  | 'look'
+  | 'theme'
+  | 'palette'
+  | 'pattern'
+  | 'readingFont'
+  | 'readingSize'
+  | 'readingSpacing'
+  | 'readingTint'
+  | 'pixelRatio'
+  | 'zoom'
+  | 'textScale'
+  | 'reducedMotion'
+>;
+
+const SETTING = /^[a-z0-9-]{1,40}$/;
+const round2 = (n: number) => Math.round(n * 100) / 100;
+
+/**
+ * F16: the root element's appearance and reading settings (as the app sets them), plus the
+ * screen's pixel ratio, pinch zoom and text size. Anything that is not a plain setting name is
+ * left out.
+ */
+export function readDisplayDetails(
+  root: HTMLElement,
+  env: { pixelRatio: number; zoom: number; rootFontPx: number; reducedMotion: boolean },
+): DisplayDetails {
+  const d = root.dataset;
+  const setting = (value: string | undefined, fallback?: string) => {
+    const v = value ?? fallback;
+    return v && SETTING.test(v) ? v : undefined;
+  };
+  const named = {
+    look: setting(d.effectStyle),
+    theme: setting(d.theme, 'light'),
+    palette: setting(d.palette, 'standard'),
+    pattern: setting(d.pattern, 'on'),
+    readingFont: setting(d.readingFont, 'standard'),
+    readingSize: setting(d.readingSize, 'normal'),
+    readingSpacing: setting(d.readingSpacing, 'normal'),
+    readingTint: setting(d.readingTint, 'none'),
+  };
+  return {
+    ...Object.fromEntries(Object.entries(named).filter(([, v]) => v !== undefined)),
+    pixelRatio: round2(env.pixelRatio),
+    zoom: round2(env.zoom),
+    textScale: round2(env.rootFontPx / 16),
+    reducedMotion: env.reducedMotion,
+  };
+}
+
+/** The display details of this browser right now (F16). */
+export function currentDisplayDetails(): DisplayDetails {
+  let reducedMotion = false;
+  try {
+    reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+  } catch {
+    reducedMotion = false;
+  }
+  const root = document.documentElement;
+  return readDisplayDetails(root, {
+    pixelRatio: window.devicePixelRatio || 1,
+    zoom: window.visualViewport?.scale ?? 1,
+    rootFontPx: parseFloat(getComputedStyle(root).fontSize) || 16,
+    reducedMotion,
+  });
 }
 
 const PROBLEM_CODE = /^[A-Za-z0-9_:-]{1,80}$/;

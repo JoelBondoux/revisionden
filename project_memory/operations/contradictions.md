@@ -10,7 +10,9 @@
       never its text and never a student's own card) to the optional device details of a bug report
       (`apps/web/src/features/feedback/details.ts`, `apps/api/src/feedback/routes.ts`), while
       `docs/legal/privacy-notice.md` 9.2 (and the young people's version) list only app version,
-      screen, browser family, screen size and online. Not settled here: the notice is L's, and a
+      screen, browser family, screen size and online. F16 also adds how the screen looked (look,
+      light or dark, colours, pattern, reading settings, pixel ratio, zoom, text size, reduced
+      motion), which the notice does not list either. Not settled here: the notice is L's, and a
       notice change may need a version bump and owner sign-off. F16 asks L to add "the question or
       card you were looking at" to 9.2 before or with the F16 merge.
 

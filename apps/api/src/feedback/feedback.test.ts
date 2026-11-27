@@ -95,6 +95,36 @@ describe('sending feedback', () => {
     expect(text.status).toBe(400);
   });
 
+  it('keeps how the screen looked, and refuses free text or odd values there (F16)', async () => {
+    const parent = await t.signInParent();
+    const display = {
+      look: 'doodle-diary',
+      theme: 'dark',
+      palette: 'colourblind',
+      pattern: 'off',
+      readingFont: 'dyslexic',
+      readingSize: 'large',
+      readingSpacing: 'wide',
+      readingTint: 'cream',
+      pixelRatio: 2.63,
+      zoom: 1.25,
+      textScale: 1.25,
+      reducedMotion: true,
+    };
+    const ok = await sendAsParent(parent.headers, {
+      kind: 'bug',
+      device: { ...DEVICE, ...display },
+    });
+    expect(ok.status).toBe(201);
+    for (const bad of [{ look: 'Sam likes this' }, { zoom: 900 }, { theme: 'x'.repeat(41) }]) {
+      const res = await sendAsParent(parent.headers, {
+        kind: 'bug',
+        device: { ...DEVICE, ...bad },
+      });
+      expect(res.status).toBe(400);
+    }
+  });
+
   it('needs a signed-in student or parent', async () => {
     expect((await sendAsStudent({}, { kind: 'bug' })).status).toBe(401);
     expect((await sendAsParent({}, { kind: 'bug' })).status).toBe(401);

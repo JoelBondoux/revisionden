@@ -9,6 +9,7 @@ import { buildInfo } from '../about/buildInfo';
 import { SUPPORT_EMAIL } from '../legal/supportEmail';
 import {
   collectDeviceDetails,
+  currentDisplayDetails,
   findPersonalDetails,
   PERSONAL_DETAILS_MESSAGE,
   type DeviceDetails,
@@ -26,14 +27,17 @@ import './feedback.css';
 const MAX_TEXT = 500;
 
 function currentDeviceDetails(route: string): DeviceDetails {
-  return collectDeviceDetails({
-    appVersion: buildInfo.version,
-    route,
-    userAgent: navigator.userAgent,
-    width: window.screen?.width ?? window.innerWidth,
-    height: window.screen?.height ?? window.innerHeight,
-    online: navigator.onLine,
-  });
+  return {
+    ...collectDeviceDetails({
+      appVersion: buildInfo.version,
+      route,
+      userAgent: navigator.userAgent,
+      width: window.screen?.width ?? window.innerWidth,
+      height: window.screen?.height ?? window.innerHeight,
+      online: navigator.onLine,
+    }),
+    ...currentDisplayDetails(),
+  };
 }
 
 interface FeedbackFormProps {
@@ -182,6 +186,18 @@ export function FeedbackForm({ initialKind, route, variant = 'page', onClose }: 
             <li>Connection: {device.online ? 'online' : 'offline'}</li>
             {device.lastProblem && <li>Last problem: {device.lastProblem}</li>}
             {device.contentId && <li>Question or card: {device.contentId}</li>}
+            <li>
+              Look: {device.look ?? 'default'}, {device.theme}, {device.palette} colours, pattern{' '}
+              {device.pattern}
+            </li>
+            <li>
+              Reading: {device.readingFont} font, {device.readingSize} text, {device.readingSpacing}{' '}
+              spacing, {device.readingTint} tint
+            </li>
+            <li>
+              Pixel ratio {device.pixelRatio}, zoom {device.zoom}, text size ×{device.textScale}
+              {device.reducedMotion ? ', reduced motion' : ''}
+            </li>
           </ul>
         )}
         <p className="secondary-text">Never your IP address, location or contacts.</p>
