@@ -1,0 +1,923 @@
+[
+  {
+    "id": "gcse-maths-h-p3-0101",
+    "topic": "gcse-maths-h-p3",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p3-lp-scale",
+    "expected_seconds": 20,
+    "prompt": "On the probability scale, which probability means an event is impossible?",
+    "options": ["0", "0.5", "1", "-1"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Probabilities go from 0 to 1. A probability of 0 means the event cannot happen.",
+    "hint": "Probabilities lie between two end values.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (on the 0-1 probability scale, 0 means impossible, 1 means certain and 0.5 means an even chance) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:22Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:08Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:10Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0102",
+    "topic": "gcse-maths-h-p3",
+    "type": "multiple_choice",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p3-lp-scale",
+    "expected_seconds": 20,
+    "prompt": "Which phrase describes a probability of 0.5?",
+    "options": ["Even chance", "Certain", "Impossible", "Very unlikely"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "0.5 is halfway between 0 and 1: the event is as likely to happen as not.",
+    "hint": "Where is 0.5 on the 0 to 1 scale?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (on the 0-1 probability scale, 0 means impossible, 1 means certain and 0.5 means an even chance) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:22Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:11Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:12Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0103",
+    "topic": "gcse-maths-h-p3",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p3-lp-scale",
+    "expected_seconds": 25,
+    "prompt": "Which of these cannot be a probability?",
+    "options": ["1.2", "0", "0.99", "3/4"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "Probabilities are on the 0 to 1 scale. 1.2 is greater than 1, so it cannot be a probability.",
+    "hint": "Check which value is outside the scale.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:22Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:14Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:15Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0104",
+    "topic": "gcse-maths-h-p3",
+    "type": "numeric",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p3-lp-theoretical",
+    "expected_seconds": 25,
+    "prompt": "A fair 8-sided dice is numbered 1 to 8. Work out the probability of rolling a 3.",
+    "answer": {
+      "value": "1/8"
+    },
+    "verify": {
+      "expression": "1/8"
+    },
+    "marks": 1,
+    "explanation": "There are 8 equally likely outcomes and one of them is 3, so P(3) = 1/8.",
+    "hint": "How many equally likely outcomes are there?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:22Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:17Z",
+          "notes": "model answered \"1/8\"; expected \"1/8\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:20Z",
+          "notes": "unsupported_claim (question): The question states 'A fair 8-sided dice is numbered 1 to 8.' The provided source only supports theoretical probability on the 0–1 scale in general and does not specifically support the factual setup that the die is fair or numbered 1 to 8.; unsupported_claim (hint): The hint says 'How many equally likely outcomes are there?' This introduces the factual claim that the outcomes are equally likely. That follows from the die being fair, but the quoted source does not support that claim.; unsupported_claim (explanation): The explanation states 'There are 8 equally likely outcomes'. This is a factual claim about the sample space and equal likelihood, but the quoted source does not back up this specific claim."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0105",
+    "topic": "gcse-maths-h-p3",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p3-lp-theoretical",
+    "expected_seconds": 30,
+    "prompt": "A bag contains 4 red, 5 green and 11 yellow counters. One counter is taken at random. Work out the probability that it is green. Give your answer as a fraction in its simplest form.",
+    "answer": {
+      "value": "1/4",
+      "form": "simplest_fraction"
+    },
+    "verify": {
+      "expression": "5/20"
+    },
+    "marks": 1,
+    "explanation": "There are 4 + 5 + 11 = 20 counters and 5 are green. P(green) = 5/20 = 1/4.",
+    "hint": "Find the total number of counters first.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:23Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:21Z",
+          "notes": "model answered \"1/4\"; expected \"1/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:22Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0106",
+    "topic": "gcse-maths-h-p3",
+    "type": "numeric",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p3-lp-theoretical",
+    "expected_seconds": 30,
+    "prompt": "A letter is chosen at random from the word MATHS. Work out the probability that it is a vowel.",
+    "answer": {
+      "value": "1/5"
+    },
+    "verify": {
+      "expression": "1/5"
+    },
+    "marks": 1,
+    "explanation": "MATHS has 5 letters and only A is a vowel, so P(vowel) = 1/5.",
+    "hint": "Count the letters and the vowels.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "facts": [
+      {
+        "statement": "When all outcomes are equally likely, the probability of an event is the number of outcomes in the event divided by the total number of outcomes.",
+        "ask": "How do you find a probability when all the outcomes are equally likely?"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0009: the standard fact it uses is listed in facts for the fact-check stage.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:23Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:24Z",
+          "notes": "model answered \"1/5\"; expected \"1/5\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:28Z",
+          "notes": "unsupported_claim (question): The question requires identifying vowels in the word MATHS and using that to calculate a theoretical probability, but the only cited source is a broad probability statement about relating relative expected frequencies to theoretical probability on the 0–1 scale. No quoted source is provided to support the specific factual/language claim needed here about which letters count as vowels.; unsupported_claim (hint): The hint says 'Count the letters and the vowels.' This introduces the factual claim/category that some letters in MATHS are vowels, but no quoted source is provided for that claim.; unsupported_claim (explanation): The explanation states 'MATHS has 5 letters and only A is a vowel'. These are factual claims used to justify the answer, but the quoted source only supports theoretical probability generally and does not back up these specific claims."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0107",
+    "topic": "gcse-maths-h-p3",
+    "type": "numeric",
+    "difficulty": 3,
+    "learning_point": "gcse-maths-h-p3-lp-relative-to-theoretical",
+    "expected_seconds": 40,
+    "prompt": "A spinner has a theoretical probability of 0.3 of landing on blue. It is spun 150 times. How many blues would you expect?",
+    "answer": {
+      "value": "45"
+    },
+    "verify": {
+      "expression": "0.3 * 150"
+    },
+    "marks": 1,
+    "explanation": "Expected number = 0.3 × 150 = 45.",
+    "hint": "Multiply the probability by the number of spins.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["maths-engine", "author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). Answer backed by the maths engine. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:23Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "maths-engine",
+          "result": "pass",
+          "tool": "revisionden-maths-engine",
+          "tool_version": "sympy 1.13.3",
+          "notes": "pnpm content:validate: answer and every step checked",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:29Z",
+          "notes": "model answered \"45 blues\"; expected \"45\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:30Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0108",
+    "topic": "gcse-maths-h-p3",
+    "type": "multiple_choice",
+    "difficulty": 2,
+    "learning_point": "gcse-maths-h-p3-lp-relative-to-theoretical",
+    "expected_seconds": 30,
+    "prompt": "A fair coin is flipped 1000 times. The relative frequency of heads is most likely to be close to which value?",
+    "options": ["0.5", "0.1", "1", "0"],
+    "answer": {
+      "option": 0
+    },
+    "marks": 1,
+    "explanation": "The theoretical probability of heads is 0.5, and with many flips the relative frequency should be close to it.",
+    "hint": "What is the theoretical probability of heads?",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      },
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P5 (page 19; PDF page 31)",
+        "quote": "understand that empirical unbiased samples tend towards theoretical probability distributions, with increasing sample size",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:23Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b); citation 2: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:31Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:32Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0109",
+    "topic": "gcse-maths-h-p3",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p3-lp-scale-recall",
+    "expected_seconds": 10,
+    "front": "What is the probability of an event that is certain to happen?",
+    "back": "1",
+    "explanation": "A certain event is at the top of the 0 to 1 scale: 1.",
+    "hint": "Top of the scale.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (on the 0-1 probability scale, 0 means impossible, 1 means certain and 0.5 means an even chance) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:23Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:33Z",
+          "notes": "model answered \"1\"; expected \"1\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:34Z",
+          "notes": "no problems found"
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0110",
+    "topic": "gcse-maths-h-p3",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p3-lp-scale-recall",
+    "expected_seconds": 10,
+    "front": "What is the probability of an event that is impossible?",
+    "back": "0",
+    "explanation": "An impossible event is at the bottom of the scale: 0.",
+    "hint": "Bottom of the scale.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "needs_human_approval": true,
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer. Decision 0008: the item rests on a standard definition (on the 0-1 probability scale, 0 means impossible, 1 means certain and 0.5 means an even chance) that the cited specification point names but does not define, so needs_human_approval is set and the owner approves this item individually.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:23Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:35Z",
+          "notes": "model answered \"0\"; expected \"0\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:38Z",
+          "notes": "unsupported_claim (hint): The hint 'Bottom of the scale.' introduces the factual claim that an impossible event is at the bottom of the 0–1 probability scale, but the quoted source only says to use 'the 0-1 probability scale' and does not state which events correspond to which positions on it.; unsupported_claim (explanation): The explanation states 'An impossible event is at the bottom of the scale: 0.' The quoted source supports use of the 0–1 probability scale, but does not explicitly support the claim that an impossible event is at the bottom of that scale or has probability 0."
+        }
+      ]
+    }
+  },
+  {
+    "id": "gcse-maths-h-p3-0111",
+    "topic": "gcse-maths-h-p3",
+    "type": "flashcard",
+    "difficulty": 1,
+    "learning_point": "gcse-maths-h-p3-lp-scale-recall",
+    "expected_seconds": 10,
+    "front": "Write a probability of 0.25 as a fraction.",
+    "back": "1/4",
+    "explanation": "0.25 = 25/100 = 1/4.",
+    "hint": "Write it over 100 and simplify.",
+    "source_ref": "Pearson Edexcel GCSE Mathematics (1MA1) content reference P3",
+    "checked_by": ["author"],
+    "citations": [
+      {
+        "source_type": "specification",
+        "publisher": "Pearson Edexcel",
+        "title": "Pearson Edexcel Level 1/Level 2 GCSE (9–1) in Mathematics (1MA1) Specification",
+        "document_ref": "1MA1 Issue 2 (June 2015)",
+        "url": "https://qualifications.pearson.com/content/dam/pdf/GCSE/mathematics/2015/specification-and-sample-assesment/gcse-maths-2015-specification.pdf",
+        "retrieved_at": "2026-11-27",
+        "location": "Higher tier knowledge, skills and understanding, 5. Probability, content reference P3 (page 19; PDF page 31)",
+        "quote": "relate relative expected frequencies to theoretical probability, using appropriate language and the 0-1 probability scale",
+        "supports": ["question"],
+        "sha256": "c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b"
+      }
+    ],
+    "verification": {
+      "status": "draft",
+      "version": 1,
+      "checks": [
+        {
+          "name": "grounded-writing",
+          "tool": "anthropic:content-session",
+          "tool_version": "S4 2026-11-27",
+          "result": "pass",
+          "notes": "Written by this session (S4) from the 1MA1 specification excerpt only; the question is original, not taken from any past paper. Question scope cited (spec P3). No engine check applies to this item type; the answer and every number in the explanation were checked with exact arithmetic (SymPy) by this session. Explanation arithmetic checked with exact arithmetic (SymPy). Hint is a method nudge written from this item's own working; it does not state the answer.",
+          "at": "2026-11-27T12:00:00Z"
+        },
+        {
+          "name": "quote-check",
+          "result": "pass",
+          "tool": "revisionden-quote-check",
+          "tool_version": "1.0.0",
+          "at": "2026-11-27T11:18:23Z",
+          "notes": "citation 1: found on page 31 (sha256 c30745f274663c5f910e3706ea836c6f7e95e0a00ff38eac860622232ed84f8b)"
+        },
+        {
+          "name": "schema",
+          "result": "pass",
+          "tool": "revisionden-content-validate",
+          "tool_version": "00.01.002",
+          "notes": "pnpm content:validate: schema, ids and links valid",
+          "at": "2026-11-27T17:00:00Z"
+        },
+        {
+          "name": "blind-answer",
+          "result": "pass",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:39Z",
+          "notes": "model answered \"1/4\"; expected \"1/4\""
+        },
+        {
+          "name": "adversarial-review",
+          "result": "fail",
+          "tool": "openai:gpt-5.4-2026-03-05",
+          "tool_version": "gpt-5.4-2026-03-05",
+          "at": "2026-11-27T11:19:42Z",
+          "notes": "unsupported_claim (hint): The hint introduces a specific conversion method, 'Write it over 100 and simplify.' The only quoted source supports using the 0–1 probability scale, not this fraction-conversion method, so this factual claim/method is not backed by the provided source.; unsupported_claim (explanation): The explanation states '0.25 = 25/100 = 1/4.' While mathematically correct, these factual claims are not supported by the only quoted source, which does not cover converting decimals to fractions."
+        }
+      ]
+    }
+  }
+]
