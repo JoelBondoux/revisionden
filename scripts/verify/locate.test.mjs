@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { parseLocation, locateQuote } from './locate.mjs';
+import { htmlToText } from './extract.mjs';
 
 test('reads page numbers from a location', () => {
   assert.deepEqual(parseLocation('page 12').pages, [12]);
@@ -241,12 +242,20 @@ test('words scattered far apart are not a match', () => {
 });
 
 // UK legislation pages (legislation.gov.uk, lead's ruling for S4) have no pages or spec codes;
-// a "Part III" location must be the nearest Part heading before the quote.
+// a "Part III" location must be the nearest Part heading before the quote. Part headings are
+// heading elements on the page, as on legislation.gov.uk (<h3 class="LegSchedulePart">).
+const partHeading = (no, title) =>
+  `<h3 class="LegSchedulePart"><span class="LegPartNo">Part ${no}<span>U.K.</span></span>` +
+  `<span class="LegPartTitle">${title}</span></h3>`;
 const act = [
-  'Schedule 1 Part I U.K. Measurement of Length Metric units Kilometre = 1000 metres. ' +
-    'Centimetre = 1/100 metre. Part III U.K. Measurement of Volume Metric units ' +
-    'Cubic centimetre = 1/1000 cubic decimetre. LITRE = a cubic decimetre. ' +
-    'Millilitre = 1/1000 litre. Part V U.K. Measurement of Mass Gram = 1/1000 kilogram.',
+  htmlToText(
+    `<h2>Schedule 1</h2>${partHeading('I', 'Measurement of Length')}<p>Metric units</p>` +
+      '<p>Kilometre = 1000 metres.</p><p>Centimetre = 1/100 metre.</p>' +
+      `${partHeading('III', 'Measurement of Volume')}<p>Metric units</p>` +
+      '<p>Cubic centimetre = 1/1000 cubic decimetre.</p><p>LITRE = a cubic decimetre.</p>' +
+      `<p>Millilitre = 1/1000 litre.</p>${partHeading('V', 'Measurement of Mass')}` +
+      '<p>Gram = 1/1000 kilogram.</p>',
+  ),
 ];
 
 test('reads a legislation Part from a location', () => {
@@ -281,7 +290,10 @@ test('a legislation quote fails under the wrong Part', () => {
 
 test('a Part heading far before the quote still counts (Codex on #435)', () => {
   const long = [
-    `Part III Measurement of Volume ${'Some intervening text. '.repeat(120)}Millilitre = 1/1000 litre.`,
+    htmlToText(
+      `${partHeading('III', 'Measurement of Volume')}<p>${'Some intervening text. '.repeat(120)}</p>` +
+        '<p>Millilitre = 1/1000 litre.</p>',
+    ),
   ];
   const r = locateQuote(
     { quote: 'Millilitre = 1/1000 litre.', location: 'Schedule 1, Part III' },
@@ -289,4 +301,36 @@ test('a Part heading far before the quote still counts (Codex on #435)', () => {
     { paged: false },
   );
   assert.equal(r.locationConfirmed, true);
+});
+
+test('a "See Part III" cross-reference in the text is not a Part heading (Codex on #435)', () => {
+  const page = [
+    htmlToText(
+      `${partHeading('V', 'Measurement of Mass')}<p>See Part III for volume units.</p>` +
+        '<p>Gram = 1/1000 kilogram.</p>',
+    ),
+  ];
+  const right = locateQuote(
+    { quote: 'Gram = 1/1000 kilogram.', location: 'Schedule 1, Part V' },
+    page,
+    { paged: false },
+  );
+  assert.equal(right.locationConfirmed, true);
+  const wrong = locateQuote(
+    { quote: 'Gram = 1/1000 kilogram.', location: 'Schedule 1, Part III' },
+    page,
+    { paged: false },
+  );
+  assert.equal(wrong.locationConfirmed, false);
+  assert.match(wrong.reason, /Part V, not Part III/);
+});
+
+test('a Part named only in running text, with no heading, does not confirm a Part', () => {
+  const r = locateQuote(
+    { quote: 'Gram = 1/1000 kilogram.', location: 'Schedule 1, Part III' },
+    ['See Part III for volume units. Gram = 1/1000 kilogram.'],
+    { paged: false },
+  );
+  assert.equal(r.locationConfirmed, false);
+  assert.match(r.reason, /no Part heading before the quote/);
 });

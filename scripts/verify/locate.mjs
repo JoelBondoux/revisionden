@@ -1,9 +1,13 @@
 // Finds a citation's quote in a source's pages and confirms it sits at the stated location.
-import { normaliseText } from './normalise.mjs';
+import { HEADING, normaliseText } from './normalise.mjs';
 
 const PAGE_PHRASE = /\b(?:pages?|pp?\.?)\s*(\d+)(?:\s*[-\u2013\u2014]\s*(\d+))?/gi;
 // A Part of a UK Act or regulation (legislation.gov.uk pages): "Schedule 1, Part III".
 const PART = /\bPart\s+([IVXLC]+)\b/gi;
+// A Part heading on the page itself (a heading element, marked by extract.mjs), not a "See Part
+// III" cross-reference in the text (Codex on #435). legislation.gov.uk runs the extent straight
+// on ("Part IIIU.K."), so the numeral ends at any letter that is not a numeral.
+const PART_HEADING = new RegExp(`${HEADING}\\s*Part\\s+([IVXLC]+)(?![IVXLCa-z])`, 'g');
 const CODE = /(?<![A-Za-z0-9.])([A-Z]{1,3}\d+[a-z]?|\d+(?:\.\d+)+[a-z]?)(?![A-Za-z0-9]|\.\d)/g;
 
 /** Page numbers and specification codes (N7, A17, 4.2.1a) named in a citation location. */
@@ -193,12 +197,12 @@ function locationProblems({ text, at, page, length }, loc, { paged, window, labe
   // A Part heading can be far above the quote, so look at all the text before it, not only the
   // specification-code window (Codex on #435).
   for (const part of loc.parts ?? []) {
-    const nearest = [...text.slice(0, at).matchAll(PART)].map((m) => m[1].toUpperCase()).at(-1);
+    const nearest = [...text.slice(0, at).matchAll(PART_HEADING)].map((m) => m[1]).at(-1);
     if (nearest !== part) {
       problems.push(
         nearest
-          ? `the nearest Part before the quote is Part ${nearest}, not Part ${part}`
-          : `Part ${part} does not appear before the quote`,
+          ? `the nearest Part heading before the quote is Part ${nearest}, not Part ${part}`
+          : `there is no Part heading before the quote (Part ${part} stated)`,
       );
     }
   }

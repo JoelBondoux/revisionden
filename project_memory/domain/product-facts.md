@@ -630,7 +630,8 @@ Tags: #product #rules #limits #defaults
   gov.uk, and www.legislation.gov.uk for unit definitions only) and cached outside git with their
   SHA-256. "page N" may be the PDF page or the printed page; a specification code must be the
   nearest code before the quote; a legislation location names its Part ("Schedule 1, Part III"),
-  which must be the nearest Part heading anywhere before the quote. Unconfirmable = fail.
+  which must be the nearest Part heading (a heading element on the page, not a "See Part III"
+  cross-reference in the text) anywhere before the quote. Unconfirmable = fail.
 - UK legislation (citation `source_type` `legislation`, lead's ruling 2026-11-27) may back unit
   definitions only, for example the Weights and Measures Act 1985, Schedule 1 ("Millilitre =
   1/1000 litre."). It defines length, area, volume, capacity and mass, not time, so items resting

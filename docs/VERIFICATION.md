@@ -250,7 +250,9 @@ location. The location must be checkable:
 French_required_words_(F), row 261, cell C261`), and the quote must equal that cell's text
   (decision 0010; not yet implemented in the checker, so such citations fail until it is);
 - a UK Act or regulation page is located by its Part (`Schedule 1, Part III`): the nearest
-  "Part …" heading before the quote must be that Part;
+  "Part …" heading before the quote must be that Part. Only a heading element on the page counts
+  (text extraction marks where each heading starts), never a "See Part III" cross-reference in
+  the running text;
 - a web page has no pages, so its citations need a code; a location with neither a page nor a
   code fails. Anything the checker cannot confirm fails, for a person to fix.
 
