@@ -11,8 +11,14 @@ const PINNED_LAST = /^(none|all|both|neither) of (these|those|them|the above)\b/
  * Shuffled fresh each serve (Fisher-Yates with the given randomness) so the right answer is not
  * always in the same place; options like "None of these" stay last in their own order. Marking
  * goes by the original position, so it never depends on where an option was shown.
+ * With `previous` (a retry of the same question), the new order is never the same as it: if the
+ * shuffle lands on it, the movable options shift round by one place.
  */
-export function shuffledOptionOrder(options: readonly string[], rng: Rng): number[] {
+export function shuffledOptionOrder(
+  options: readonly string[],
+  rng: Rng,
+  previous?: readonly number[],
+): number[] {
   const free: number[] = [];
   const pinned: number[] = [];
   options.forEach((option, index) => (PINNED_LAST.test(option.trim()) ? pinned : free).push(index));
@@ -20,5 +26,8 @@ export function shuffledOptionOrder(options: readonly string[], rng: Rng): numbe
     const j = Math.floor(rng() * (i + 1));
     [free[i], free[j]] = [free[j]!, free[i]!];
   }
+  const order = [...free, ...pinned];
+  const same = previous?.length === order.length && previous.every((v, i) => v === order[i]);
+  if (same && free.length > 1) free.push(free.shift()!);
   return [...free, ...pinned];
 }

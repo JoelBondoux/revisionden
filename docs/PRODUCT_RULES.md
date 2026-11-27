@@ -40,7 +40,10 @@
     test, the 5-a-day and recall checks all use it; "None of these", "All of the above", "Both of
     them" and "Neither of these" stay last. Marking goes by the option itself (its original
     position), so attempts, the right-answer highlight and review screens line up whatever the
-    shown order. `packages/core/src/option-order.ts` (`shuffledOptionOrder`, injected randomness);
+    shown order. Read aloud says the options in the shown order ("Option 2" is the second on
+    screen), and a missed question served straight back gets a different order from the one just
+    seen (one order per serve, `useServedOptionOrder`; Codex on #448).
+    `packages/core/src/option-order.ts` (`shuffledOptionOrder`, injected randomness);
     `apps/web/src/features/learn/shuffle.tsx`. The operator's content review keeps the authored
     order. Flashcard choices (F20) follow once #441 lands.
   - Combo bonus (`docs/GAME_FEEL.md`): +5 XP per right answer from the 3rd right answer in a row,

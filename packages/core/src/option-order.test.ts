@@ -38,6 +38,18 @@ describe('shuffled option order (F22)', () => {
     expect(order.slice(-2)).toEqual([1, 3]);
   });
 
+  it('never repeats the previous order when asked, so a retry shows the options moved', () => {
+    const options = ['a', 'b', 'c'];
+    for (let seed = 0; seed < 100; seed += 1) {
+      const previous = shuffledOptionOrder(options, createRng(seed));
+      const next = shuffledOptionOrder(options, createRng(seed), previous);
+      expect(next).not.toEqual(previous);
+      expect([...next].sort()).toEqual([0, 1, 2]);
+    }
+    // With only one option that can move, the order cannot change.
+    expect(shuffledOptionOrder(['a', 'None of these'], createRng(1), [0, 1])).toEqual([0, 1]);
+  });
+
   it('gives the same order for the same randomness, so a serve can be replayed in tests', () => {
     const options = ['a', 'b', 'c', 'd', 'e'];
     expect(shuffledOptionOrder(options, createRng(9))).toEqual(

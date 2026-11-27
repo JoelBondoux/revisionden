@@ -34,11 +34,13 @@ export function useServedOptionOrder(
 ): number[] | undefined {
   const rng = useContext(ShuffleContext);
   const key = `${serve}:${item?.id ?? ''}`;
-  const draw = () =>
-    item?.type === 'multiple_choice' ? shuffledOptionOrder(item.options, rng) : undefined;
-  const [served, setServed] = useState(() => ({ key, order: draw() }));
+  const draw = (previous?: number[]) =>
+    item?.type === 'multiple_choice' ? shuffledOptionOrder(item.options, rng, previous) : undefined;
+  const [served, setServed] = useState(() => ({ key, itemId: item?.id, order: draw() }));
   if (served.key !== key) {
-    const next = { key, order: draw() };
+    // A retry of the same question never shows its options in the order just seen.
+    const previous = served.itemId === item?.id ? served.order : undefined;
+    const next = { key, itemId: item?.id, order: draw(previous) };
     setServed(next);
     return next.order;
   }

@@ -84,6 +84,21 @@ describe('a fresh order for each serve (F22, Codex on #448)', () => {
     expect(orders.size).toBeGreaterThan(1);
   });
 
+  it('never serves a retry in the order just seen', () => {
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <ShuffleProvider rng={createRng(11)}>{children}</ShuffleProvider>
+    );
+    const { result, rerender } = renderHook(({ serve }) => useServedOptionOrder(item, serve), {
+      wrapper,
+      initialProps: { serve: 0 },
+    });
+    for (let serve = 1; serve < 20; serve += 1) {
+      const before = result.current;
+      rerender({ serve });
+      expect(result.current).not.toEqual(before);
+    }
+  });
+
   it('has no order for a question that is not multiple choice', () => {
     const { result } = renderHook(() =>
       useServedOptionOrder({ ...item, type: 'short_answer' } as LearnItem, 0),
