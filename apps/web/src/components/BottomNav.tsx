@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useAvatarMotion } from '../features/avatar/motion';
 import { FramedAvatar } from '../features/juice/pip/FramedAvatar';
-import { CardsIcon, MapIcon, PapersIcon, PlanIcon, PersonIcon } from './icons';
+import { CardsIcon, HomeIcon, MapIcon, PapersIcon, PlanIcon, PersonIcon } from './icons';
 
 interface NavItem {
   to: string;
@@ -10,12 +10,27 @@ interface NavItem {
   Icon: ComponentType;
 }
 
-export const navItems: NavItem[] = [
-  { to: '/map', label: 'Map', Icon: MapIcon },
-  { to: '/cards', label: 'Cards', Icon: CardsIcon },
+/*
+ * UX-1 (owner approved the UX report, 2026-11-27): Home · Learn (the map) · Cards · Me. Plan and
+ * Papers are only "Coming soon", so they stay out of the bar unless the build turns them on
+ * (VITE_COMING_SOON_TABS=1); their pages still open by address.
+ */
+const comingSoonTabs: NavItem[] = [
   { to: '/plan', label: 'Plan', Icon: PlanIcon },
   { to: '/papers', label: 'Papers', Icon: PapersIcon },
 ];
+
+/** The tabs before Me, with the coming-soon ones only when asked for. */
+export function navItemsFor(showComingSoon: boolean): NavItem[] {
+  return [
+    { to: '/home', label: 'Home', Icon: HomeIcon },
+    { to: '/map', label: 'Learn', Icon: MapIcon },
+    { to: '/cards', label: 'Cards', Icon: CardsIcon },
+    ...(showComingSoon ? comingSoonTabs : []),
+  ];
+}
+
+export const navItems = navItemsFor(import.meta.env.VITE_COMING_SOON_TABS === '1');
 
 interface BottomNavProps {
   /** Flashcards due today; shown as a badge on the Cards tab when above zero. */

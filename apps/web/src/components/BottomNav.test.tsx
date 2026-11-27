@@ -2,7 +2,7 @@ import { nameStartsWithText } from '../test/nameMatchesText';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { DEFAULT_AVATAR, encodeAvatar } from '@revisionden/core';
-import { BottomNav } from './BottomNav';
+import { BottomNav, navItemsFor } from './BottomNav';
 
 function renderAt(path: string, cardsDue?: number, avatarCode?: string | null) {
   return render(
@@ -15,11 +15,24 @@ function renderAt(path: string, cardsDue?: number, avatarCode?: string | null) {
 const AVATAR = encodeAvatar(DEFAULT_AVATAR);
 
 describe('BottomNav', () => {
-  it('links to Map, Cards, Plan, Papers and, last, Me (Progress lives on Me)', () => {
+  it('links to Home, Learn (the map), Cards and, last, Me (UX-1)', () => {
     renderAt('/map');
     const nav = screen.getByRole('navigation', { name: 'Main' });
     const names = Array.from(nav.querySelectorAll('a')).map((a) => a.textContent?.trim());
-    expect(names).toEqual(['Map', 'Cards', 'Plan', 'Papers', 'Me']);
+    expect(names).toEqual(['Home', 'Learn', 'Cards', 'Me']);
+    expect(screen.getByRole('link', { name: 'Learn' })).toHaveAttribute('href', '/map');
+    expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/home');
+  });
+
+  it('keeps Plan and Papers out of the bar unless the build asks for them (coming soon)', () => {
+    expect(navItemsFor(false).map((i) => i.label)).toEqual(['Home', 'Learn', 'Cards']);
+    expect(navItemsFor(true).map((i) => i.label)).toEqual([
+      'Home',
+      'Learn',
+      'Cards',
+      'Plan',
+      'Papers',
+    ]);
   });
 
   it('the last item, Me, opens settings and personalisation', () => {
@@ -38,7 +51,7 @@ describe('BottomNav', () => {
       expect(
         screen.getByRole('link', { name: 'Me, settings and personalisation' }),
       ).toHaveAttribute('aria-current', 'page');
-      expect(screen.getByRole('link', { name: 'Map' })).not.toHaveAttribute('aria-current');
+      expect(screen.getByRole('link', { name: 'Learn' })).not.toHaveAttribute('aria-current');
       unmount();
     }
   });
@@ -79,9 +92,9 @@ describe('BottomNav', () => {
   });
 
   it('marks the current page', () => {
-    renderAt('/plan');
-    expect(screen.getByRole('link', { name: 'Plan' })).toHaveAttribute('aria-current', 'page');
-    expect(screen.getByRole('link', { name: 'Map' })).not.toHaveAttribute('aria-current');
+    renderAt('/home');
+    expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
+    expect(screen.getByRole('link', { name: 'Learn' })).not.toHaveAttribute('aria-current');
   });
 
   it('shows how many flashcards are due on the Cards tab', () => {

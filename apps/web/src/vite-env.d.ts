@@ -7,6 +7,8 @@ interface ImportMetaEnv {
   readonly VITE_API_URL?: string;
   /** Set to "false" to turn off the mock API in development. */
   readonly VITE_USE_MOCKS?: string;
+  /** "1" shows Plan and Papers in the main navigation while they are coming soon (UX-1). */
+  readonly VITE_COMING_SOON_TABS?: string;
   /** development, staging or production (shown on the About page). Defaults to development. */
   readonly VITE_ENVIRONMENT?: string;
   /** Operator details filled into the policies (docs/LEGAL.md). Never in the repository. */

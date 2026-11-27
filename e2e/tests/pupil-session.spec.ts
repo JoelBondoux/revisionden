@@ -203,7 +203,7 @@ for (const size of SIZES) {
     await check('Home');
 
     // The map opens on the current unit; "You are here" starts that topic's lesson.
-    await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Map' }).click();
+    await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Learn' }).click();
     await expect(page.getByRole('group', { name: 'Units' })).toBeVisible();
     await check('the map');
     // It opens with "You are here" in view and clear of the bottom nav, so a tap on it is a tap
