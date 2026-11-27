@@ -386,6 +386,55 @@ describe('wrong answers and the student’s own cards', () => {
     expect(card).toMatchObject({ origin: 'wrong_answer', back: 'Option B' });
   });
 
+  it('gives a card made from a multiple choice question its options and right answer (F20)', async () => {
+    const { headers } = await student('mc_card_kid');
+    const res = await t.app.request('/v1/student/learn/lesson?topicId=test-topic-a&count=20', {
+      headers,
+    });
+    const { items } = (await res.json()) as { items: { id: string; prompt?: string }[] };
+    const mc = items.find((i) => i.prompt === 'Test question 1')!;
+    await t.app.request(
+      '/v1/student/learn/attempts',
+      jsonRequest('POST', { itemId: mc.id, answer: 0, timeMs: 1, mode: 'learn' }, headers),
+    );
+    const card = byFront((await overview(headers)).due, 'Test question 1');
+    expect(card).toMatchObject({
+      options: ['Option A', 'Option B', 'Option C'],
+      answerOption: 1,
+      back: 'Option B',
+    });
+  });
+
+  it('never serves a card whose question needs options without them (F20 guard)', async () => {
+    const { headers } = await student('mc_guard_kid');
+    const lesson = await t.app.request('/v1/student/learn/lesson?topicId=test-unit&count=20', {
+      headers,
+    });
+    const { items } = (await lesson.json()) as {
+      items: { id: string; type: string; options?: string[] }[];
+    };
+    // Miss every multiple choice question, so each becomes a card.
+    for (const item of items.filter((i) => i.type === 'multiple_choice')) {
+      await t.app.request(
+        '/v1/student/learn/attempts',
+        jsonRequest('POST', { itemId: item.id, answer: 2, timeMs: 1, mode: 'learn' }, headers),
+      );
+    }
+    const body = await overview(headers);
+    const cards = [...body.due, ...body.mine];
+    const mcPrompts = new Set(
+      items
+        .filter((i) => i.type === 'multiple_choice')
+        .map((i) => (i as { prompt?: string }).prompt),
+    );
+    const fromMc = cards.filter((c) => mcPrompts.has(c.front));
+    expect(fromMc.length).toBeGreaterThan(0);
+    for (const card of fromMc) {
+      expect(card.options?.length ?? 0).toBeGreaterThanOrEqual(2);
+      expect(card.answerOption).toBeTypeOf('number');
+    }
+  });
+
   it('lets a student add their own card to a topic', async () => {
     const { headers } = await student('own_kid');
     const res = await t.app.request(

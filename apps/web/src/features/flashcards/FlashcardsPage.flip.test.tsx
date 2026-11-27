@@ -15,13 +15,14 @@ async function openCards() {
 describe('Turning flashcards (F7)', () => {
   it('never shows the next card’s answer while its question is showing', async () => {
     await openCards();
-    expect(screen.queryByText('Demo back 1')).not.toBeInTheDocument();
+    // The answer is laid out (so the card keeps one height) but never visible until revealed.
+    expect(screen.getByText('Demo back 1')).not.toBeVisible();
     await click('Show answer');
-    expect(screen.getByText('Demo back 1')).toBeInTheDocument();
+    expect(screen.getByText('Demo back 1')).toBeVisible();
     await click(/^Good/);
     await screen.findByText('Demo front 2');
     expect(flipCard()).not.toHaveClass('flip-card--flipped');
-    expect(screen.queryByText('Demo back 2')).not.toBeInTheDocument();
+    expect(screen.getByText('Demo back 2')).not.toBeVisible();
     expect(screen.queryByText('Demo back 1')).not.toBeInTheDocument();
   });
 

@@ -153,11 +153,9 @@ describe('words on the wrong colour', () => {
       for (const cb of [false, true]) {
         const t = palette(id, mode, cb);
         const tokenOf = (decl: string) => /color: var\((--[\w-]+)\)/.exec(decl)?.[1] ?? '';
-        // A card's topic on the flip card, and the thanks after sending feedback, on the page.
-        for (const [path, selector] of [
-          ['features/flashcards/flashcards.css', '.flip-card__topic'],
-          ['features/feedback/feedback.css', '.feedback__thanks'],
-        ]) {
+        // The thanks after sending feedback, on the page. (The flip card's topic line went in F20:
+        // the topic shows once, in the deck header.)
+        for (const [path, selector] of [['features/feedback/feedback.css', '.feedback__thanks']]) {
           const fg = t[tokenOf(rule(path!, selector!))]!;
           for (const bg of ['--color-background', '--color-surface'])
             expect(contrastRatio(fg, t[bg]!), `${selector} on ${bg}`).toBeGreaterThanOrEqual(4.5);

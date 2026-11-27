@@ -621,6 +621,18 @@ or animation, the avatar's `react('nod' | 'hmm' | 'hop')`, placement and timing)
   verified `explanation` as a final "Why" step (enough on its own for a button). No AI-made explanation
   (CLAUDE.md rule 7). Cards without such content, and the student's own cards, have no Explain
   button. Implemented in `packages/core/src/flashcard-explain.ts` (`explain` on each card).
+  F21 (owner, 2026-11-27): Explain sits on the turned-over card face, in its bottom corner (its own
+  button, 44px tap target, beside the card's turn control rather than inside it), so revealing the
+  answer moves nothing below the card: the rating buttons take Show answer's place. The card is as
+  tall as its taller face before and after it turns. The topic shows once, in the deck header (not
+  again on the card).
+- **Multiple choice cards (F20, owner bug, 2026-11-27):** a card made from a multiple choice
+  question (a missed lesson question) carries its options and right answer (`options`,
+  `answerOption`), because its prompt ("Which of these…") makes no sense without them. Its front
+  shows the choices as buttons, with no Show answer; tapping one is the answer: the card turns
+  over to "Right!" or "Not quite. The answer is:" and the right option, and "Next card" saves the
+  rating from it (right Good, wrong Again). Plain recall cards keep Show answer and self-rating.
+  A guard test checks every served card from a multiple choice question has its options.
 
 ## Statistics dashboards (workstream K)
 

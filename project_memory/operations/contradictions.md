@@ -119,10 +119,17 @@
       checked 2026-11-25). `docs/CONTENT_PLAN.md` writes items in AI working sessions from official
       source excerpts and quotes them in citations. Not settled: needs a legal answer or written
       AQA permission before any AQA subject is built; the pilot (Pearson Edexcel 1MA1) is not
-      affected. Detail: `docs/research/competitors-2026-11.md` section 3.3. Pearson reportedly
-      reserves "text and data mining and training of artificial intelligence" rights (search extract,
-      `pearson.com` blocked, not confirmed); OCR and WJEC Eduqas have no AI clause
-      (`docs/research/board-shares-2026-11.md` section 3).
+      affected. Detail: `docs/research/competitors-2026-11.md` section 3.3. OCR and WJEC Eduqas have no AI clause
+      (`docs/research/board-shares-2026-11.md` section 3). Pearson, read directly 2026-11-27 for
+      A-Level 9MA0 / 9FM0 (`docs/research/pearson-terms-2026-11.md`): its copyright policy says
+      specifications "may not be copied or made available electronically in whole or in part
+      without permission from Pearson", with exceptions for exam centres only. No AI clause on the
+      `qualifications.pearson.com` pages or in the specifications, but the `www.pearson.com` website
+      terms (dated 10 July 2025, which the qualifications site links to as its legal notice) reserve
+      "text and data mining and training of artificial intelligence and similar technologies" and
+      allow only "personal, non-commercial and class room use". The same question applies to the
+      1MA1 pilot's quoted citations; no new Pearson quotes are added meanwhile. Needs the owner: written permission
+      from Pearson, a legal view, or citing by location without quoted text.
 - [ ] **Reward stats with no data yet.** Milestones for past papers, mock and assessment grades,
       exams sat, weak spots fixed, perfect sets, gifting and the friends league
       are in the catalogue, but nothing records those numbers yet, so the rewards route counts them
