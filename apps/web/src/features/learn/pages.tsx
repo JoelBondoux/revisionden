@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { WEAK_SPOT_THRESHOLD } from '@revisionden/core';
+import { useApi } from '../../api/ApiContext';
 import { LoadingOrError } from '../../api/LoadingOrError';
 import { useApiResource } from '../../api/useApiResource';
 import { ButtonLink } from '../../components/Button';
@@ -10,6 +12,31 @@ import { LearnItFirst, checkedLinksFor, learnLinksByTopic } from '../learn-links
 import { RecallGate } from '../recall';
 import { LessonPlayer } from './LessonPlayer';
 import { subjectLabel, useLearnApi } from './learnApi';
+
+/**
+ * UX-3: when a topic's lesson finds no questions, the way on is the map's next suggested topic
+ * (only topics with questions are suggested). Shows nothing if there is none or the map fails.
+ */
+function ReadyTopicLink({ topicId }: { topicId: string }) {
+  const api = useApi();
+  const [next, setNext] = useState<string | null>(null);
+  useEffect(() => {
+    let live = true;
+    api
+      .getTopicMap()
+      .then((map) => {
+        const id = map.nextMission?.lessonId;
+        if (live && id && id !== topicId) setNext(id);
+      })
+      .catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, [api, topicId]);
+  return next ? (
+    <ButtonLink to={`/learn/topic/${next}`}>Try a topic that&apos;s ready</ButtonLink>
+  ) : null;
+}
 
 /** A lesson on one topic: `/learn/topic/:topicId`. */
 export function TopicLessonPage() {
@@ -26,6 +53,9 @@ export function TopicLessonPage() {
           title={lesson.data.items[0]?.topicTitle ?? 'Lesson'}
           items={lesson.data.items}
           draftContent={lesson.data.draftContent}
+          emptyAction={
+            lesson.data.items.length === 0 ? <ReadyTopicLink topicId={topicId} /> : undefined
+          }
         />
       </RecallGate>
     </>
